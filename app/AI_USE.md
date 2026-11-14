@@ -1,0 +1,55 @@
+# Use of AI (Super Intelligence) — Walo web app
+
+*Simply Zero · NASA Space Apps Challenge 2026 · written 14 November 2026 (Africa/Accra)*
+
+- **The idea is the team's.** The problem, the district (Ejura-Sekyedumase), the four crops and the three rotations to compare were decided by Simply Zero.
+- **App code:** this web app (index.html, styles.css, app.js) was scaffolded and coded by an AI assistant (**Grok Bot**) from the team's written brief and the team's seed data.
+- **Data processing:** `scripts/build_data.py`, which turns the NASA POWER, SRTM, SoilGrids and price files into the app's JSON, was AI-written.
+- **Figures:** all numbers come from the cited datasets (NASA POWER, NASA SRTM via OpenTopoData, SoilGrids 2.0, WFP/HDX, MoFA SRID, Ghana Commodity Exchange, and dated news articles kept in the data files). Nothing was estimated by AI; where data are missing the app says so ("data gap", "coming later").
+- **Redesign (14 November 2026):** after the team found the first version overwhelming, the AI assistant (Grok Bot) applied a design process (personas, one question per screen, design principles, visual system, Nielsen heuristic review — see `DESIGN.md`) and rebuilt the interface (index.html, styles.css, app.js, sw.js, icon.svg). The four crop illustrations are simple hand-coded SVG shapes written by the AI, not AI-generated images. No data was changed or added.
+- **Visual redesign (14 November 2026, later the same day):** the AI assistant restyled the app (photo headers, photo crop cards, new charts, "Your farm" location card with a Ghana map, "Generic advice vs. Walo" card). The location-first idea (NASA data for the farm's own point instead of generic advice) is the team's. Every number on the new cards is read from the existing data files.
+- **Photos:** 8 real photographs from Wikimedia Commons (CC BY-SA 4.0 / CC BY-SA 2.0), credited with author, licence and source link on the About page and in `data/credits.json`. They were only cropped, resized and converted to WebP. **No AI-generated images are used.**
+- **Map:** Ghana outline from Natural Earth (public domain); Ejura and Kumasi positions from GeoNames coordinates.
+- **Font and icons:** Plus Jakarta Sans (SIL OFL 1.1) and Lucide icons (ISC), bundled locally; licences in `licenses/`.
+- **Review:** the team reviewed the app, its text and its numbers.
+- **Media:** no AI-generated images, video or audio are used. Read-aloud uses the phone's or laptop's own built-in speech. No NASA logos are used. (Plant Doctor's text answers are AI-generated at runtime and labelled; see v9–v11.)
+
+## v4 restructure (14 Nov 2026)
+- The concept (location first, best crops per place, tracking farms) and the three districts are the team's.
+- The AI assistant (Grok Bot) downloaded NASA POWER data for Tamale and Techiman with the same parameters as Ejura, wrote the live NASA POWER fetch for "Use my location", moved the crop list into `data/crops.json`, and wrote the scoring code that applies the team's rules of thumb. Every score and reason is computed from NASA numbers in the data files; the app shows which rules fired.
+- Growth-stage timings are typical durations from the sources in `crops.json`, labelled "typical".
+- No AI-generated images, audio or video were added.
+
+## v5–v6 (14 Nov 2026)
+- The crop knowledge base (`walo-crops.json`) was compiled with AI help from the sources listed in it; the app shows each fact's source ids and "not confirmed" where none was found.
+- The AI assistant wrote the crop build script, the scoring code, the guided planting flow, farm view and photo diary, and picked 15 openly licensed Wikimedia Commons photos (credited). No AI-generated images.
+- The team asked for direct answers instead of "ask your extension officer"; where data is thin the app now labels its answer "Best guess" with a grey confidence dot.
+
+## v7–v8 (14 Nov 2026)
+- **Team decisions:** the two-way flow (pick a place → what to plant now; pick a crop → where it grows best), equal weight for both, three tabs, and covering Ghana's regional capitals.
+- **AI-written (Grok Bot):** `scripts/build_places.py` (downloads NASA POWER monthly data for 14 regional capitals and computes the same summaries and rain trends as the pilot districts), `scripts/fix_crops_v7.py` and `scripts/fix_crops_v8.py` (sourced data fixes; Rain forest and Coastal savanna zones from FAO's crop calendar), `scripts/flag_price_outliers.py`, the "plant now" rule, the place-ranking code, the map with pins and the new screens.
+- **v7 data fixes (each with a source in `crops.json`):** sorghum uses FAO's Ghana rainfall (750–1,300 mm) instead of EcoCrop's 700 mm cap (FAO crop calendar, FAO CWR manual, FAO Land & Water); cocoyam placed in the Transition zone (Ansah et al. 2023, PLOS ONE) with a borrowed Rain forest window marked Best guess; millet (CSIR-SARI trials), plantain (IITA manual), okra (Kugbe et al. 2019; MADE 2015), pepper (IFPRI GSSP WP55; MoFA-IFPRI brief), garden egg (MADE 2015) and onion windows; odd one-off prices flagged, not deleted.
+- **Zones:** each place is matched to an FAO agro-ecological zone by reading FAO's region text; the AI did the matching and flagged the uncertain ones (Ho, Sunyani, Dambai).
+- **Coordinates:** from Wikipedia / Wikidata, not estimated.
+- No AI-generated images, audio or video. All photos are credited Wikimedia Commons photographs.
+
+## v9–v11 (14 Nov 2026)
+- **Team decisions:** add Plant Doctor, use published scientific methods instead of rules of thumb, add Meteomatics forecasts and NASA MODIS greenness (Space Apps partner offers), keep NASA POWER as the core.
+- **AI-written (Grok Bot):** `lib/agro.js` (FAO-56 Penman-Monteith ET0, USDA-SCS effective rain, FAO-56 Kc/WRSI water balance, Sivakumar onset, EcoCrop suitability, GDD), `data/rules.json` (each threshold with its source, or marked `default: true`), `scripts/fetch_agro.py`, `scripts/build_agro.js`, `scripts/add_fao56.py` (values transcribed from FAO-56 Tables 11 and 12), `scripts/build_ndvi.py`, `api/forecast.js`, `api/diagnose.js` and the new screens. Citations were checked against Crossref/DOI records; method checks are in DESIGN.md §14.
+- **AI at runtime (new):** Plant Doctor sends the farmer's 1–3 photos and the farm's NASA POWER weather for the last 14 days to Google Gemini (a current Flash vision model, picked on the server from Google's model list; Flash-Lite as fallback when the newest models are busy). The answer must match a fixed JSON schema; the app shows it with an **AI-generated** chip and a confidence dot, asks for a retake when the photo is unclear, and says "It can be wrong: check the plant yourself before spending money". The API key stays on the server (Vercel environment variable); photos are not stored.
+- **Test images:** the end-to-end test used a real, openly licensed photo: "Northern corn leaf blight.JPG" by Chroanch, Wikimedia Commons, CC BY-SA 4.0 (correct diagnosis: Northern leaf blight, high confidence), and a deliberately blurred copy (answer: retake prompt). Test photos are not shipped in the app.
+- **Forecast and greenness:** numbers come straight from Meteomatics and NASA MODIS (MOD13Q1 via Microsoft Planetary Computer); nothing is estimated by AI.
+- No AI-generated images, audio or video.
+
+## v12 rebuild (14 Nov 2026)
+- **Team decisions:** the app must work for low-literacy farmers (one answer per screen, pictures, icons, Listen; no charts or tables on the main screens), must not pitch itself (no intro slides, hero images, slogans or "then vs now" showcases), and must be rebuilt cleanly rather than patched.
+- **AI-written (Grok Bot):** the new front end (`js/main.js`, `js/data.js`, `js/store.js`, `js/ui.js`, `js/screens/*.js`, `styles.css`, `index.html`, `sw.js`), `scripts/finalize_data.py`, and the Plant Doctor changes in `api/diagnose.js` (fastest model first, short limits, `need_more` field so the AI asks for one named extra photo). The old `app.js`, `icons.js`, `data/climate.json`, `data/locations.json`, `data/calendar.json`, `data/thennow.json`, the hero/market/grain photos and the old build scripts were deleted.
+- **Unchanged:** the methods (`lib/agro.js`), every threshold in `data/rules.json` (new selling defaults are marked `default: true`), and all NASA, FAO and price data. Nothing on screen is estimated by AI except Plant Doctor answers, which say "AI answer" and "can be wrong".
+- **New outside service:** place names for "Use my location" come from OpenStreetMap Nominatim (credited on About).
+- No AI-generated images, audio or video.
+- **v12.1 look (14 Nov 2026):** after team feedback, the AI assistant restyled the screens (photo cards, photo bands, month bars, progress ring). Four more real Wikimedia Commons photos were added (`img/hero.webp`, `field.webp`, `grain.webp`, `market.webp`), credited in `data/credits.json`. No AI-generated images.
+- **v12.2 optional backup (14 Nov 2026):** at the team's request the AI assistant created a free Supabase project (`walo`), the `fields` table, the private `field-photos` bucket and their row-level-security policies, and wrote `js/sync.js`, `js/screens/backup.js` and the store changes. The supabase-js library (MIT) is included as-is in `lib/supabase.js`. It tested the policies with two throwaway users inside a rolled-back transaction, and the sign-in, upload, restore on a second browser and delete end to end. No personal data is processed by AI.
+- **v12.3 Plant Doctor by voice or text (14 Nov 2026):** the AI assistant (Grok Bot) wrote the Take photo / Talk / Type screen (`js/screens/doctor.js`) and the server changes in `api/diagnose.js`. Plant Doctor (Google Gemini) can now answer from the farmer's own words, with or without a photo, together with recent NASA POWER weather; with words only it may ask one short follow-up question. Speech-to-text is done by the phone's browser (Web Speech API), not by Walo's server. Answers stay labelled "AI answer, can be wrong". The photo and words are sent once for the check and are not stored or logged.
+- **v12.4 (14 Nov 2026):** the AI assistant moved Add photo (My farm) and the Start planting photo onto the same photo code as Plant Doctor (`js/photo.js`) and deleted the old photo code.
+- **v12.5 (14 Nov 2026):** after a real-phone test by the team, the AI assistant changed the photo pickers to plain `<label for>` inputs kept in the page, added a small privacy-safe error log (`api/log.js`), removed the weather line from Plant Doctor, and grouped crop lists by when you can plant (the team's idea).
+- **v12.6 (14 Nov 2026):** at the team's request, the AI assistant made Sell open on the farmer's own fields and added "My main crop" (the team's idea), synced through the existing backup.

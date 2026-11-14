@@ -1,0 +1,269 @@
+{
+ "note": "All photos are real photographs from Wikimedia Commons, used under the licence shown. No AI-generated images.",
+ "images": [
+  {
+   "id": "maize",
+   "file": "img/maize.webp",
+   "use": "Maize crop photo",
+   "title": "Checking the corn crop in the field",
+   "author": "Christine Xuereb Seidu",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Checking_the_corn_crop_in_the_field.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "maize-field",
+   "file": "img/maize-field.webp",
+   "use": "Maize field (Check screen)",
+   "title": "Maize Farm in Northern Ghana",
+   "author": "Ibn Shiraz",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Maize_Farm_in_Northern_Ghana.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "cowpea",
+   "file": "img/cowpea.webp",
+   "use": "Cowpea crop photo",
+   "title": "Black eyed cowpea",
+   "author": "Seimawu Sugri Seidu",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Black_eyed_cowpea.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "groundnut",
+   "file": "img/groundnut.webp",
+   "use": "Groundnut crop photo",
+   "title": "Groundnut on the farm",
+   "author": "Anniwinner",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Groundnut_on_the_farm.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "cassava",
+   "file": "img/cassava.webp",
+   "use": "Cassava crop photo",
+   "title": "Cassava April",
+   "author": "Sasu photography",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Cassava_April.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "yam",
+   "file": "img/yam.webp",
+   "use": "Yam crop photo",
+   "title": "Tubers of yam at Sitting",
+   "author": "Dnshitobu",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Tubers_of_yam_at_Sitting.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "sorghum",
+   "file": "img/sorghum.webp",
+   "use": "Sorghum crop photo",
+   "title": "Sorghum plants farm",
+   "author": "Munkaila Sulemana",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Sorghum_plants_farm.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "millet",
+   "file": "img/millet.webp",
+   "use": "Millet crop photo",
+   "title": "Millet Farm In Ghana, Africa",
+   "author": "Scientificmanuel",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Millet_Farm_In_Ghana,_Africa.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "rice",
+   "file": "img/rice.webp",
+   "use": "Rice crop photo",
+   "title": "Rice farm in Nyankpala",
+   "author": "Knowledge and philosophy",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Rice_farm_in_Nyankpala.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "soybean",
+   "file": "img/soybean.webp",
+   "use": "Soybean crop photo",
+   "title": "Soybean Plants in the Field (9624015808)",
+   "author": "United Soybean Board",
+   "license": "CC BY 2.0",
+   "license_url": "https://creativecommons.org/licenses/by/2.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Soybean_Plants_in_the_Field_(9624015808).jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "plantain",
+   "file": "img/plantain.webp",
+   "use": "Plantain crop photo",
+   "title": "Unripped plantain in Ghana",
+   "author": "Edithobayaa1",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Unripped_plantain_in_Ghana.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "cocoyam",
+   "file": "img/cocoyam.webp",
+   "use": "Cocoyam crop photo",
+   "title": "Cocoyam plants 01",
+   "author": "daSupremo",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Cocoyam_plants_01.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "cocoa",
+   "file": "img/cocoa.webp",
+   "use": "Cocoa crop photo",
+   "title": "Cocoa farm 01",
+   "author": "Agoetee 123",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Cocoa_farm_01.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "tomato",
+   "file": "img/tomato.webp",
+   "use": "Tomato crop photo",
+   "title": "Riped Tomatoes",
+   "author": "Abdul-Rauf Moshie",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Riped_Tomatoes.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "pepper",
+   "file": "img/pepper.webp",
+   "use": "Pepper crop photo",
+   "title": "PEPPER FARM IN GHANA",
+   "author": "Abubakar Naziru",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:PEPPER_FARM_IN_GHANA.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "onion",
+   "file": "img/onion.webp",
+   "use": "Onion crop photo",
+   "title": "Onion 0011",
+   "author": "Amuzujoe",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Onion_0011.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "okra",
+   "file": "img/okra.webp",
+   "use": "Okra crop photo",
+   "title": "Okra in Ghana 05",
+   "author": "Pascal Kings",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Okra_in_Ghana_05.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "garden-egg",
+   "file": "img/garden-egg.webp",
+   "use": "Garden Egg crop photo",
+   "title": "Garden egg plant 01",
+   "author": "Colesman25",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Garden_egg_plant_01.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "sweet-potato",
+   "file": "img/sweet-potato.webp",
+   "use": "Sweet Potato crop photo",
+   "title": "Youth in Sweet Potato Farming in Northern Ghana",
+   "author": "Sheihu Salawatia",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Youth_in_Sweet_Potato_Farming_in_Northern_Ghana.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "cashew",
+   "file": "img/cashew.webp",
+   "use": "Cashew crop photo",
+   "title": "A cashew tree in Northern Ghana",
+   "author": "Sir Amugi",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:A_cashew_tree_in_Northern_Ghana.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "hero",
+   "file": "img/hero.webp",
+   "use": "Home photo band: farmer harvesting maize",
+   "title": "Harvest 2",
+   "author": "Wilhelm Nomu Kutah",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Harvest_2.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "field",
+   "file": "img/field.webp",
+   "use": "\"What to plant here\" card and Plant now photo band",
+   "title": "A green maize farm",
+   "author": "Knowledge and philosophy",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:A_green_maize_farm.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "grain",
+   "file": "img/grain.webp",
+   "use": "\"Where my crop grows best\" card",
+   "title": "Maize Farming in Ghana",
+   "author": "Pascal Kings",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Maize_Farming_in_Ghana.jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  },
+  {
+   "id": "market",
+   "file": "img/market.webp",
+   "use": "Sell photo band",
+   "title": "Market Women - Kejetia Market - Kumasi - Ghana (4755543337)",
+   "author": "Adam Jones from Kelowna, BC, Canada",
+   "license": "CC BY-SA 2.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+   "source_url": "https://commons.wikimedia.org/wiki/File:Market_Women_-_Kejetia_Market_-_Kumasi_-_Ghana_(4755543337).jpg",
+   "changes": "Cropped/resized and converted to WebP for the app"
+  }
+ ]
+}

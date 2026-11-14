@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Walo</title>
+  <meta name="description" content="Walo: what to plant, where and when in Ghana, from NASA data for your place. Team Simply Zero, NASA Space Apps 2026.">
+  <meta name="theme-color" content="#1f5c36">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preload" href="fonts/jakarta-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar" id="topbar"></header>
+    <main id="main" tabindex="-1"><p class="loading">Loading…</p></main>
+    <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+  </div>
+  <dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+    <div class="sheet-top"><span class="grab" aria-hidden="true"></span>
+      <div class="sheet-head"><h2 id="sheet-title"></h2><button type="button" class="sheet-x" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    </div>
+    <div class="sheet-body"></div>
+  </dialog>
+  <!-- the one pair of photo inputs (js/photo.js); screens open them with <label for> -->
+  <input type="file" id="walo-camera" class="vh-input" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+  <input type="file" id="walo-gallery" class="vh-input" accept="image/*" tabindex="-1" aria-hidden="true">
+  <script src="lib/agro.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

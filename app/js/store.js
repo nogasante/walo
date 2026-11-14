@@ -1,0 +1,112 @@
+/* Walo state: the chosen place and crop, the farms, and farm photos. Everything stays on this phone
+   (localStorage for small values, IndexedDB for photos). Screens read from here and call the setters.
+   If the farmer turns on backup (js/sync.js), each changed field also gets a time stamp so the newest copy wins. */
+import { CFG, town, crop, crops } from "./data.js";
+import { DAY, today0, iso } from "./util.js";
+
+const get = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } };
+const set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } };
+const listeners = new Set();
+export const subscribe = (fn) => listeners.add(fn);
+const emit = () => listeners.forEach((fn) => fn());
+
+/* ---------- place ---------- */
+export function place() {
+  const id = get("walo.place", null);
+  if (id === "gps") { const g = get("walo.gps", null); if (g && g.agro) return g; }
+  return town(id) || town(CFG().default_place);
+}
+export function setPlace(id) { set("walo.place", id); emit(); }
+export function setGps(p) { set("walo.gps", p); set("walo.place", "gps"); emit(); }
+export const placeLabel = (p) => (p.kind === "gps" ? p.name || "My location" : p.name);
+
+/* ---------- crop ---------- */
+export function cropId() { const id = get("walo.crop", null); return crop(id) ? id : crop(CFG().default_crop) ? CFG().default_crop : crops()[0].id; }
+export function setCrop(id) { if (crop(id)) set("walo.crop", id); }
+
+/* ---------- main crop: the crop this farmer focuses on. A choice made here wins; otherwise ("auto") the crop of most of
+   their fields (real fields before the demo; on a tie the newest field). Sell, Plant Doctor and Crop open on it. ---------- */
+const mainRaw = () => get("walo.main", null); // { crop: id | null (auto), updated }
+export function autoMainCrop() {
+  const all = farms(), real = all.filter((f) => !f.demo), list = real.length ? real : all, n = {};
+  list.forEach((f) => { n[f.crop] = (n[f.crop] || 0) + 1; });
+  return list.reduce((best, f) => (best == null || n[f.crop] > n[best] ? f.crop : best), null);
+}
+export const mainIsAuto = () => { const m = mainRaw(); return !(m && crop(m.crop)); };
+export const mainCrop = () => (mainIsAuto() ? autoMainCrop() : mainRaw().crop);
+export const focusCrop = () => mainCrop() || cropId();
+export function setMainCrop(id) { set("walo.main", { crop: id && crop(id) ? id : null, updated: new Date().toISOString() }); emit(); }
+/* for js/sync.js only */
+export const mainCropRaw = mainRaw;
+export const putMainCropRaw = (m) => { set("walo.main", m); emit(); };
+
+/* ---------- farms ---------- */
+export const farms = () => get("walo.farms", []).filter((f) => crop(f.crop));
+export const farm = (id) => farms().find((f) => f.id === id) || null;
+function saveFarms(list) {
+  if (!set("walo.farms", list)) { alert("Phone storage is full. Remove a field and try again."); return false; }
+  emit(); return true;
+}
+const stamp = () => new Date().toISOString();
+const newUid = () => (crypto.randomUUID ? crypto.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)));
+export function addFarm(f) { const id = Date.now().toString(36); return saveFarms([{ id, uid: newUid(), photos: [], ...f, updated: stamp() }, ...farms()]) ? id : null; }
+export function updateFarm(id, fn) { const all = farms(), f = all.find((x) => x.id === id); if (!f) return false; fn(f); f.updated = stamp(); return saveFarms(all); }
+export function removeFarm(id) {
+  const all = farms(), gone = all.find((f) => f.id === id);
+  ((gone && gone.photos) || []).forEach((ph) => { if (/^idb:/.test(ph.src || "")) delPhoto(ph.src.slice(4)); });
+  if (gone && gone.uid && !gone.demo) set("walo.removed", [...get("walo.removed", []), { uid: gone.uid, at: stamp() }]); // so backup removes it too
+  return saveFarms(all.filter((f) => f.id !== id));
+}
+/* for js/sync.js only: the raw list, a whole-list replace after a download, and the removed-fields list */
+export const allFarmsRaw = () => get("walo.farms", []);
+export const replaceFarms = (list) => saveFarms(list);
+export const removedFarms = () => get("walo.removed", []);
+export const clearRemoved = (uids) => set("walo.removed", get("walo.removed", []).filter((r) => !uids.includes(r.uid)));
+export const ensureUid = (f) => (f.uid ? false : ((f.uid = newUid()), (f.updated = f.updated || stamp()), true));
+/* first open: one demo field (data/app.json demo_farm), clearly tagged "Demo" */
+export function seedDemo() {
+  if (get("walo.seeded", null)) return;
+  set("walo.seeded", 1);
+  if (farms().length) return;
+  const d = CFG().demo_farm, sow = new Date(today0().getTime() - d.days_ago * DAY);
+  set("walo.farms", [{ id: d.id, demo: true, name: d.name, crop: d.crop, date: iso(sow), loc: d.loc,
+    photos: d.photos.map((ph) => ({ src: ph.src, stage: ph.stage, date: iso(new Date(sow.getTime() + ph.day_offset * DAY)) })) }]);
+}
+
+/* ---------- photos: resized JPEG in IndexedDB; a farm keeps "idb:<key>" ---------- */
+let _db;
+function db() {
+  if (!_db) _db = new Promise((res, rej) => {
+    if (!("indexedDB" in window)) { rej(new Error("no IndexedDB")); return; }
+    const r = indexedDB.open("walo", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("photos");
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  });
+  return _db;
+}
+async function tx(mode, fn) {
+  const d = await db();
+  return new Promise((res, rej) => { const t = d.transaction("photos", mode), q = fn(t.objectStore("photos")); t.oncomplete = () => res(q && q.result); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error); });
+}
+const delPhoto = (k) => tx("readwrite", (s) => s.delete(k)).catch(() => {});
+export const getPhotoBlob = (k) => tx("readonly", (s) => s.get(k)).catch(() => null);
+export const putPhotoBlob = (k, blob) => tx("readwrite", (s) => s.put(blob, k));
+const URLS = {};
+export async function photoUrl(src) {
+  if (!/^idb:/.test(src || "")) return src;
+  const k = src.slice(4);
+  if (!URLS[k]) { const b = await tx("readonly", (s) => s.get(k)).catch(() => null); if (b) URLS[k] = URL.createObjectURL(b); }
+  return URLS[k] || "";
+}
+export const photoUrlNow = (src) => (/^idb:/.test(src || "") ? URLS[src.slice(4)] || "" : src);
+/* fill <img data-ph="idb:..."> after render */
+export async function hydrate(root) {
+  for (const el of root.querySelectorAll("img[data-ph]")) { const u = await photoUrl(el.dataset.ph); if (u) el.src = u; }
+}
+/* keep a prepared JPEG (js/photo.js) on the phone; returns "idb:<key>" */
+export async function saveBlob(blob) {
+  const k = "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  await tx("readwrite", (s) => s.put(blob, k));
+  URLS[k] = URL.createObjectURL(blob);
+  return "idb:" + k;
+}

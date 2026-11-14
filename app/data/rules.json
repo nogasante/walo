@@ -1,0 +1,294 @@
+{
+ "_about": "Every decision rule Walo uses, with its source. Crop-specific values live in data/crops.json (eco = FAO EcoCrop, fao56 = FAO-56 Tables 11/12, heat/gdd below). Values marked default:true have no single standard; they are Walo's labelled choice and can be changed here without touching the code.",
+ "sources": {
+  "FAO56": {
+   "title": "Allen, R.G., Pereira, L.S., Raes, D. & Smith, M. (1998). Crop evapotranspiration: guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56. FAO, Rome. Eq. 6 (Penman-Monteith ET0), Eq. 7-13, 21-39; Tables 11 and 12.",
+   "url": "https://www.fao.org/4/x0490e/x0490e00.htm"
+  },
+  "USDA_SCS": {
+   "title": "USDA Soil Conservation Service effective rainfall method as implemented in FAO CROPWAT (Smith 1992, FAO Irrigation and Drainage Paper 46): Peff = P(125 - 0.2P)/125 for P <= 250 mm/month, else 125 + 0.1P.",
+   "url": "https://www.fao.org/land-water/databases-and-software/cropwat/en/"
+  },
+  "FREREPOPOV": {
+   "title": "Frère, M. & Popov, G.F. (1979). Agrometeorological crop monitoring and forecasting. FAO Plant Production and Protection Paper 17. FAO, Rome (Water Requirement Satisfaction Index, WRSI).",
+   "url": "https://openknowledge.fao.org/"
+  },
+  "FAO_AEZ": {
+   "title": "FAO (1978). Report on the Agro-ecological Zones Project, Vol. 1: Methodology and results for Africa. World Soil Resources Report 48 (growing period: months with rain >= 0.5 x potential evapotranspiration).",
+   "url": "https://www.fao.org/4/f2565e/f2565e00.htm"
+  },
+  "SIVAKUMAR88": {
+   "title": "Sivakumar, M.V.K. (1988). Predicting rainy season potential from the onset of rains in Southern Sahelian and Sudanian climatic zones of West Africa. Agricultural and Forest Meteorology 42: 295-305 (onset: >= 20 mm in 3 days, no dry spell > 7 days in the next 30 days).",
+   "url": "https://doi.org/10.1016/0168-1923(88)90039-1"
+  },
+  "STERN82": {
+   "title": "Stern, R.D., Dennett, M.D. & Dale, I.C. (1982). Analysing daily rainfall measurements to give agronomically useful results. I. Direct methods. Experimental Agriculture 18: 223-236 (onset = first date after a fixed start date meeting a rain and dry-spell rule; percentiles across years).",
+   "url": "https://doi.org/10.1017/S001447970001379X"
+  },
+  "ECOCROP": {
+   "title": "FAO EcoCrop database; suitability method of Hijmans et al. (2001) DIVA-GIS and Ramirez-Villegas, Jarvis & Läderach (2013) Agricultural and Forest Meteorology 170: 67-78 (suitability 1 inside the optimum range, falling linearly to 0 at the absolute limits; overall = minimum of temperature and rain suitability).",
+   "url": "https://doi.org/10.1016/j.agrformet.2011.09.005"
+  },
+  "FAO76": {
+   "title": "FAO (1976). A framework for land evaluation. FAO Soils Bulletin 32 (suitability classes S1 highly, S2 moderately, S3 marginally suitable, N not suitable).",
+   "url": "https://www.fao.org/4/x5310e/x5310e00.htm"
+  },
+  "SANCHEZ14": {
+   "title": "Sánchez, B., Rasmussen, A. & Porter, J.R. (2014). Temperatures and the growth and development of maize and rice: a review. Global Change Biology 20: 408-417 (maize and rice: reproductive damage above about 35 °C).",
+   "url": "https://doi.org/10.1111/gcb.12389"
+  },
+  "MCMASTER97": {
+   "title": "McMaster, G.S. & Wilhelm, W.W. (1997). Growing degree-days: one equation, two interpretations. Agricultural and Forest Meteorology 87: 291-300 (GDD = max(0, (Tmax + Tmin)/2 - Tbase); maize Tbase 10 °C with 30 °C upper cut-off).",
+   "url": "https://doi.org/10.1016/S0168-1923(97)00027-0"
+  },
+  "POWER": {
+   "title": "NASA POWER daily API, AG community: PRECTOTCORR, T2M, T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN, 1991-2025.",
+   "url": "https://power.larc.nasa.gov/"
+  },
+  "MODIS": {
+   "title": "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061 (MOD13Q1). NASA EOSDIS Land Processes DAAC. doi:10.5067/MODIS/MOD13Q1.061. Accessed via Microsoft Planetary Computer.",
+   "url": "https://doi.org/10.5067/MODIS/MOD13Q1.061"
+  },
+  "METEOMATICS": {
+   "title": "Meteomatics Weather API, daily precip_24h and t_max_2m_24h, model mix (forecast only; NASA POWER remains the climatology and history).",
+   "url": "https://www.meteomatics.com/en/api/getting-started/"
+  }
+ },
+ "et0": {
+  "method": "FAO-56 Penman-Monteith, daily, from NASA POWER Tmax, Tmin, RH2M, WS2M (2 m), ALLSKY_SFC_SW_DWN; site elevation from POWER",
+  "albedo": 0.23,
+  "source": "FAO56"
+ },
+ "effective_rain": {
+  "method": "USDA_SCS",
+  "source": "USDA_SCS"
+ },
+ "growing_period": {
+  "rain_over_et0_min": 0.5,
+  "source": "FAO_AEZ",
+  "humid_rain_over_et0": 1.0,
+  "humid_note": "Humid period: months where rain exceeds ET0 (FAO AEZ). Used for 'harvest month is usually wet' (drying risk)."
+ },
+ "onset": {
+  "rain_mm": 20,
+  "rain_days": 3,
+  "wet_day_mm": 1,
+  "dry_spell_max_days": 7,
+  "check_days": 30,
+  "source": "SIVAKUMAR88",
+  "percentiles": [
+   20,
+   50,
+   80
+  ],
+  "percentile_source": "STERN82",
+  "major_search": {
+   "from": "03-01",
+   "to": "07-31",
+   "default": true,
+   "note": "No single standard start date for Ghana; Sivakumar (1988) searched from 1 May in the Sahel. Walo starts at 1 March so the forest and transition zones are not missed."
+  },
+  "minor_search": {
+   "from": "08-15",
+   "to": "10-31",
+   "zones": [
+    "F",
+    "T",
+    "C"
+   ],
+   "default": true,
+   "note": "Second (minor) season searched only in the bimodal zones (FAO zone text: forest, transition, coastal savanna)."
+  }
+ },
+ "water": {
+  "soil_store_mm": 100,
+  "store_default": true,
+  "store_note": "Plant-available water in the root zone at sowing is unknown; Walo assumes a 100 mm bucket that starts empty and fills with effective rain (FAO WRSI practice uses soil water-holding capacity; no farm soil test).",
+  "wrsi_classes": [
+   {
+    "min": 80,
+    "label": "Enough rain",
+    "cls": "good"
+   },
+   {
+    "min": 60,
+    "label": "Some water stress",
+    "cls": "wait"
+   },
+   {
+    "min": 50,
+    "label": "Serious water stress",
+    "cls": "bad"
+   },
+   {
+    "min": 0,
+    "label": "Crop likely to fail without water",
+    "cls": "bad"
+   }
+  ],
+  "wrsi_source": "FREREPOPOV",
+  "wrsi_note": "WRSI = 100 x actual / required crop water use over the season. Below 50 is associated with crop failure (Frère & Popov 1979).",
+  "wrsi_dots": [
+   {
+    "min": 80,
+    "dots": 5
+   },
+   {
+    "min": 60,
+    "dots": 4
+   },
+   {
+    "min": 50,
+    "dots": 3
+   },
+   {
+    "min": 0,
+    "dots": 1
+   }
+  ],
+  "wrsi_dots_note": "WRSI mapped to the same dots: >=80 -> 5 (S1), 60-80 -> 4 (S2), 50-60 -> 3 (S3), <50 -> 1 (N). Walo mapping (labelled default).",
+  "wrsi_dots_default": true,
+  "wrsi_max_season_days": 200,
+  "wrsi_max_note": "WRSI was built for rain-fed seasonal crops (cereals, legumes). For longer crops (cassava, plantain) Walo shows the water numbers but does not use them for the class. Labelled default."
+ },
+ "suitability": {
+  "source": "ECOCROP",
+  "classes_source": "FAO76",
+  "classes": [
+   {
+    "min": 0.8,
+    "code": "S1",
+    "label": "Highly suitable",
+    "dots": 5
+   },
+   {
+    "min": 0.6,
+    "code": "S2",
+    "label": "Moderately suitable",
+    "dots": 4
+   },
+   {
+    "min": 0.4,
+    "code": "S3",
+    "label": "Marginally suitable",
+    "dots": 3
+   },
+   {
+    "min": 0.2,
+    "code": "S3-",
+    "label": "Very marginal",
+    "dots": 2
+   },
+   {
+    "min": 0,
+    "code": "N",
+    "label": "Not suitable",
+    "dots": 1
+   }
+  ],
+  "classes_default": true,
+  "classes_note": "FAO (1976) defines the classes but not numeric cut-offs; Walo splits the 0-1 EcoCrop index at 0.8 / 0.6 / 0.4 / 0.2.",
+  "combine": "Shown class = the lower of the EcoCrop class and the FAO-56 water class (WRSI at the usual onset) for seasonal crops with FAO-56 values.",
+  "method": "EcoCrop (Ramirez-Villegas et al. 2013): for each of the 12 possible start months, growing season = round(mean(cycle_days.min, cycle_days.max) / 30) months (max 12). Temperature suitability = lowest monthly value in the season (mean temperature against abs_min, opt_min, opt_max, abs_max, linear in between); the best start month is kept. Rain suitability = the place's annual rain against the EcoCrop rain limits, because the FAO EcoCrop database gives those limits as annual rainfall (deviation from the season-total form; see DESIGN.md Methods). Suitability = temperature x rain.",
+  "rain_basis": "annual"
+ },
+ "heat": {
+  "default_threshold": "eco.temp_c.opt_max",
+  "default_note": "Where no crop-specific critical temperature is cited, Walo uses the top of the crop's EcoCrop optimum temperature range.",
+  "crops": {
+   "maize": {
+    "tmax_c": 35,
+    "stage": "flowering",
+    "source": "SANCHEZ14"
+   },
+   "rice": {
+    "tmax_c": 35,
+    "stage": "flowering",
+    "source": "SANCHEZ14"
+   }
+  },
+  "hot_day_c": 35,
+  "hot_day_note": "Days above 35 °C shown in 'then vs now' and month cards (the maize and rice critical temperature, Sánchez et al. 2014).",
+  "count_thresholds_c": [
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40
+  ],
+  "count_note": "Hot-day counts (days with Tmax above each whole degree) are stored per month so any crop's threshold can be looked up."
+ },
+ "gdd": {
+  "crops": {
+   "maize": {
+    "tbase_c": 10,
+    "tupper_c": 30,
+    "source": "MCMASTER97"
+   }
+  },
+  "default_tbase": "eco.temp_c.abs_min",
+  "default_note": "Other crops: the EcoCrop absolute minimum temperature is used as base temperature (no upper cut-off).",
+  "use": "Farm stage = heat units since sowing (NASA POWER daily when available) / heat units the FAO-56 stage lengths need at that place in a normal year."
+ },
+ "sell": {
+  "rule": "Show 'Harvest & sell' from the start of the FAO-56 late-season stage (heat units). Crops without FAO-56 stages use stages_default.",
+  "source": "FAO56",
+  "store_window_months": {
+   "value": 6,
+   "default": true,
+   "note": "How far after harvest Walo looks for the usual price peak when it says 'store if you can'. Walo default (grain and dried crops keep about this long in a good store)."
+  },
+  "store_gain_min": {
+   "value": 0.1,
+   "default": true,
+   "note": "Walo says 'store if you can' only when the usual price in the best month is at least 10% above the harvest month (WFP seasonal index). Walo default."
+  },
+  "best_guess_months_after_harvest": {
+   "value": 3,
+   "default": true,
+   "note": "Crops with no price series: sell about 3 months after harvest, when stores run low. Walo default, from the usual pattern of crops that do have price data."
+  },
+  "compare_max_km": {
+   "value": 150,
+   "default": true,
+   "note": "Other markets compared with the nearest one only within this straight-line distance. Walo default."
+  },
+  "compare_gain_min": {
+   "value": 0.15,
+   "default": true,
+   "note": "A market is named as 'usually pays more' only if its last-12-months average is at least 15% above the nearest market, same crop and unit. Walo default."
+  }
+ },
+ "season_days_default": {
+  "value": 120,
+  "default": true,
+  "note": "Only for crops with neither a local season length nor an EcoCrop cycle (none at present)."
+ },
+ "stages_default": {
+  "fractions": [
+   0,
+   0.18,
+   0.43,
+   0.8
+  ],
+  "note": "Stage starts (share of the season) for crops without FAO-56 stage lengths (yam, cocoyam, okra, cashew): the mean split of the FAO-56 Table 11 rows Walo uses (initial 18%, development 25%, mid 37%, late 21%).",
+  "source": "FAO56"
+ },
+ "ndvi": {
+  "usual_band": 0.05,
+  "default": true,
+  "note": "NDVI within ±0.05 of the 2016–2025 mean for that month is shown as 'about usual'. Walo default (MODIS NDVI noise is a few hundredths)."
+ }
+}
