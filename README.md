@@ -30,7 +30,7 @@ Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the 
 
 The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it. See [docs/HANDOFF.md](docs/HANDOFF.md).
 
-The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v25`.
+The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v26`.
 
 ## How it works
 
@@ -211,6 +211,7 @@ find app -name '*.js' -print0 | xargs -0 -n1 node --check
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — modules, functions, storage, offline
 - [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md) — which script writes which file, and how to rebuild
 - [docs/METHODS.md](docs/METHODS.md) — onset, FAO-56, heat, growing degree days, suitability
+- [docs/EXPANSION.md](docs/EXPANSION.md) — what a country owns, what is still Ghana-only, and how to add one
 - [docs/HANDOFF.md](docs/HANDOFF.md) — current status, known gaps, how to continue
 - [docs/walo-crops-sources.md](docs/walo-crops-sources.md) — per-crop sources and confidence
 - [app/AI_USE.md](app/AI_USE.md) — what AI wrote, and what it did not

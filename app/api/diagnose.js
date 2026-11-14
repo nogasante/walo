@@ -14,6 +14,7 @@ const RULES = require("../data/rules.json"); // hot-day line shared with the app
 const HOT_C = RULES.heat.hot_day_c;
 const { gemini: geminiCall } = require("./_gemini.js"); // model choice and fallbacks, shared with /api/help
 const { takeAiHit } = require("./_budget.js"); // daily cap shared with /api/help (supabase/schema.sql)
+const { inCountry, countryAt } = require("./_country.js"); // accepted coordinates and the country name come from data/countries.json
 const BUDGET_MS = 38000; // all model attempts together; the phone gives up at 45 s (data/app.json plant_doctor.timeout_ms)
 const MAX_IMAGES = 3, MAX_IMG_B64 = 3_400_000, MAX_TOTAL_B64 = 3_600_000, MAX_WORDS = 600; // one original photo up to ~2.4 MB; all under Vercel's 4.5 MB body limit
 const MIMES = /^image\/(jpeg|png|webp|heic|heif)$/; // types Gemini reads
@@ -102,7 +103,7 @@ function prompt(b, wx, nImg) {
   const said = b.words ? `The farmer says (spoken or typed, may have spelling or speech-to-text mistakes): "${b.words}"` : "";
   const fu = b.followup ? `You asked: "${b.followup.question}". The farmer answered: "${b.followup.answer || "(no answer)"}". Do not ask another question now; give your best answer.` : "";
   const input = nImg && b.words ? "Look at the photos, read what the farmer says" : nImg ? "Look at the photos" : "There is NO photo. Read what the farmer says";
-  return `You are Walo's Plant Doctor, helping a smallholder farmer in Ghana. ${input}, then answer in the JSON schema. The weather below is background only: it cannot show a disease by itself.
+  return `You are Walo's Plant Doctor, helping a smallholder farmer in ${countryAt(b.lat, b.lon).name}. ${input}, then answer in the JSON schema. The weather below is background only: it cannot show a disease by itself.
 ${said}
 ${fu}
 Crop (as told by the farmer): ${b.crop_name}. Place: ${b.place} (${b.lat.toFixed(2)}, ${b.lon.toFixed(2)}).
@@ -168,7 +169,7 @@ module.exports = async (req, res) => {
   // no photo or words are logged: only counts, sizes and types, so failures on real phones can be traced
   console.log(JSON.stringify({ ev: "diagnose", photos: imgs.length, kb: Math.round(total * 0.75 / 1024), types: imgs.map((im) => im.mime || "?"), words: words.length, followup: !!followup }));
   const lat = Number(b.lat), lon = Number(b.lon);
-  if (!(lat >= -5 && lat <= 16 && lon >= -10 && lon <= 6)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
+  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
   // Daily cap across every server instance (supabase/schema.sql -> walo_ai_hit). Null means the SQL is not
   // applied yet, or Supabase is down: the per-IP limit above still applies and Walo keeps answering.
   const budget = await takeAiHit();
@@ -179,7 +180,7 @@ module.exports = async (req, res) => {
   }
   const body = {
     mode: b.mode === "stage" ? "stage" : "doctor", lat, lon,
-    crop_name: String(b.crop_name || b.crop || "crop").slice(0, 40), place: String(b.place || "Ghana").slice(0, 60),
+    crop_name: String(b.crop_name || b.crop || "crop").slice(0, 40), place: String(b.place || countryAt(lat, lon).name).slice(0, 60),
     days_since_sowing: Number.isFinite(+b.days_since_sowing) && b.days_since_sowing !== null ? Math.round(+b.days_since_sowing) : null,
     season_days: Number.isFinite(+b.season_days) ? Math.round(+b.season_days) : null, expected_stage: String(b.expected_stage || "unknown").slice(0, 40),
     words, followup,

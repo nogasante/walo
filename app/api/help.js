@@ -10,6 +10,7 @@
 const HELP = require("../data/help.json");
 const { gemini } = require("./_gemini.js");
 const { takeAiHit } = require("./_budget.js"); // daily cap shared with /api/diagnose (supabase/schema.sql)
+const { defaultCountry } = require("./_country.js"); // the country name comes from data/countries.json
 const MAX_MSG = 8, MAX_CHARS = 600, BUDGET_MS = 20000;
 const RATE = { windowMs: 10 * 60 * 1000, perIp: 20 };
 const hits = new Map();
@@ -49,7 +50,7 @@ module.exports = async (req, res) => {
   }
   const c = b.ctx && typeof b.ctx === "object" ? b.ctx : {};
   const fields = Array.isArray(c.fields) ? c.fields.slice(0, 6).map((f) => `${s(f.crop, 30)} (${s(f.stage, 30)}${f.harvest ? `, harvest ${s(f.harvest, 30)}` : ""})`).join("; ") : "";
-  const text = `You are Walo's helper inside the Walo app, for smallholder farmers in Ghana. Answer the farmer's last message.
+  const text = `You are Walo's helper inside the Walo app, for smallholder farmers in ${defaultCountry().name}. Answer the farmer's last message.
 What Walo is and does:
 - ${HELP.knowledge.join("\n- ")}
 This farmer: place ${s(c.place, 60) || "unknown"}; main crop ${s(c.main_crop, 30) || "not set"}; fields: ${fields || "none yet"}; screen open now: ${s(c.screen, 30) || "unknown"}.

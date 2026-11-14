@@ -34,9 +34,11 @@ Shared modules:
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
 | `js/screens/pickers.js` | Place, crop, and main-crop sheets. |
-| `sw.js` | Cache `walo-v25`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
+| `sw.js` | Cache `walo-v26`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
 
 `data/app.json` holds settings that are not climate, crops, or prices: default place, endpoints, photo size, zone names, the empty support phone, and the Supabase publishable config.
+
+`data/countries.json` holds everything that changes by country: accepted coordinates, currency, the onset search windows, zone names, the map, source labels, and a `status` gate (`live` or `draft`). `js/data.js` reads it on the phone; `api/_country.js` reads the same file on the server, so the AI routes accept exactly the countries the app offers. Adding a country is a data change plus a local review — see [EXPANSION.md](EXPANSION.md).
 
 ## What happens on a decision
 
@@ -78,6 +80,7 @@ All of these are Vercel Node functions. They read secrets from the environment a
 | `api/log.js` | POST | `console.log` of a whitelist of short fields | Body capped at 4 KB |
 | `api/_gemini.js` | shared | Gemini model list and generateContent | Used by diagnose and help. Not a public route worth calling on its own. |
 | `api/_budget.js` | shared | One rpc call to `public.walo_ai_hit()` in Supabase | The daily cap across all instances. The cap is a constant inside the SQL function, never an argument. Returns null when the SQL is not applied or Supabase does not answer; the caller then relies on the per-IP limits only. |
+| `api/_country.js` | shared | `data/countries.json` | Accepted coordinates for forecast and diagnose, and the country name used in the AI prompts. Only countries with `status: "live"` count. |
 
 `vercel.json` gives `diagnose` and `twi` 60 seconds, `help` 30 seconds, and `diagnose` 1024 MB. Forecast and log use the platform default. `/api/diagnose`, `/api/forecast`, `/api/log`, and `/api/help` are sent `Cache-Control: no-store`. Forecast sets its own short public cache when it has a fresh body.
 
@@ -99,7 +102,7 @@ Optional backup, Supabase project `walo`, ref `yceufknddlcrezefaivi`:
 
 ## Offline
 
-The live service worker cache is `walo-v25` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
+The live service worker cache is `walo-v26` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
 
 ## What is not in the running app
 

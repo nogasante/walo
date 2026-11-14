@@ -1,5 +1,5 @@
 /* The two pickers every path uses: place (towns + "Use my location") and crop. Both open as a bottom sheet. */
-import { towns, crops, cropsHere, fetchLive, placeName, nearestTown } from "../data.js";
+import { towns, crops, cropsHere, fetchLive, placeName, nearestTown, inCountry } from "../data.js";
 import { place, setPlace, setGps, placeLabel, mainCrop, mainIsAuto, autoMainCrop, setMainCrop } from "../store.js";
 import { openSheet, closeSheet, icon, cropImg, row } from "../ui.js";
 import { esc } from "../util.js";
@@ -26,6 +26,7 @@ function useGps(b, next) {
   btn.disabled = true; say("Finding you…", true);
   navigator.geolocation.getCurrentPosition(async (pos) => {
     const lat = pos.coords.latitude, lon = pos.coords.longitude, n = nearestTown({ lat, lon });
+    if (!inCountry(lat, lon)) { btn.disabled = false; say("Walo does not cover this place yet. Pick a town below."); return; }
     const name = await placeName(lat, lon);
     say(`Found you${name ? ` near ${esc(name)}` : ""}. Getting NASA weather for this spot…`, true);
     try {

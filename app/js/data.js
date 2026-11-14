@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "crops", "places", "agro", "ndvi", "market", "credits", "ghana-map", "help"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "credits", "ghana-map", "help"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -13,6 +13,21 @@ export async function load() {
 }
 export const CFG = () => D.app;
 export const R = () => D.rules;
+
+/* ---------- country ---------- */
+/* Everything a country changes lives in data/countries.json: which coordinates are accepted, the money on
+   Sell, the rain-season search windows, the zone names and the map. No country name is written in this file. */
+const COUNTRIES = () => D.countries || { default: "GH", countries: {} };
+export const country = (id) => { const c = COUNTRIES(), k = id || c.default; return c.countries[k] ? { id: k, ...c.countries[k] } : null; };
+export const currency = () => { const c = country(); return (c && c.currency && c.currency.code) || ""; };
+export const inCountry = (lat, lon) => Object.values(COUNTRIES().countries).some((c) => c.status === "live" && lat >= c.bbox.lat[0] && lat <= c.bbox.lat[1] && lon >= c.bbox.lon[0] && lon <= c.bbox.lon[1]);
+/* rules.json holds the physical onset rule; the country holds where to look for the season. A southern-hemisphere
+   country points these windows at its own rainy months; nothing else in the method changes. */
+export const onsetRules = () => {
+  const r = R(), o = (country() || {}).onset;
+  if (!o) return r;
+  return { ...r, onset: { ...r.onset, major_search: o.major_search || r.onset.major_search, minor_search: o.minor_search || r.onset.minor_search } };
+};
 
 /* ---------- crops ---------- */
 export const crop = (id) => D.cropList.find((c) => c.id === id);
@@ -27,7 +42,11 @@ export function nearestTown(pt, except) {
 }
 /* zone: the town's FAO zone; a phone location takes the zone of its nearest town. null = outside FAO's zone text (climate only). */
 export const zoneOf = (p) => (p.kind === "gps" ? p.zone : p.zone == null ? null : p.zone);
-export const zoneName = (z) => (z ? CFG().zones[z].name : null);
+export const zoneName = (z) => {
+  if (!z) return null;
+  const cz = (country() || {}).zones;
+  return (cz && cz[z] && cz[z].name) || (CFG().zones[z] && CFG().zones[z].name) || null;
+};
 const baseId = (p) => (p.kind === "gps" ? p.near_id : p.id);
 export function agroOf(p) {
   if (p.agro) return p.agro;
@@ -288,8 +307,8 @@ export async function fetchLive(lat, lon) {
   if (!res.ok) throw new Error("POWER " + res.status);
   const j = await res.json(), P = j.properties.parameter, z = j.geometry.coordinates[2] || 0;
   const days = {}; for (const k of Object.keys(P.PRECTOTCORR)) days[k] = { P: P.PRECTOTCORR[k], tmax: P.T2M_MAX[k], tmin: P.T2M_MIN[k], t: P.T2M[k], rh: P.RH2M[k], ws: P.WS2M[k], rs: P.ALLSKY_SFC_SW_DWN[k] };
-  const n = nearestTown({ lat, lon }), zone = n.t.zone == null ? null : n.t.zone;
-  const agro = { lat, lon, elev_m: Math.round(z), zone, ...A().summarize(days, lat, z, [y0, y1], R(), zone != null && R().onset.minor_search.zones.includes(zone)) };
+  const RR = onsetRules(), n = nearestTown({ lat, lon }), zone = n.t.zone == null ? null : n.t.zone;
+  const agro = { lat, lon, elev_m: Math.round(z), zone, ...A().summarize(days, lat, z, [y0, y1], RR, zone != null && (RR.onset.minor_search.zones || []).includes(zone)) };
   return { id: "gps", kind: "gps", lat, lon, zone, near_id: n.t.id, near_km: Math.round(n.d), agro, fetched: iso(today0()) };
 }
 /* nearest village or town name for a phone location (OpenStreetMap Nominatim, cached) */

@@ -5,13 +5,14 @@
  * source for climatology and history; this is only the short-range forecast layer.
  */
 "use strict";
+const { inCountry } = require("./_country.js"); // accepted coordinates come from data/countries.json
 const DAYS = 10, TTL_S = 10800; // 3 h; Meteomatics free tier: 1000 queries/day
 const mem = new Map();
 
 module.exports = async (req, res) => {
   const send = (code, obj, cache) => { res.statusCode = code; res.setHeader("Content-Type", "application/json; charset=utf-8"); res.setHeader("Cache-Control", cache || "no-store"); res.end(JSON.stringify(obj)); };
   const q = new URL(req.url, "http://x").searchParams, lat = Number(q.get("lat")), lon = Number(q.get("lon"));
-  if (!(lat >= -5 && lat <= 16 && lon >= -10 && lon <= 6)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
+  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
   const user = process.env.METEOMATICS_USER, pass = process.env.METEOMATICS_PASS;
   if (!user || !pass) return send(503, { ok: false, error: "Forecast not set up" });
   const la = lat.toFixed(2), lo = lon.toFixed(2), key = `${la},${lo}`;

@@ -1,5 +1,5 @@
 /* About: what the data is, what Walo cannot do yet, AI use, and credits. Short on purpose. */
-import { D, CFG, crops, crop, isTree } from "../data.js";
+import { D, CFG, crops, crop, country, isTree } from "../data.js";
 import { mainCrop, mainIsAuto } from "../store.js";
 import { openMainCropPicker } from "./pickers.js";
 import { link, icon } from "../ui.js";
@@ -18,7 +18,7 @@ export function render() {
       <li><b>NASA MODIS</b> greenness (NDVI, MOD13Q1), read through ${link(D.ndvi.url, "Microsoft Planetary Computer")}.</li>
       <li><b>${esc(CFG().forecast.label)}</b>: rain forecast for the next 10 days.</li>
       <li><b>Prices</b>: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023; ${link(D.market.srid_source.url, "MoFA SRID")} 2025.</li>
-      <li><b>Crops</b>: FAO crop calendar for Ghana's zones, FAO EcoCrop, FAO-56, and Ghana research (sources below).</li>
+      <li><b>Crops</b>: FAO crop calendar for ${esc((country() || {}).name || "the country")}'s zones, FAO EcoCrop, FAO-56, and local research (sources below).</li>
       <li>${link(CFG().geocode.credit_url, CFG().geocode.credit)}. Map: Natural Earth.</li>
     </ul>
     <h2 class="h2">${icon("info")}What Walo cannot do yet</h2>

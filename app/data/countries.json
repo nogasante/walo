@@ -1,0 +1,47 @@
+{
+  "_about": "Countries Walo runs in. Everything a country changes lives here, so the code contains no country: which coordinates are accepted, the money on Sell, the rain-season search windows, the zone names, the map, the labels on sources. Adding a country is a data change plus a check by someone who farms there — see docs/EXPANSION.md. A country only appears in the app when status is \"live\"; anything half-sourced stays \"draft\" and is never selectable.",
+  "default": "GH",
+  "countries": {
+    "GH": {
+      "name": "Ghana",
+      "status": "live",
+      "checked_by_local": true,
+      "bbox": {
+        "lat": [-5, 16],
+        "lon": [-10, 6],
+        "_note": "Walo deliberately accepts a margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": { "code": "GHS", "name": "cedi" },
+      "language": "en",
+      "map": "ghana-map",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "No single standard start date for Ghana; Sivakumar (1988) searched from 1 May in the Sahel. Walo starts at 1 March so the forest and transition zones are not missed."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": ["F", "T", "C"],
+          "default": true,
+          "note": "Second (minor) season searched only in the bimodal zones (FAO zone text: forest, transition, coastal savanna)."
+        }
+      },
+      "zones": {
+        "_source": "FAO Ghana agro-ecological zones (crop calendar region text)",
+        "F": { "name": "Rain forest zone", "short": "Forest" },
+        "T": { "name": "Transitional zone", "short": "Transition" },
+        "G": { "name": "Guinea savanna zone", "short": "Savanna (north)" },
+        "C": { "name": "Coastal savanna zone", "short": "Coastal savanna" }
+      },
+      "sources": {
+        "crop_calendar": "FAO Ghana crop calendar",
+        "prices": "WFP Ghana food prices",
+        "spot_prices": "MoFA SRID"
+      }
+    }
+  }
+}

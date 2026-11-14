@@ -2,7 +2,7 @@
    For each: when it usually sells best near that field (WFP/HDX price pattern), tied to its harvest, with the data's years and unit.
    "Check another crop" is a small option at the bottom. */
 import { place, placeLabel, farm, farms, setCrop, mainCrop } from "../store.js";
-import { crop, sellAdvice, farmProgress, monthName, D, CFG } from "../data.js";
+import { crop, sellAdvice, farmProgress, monthName, currency, D, CFG } from "../data.js";
 import { answer, whyBody, note, icon, link, cropImg, hero, monthBars, btn, chip } from "../ui.js";
 import { esc, fmt, roughDate } from "../util.js";
 import { sellLine } from "./farm.js";
@@ -20,7 +20,7 @@ export function render(id, farmId) {
 /* one plain summary of the advice for a field (used on the cards) */
 function summary(sa, pr) {
   if (sa.kind === "index") return { line: `Usually best in ${monthName(sa.peak)} at ${mk(sa.market)}`, tone: sa.store ? "wait" : "now", act: sa.store ? `Store if you can: prices rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", data: `Price pattern to ${monthName(+sa.s.last.slice(5, 7))} ${sa.s.last.slice(0, 4)} · per ${esc(sa.unit)}` };
-  if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: GHS ${fmt(sa.spot.lo)}–${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
+  if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: ${currency()} ${fmt(sa.spot.lo)}–${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
   return { line: "No price records yet", tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "Sell when stores run low", data: "" };
 }
 function list(mine) {
@@ -51,7 +51,7 @@ function detail(id, f) {
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else if (sa.kind === "spot") {
     const s = sa.spot;
-    a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: `Only 2025 prices: ${esc(s.market)}${s.km != null ? ` (${fmt(s.km)} km)` : ""}, GHS ${fmt(s.lo)}–${fmt(s.hi)}, unit not given.` };
+    a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: `Only 2025 prices: ${esc(s.market)}${s.km != null ? ` (${fmt(s.km)} km)` : ""}, ${currency()} ${fmt(s.lo)}–${fmt(s.hi)}, unit not given.` };
     dataLine = `No price history for ${esc(c.name.toLowerCase())}, so the month is a best guess.`;
   } else {
     a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price records", sub: `No price records for ${esc(c.name.toLowerCase())} yet.` };
@@ -61,13 +61,13 @@ function detail(id, f) {
   if (sa.kind === "index") {
     const s = sa.s, pct = (m) => Math.round((s.index[m - 1] - 1) * 100);
     det.push(`${esc(sa.market.name)}, ${esc(sa.label)}, ${esc(sa.unit)}: usually ${pct(sa.peak) >= 0 ? "+" : ""}${pct(sa.peak)}% in ${monthName(sa.peak)} and ${pct(sa.dip)}% in ${monthName(sa.dip)} vs the year's average (seasonal index, ${s.index_years} years in ${yrs}).`);
-    det.push(`Last price in the data: ${s.last.replace(/(\d{4})-(\d\d)/, (x, y, mm) => `${monthName(+mm)} ${y}`)}. Last 12 months' average then: GHS ${fmt(s.recent_avg)}.`);
+    det.push(`Last price in the data: ${s.last.replace(/(\d{4})-(\d\d)/, (x, y, mm) => `${monthName(+mm)} ${y}`)}. Last 12 months' average then: ${currency()} ${fmt(s.recent_avg)}.`);
     if (sa.store) det.push(`Harvest month to best month within ${D.rules.sell.store_window_months.value} months: about +${Math.round(sa.store.gain * 100)}% (Walo says "store" from +${Math.round(D.rules.sell.store_gain_min.value * 100)}%).`);
     if (sa.better) det.push(`${esc(sa.better.market.name)} paid about ${Math.round(sa.better.gain * 100)}% more in its last year of data (same crop and ${esc(sa.better.unit)}).`);
     if (s.thin) det.push("Only a few years of data for this market: treat the pattern with care.");
     if (s.n_excluded) det.push(`${s.n_excluded} odd price(s) left out (over 3× the months around them). The raw data is unchanged.`);
   }
-  if (sa.kind === "spot") det.push(`MoFA SRID 2025 (${esc(sa.spot.market)}): ${esc(sa.spot.label)}, GHS ${fmt(sa.spot.lo, 2)}–${fmt(sa.spot.hi, 2)}, June–October 2025. The file has no unit column.`);
+  if (sa.kind === "spot") det.push(`MoFA SRID 2025 (${esc(sa.spot.market)}): ${esc(sa.spot.label)}, ${currency()} ${fmt(sa.spot.lo, 2)}–${fmt(sa.spot.hi, 2)}, June–October 2025. The file has no unit column.`);
   det.push(`Distances are straight-line from ${esc(placeLabel(p))}.`);
   det.push(`Sources: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")} · ${link(D.market.srid_source.url, "MoFA SRID")}`);
   const why = whyBody([

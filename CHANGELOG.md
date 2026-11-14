@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-11-14 — country becomes data
+
+First step toward running outside Ghana. No country names are left in the code that change behaviour;
+Ghana's numbers were copied into the new file unchanged, so its answers are identical. Cache `walo-v26`.
+
+### Added
+
+- `data/countries.json`: accepted coordinates, currency, onset search windows (with hemisphere), zone names, map, source labels, language, and a `status` gate so an unreviewed country can never be selected.
+- `api/_country.js`: the same bbox check for `/api/forecast` and `/api/diagnose`, so the server accepts exactly the countries the app offers.
+- `docs/EXPANSION.md`: what a country owns, what is still Ghana-only, and the three countries worth proving first.
+
+### Changed
+
+- `js/data.js` exposes `country()`, `currency()`, `inCountry()`, `onsetRules()`; `zoneName()` prefers the country's zones.
+- Sell prints the country's currency instead of the `GHS` literal; `js/screens/crop.js` and `about.js` take their labels from the country; Plant Doctor and Get help name the country from the coordinate instead of saying Ghana.
+- `scripts/build_agro.js` reads the country's onset windows, so the data pipeline and the phone cannot disagree.
+- "Use my location" refuses a point outside every supported country with a plain message instead of silently using a Ghanaian town.
+
+### Not changed
+
+- The season windows for a southern-hemisphere country are a config entry now, but no such country exists yet: `crops.json` is still keyed by Ghana's zones, `nearestTown()` still searches every town, and the map is still Ghana's outline. See EXPANSION.md.
+
 ## 2026-11-14 — recover the deployed voice chat into the repo
 
 Production was ahead of this repository. A bot on another computer built the Get help

@@ -114,7 +114,7 @@ async function run() {
     if (reply) replyEn = r2 ? `${r2} (in Twi: ${reply})` : reply;
   }
   const body = {
-    mode: "doctor", crop: c.id, crop_name: c.name, place: p.kind === "gps" ? "the farmer's location, Ghana" : `${p.name}, ${p.region}`, lat: p.lat, lon: p.lon,
+    mode: "doctor", crop: c.id, crop_name: c.name, place: p.kind === "gps" ? "the farmer's location" : `${p.name}, ${p.region}`, lat: p.lat, lon: p.lon,
     days_since_sowing: pr && pr.d >= 0 ? pr.d : null, season_days: pr ? pr.days : c.days_typical || null, expected_stage: pr && pr.si >= 0 ? pr.stages[pr.si].name : "unknown",
     climatology: { month: MONTHS_LONG[m], rain_mm: cl.rain_mm, tmax_c: cl.tmax_c, hot_days: cl.hot ? cl.hot[R().heat.hot_day_c] : null },
     images: S.shots.map((s) => ({ role: s.role, mime: s.mime, data: s.data })),

@@ -61,8 +61,10 @@ api/forecast.js                   Meteomatics 10-day forecast proxy, cached 3 h
 api/twi.js                        GhanaNLP Khaya: translate (v2 en-tw / tw-en), TTS v1 (tw, CDN-cached wav), ASR v3 (twi); limits, timeouts, no content logs
 api/help.js, api/_gemini.js       Get help (Gemini, data/help.json facts); shared Gemini model choice for diagnose + help
 api/_budget.js                    daily AI cap across all instances (public.walo_ai_hit in supabase/schema.sql); falls back to the per-IP limits
-sw.js, manifest.json, icon.svg    offline cache (walo-v25, exactly the shipped files; /api/ never cached; each file cached on its own so one miss cannot break install), Add to Home Screen
+api/_country.js                   accepted coordinates and the country name for the AI prompts, from data/countries.json
+sw.js, manifest.json, icon.svg    offline cache (walo-v26, exactly the shipped files; /api/ never cached; each file cached on its own so one miss cannot break install), Add to Home Screen
 data/app.json                     settings: default place/crop, endpoints, Plant Doctor photo size, demo field, zone names
+data/countries.json               everything that changes by country: bbox, currency, onset windows, zones, map, source labels, status gate
 data/rules.json                   every method threshold + its source
 data/places.json                  17 towns: coordinates, region, FAO zone
 data/agro.json                    NASA POWER daily 1991–2025 summaries per town (ET0, Peff, onset percentiles, hot days)
