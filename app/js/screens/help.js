@@ -1,6 +1,7 @@
 /* Get help: an AI helper first (Gemini on our server, /api/help, knows Walo and this farmer's place, main crop and fields),
    a person second: when the AI is unsure or the farmer asks for a person, Call and WhatsApp to the team's help line
-   (data/app.json support.phone; empty = no person option yet). Talk or type; Listen; Twi when it is on. Nothing is kept on the server. */
+   (data/app.json support.phone; empty = no person option yet). Talk or type; Listen; or a hands-free voice chat (English: the browser listens, the helper answers, the phone speaks it, then listens again).
+   Nothing is kept on the server. */
 import { place, placeLabel, farms, mainCrop } from "../store.js";
 import { crop, farmProgress, CFG, D } from "../data.js";
 import { btn, note, icon, speaker } from "../ui.js";
@@ -10,6 +11,7 @@ import { isTwi, asrReady, status as twiStatus, startRecording, stopRecording, re
 
 const SR = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
 const canTalk = () => (isTwi() ? asrReady() : !!SR);
+const canVoice = () => !!SR && !isTwi() && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
 let S = { msgs: [], draft: "", busy: false, err: "", person: false, listening: false, writing: false, from: "" };
 const SC = () => CFG().support;
 const hasLine = () => !!(SC().phone || SC().whatsapp);
@@ -49,19 +51,98 @@ export function render(from) {
   return `<div class="stack help">
     ${S.msgs.length ? "" : `<div class="card help-intro"><span class="tile-ic talk">${icon("message-circle-question")}</span><div><h1 class="a-title">Ask Walo anything</h1><p class="a-sub">Talk or type your question about your farm or the app. An AI answers first and can be wrong.${hasLine() ? " A person from the team can help too." : ""}</p></div></div>`}
     ${online() ? "" : note("Get help needs internet. You are offline now.", "wifi-off")}
-    <div class="chat" aria-live="polite">${S.msgs.map(bubble).join("")}${S.busy ? `<p class="busy">${icon("loader-circle", "spin")}<span>Thinking…</span></p>` : ""}</div>
+    <div class="chat" aria-live="polite">${S.msgs.map(bubble).join("")}${S.busy && !VC.on ? `<p class="busy">${icon("loader-circle", "spin")}<span>Thinking…</span></p>` : ""}</div>
     ${S.err ? `<p class="alert">${icon("triangle-alert")}<span>${esc(S.err)}</span></p>` : ""}
     ${showPerson ? personBox() : ""}
+    ${VC.on ? voicePanel() : `${canVoice() ? `<button type="button" class="vc-start" id="vc-start" data-net><span class="vc-ic">${icon("mic")}</span><span class="vc-t"><b>Voice chat</b><small>Talk with Walo, no reading. It answers out loud.</small></span></button>` : ""}
     <div class="card stack">
       <label class="field"><span>Your question</span><textarea id="help-words" data-notw rows="2" maxlength="${CFG().plant_doctor.max_words_chars}" placeholder="For example: when should I sell my maize?">${esc(S.draft)}</textarea></label>
       ${S.writing ? `<p class="busy">${icon("loader-circle", "spin")}<span>Writing down your words…</span></p>`
         : canTalk() ? `<button type="button" class="micbtn${S.listening ? " on" : ""}" id="help-mic" data-net>${icon(S.listening ? "square" : "mic")}<span>${S.listening ? "Listening… tap to stop" : isTwi() ? "Tap and talk in Twi" : "Tap and talk"}</span></button>` : ""}
       ${btn("Send", { ic: "send", attrs: `id="help-send" data-net ${S.busy || S.writing ? "disabled" : ""}` })}
-    </div>
+    </div>`}
     ${showPerson || !hasLine() ? "" : `<button type="button" class="linkbtn center" id="help-person">${icon("headset")}<span>Talk to a person</span></button>`}
     ${S.msgs.length ? `<button type="button" class="linkbtn center" id="help-clear">${icon("refresh-cw")}<span>Start again</span></button>` : ""}
   </div>`;
 }
+/* ---------- hands-free voice chat ---------- */
+const VC = { on: false, phase: "", silent: 0, turns: 0, rec: null, timer: 0 };
+const VC_STATE = { listening: ["mic", "Listening…", "Say your question"], thinking: ["loader-circle", "Thinking…", "Walo is finding the answer"], speaking: ["volume-2", "Speaking…", "Walo is answering"], tap: ["mic", "Tap to talk", "Tap the big button, then speak"] };
+export const voiceOn = () => VC.on;
+function voicePanel() {
+  const [ic, t, sub] = VC_STATE[VC.phase] || VC_STATE.listening, tap = VC.phase === "tap";
+  return `<div class="card vc ${VC.phase}" aria-live="polite">
+    <button type="button" class="vc-orb" id="vc-orb" ${tap ? "" : "disabled"} aria-label="${t}">${icon(ic, VC.phase === "thinking" ? "spin" : "")}</button>
+    <p class="vc-state"><b>${t}</b><small>${sub}</small></p>
+    ${btn("Stop voice chat", { kind: "secondary", ic: "square", attrs: 'id="vc-stop"' })}
+  </div>`;
+}
+function vcStop(msg = "") {
+  if (!VC.on && !msg) return;
+  VC.on = false; VC.phase = ""; clearTimeout(VC.timer);
+  if (VC.rec) { const r = VC.rec; VC.rec = null; try { r.abort(); } catch { /* */ } }
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  if (msg) S.err = msg;
+  redraw();
+}
+/* one listening turn; auto=true when Walo starts it by itself (iOS may refuse that and needs a tap) */
+function vcListen(auto) {
+  if (!VC.on) return;
+  if (!online()) return vcStop("Voice chat needs internet. You are offline now.");
+  const me = new SR(); VC.rec = me; me.lang = CFG().plant_doctor.speech_langs[0]; me.interimResults = false; me.continuous = false; me.maxAlternatives = 1;
+  let said = "", err = "";
+  me.onresult = (e) => { said = ""; for (let i = 0; i < e.results.length; i++) said += e.results[i][0].transcript; };
+  me.onerror = (e) => { err = e.error || "error"; };
+  me.onend = () => {
+    if (VC.rec !== me) return; // stopped or replaced
+    VC.rec = null; if (!VC.on) return;
+    if ((err === "not-allowed" || err === "service-not-allowed") && auto && VC.turns > 0) { VC.phase = "tap"; return redraw(); } // auto-start refused: wait for a tap
+    if (err === "not-allowed" || err === "service-not-allowed") return vcStop("Walo cannot use the microphone. Allow it in the browser settings, or type instead.");
+    if (err === "network") return vcStop("Voice chat needs internet. Try again, or type.");
+    if (err && err !== "no-speech" && err !== "aborted") return vcStop("Voice chat did not work. Tap and talk, or type instead.");
+    said = said.trim();
+    if (!said) {
+      VC.silent++;
+      if (VC.silent >= CFG().support.voice.silent_turns) return vcStop("I did not hear you, so I stopped listening. Tap Voice chat when you want to talk again.");
+      return vcListen(true);
+    }
+    VC.silent = 0; VC.turns++; vcAsk(said);
+  };
+  try { me.start(); VC.phase = "listening"; S.err = ""; redraw(); }
+  catch { VC.rec = null; if (auto && VC.turns > 0) { VC.phase = "tap"; redraw(); } else vcStop("Voice chat did not work. Tap and talk, or type instead."); }
+}
+async function vcAsk(text) {
+  VC.phase = "thinking"; S.draft = text; redraw();
+  const before = S.msgs.length;
+  await send();
+  if (!VC.on) return;
+  const ans = S.msgs.slice(before).find((m) => m.role === "walo");
+  if (!ans) return vcSpeak(S.err || "Sorry, I could not answer just now.", () => vcStop(S.err));
+  const lastAi = ans, person = S.person || lastAi.unsure || lastAi.wants_person;
+  const offer = person ? (hasLine() ? " A person from the Walo team can help you. Tap Call or WhatsApp below." : " A help line with a real person is coming soon.") : "";
+  vcSpeak(ans.text + offer, () => vcListen(true));
+}
+/* speak, and only then listen again (never both at once, so Walo does not hear itself) */
+function vcSpeak(text, next) {
+  if (!VC.on) return;
+  VC.phase = "speaking"; redraw();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text); u.lang = "en-GB"; u.rate = 0.95;
+  let done = false; const go = () => { if (done) return; done = true; clearTimeout(VC.timer); if (VC.on) setTimeout(next, CFG().support.voice.gap_ms); };
+  u.onend = go; u.onerror = go;
+  VC.timer = setTimeout(go, CFG().support.voice.max_speak_ms_per_char * text.length + 4000); // some phones never fire onend
+  speechSynthesis.speak(u);
+}
+function vcStart() {
+  if (!online()) return;
+  stopListen(); if ("speechSynthesis" in window) speechSynthesis.cancel();
+  Object.assign(VC, { on: true, phase: "listening", silent: 0, turns: 0 }); S.err = "";
+  vcListen(false); // inside the tap, so the browser allows the microphone
+}
+window.addEventListener("hashchange", () => { if (!location.hash.startsWith("#/help")) vcStop(); });
+addEventListener("offline", () => { if (VC.on) vcStop("Voice chat needs internet. You are offline now."); });
+document.addEventListener("visibilitychange", () => { if (document.hidden && VC.on) vcStop(); });
+
 const redraw = () => { if (location.hash.startsWith("#/help")) document.dispatchEvent(new Event("walo-refresh")); };
 async function send() {
   const text = S.draft.trim(); if (!text) { S.err = "Say or type your question first."; return redraw(); }
@@ -114,5 +195,9 @@ export function mount(root, from, b, rerender) {
   on("#help-send", () => { if (ta) S.draft = ta.value; stopListen(); send(); });
   on("#help-mic", () => { if (ta) S.draft = ta.value; if (S.listening) stopListen(); else listen(); });
   on("#help-person", () => { S.person = true; rerender(); });
-  on("#help-clear", () => { S = { ...S, msgs: [], draft: "", err: "", person: false }; rerender(); });
+  on("#help-clear", () => { vcStop(); S = { ...S, msgs: [], draft: "", err: "", person: false }; rerender(); });
+  if (VC.on) { const p = root.querySelector(".vc"); if (p && p.scrollIntoView) p.scrollIntoView({ block: "nearest" }); }
+  on("#vc-start", vcStart);
+  on("#vc-stop", () => vcStop());
+  on("#vc-orb", () => { if (VC.on && VC.phase === "tap") vcListen(false); });
 }

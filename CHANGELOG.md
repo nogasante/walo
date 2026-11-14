@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-11-14 — recover the deployed voice chat into the repo
+
+Production was ahead of this repository. A bot on another computer built the Get help
+hands-free voice chat and deployed it from that computer with the Vercel CLI, so the
+feature existed only in that build and in that machine's folder. Recovered from the
+live site into the repo, then re-applied the review fixes on top of it.
+
+### Added
+
+- `js/screens/help.js`: hands-free voice chat (one tap listens, the phone speaks the answer, then it listens again), with Stop, silence limits, mic-blocked and offline fallbacks, and an iPhone tap-to-continue path. `voiceOn()` is exported so a re-render does not cut off speech.
+- `data/app.json` → `support.voice` (`silent_turns`, `gap_ms`, `max_speak_ms_per_char`) and the `.vc-*` styles in `styles.css`.
+
+### Changed
+
+- Service worker cache is `walo-v25`: the recovered files changed, so phones on `walo-v24` must drop the old cache.
+- `js/main.js` carries both the voice-chat guard and the newer service-worker update check.
+
+### Not recovered
+
+- The My farm change the other bot described (days since sowing, progress bar, days to harvest on each field card) was never deployed and is not in this repository. `farm.js` and `home.js` here are unchanged, so that work still exists only on that computer.
+
 ## 2026-11-14 — review fixes
 
 Changes after a code and data review. Service worker cache `walo-v23`.

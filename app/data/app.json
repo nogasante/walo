@@ -224,7 +224,13 @@
       "customer care",
       "someone",
       "onipa"
-    ]
+    ],
+    "voice": {
+      "_note": "Hands-free voice chat in Get help: stop after this many silent turns; pause between speaking and listening; safety limit if the phone never says speech ended.",
+      "silent_turns": 2,
+      "gap_ms": 350,
+      "max_speak_ms_per_char": 90
+    }
   },
   "offline": {
     "_note": "What still works without internet (said in the Needs internet sheet).",

@@ -30,7 +30,7 @@ Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the 
 
 The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it. See [docs/HANDOFF.md](docs/HANDOFF.md).
 
-The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v23`.
+The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v25`.
 
 ## How it works
 

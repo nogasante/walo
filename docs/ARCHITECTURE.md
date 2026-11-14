@@ -34,7 +34,7 @@ Shared modules:
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
 | `js/screens/pickers.js` | Place, crop, and main-crop sheets. |
-| `sw.js` | Cache `walo-v23`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
+| `sw.js` | Cache `walo-v25`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
 
 `data/app.json` holds settings that are not climate, crops, or prices: default place, endpoints, photo size, zone names, the empty support phone, and the Supabase publishable config.
 
@@ -99,7 +99,7 @@ Optional backup, Supabase project `walo`, ref `yceufknddlcrezefaivi`:
 
 ## Offline
 
-The live service worker cache is `walo-v23` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
+The live service worker cache is `walo-v25` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
 
 ## What is not in the running app
 

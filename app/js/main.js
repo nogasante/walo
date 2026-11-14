@@ -64,7 +64,8 @@ function render(keepScroll = false) {
   if (busy || !ready) return; busy = true;
   try {
     const y = window.scrollY, r = parse(), rt = ROUTES[r.name];
-    stopSpeaking(); resetSheets();
+    if (!(rt.s === help && help.voiceOn())) stopSpeaking(); // a voice chat keeps talking while its own screen redraws
+    resetSheets();
     const main = document.getElementById("main");
     main.innerHTML = `<div class="screen">${rt.s.render(r.a, r.b)}</div>`;
     document.getElementById("topbar").innerHTML = topbar(r, rt);
