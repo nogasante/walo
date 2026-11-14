@@ -1,7 +1,7 @@
 /* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
 import { load, setForecastListener, CFG } from "./data.js";
-import { place, placeLabel, focusCrop, subscribe, seedDemo, hydrate } from "./store.js";
+import { place, placeLabel, focusCrop, subscribe, seedDemo, hydrate, farms } from "./store.js";
 import { icon, wire, resetSheets, closeSheet, stopSpeaking, openSheet, toast, note } from "./ui.js";
 import { esc } from "./util.js";
 import * as home from "./screens/home.js";
@@ -14,12 +14,14 @@ import * as doctor from "./screens/doctor.js";
 import * as about from "./screens/about.js";
 import * as backup from "./screens/backup.js";
 import * as help from "./screens/help.js";
+import * as welcome from "./screens/welcome.js";
 import { startSync } from "./sync.js";
 import { isTwi, twiOn, setLang, apply as applyLang } from "./twi.js";
 import { openPlacePicker } from "./screens/pickers.js";
 
 /* route -> screen, tab, whether the answer depends on the chosen place */
 const ROUTES = {
+  welcome: { s: welcome, root: true }, // no tab bar: there is nowhere to go until she has a farm
   home: { s: home, tab: "home", root: true, chip: true },
   now: { s: now, tab: "home", chip: true },
   crop: { s: cropScreen, tab: "home", chip: true },
@@ -33,6 +35,8 @@ const ROUTES = {
 };
 const TABS = [["home", "#/", "house", "Home"], ["farm", "#/farm", "sprout", "My farm"], ["sell", null, "tag", "Sell"], ["doctor", null, "stethoscope", "Doctor"]];
 
+/* first run: no place chosen yet, and no real field to read it from. The demo field does not count. */
+const needsSetup = () => { try { return !localStorage.getItem("walo.place") && !farms().some((f) => !f.demo); } catch { return false; } };
 const parse = () => { const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent); return { name: ROUTES[parts[0]] ? parts[0] : "home", a: parts[1], b: parts[2] }; };
 function topbar(r, rt) {
   const farmCtx = (r.name === "sell" && !r.a) || ((r.name === "sell" || r.name === "doctor") && r.b); // the fields' own places, not the chip
@@ -64,12 +68,13 @@ function render(keepScroll = false) {
   if (busy || !ready) return; busy = true;
   try {
     const y = window.scrollY, r = parse(), rt = ROUTES[r.name];
+    if (needsSetup() && r.name !== "welcome" && r.name !== "backup") { location.hash = "#/welcome"; return; }
     if (!(rt.s === help && help.voiceOn())) stopSpeaking(); // a voice chat keeps talking while its own screen redraws
     resetSheets();
     const main = document.getElementById("main");
     main.innerHTML = `<div class="screen">${rt.s.render(r.a, r.b)}</div>`;
     document.getElementById("topbar").innerHTML = topbar(r, rt);
-    document.getElementById("tabbar").innerHTML = tabbar(rt.tab);
+    const tb = document.getElementById("tabbar"); tb.innerHTML = rt.tab ? tabbar(rt.tab) : ""; tb.hidden = !rt.tab; tb.style.display = rt.tab ? "" : "none";
     document.body.dataset.route = r.name;
     document.body.classList.toggle("has-hero", !!main.querySelector(".hero"));
     document.title = `${rt.s.title(r.a, r.b)} · Walo`;

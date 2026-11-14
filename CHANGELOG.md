@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-11-14 — first run, a real sign-in door, and looking stops moving the farm
+
+Cache `walo-v28`.
+
+### Added
+
+- **First run** (`#/welcome`, `js/screens/welcome.js`): one screen asking *where is your farm*, then *what do you mainly grow*, with **Use my location** and a town list. No town is chosen for her. It only appears when no place has ever been chosen and there is no real field to read one from — an existing farmer never sees it.
+- **Sign-in door**: the backup screen is now **"Sign in or back up"**, and the first-run screen links to it, so a farmer with a new phone can find her way back to her fields. Nothing was added to accounts: it is still an email plus a one-time code, and it is still optional.
+
+### Changed
+
+- Tapping a town in *Where my crop grows best* used to call `setPlace()` — browsing moved her farm. It now shows that town's answer inside the sheet, with **Make this my farm** as the only thing that changes anything.
+- The backup card on My farm reads **"Sign in or back up — your email is enough, no password"**.
+
+### Not changed
+
+- `farmPlace()` already kept a GPS field's own `place`, so a GPS farm was never turned into Ejura; the fallback only touches fields with no location at all. The remaining Ejura default in `store.place()` is now unreachable for a real farmer, because first run always sets a place.
+
 ## 2026-11-14 — country becomes data
 
 First step toward running outside Ghana. No country names are left in the code that change behaviour;

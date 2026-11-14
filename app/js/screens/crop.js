@@ -1,7 +1,7 @@
 /* Crop answer: can I plant this crop here, and when. "Where else" shows the best towns for it. */
 import { twiOn } from "../twi.js";
 import { place, placeLabel, setPlace, setCrop, focusCrop } from "../store.js";
-import { crop, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor } from "../data.js";
+import { crop, town, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor } from "../data.js";
 import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts } from "../ui.js";
 import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText } from "../util.js";
 import { rainDetails, rainStrip } from "./words.js";
@@ -64,6 +64,23 @@ function whereSheet(c) {
   const top = list.filter((x) => x.listed).slice(0, 6);
   const html = `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>
     <div class="list">${top.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: fitWord(x.sc).text, status: x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad" })).join("")}</div>
-    <p class="muted small">Tap a town to see ${esc(c.name.toLowerCase())} there. Based on NASA weather and FAO methods.</p>`;
-  return { title: `Where ${c.name.toLowerCase()} grows best`, html, onOpen: (b) => b.addEventListener("click", (e) => { const t = e.target.closest("[data-town]"); if (t) { setPlace(t.dataset.town); closeSheet(true); location.hash = `#/crop/${c.id}`; } }) };
+    <p class="muted small">Tap a town to see how it does there. Your farm does not change.</p>`;
+  /* tapping a town only looks at it. Her farm changes on "Make this my farm", and nowhere else. */
+  const detail = (id) => {
+    const p = town(id); if (!p) return html;
+    const sc = scoreCrop(c, p), st = plantStatus(c, p), isCur = p.id === cur.id;
+    return `<div class="stack">
+      <p class="list-h">${esc(p.name)}${isCur ? " · your farm" : ""}</p>
+      ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.`, credit: "NASA data" })}
+      ${isCur ? "" : btn("Make this my farm", { ic: "map-pin", attrs: `data-makefarm="${p.id}"` })}
+      ${btn("Back to the map", { kind: "secondary", attrs: "data-backmap" })}
+    </div>`;
+  };
+  return { title: `Where ${c.name.toLowerCase()} grows best`, html, onOpen: (b) => b.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-town]");
+    if (t) { b.innerHTML = detail(t.dataset.town); return; }
+    const mk = e.target.closest("[data-makefarm]");
+    if (mk) { setPlace(mk.dataset.makefarm); closeSheet(true); location.hash = `#/crop/${c.id}`; return; }
+    if (e.target.closest("[data-backmap]")) b.innerHTML = html;
+  }) };
 }

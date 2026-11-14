@@ -7,7 +7,7 @@ import { esc, fmt, roughDate, dayMonth, iso, today0, fromIso, MONTHS_LONG } from
 import { fieldCard } from "./home.js";
 import { hasSession } from "../sync.js";
 /* small, optional: back up fields so they follow the farmer to a new phone */
-export const backupLink = () => `<a class="sellcard" href="#/backup"><span class="tile-ic photo">${icon(hasSession() ? "cloud-check" : "cloud-upload")}</span><span>${hasSession() ? "Fields backed up" : "Back up my fields"}<small>${hasSession() ? "They come back on a new phone" : "So they come back on a new phone"}</small></span>${icon("chevron-right")}</a>`;
+export const backupLink = () => `<a class="sellcard" href="#/backup"><span class="tile-ic photo">${icon(hasSession() ? "cloud-check" : "cloud-upload")}</span><span>${hasSession() ? "Fields backed up" : "Sign in or back up"}<small>${hasSession() ? "They come back on a new phone" : "Your email is enough — no password"}</small></span>${icon("chevron-right")}</a>`;
 
 export const title = (id) => { const f = id && farm(id); return f ? f.name : farms().length === 1 ? farms()[0].name : "My fields"; };
 export function render(id) {

@@ -6,7 +6,7 @@ import { esc, dayMonth } from "../util.js";
 import { sb, sendCode, checkCode, signOut, syncNow, takeLinkError, currentUser, hasSession, lastSync, isBusy, onSyncChange } from "../sync.js";
 
 let S = { step: "email", email: "", err: "", wait: false, ready: false };
-export const title = () => "Back up my fields";
+export const title = () => "Sign in or back up";
 onSyncChange(() => { if (location.hash.startsWith("#/backup")) document.dispatchEvent(new Event("walo-refresh")); });
 const head = (ic, tone, t, sub) => `<article class="answer ${tone}"><div class="a-top"><span class="a-ic">${icon(ic)}</span></div><h1 class="a-title">${t}</h1><p class="a-sub">${sub}</p></article>`;
 export function render() {
@@ -37,7 +37,7 @@ export function render() {
     </div>`;
   }
   return `<div class="stack">
-    ${head("cloud-upload", "info", "Back up my fields", "Your fields stay on this phone. Add your email so they also come back if you change or lose your phone.")}
+    ${head("cloud-upload", "info", "Sign in or back up", "Used Walo before? Sign in with the same email and your fields come back. New here? Add your email so your fields come back if you change or lose this phone.")}
     ${err}
     <form class="card stack" id="bk-email-form" novalidate>
       <label class="field">Your email<input id="bk-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" value="${esc(S.email)}" required></label>

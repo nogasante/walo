@@ -8,6 +8,7 @@ Walo is a phone-first static site plus a few serverless functions. There is no f
 
 | Hash | Screen module | Tab |
 | --- | --- | --- |
+| `#/welcome` | `js/screens/welcome.js` | — (first run only) |
 | `#/` | `js/screens/home.js` | Home |
 | `#/now` | `js/screens/now.js` | Home |
 | `#/crop/<id>` | `js/screens/crop.js` | Home |
@@ -34,7 +35,8 @@ Shared modules:
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
 | `js/screens/pickers.js` | Place, crop, and main-crop sheets. |
-| `sw.js` | Cache `walo-v26`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
+| `js/screens/welcome.js` | First run: where the farm is, then the main crop. Shown only while no place has ever been chosen and no real field exists, so a returning farmer never sees it. |
+| `sw.js` | Cache `walo-v28`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
 
 `data/app.json` holds settings that are not climate, crops, or prices: default place, endpoints, photo size, zone names, the empty support phone, and the Supabase publishable config.
 
