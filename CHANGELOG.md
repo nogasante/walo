@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-11-14 — tier 1: the answer becomes a season
+
+Cache `walo-v33`. Advice stopped being a leaflet.
+
+### Added
+
+- **Rain at this field.** The POWER call that already fetched temperatures now also asks for `PRECTOTCORR`, so the field page says *"81 mm since planting · 4 mm in the last 7 days (NASA POWER)"*. One request per field per day, cached on the phone; the day it covers is printed so old numbers cannot pass as new.
+- **Weather-timed actions** (`js/tips.js`): fertiliser before rain, don't spray ahead of heavy rain, water in a dry spell, harvest or cover before rain. Two at most, and **nothing at all when there is no forecast** — a guess about rain is worse than silence.
+- **The season as a calendar file** (`js/calendar.js`): the crop's own stages and harvest as `.ics` events with a 12-hour alarm. A phone calendar rings offline, which is the only reminder a static app can honestly promise (Web Push would need a server).
+- **The handoff**: Home's main-crop card now opens the start-a-field flow when she has no field for it, so *"Your maize · Plant in May"* leads somewhere instead of to another page to read.
+
+### Not changed
+
+- The 10-day forecast is still ours via `/api/forecast` (Meteomatics key server-side). No new keys, no new services.
+
 ## 2026-11-14 — walked it as a new farmer
 
 Cache `walo-v31`. Three things only showed up by using the app as someone who has never seen it.

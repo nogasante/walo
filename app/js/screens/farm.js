@@ -76,7 +76,7 @@ function farmView(f, many) {
     ${task ? `<div class="task">${icon("circle-check")}<div><small>Today</small><b>${esc(task)}</b></div></div>` : ""}
     ${al ? `<p class="alert">${icon(al.icon)}<span>${ALERT[al.kind]()}</span></p>` : ""}
     ${tips.map((t) => `<div class="task">${icon(t.ic)}<div><small>${esc(t.k)}</small><b>${esc(t.text)}</b></div></div>`).join("")}
-    ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days <small>(NASA POWER)</small></b></div></div>` : ""}
+    ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days <small>(NASA POWER${rain.last ? `, to ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}` : ""})</small></b></div></div>` : ""}
     ${pr.late || pr.frac >= 1 ? `<a class="sellcard" href="#/sell/${c.id}/${esc(f.id)}"><span class="tile-ic sell">${icon("tag")}</span><span>${esc(sellLine(sa, pr))}</span>${icon("chevron-right")}</a>` : ""}
     ${addState(f)}
     <div class="actions3">

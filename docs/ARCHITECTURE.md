@@ -35,8 +35,10 @@ Shared modules:
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
 | `js/screens/pickers.js` | Place, crop, and main-crop sheets. |
+| `js/tips.js` | Weather-timed actions for a planted field (fertiliser before rain, no spraying ahead of heavy rain, dry-spell watering, harvest window). Silent when there is no forecast. |
+| `js/calendar.js` | The season as an `.ics` file: the crop's own stages and harvest, so the phone's calendar can ring offline. |
 | `js/screens/welcome.js` | First run: two doors (I have a farm / I want to plant a crop) and the one question each needs. Shown only while no place has ever been chosen and no real field exists, so a returning farmer never sees it. |
-| `sw.js` | Cache `walo-v31`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
+| `sw.js` | Cache `walo-v33`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
 
 `data/app.json` holds settings that are not climate, crops, or prices: default place, endpoints, photo size, zone names, the empty support phone, and the Supabase publishable config.
 
