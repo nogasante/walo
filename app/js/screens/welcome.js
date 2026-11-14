@@ -1,18 +1,21 @@
-/* First run: the two questions Walo exists to answer, then the one thing it needs to answer them.
-   Door 1: I have a farm — what can I grow there?  Door 2: I want to plant a crop — where should I plant it?
+/* First run: the two questions Walo exists to answer, then the answer to the one she picked.
+   Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
+   Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
-import { towns, crops, cropsHere, fetchLive, placeName, nearestTown, inCountry } from "../data.js";
+import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto } from "../store.js";
 import { btn, icon, note, row, cropImg } from "../ui.js";
+import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
 
-/* step: "doors" | "place" | "crop".  order: which of the two she picked first. */
+/* step: "doors" | "place" | "crop" | "places".  order: which of the two she picked first. */
 let W = { step: "doors", order: "place", crop: null };
 export const title = () => "Welcome";
 
 export function render() {
   if (W.step === "doors") return doors();
   if (W.step === "place") return placeStep();
+  if (W.step === "places") return placesStep();
   return cropStep();
 }
 
@@ -29,10 +32,9 @@ function doors() {
 
 function placeStep() {
   const list = towns().slice().sort((a, b) => a.name.localeCompare(b.name));
-  const forCrop = W.order === "crop" && W.crop;
   return `<div class="stack">
-    <h1 class="q">${forCrop ? "Where are you planting?" : "Where is your farm?"}</h1>
-    ${note(forCrop ? `Walo will show you ${esc(W.crop)} where you are, and better places for it.` : "Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
+    <h1 class="q">Where is your farm?</h1>
+    ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
     <p class="gps-msg" id="w-msg" aria-live="polite"></p>
     <p class="list-h">Or pick the town nearest your farm</p>
@@ -41,50 +43,60 @@ function placeStep() {
 }
 
 function cropStep() {
-  const here = new Set(cropsHere(place()).map((c) => c.id));
-  const list = crops().slice().sort((a, b) => here.has(b.id) - here.has(a.id) || a.name.localeCompare(b.name));
-  const cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
   const asking = W.order === "crop";
+  const here = new Set(cropsHere(place()).map((c) => c.id));
+  // door 1: the crops that do well here come first. Door 2: she already knows the crop, so keep it A-Z.
+  const list = crops().slice().sort((a, b) => (asking ? 0 : here.has(b.id) - here.has(a.id)) || a.name.localeCompare(b.name));
+  const cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
   return `<div class="stack">
     <h1 class="q">${asking ? "Which crop do you want to plant?" : `What can you grow in ${esc(placeLabel(place()))}?`}</h1>
     ${note(asking ? "Walo will show you where it does best." : "The crops that do well here come first. Pick the one you grow.", "sprout")}
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
-    ${btn("I grow more than one", { kind: "secondary", attrs: "data-later" })}
+    ${asking ? "" : btn("I grow more than one", { kind: "secondary", attrs: "data-later" })}
     ${note("Sell, Plant Doctor and crop pages open on this crop. You can change it later.")}
   </div>`;
 }
 
-/* after she answers both questions, land where her question started */
-const finish = (id) => {
-  if (W.order === "crop" && id) location.hash = `#/crop/${id}/where`; // her crop, and the best places for it
-  else location.hash = "#/";
-};
+/* door 2's answer: the places that suit the crop, and nothing asked of her */
+function placesStep() {
+  const c = crop(W.crop);
+  if (!c) { W.step = "doors"; return doors(); }
+  return `<div class="stack">
+    <h1 class="q">Where should you plant ${esc(c.name.toLowerCase())}?</h1>
+    ${placesHtml(c, "Tap the town where you will plant it.")}
+    ${btn("Choose another crop", { kind: "secondary", attrs: "data-back" })}
+  </div>`;
+}
 
 export function mount(root) {
   root.addEventListener("click", (e) => {
     const door = e.target.closest("[data-door]");
-    if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : "place"; document.dispatchEvent(new Event("walo-refresh")); return; }
+    if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : "place"; refresh(); return; }
+    if (e.target.closest("[data-back]")) { W.step = "crop"; W.crop = null; refresh(); return; }
     const t = e.target.closest("[data-town]");
     if (t) { choosePlace(t.dataset.town); return; }
     const c = e.target.closest("[data-crop]");
     if (c) { chooseCrop(c.dataset.crop); return; }
-    if (e.target.closest("[data-later]")) { setMainCrop(null); finish(null); return; }
+    if (e.target.closest("[data-later]")) { setMainCrop(null); location.hash = "#/"; return; }
     if (e.target.closest("#w-gps")) useGps(root);
   });
 }
 
-/* chose a crop */
+const refresh = () => document.dispatchEvent(new Event("walo-refresh"));
+
+/* chose a crop: door 1 goes on to ask the place; door 2 gets its answer straight away */
 function chooseCrop(id) {
   setMainCrop(id);
-  if (W.order === "crop") { W.crop = id; W.step = "place"; }
-  else finish(id);
-  document.dispatchEvent(new Event("walo-refresh"));
+  W.crop = id;
+  if (W.order === "crop") W.step = "places";
+  else { W.step = "doors"; location.hash = "#/"; return; }
+  refresh();
 }
 /* chose a town */
 function choosePlace(id) {
   setPlace(id);
-  if (W.order === "crop") { W.step = "doors"; finish(W.crop); }
-  else { W.step = "crop"; document.dispatchEvent(new Event("walo-refresh")); }
+  if (W.order === "crop") { W.step = "doors"; location.hash = `#/crop/${W.crop}`; }
+  else { W.step = "crop"; refresh(); }
 }
 
 /* same rules as the place picker: only inside a country Walo covers, and NASA must answer */
@@ -102,8 +114,7 @@ function useGps(root) {
       const live = await fetchLive(lat, lon);
       live.name = name || `Near ${nearestTown({ lat, lon }).t.name}`;
       setGps(live);
-      if (W.order === "crop") { W.step = "doors"; finish(W.crop); }
-      else { W.step = "crop"; document.dispatchEvent(new Event("walo-refresh")); }
+      W.step = "crop"; refresh();
     } catch {
       b.disabled = false; say("Could not reach NASA right now. Pick a town below.");
     }

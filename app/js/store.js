@@ -19,6 +19,8 @@ export function place() {
 export function setPlace(id) { set("walo.place", id); emit(); }
 export function setGps(p) { set("walo.gps", p); set("walo.place", "gps"); emit(); }
 export const placeLabel = (p) => (p.kind === "gps" ? p.name || "My location" : p.name);
+/* has she actually chosen a place? Before that, place() is only the demo default and must not look like hers. */
+export const placeChosen = () => !!get("walo.place", null);
 
 /* ---------- crop ---------- */
 export function cropId() { const id = get("walo.crop", null); return crop(id) ? id : crop(CFG().default_crop) ? CFG().default_crop : crops()[0].id; }
