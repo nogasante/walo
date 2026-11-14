@@ -76,7 +76,6 @@ export function wire() {
     const s = e.target.closest("[data-say]"); if (s) { e.stopPropagation(); e.preventDefault(); speak(s); return; }
     const b = e.target.closest("[data-sheet]"); if (b) { e.preventDefault(); openSheet(b.dataset.sheet, b); }
   });
-  document.addEventListener("keydown", (e) => { const b = e.target.closest && e.target.closest("[data-sheet][role=button]"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSheet(b.dataset.sheet, b); } });
 }
 
 /* ---------- building blocks ---------- */
@@ -84,12 +83,15 @@ const CREDIT_ICON = { "AI answer": "sparkles", "Price data": "tag", "On this pho
 /* the answer: one icon, one plain line, an optional second line, a quiet source line. Tap = the "Why?" sheet. */
 export function answer({ kind = "info", icon: ic, badge = "", title, sub = "", extra = "", credit = "NASA data", why = null, say = "", tone }) {
   const [i, t] = STATUS[kind] || STATUS.info, sid = why ? sheet(why.title || "Why?", why.html) : null;
-  return `<article class="answer ${tone || t}" ${sid ? `data-sheet="${sid}" role="button" tabindex="0" aria-label="${esc(title)}. Tap for why."` : ""}>
+  // The card stays tappable for sighted users (data-sheet), but it is deliberately NOT a button: the
+  // "Why?" control below is a real <button>, so TalkBack and VoiceOver get one focusable control
+  // instead of a button nested inside a role="button" card.
+  return `<article class="answer ${tone || t}" ${sid ? `data-sheet="${sid}"` : ""}>
     <div class="a-top">${badge || `<span class="a-ic">${icon(ic || i)}</span>`}${say ? speaker(say) : ""}</div>
     <h1 class="a-title">${title}</h1>
     ${sub ? `<p class="a-sub">${sub}</p>` : ""}
     ${extra}
-    <p class="a-foot"><span class="credit">${icon(CREDIT_ICON[credit] || "satellite")}${esc(credit)}</span>${sid ? `<span class="why-link">Why?${icon("chevron-right")}</span>` : ""}</p>
+    <p class="a-foot"><span class="credit">${icon(CREDIT_ICON[credit] || "satellite")}${esc(credit)}</span>${sid ? `<button type="button" class="why-link" data-sheet="${sid}">Why?${icon("chevron-right")}</button>` : ""}</p>
   </article>`;
 }
 /* inside a Why? sheet: 1-3 plain sentences, then numbers and sources folded under Details */

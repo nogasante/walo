@@ -56,7 +56,7 @@ main { padding: var(--sp) var(--sp) calc(var(--tabs) + env(safe-area-inset-botto
 /* ---------- the answer card ---------- */
 /* status shows in the round icon badge and chips only: no side stripes on cards */
 .answer { position: relative; display: flex; flex-direction: column; gap: 6px; padding: var(--sp); border-radius: 18px; background: var(--surface); border: 1px solid rgba(20, 40, 25, .06); box-shadow: var(--shadow-2); cursor: default; }
-.answer[role=button] { cursor: pointer; }
+.answer[data-sheet] { cursor: pointer; }
 .a-top { display: flex; align-items: center; justify-content: space-between; }
 .a-ic { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--info-bg); color: var(--info); }
 .good .a-ic { background: var(--good-bg); color: var(--good); } .wait .a-ic { background: var(--wait-bg); color: var(--wait); } .bad .a-ic { background: var(--bad-bg); color: var(--bad); }
@@ -65,7 +65,7 @@ main { padding: var(--sp) var(--sp) calc(var(--tabs) + env(safe-area-inset-botto
 .a-sub { color: var(--ink); }
 .a-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-s); margin-top: 4px; font-size: var(--fs-xs); color: var(--muted); }
 .credit { display: inline-flex; align-items: center; gap: 6px; } .credit .ic { width: 16px; height: 16px; }
-.why-link { display: inline-flex; align-items: center; min-height: 32px; font-weight: 700; color: var(--brand); font-size: var(--fs-s); }
+.why-link { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; padding: 0 4px; border: 0; background: none; font: inherit; font-weight: 700; color: var(--brand); font-size: var(--fs-s); cursor: pointer; }
 .why-link .ic { width: 18px; height: 18px; }
 .say { display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--fs-s); font-weight: 600; color: var(--brand); cursor: pointer; }
 .say .ic { width: 20px; height: 20px; } .say.on { background: var(--brand); color: #fff; border-color: var(--brand); }

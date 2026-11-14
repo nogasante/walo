@@ -34,7 +34,7 @@ Shared modules:
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
 | `js/screens/pickers.js` | Place, crop, and main-crop sheets. |
-| `sw.js` | Cache `walo-v21`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. |
+| `sw.js` | Cache `walo-v23`. Code and JSON are network-first. Photos and the font are cache-first. `/api/` is never cached. Install caches each file on its own, so one missing file can no longer fail the whole install; failures are reported to `/api/log` as `sw_missing`. |
 
 `data/app.json` holds settings that are not climate, crops, or prices: default place, endpoints, photo size, zone names, the empty support phone, and the Supabase publishable config.
 
@@ -61,7 +61,7 @@ Saved towns (17 of them, in `data/places.json`) use the precomputed NASA POWER s
 
 Sell reads `data/market.json`: a seasonal index (month price divided by that year’s average, averaged over 2015–2023) for the nearest of 20 WFP markets, plus MoFA SRID 2025 rows for Techiman. The advice for a field starts from that field’s harvest date.
 
-Plant Doctor posts up to three photos and/or the farmer’s words to `/api/diagnose`. The function also fetches the last valid 14 days of NASA POWER for that point and passes them to Gemini as background. The phone shows the model’s JSON, labelled as an AI answer. Diagnose and Get help share `api/_gemini.js` for model choice.
+Plant Doctor posts up to three photos and/or the farmer’s words to `/api/diagnose`. The function also fetches the last valid 14 days of NASA POWER for that point and passes them to Gemini as background. The phone shows the model’s JSON, labelled as an AI answer. Diagnose and Get help share `api/_gemini.js` for model choice and `api/_budget.js` for the daily cap on AI calls.
 
 Get help (`#/help`) posts the last few messages and a short farm context (place, main crop, fields) to `/api/help`. The model is limited to the facts in `data/help.json`, which the browser already loaded. When the model is unsure, or the farmer asks for a person, the screen offers `tel:` and `wa.me` links built from `data/app.json` → `support.phone` and `support.whatsapp`. Both are empty, so the screen says a help line is coming soon. The server does not store the chat. WhatsApp text is filled in on the phone only.
 
@@ -71,12 +71,13 @@ All of these are Vercel Node functions. They read secrets from the environment a
 
 | File | Method | Calls | Limit |
 | --- | --- | --- | --- |
-| `api/diagnose.js` | POST | Gemini, NASA POWER daily | 8 checks / 10 min / IP, 38 s model budget, phone gives up at 45 s |
+| `api/diagnose.js` | POST | Gemini, NASA POWER daily, the shared AI budget | 8 checks / 10 min / IP, plus the daily cap, 38 s model budget, phone gives up at 45 s |
 | `api/forecast.js` | GET `lat`, `lon` | Meteomatics `precip_24h` and `t_max_2m_24h`, model mix | Response cached 3 hours. Ghana box only: lat −5..16, lon −10..6 |
-| `api/help.js` | POST | Gemini, with `data/help.json` in the prompt | 20 / 10 min / IP |
+| `api/help.js` | POST | Gemini, with `data/help.json` in the prompt, the shared AI budget | 20 / 10 min / IP, plus the daily cap |
 | `api/twi.js` | GET `status`, `tts`; POST `translate`, `asr` | Returns **404** while `languages.enabled` does not include `"tw"`. When it is on: GhanaNLP Khaya translate v2 (`en-tw` / `tw-en`), TTS v1, ASR v3. `KHAYA_API_KEY` stays on the server. A 403 or 429 backs off. Nothing the farmer typed or said is logged. |
 | `api/log.js` | POST | `console.log` of a whitelist of short fields | Body capped at 4 KB |
 | `api/_gemini.js` | shared | Gemini model list and generateContent | Used by diagnose and help. Not a public route worth calling on its own. |
+| `api/_budget.js` | shared | One rpc call to `public.walo_ai_hit()` in Supabase | The daily cap across all instances. The cap is a constant inside the SQL function, never an argument. Returns null when the SQL is not applied or Supabase does not answer; the caller then relies on the per-IP limits only. |
 
 `vercel.json` gives `diagnose` and `twi` 60 seconds, `help` 30 seconds, and `diagnose` 1024 MB. Forecast and log use the platform default. `/api/diagnose`, `/api/forecast`, `/api/log`, and `/api/help` are sent `Cache-Control: no-store`. Forecast sets its own short public cache when it has a fresh body.
 
@@ -98,7 +99,7 @@ Optional backup, Supabase project `walo`, ref `yceufknddlcrezefaivi`:
 
 ## Offline
 
-The live service worker cache is `walo-v22` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
+The live service worker cache is `walo-v23` (deployment `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `data/i18n-tw.json` is kept in the repo and is not in the precache while Twi is off. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
 
 ## What is not in the running app
 

@@ -30,7 +30,7 @@ Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the 
 
 The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it. See [docs/HANDOFF.md](docs/HANDOFF.md).
 
-The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v22`.
+The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v23`.
 
 ## How it works
 
@@ -135,6 +135,7 @@ app/                  Vercel root. The running app.
   DESIGN.md           Design record and the methods chapter
 proof/                Stdlib NASA POWER proof script
 presentation/         Check-in deck (walo-checkin-v2.pptx)
+supabase/schema.sql   Table, row-level security, photo bucket, and the daily AI budget
 docs/                 Architecture, pipeline, methods, handoff, crop sources
 ```
 
@@ -192,6 +193,8 @@ Set these in Vercel. Names only here. Values stay in the dashboard.
 | `GEMINI_MODEL` | optional, `api/_gemini.js` | The server picks a current Flash model |
 
 The Supabase project URL and the **publishable** key are in `app/data/app.json` under `backup`. They are meant to be public. Row-level security limits each person to their own rows. Do not add a service-role key anywhere in this repository or in client code.
+
+The hard daily cap on Gemini calls is **not** an environment variable. It is a constant inside `public.walo_ai_hit()` in [supabase/schema.sql](supabase/schema.sql) (400 calls a day by default), because a cap the app sends is a cap an attacker chooses. Apply that file once in the Supabase SQL editor; the file also creates the `fields` table, its four row-level-security policies, and the private `field-photos` bucket with per-owner policies. Until it is applied, the per-IP limits in `api/diagnose.js` and `api/help.js` still run and the app keeps answering.
 
 Project ref: `yceufknddlcrezefaivi`. Dashboard steps that are still open are in [docs/HANDOFF.md](docs/HANDOFF.md).
 

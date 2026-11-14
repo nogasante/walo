@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-11-14 — review fixes
+
+Changes after a code and data review. Service worker cache `walo-v23`.
+
+### Added
+
+- `supabase/schema.sql`: the `fields` table, its four row-level-security policies, the private `field-photos` bucket with per-owner policies, and `public.walo_ai_hit()` for the daily AI cap. Previously these existed only as dashboard state, so they could not be reviewed or restored.
+- `app/api/_budget.js`: the shared daily AI cap, used by `api/diagnose.js` and `api/help.js`. The cap (400 calls a day) is a constant inside the SQL function. Missing SQL or an unreachable Supabase returns null and leaves the per-IP limits in charge.
+
+### Changed
+
+- `sw.js` caches each file on its own instead of `addAll`, so one missing file no longer fails the whole install and removes offline support; failures are reported to `/api/log` as `sw_missing`. `js/main.js` checks for a new version on return to the screen and hourly.
+- The answer card in `js/ui.js` is no longer `role="button"` with a Listen button nested inside it. It keeps tap-to-open for sighted users, and "Why?" is now a real `<button>` with a 44 px target, which fixes the nested interactive controls for screen readers.
+- "Dry season now" on `#/now` is decided by the place's growing period, not by one crop's water balance; a water-limited month that is still in the growing period now says "Plant only if you can water".
+- Sell states the price vintage in the answer ("Prices to 2023") and names the newest price in the data (July 2023) in the note under it. The About page says the same.
+- `app/DESIGN.md` §4 corrected: it claimed no web fonts, no photos and about 130 KB for an app that ships 2.1 MB.
+
 ## 2026-11-14
 
 First public history of Walo, Simply Zero’s NASA Space Apps Challenge 2026 entry (Field Shift, Kumasi).

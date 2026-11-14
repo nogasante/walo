@@ -104,6 +104,13 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
   subscribe(() => render(true));
   setForecastListener(() => render(true));
   render();
-  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("sw.js").then((reg) => {
+      // a new deploy should reach a phone that is never fully closed: check on return to the screen, and hourly
+      const check = () => reg.update().catch(() => {});
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+      setInterval(check, 60 * 60e3);
+    }).catch(() => {});
+  }
 })();
 

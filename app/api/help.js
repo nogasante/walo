@@ -9,6 +9,7 @@
 "use strict";
 const HELP = require("../data/help.json");
 const { gemini } = require("./_gemini.js");
+const { takeAiHit } = require("./_budget.js"); // daily cap shared with /api/diagnose (supabase/schema.sql)
 const MAX_MSG = 8, MAX_CHARS = 600, BUDGET_MS = 20000;
 const RATE = { windowMs: 10 * 60 * 1000, perIp: 20 };
 const hits = new Map();
@@ -39,6 +40,13 @@ module.exports = async (req, res) => {
   if (!b || !Array.isArray(b.messages)) return send(400, { ok: false, error: "Send JSON" });
   const msgs = b.messages.slice(-MAX_MSG).map((m) => ({ who: m && m.role === "walo" ? "Walo" : "Farmer", text: s(m && m.text, MAX_CHARS) })).filter((m) => m.text);
   if (!msgs.length || msgs[msgs.length - 1].who !== "Farmer") return send(400, { ok: false, error: "Say or type your question first." });
+  // Daily cap across every server instance (supabase/schema.sql -> walo_ai_hit). Null means the SQL is
+  // not applied yet, or Supabase is down: the per-IP limit above still applies and Walo keeps answering.
+  const budget = await takeAiHit();
+  if (budget && !budget.allowed) {
+    res.setHeader("Retry-After", "3600");
+    return send(429, { ok: false, error: "Walo has answered a lot of questions today. Try again tomorrow." });
+  }
   const c = b.ctx && typeof b.ctx === "object" ? b.ctx : {};
   const fields = Array.isArray(c.fields) ? c.fields.slice(0, 6).map((f) => `${s(f.crop, 30)} (${s(f.stage, 30)}${f.harvest ? `, harvest ${s(f.harvest, 30)}` : ""})`).join("; ") : "";
   const text = `You are Walo's helper inside the Walo app, for smallholder farmers in Ghana. Answer the farmer's last message.

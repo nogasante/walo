@@ -74,7 +74,7 @@ Typical flow (3 taps): open Walo → tap Maize → see "Plant in March–April" 
 7. **Plain language:** "usual rain", "days over 35 °C", "soil: Moist" instead of PRECTOTCORR, GWETROOT. Variable names only in Sources.
 8. **Honest but quiet:** gaps are disclosed once, in the right place (Why? / About), not as banners on every card.
 9. **Support, not replace:** every check ends with "look at your own farm and ask your extension officer"; plans say "Walo shows the evidence; you decide".
-10. **Fast and offline:** no frameworks, no web fonts, no images except inline SVG; about 130 KB in total (most of it price data); service worker caches the app and data.
+10. **Fast and offline:** no frameworks and no build step; one self-hosted variable font, and real photos instead of decorative diagrams; the service worker caches exactly the shipped files. The shipped payload is about 2.1 MB, of which 1.7 MB is photography, 244 KB is data and 32 KB is the font. (This replaces the "~130 KB, no web fonts, no images except inline SVG" figure from v1, and restates §9's ~1.1 MB: both were true of the version they described, not of the current app.)
 
 ---
 

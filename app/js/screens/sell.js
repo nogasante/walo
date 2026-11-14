@@ -19,7 +19,7 @@ export function render(id, farmId) {
 }
 /* one plain summary of the advice for a field (used on the cards) */
 function summary(sa, pr) {
-  if (sa.kind === "index") return { line: `Usually best in ${monthName(sa.peak)} at ${mk(sa.market)}`, tone: sa.store ? "wait" : "now", act: sa.store ? `Store if you can: prices rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", data: `Prices ${sa.years[0]}–${sa.years[1]} · per ${esc(sa.unit)}` };
+  if (sa.kind === "index") return { line: `Usually best in ${monthName(sa.peak)} at ${mk(sa.market)}`, tone: sa.store ? "wait" : "now", act: sa.store ? `Store if you can: prices rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", data: `Price pattern to ${monthName(+sa.s.last.slice(5, 7))} ${sa.s.last.slice(0, 4)} · per ${esc(sa.unit)}` };
   if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: GHS ${fmt(sa.spot.lo)}–${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
   return { line: "No price records yet", tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "Sell when stores run low", data: "" };
 }
@@ -37,7 +37,7 @@ function list(mine) {
       <span class="sc-t"><small class="sc-eye">${esc(f.name)}</small><b>Your ${esc(c.name.toLowerCase())} · ${esc(when)}</b>${chip(s.tone, esc(s.act))}<span class="sc-line">${s.line}</span>${s.data ? `<small class="sc-data">${s.data}</small>` : ""}</span>${icon("chevron-right")}</a>`;
   };
   return `${top}<div class="stack lift"><div class="scards">${mine.map(card).join("")}</div>
-    ${note("Based on past prices near each field. Today's price may differ.", "calendar-days")}${other(true)}</div>`;
+    ${note("Price patterns end in July 2023. They show the usual season, not this year's price.", "calendar-days")}${other(true)}</div>`;
 }
 function detail(id, f) {
   const c = crop(id), pr = f ? farmProgress(f) : null, p = pr ? pr.p : place(); setCrop(id);
@@ -45,10 +45,10 @@ function detail(id, f) {
   const yrs = `${sa.years[0]}–${sa.years[1]}`;
   let a, dataLine = "";
   if (sa.kind === "index") {
-    const m = sa.market;
-    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. At ${mk(m)}.` };
-    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}.` };
-    dataLine = `Based on ${yrs} prices (WFP), per ${esc(sa.unit)}. Today's price may differ.`;
+    const m = sa.market, last = sa.s.last, newest = `${monthName(+last.slice(5, 7))} ${last.slice(0, 4)}`; // the newest price in the data, said in the answer itself
+    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. At ${mk(m)}. Prices to ${last.slice(0, 4)}.` };
+    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}. Prices to ${last.slice(0, 4)}.` };
+    dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else if (sa.kind === "spot") {
     const s = sa.spot;
     a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: `Only 2025 prices: ${esc(s.market)}${s.km != null ? ` (${fmt(s.km)} km)` : ""}, GHS ${fmt(s.lo)}–${fmt(s.hi)}, unit not given.` };

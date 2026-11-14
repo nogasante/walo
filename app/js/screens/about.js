@@ -25,7 +25,7 @@ export function render() {
     <ul class="plain">
       <li>NASA weather covers about 50 km, not your exact field.</li>
       <li>Planting advice uses the usual weather and a 10-day forecast. It is not a promise.</li>
-      <li>Price patterns end in 2023. Today's price may differ.</li>
+      <li>Price patterns stop in July 2023. They show the usual season, not this year's price: ask at the market before you sell.</li>
       <li>Walo is in English for now. Twi is planned; it needs checking by a Twi speaker first.</li>
       <li>Listen uses your phone's own English voice.</li>
       <li>Tree crops (${crops().filter(isTree).map((c) => esc(c.name.toLowerCase())).join(", ")}) are not followed as fields.</li>

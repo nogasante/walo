@@ -13,6 +13,7 @@
 const RULES = require("../data/rules.json"); // hot-day line shared with the app (data/rules.json heat.hot_day_c)
 const HOT_C = RULES.heat.hot_day_c;
 const { gemini: geminiCall } = require("./_gemini.js"); // model choice and fallbacks, shared with /api/help
+const { takeAiHit } = require("./_budget.js"); // daily cap shared with /api/help (supabase/schema.sql)
 const BUDGET_MS = 38000; // all model attempts together; the phone gives up at 45 s (data/app.json plant_doctor.timeout_ms)
 const MAX_IMAGES = 3, MAX_IMG_B64 = 3_400_000, MAX_TOTAL_B64 = 3_600_000, MAX_WORDS = 600; // one original photo up to ~2.4 MB; all under Vercel's 4.5 MB body limit
 const MIMES = /^image\/(jpeg|png|webp|heic|heif)$/; // types Gemini reads
@@ -168,6 +169,14 @@ module.exports = async (req, res) => {
   console.log(JSON.stringify({ ev: "diagnose", photos: imgs.length, kb: Math.round(total * 0.75 / 1024), types: imgs.map((im) => im.mime || "?"), words: words.length, followup: !!followup }));
   const lat = Number(b.lat), lon = Number(b.lon);
   if (!(lat >= -5 && lat <= 16 && lon >= -10 && lon <= 6)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
+  // Daily cap across every server instance (supabase/schema.sql -> walo_ai_hit). Null means the SQL is not
+  // applied yet, or Supabase is down: the per-IP limit above still applies and Walo keeps answering.
+  const budget = await takeAiHit();
+  if (budget && !budget.allowed) {
+    console.log(JSON.stringify({ ev: "diagnose_budget", used: budget.used, cap: budget.cap }));
+    res.setHeader("Retry-After", "3600");
+    return send(429, { ok: false, error: "Walo has done a lot of checks today. Try again tomorrow." });
+  }
   const body = {
     mode: b.mode === "stage" ? "stage" : "doctor", lat, lon,
     crop_name: String(b.crop_name || b.crop || "crop").slice(0, 40), place: String(b.place || "Ghana").slice(0, 60),
