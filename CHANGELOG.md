@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-14 — walked it as a new farmer
+
+Cache `walo-v31`. Three things only showed up by using the app as someone who has never seen it.
+
+### Fixed
+
+- **Home asked for her farm again.** Tapping *What to plant here* opened "Where is your farm?" even though she had just said Bolgatanga. It now goes straight to the answer once a place is chosen, and only asks the first time.
+- **The demo field spoke for her.** A new phone was seeded with "Maize by the road" in Ejura, so Home said *"Your maize · Ripening · harvest late November"* to someone who has planted nothing, and Sell and Doctor were headed **"Maize · Ejura"**. The demo field is no longer planted on a real phone (`seedDemo()` stays in `store.js` for a future, explicit "see an example farm"), and Home now only reads a field she actually made.
+- With no fields, My farm says *No fields yet*, Sell says *Add your field to see when to sell* in her own town, and Home shows *Your maize · Plant in May* — her crop, her place, nothing invented.
+
 ## 2026-11-14 — first run, a real sign-in door, and looking stops moving the farm
 
 Cache `walo-v30`.

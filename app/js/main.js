@@ -1,7 +1,7 @@
 /* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
 import { load, setForecastListener, CFG } from "./data.js";
-import { place, placeLabel, focusCrop, subscribe, seedDemo, hydrate, farms } from "./store.js";
+import { place, placeLabel, focusCrop, subscribe, hydrate, farms } from "./store.js";
 import { icon, wire, resetSheets, closeSheet, stopSpeaking, openSheet, toast, note } from "./ui.js";
 import { esc } from "./util.js";
 import * as home from "./screens/home.js";
@@ -104,8 +104,10 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
   }
   // older versions kept the place under walo.loc
   try { const old = localStorage.getItem("walo.loc"); if (old && !localStorage.getItem("walo.place") && old !== "live") localStorage.setItem("walo.place", JSON.stringify(old)); localStorage.removeItem("walo.loc"); localStorage.removeItem("walo.live"); } catch { /* ignore */ }
-  seedDemo();
   startSync(); // only does anything if this phone turned backup on
+  // No demo field is planted on a real phone any more: it made Home claim a crop she never
+  // planted and made Sell and Doctor say "Ejura". seedDemo() is kept in store.js for an
+  // explicit "see an example farm" later.
   ready = true;
   applyLang(); // English only unless data/app.json languages.enabled has "tw" (js/twi.js); clears a saved Twi choice
   subscribe(() => render(true));

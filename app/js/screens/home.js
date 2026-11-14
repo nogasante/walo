@@ -1,5 +1,5 @@
 /* Home: my main crop today, the two ways in (my place -> what to plant now; a crop -> where it grows best), Plant Doctor, my fields. */
-import { place, placeLabel, farms, setCrop, mainCrop } from "../store.js";
+import { place, placeLabel, placeChosen, farms, setCrop, mainCrop } from "../store.js";
 import { crop, farmProgress, plantStatus, CFG } from "../data.js";
 import { icon, cropImg, hero, ring } from "../ui.js";
 import { esc, roughDate, MONTHS_LONG } from "../util.js";
@@ -31,7 +31,8 @@ export function render() {
 function focusCard(p, fs) {
   const id = mainCrop();
   if (!id) return `<button type="button" class="focus empty" id="change-main"><span class="tile-ic">${icon("sprout")}</span><span class="fo-t"><b>Pick your main crop</b><small>Walo then opens on it everywhere</small></span>${icon("chevron-right")}</button>`;
-  const c = crop(id), f = fs.find((x) => x.crop === id), pr = f ? farmProgress(f) : null;
+  // only a field she actually made can say "ripening"; a demo field never speaks for her
+  const c = crop(id), f = fs.find((x) => !x.demo && x.crop === id), pr = f ? farmProgress(f) : null;
   const line = pr ? (pr.d < 0 ? `Plant ${roughDate(pr.start)}` : pr.frac >= 1 ? "Ready to harvest" : `${pr.stages[pr.si].name} · harvest ${roughDate(pr.harvest)}`) : statusLine(plantStatus(c, p));
   return `<div class="focus"><a class="fo-main" href="${f ? `#/farm/${esc(f.id)}` : `#/crop/${c.id}`}">${cropImg(c, "fo-img")}<span class="fo-t"><small>My main crop</small><b>Your ${esc(c.name.toLowerCase())}</b><span>${esc(line)}</span></span></a>
     <button type="button" class="fo-change" id="change-main" aria-label="Change my main crop">Change</button></div>`;
@@ -47,7 +48,8 @@ export function fieldCard(f) {
 }
 export function mount(root) {
   root.querySelector("#change-main").addEventListener("click", (e) => openMainCropPicker(e.currentTarget));
-  root.querySelector("#pick-place").addEventListener("click", (e) => openPlacePicker("#/now", e.currentTarget));
+  // she already told Walo where her farm is: answer, do not ask again
+  root.querySelector("#pick-place").addEventListener("click", (e) => { if (placeChosen()) location.hash = "#/now"; else openPlacePicker("#/now", e.currentTarget); });
   root.querySelector("#pick-crop").addEventListener("click", (e) => openCropPicker("where", e.currentTarget, (id) => { setCrop(id); location.hash = `#/crop/${id}/where`; }));
 }
 export { openPlacePicker };
