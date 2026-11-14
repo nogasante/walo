@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "crops", "places", "agro", "ndvi", "market", "credits", "ghana-map"];
+const FILES = ["app", "rules", "crops", "places", "agro", "ndvi", "market", "credits", "ghana-map", "help"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });

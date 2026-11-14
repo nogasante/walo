@@ -280,3 +280,8 @@ with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80
 ### v12.6 notes
 - Sell opens on the farmer's own fields (photo cards: field name, "Your maize · Harvest late November", a coloured chip for store/sell now, "Usually best in June at Ejura market (2 km)", price years and unit). One field opens straight on it; no fields shows an empty state with Add a field.
 - My main crop: a small card on Home (crop photo, one line for today, a Change pill); Sell, Plant Doctor and crop pages open on it. Change also in About.
+
+### v12.7 notes
+- **Twi:** one EN/Twi chip in the top bar. Screens stay written in English; `js/twi.js` swaps the words on the page (dictionary first, then Khaya, kept on the phone), so there is one source of truth and nothing to keep in sync. Farmer's own words, place names and source titles are marked `data-notw`. Listen in Twi uses Khaya's voice; if it fails Walo says so and reads in English.
+- **Offline:** a dark "Offline" chip; anything that needs internet turns grey with a "Needs internet" tag and opens one plain sheet listing what still works. Plant now says "Using usual weather (no forecast offline)".
+- **Get help:** one button on Home and About. AI first (short spoken-style answers, a link to the right screen), a person second (Call + WhatsApp with a prefilled summary) only when a help line number is set; otherwise "A help line with a real person is coming soon".

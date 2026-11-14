@@ -16,3 +16,13 @@ First public history of Walo, Simply Zero’s NASA Space Apps Challenge 2026 ent
 - `app/styles.css`, `app/sw.js`, `app/js/screens/home.js`, `app/js/screens/about.js`, and `app/js/screens/doctor.js` were a few lines behind the live site (offline chip, Get help links, service-worker precache). Those five files were copied from the live deployment. No file under `app/data/` was changed.
 - `proof/walo_proof.py` also looks in `../app/data` for the bundled climate.
 - `app/.vercelignore` excludes `scripts/` so builders are not deployed. The live site already does not serve them.
+
+## 2026-11-14 — Twi, offline, Get help
+
+`app/` replaced with the build deployed as `dpl_9N6fgjj6Xw7MQV4pcQELVu2MnWLt` (service worker `walo-v21`).
+
+### Added
+
+- GhanaNLP Khaya through `api/twi.js` (translate v2, TTS, ASR, quota backoff) and the EN/Twi chip. `data/i18n-tw.json` has 126 of 222 labels.
+- Offline chip and “Needs internet” tags (`js/net.js`).
+- AI-first Get help (`api/help.js`, `api/_gemini.js`). Talk to a person stays hidden while `support.phone` is empty.

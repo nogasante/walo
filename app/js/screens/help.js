@@ -2,7 +2,7 @@
    a person second: when the AI is unsure or the farmer asks for a person, Call and WhatsApp to the team's help line
    (data/app.json support.phone; empty = no person option yet). Talk or type; Listen; Twi when it is on. Nothing is kept on the server. */
 import { place, placeLabel, farms, mainCrop } from "../store.js";
-import { crop, farmProgress, CFG } from "../data.js";
+import { crop, farmProgress, CFG, D } from "../data.js";
 import { btn, note, icon, speaker } from "../ui.js";
 import { esc, roughDate } from "../util.js";
 import { online } from "../net.js";
@@ -38,15 +38,12 @@ function personBox() {
 }
 function bubble(m) {
   if (m.role === "farmer") return `<div class="msg me" data-notw><p>${esc(m.text)}</p></div>`;
-  const go = m.go && CFG() && m.go !== "none" ? GO()[m.go] : null;
+  const go = m.go && m.go !== "none" ? D.help.go[m.go] : null;
   return `<div class="msg ai"><span class="msg-who">${icon("sparkles")}AI answer</span><p>${esc(m.text)}</p>
     <div class="msg-act">${speaker(m.text)}${go ? `<a class="linkbtn" href="${go[1]}">${esc(go[0])}${icon("chevron-right")}</a>` : ""}</div></div>`;
 }
-let HELP = null;
-const GO = () => (HELP ? HELP.go : {});
 export function render(from) {
   if (from !== undefined) S.from = from;
-  if (!HELP) fetch("data/help.json").then((r) => r.json()).then((j) => { HELP = j; document.dispatchEvent(new Event("walo-refresh")); }).catch(() => {});
   const lastAi = [...S.msgs].reverse().find((m) => m.role === "walo");
   const showPerson = S.person || (lastAi && (lastAi.unsure || lastAi.wants_person));
   return `<div class="stack help">

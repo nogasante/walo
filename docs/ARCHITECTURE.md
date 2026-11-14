@@ -23,13 +23,13 @@ Shared modules:
 
 | File | Role |
 | --- | --- |
-| `js/data.js` | Loads `data/*.json` and makes every decision the screens show. Uses `lib/agro.js` and `data/rules.json`. |
+| `js/data.js` | Loads `data/*.json`, including `help.json` as `D.help`, and makes every decision the screens show. Uses `lib/agro.js` and `data/rules.json`. |
 | `lib/agro.js` | FAO-56 evapotranspiration, effective rain, onset, EcoCrop suitability, growing degree days. The same file runs in `scripts/build_agro.js`. |
 | `js/store.js` | Place, main crop, and fields in `localStorage`. Field photos in IndexedDB. |
 | `js/ui.js` | Answer card, Why? sheet, Listen, buttons, rows. |
 | `js/photo.js` | The only photo path. Two `<input type="file">` elements live in `index.html`. Screens open them with `<label for>`, not `input.click()`. |
 | `js/net.js` | Online flag. A failed call to `/api/` or another origin marks the phone offline even if `navigator.onLine` is true. |
-| `js/twi.js` | EN/Twi toggle, Khaya translation and voice through `/api/twi`, speech cache. |
+| `js/twi.js` | EN/Twi chip. Fixed labels come from `data/i18n-tw.json` (126 of 222). Other sentences are translated when they appear and kept on the phone. Listen uses Khaya TTS. Talk records a short WAV and sends it to Khaya ASR. A 403 or 429 starts a local rest (`twi.rest_ms`) and a one-time toast. |
 | `js/sync.js` | Optional Supabase backup. Local data stays the copy the farmer sees. |
 | `js/log.js` | Event name, sizes, and browser family. No photo, no words, no place. |
 | `js/screens/words.js` | Plain-language sentences shared by Plant now, the crop page, and Why?. |
@@ -57,11 +57,13 @@ flowchart TD
   rules --> answer
 ```
 
-Saved towns (17 of them, in `data/places.json`) use the precomputed NASA POWER summary in `data/agro.json`. “Use my location” fetches NASA POWER in the browser for that point and runs `lib/agro.js` on the phone. The 10-day forecast, when the Meteomatics names are set, can move “wait for the planting rain” to a weekday. If the forecast has no planting rain, the screen says to wait, so the climatology and the forecast do not contradict each other. Offline, the answer uses the usual onset and says so in Why?.
+Saved towns (17 of them, in `data/places.json`) use the precomputed NASA POWER summary in `data/agro.json`. “Use my location” fetches NASA POWER in the browser for that point and runs `lib/agro.js` on the phone. The 10-day forecast, when the Meteomatics names are set, can move “wait for the planting rain” to a weekday. If the forecast has no planting rain, the screen says to wait, so the climatology and the forecast do not contradict each other. Offline with no saved forecast, the answer uses the usual onset. If a forecast was saved earlier, Plant now says it is using that last forecast.
 
 Sell reads `data/market.json`: a seasonal index (month price divided by that year’s average, averaged over 2015–2023) for the nearest of 20 WFP markets, plus MoFA SRID 2025 rows for Techiman. The advice for a field starts from that field’s harvest date.
 
-Plant Doctor posts up to three photos and/or the farmer’s words to `/api/diagnose`. The function also fetches the last valid 14 days of NASA POWER for that point and passes them to Gemini as background. The phone shows the model’s JSON, labelled as an AI answer. Get help posts the last few messages and a short farm context to `/api/help`, which reads `data/help.json`.
+Plant Doctor posts up to three photos and/or the farmer’s words to `/api/diagnose`. The function also fetches the last valid 14 days of NASA POWER for that point and passes them to Gemini as background. The phone shows the model’s JSON, labelled as an AI answer. Diagnose and Get help share `api/_gemini.js` for model choice.
+
+Get help (`#/help`) posts the last few messages and a short farm context (place, main crop, fields) to `/api/help`. The model is limited to the facts in `data/help.json`, which the browser already loaded. When the model is unsure, or the farmer asks for a person, the screen offers `tel:` and `wa.me` links built from `data/app.json` → `support.phone` and `support.whatsapp`. Both are empty, so the screen says a help line is coming soon. The server does not store the chat. WhatsApp text is filled in on the phone only.
 
 ## Server functions
 
@@ -72,7 +74,7 @@ All of these are Vercel Node functions. They read secrets from the environment a
 | `api/diagnose.js` | POST | Gemini, NASA POWER daily | 8 checks / 10 min / IP, 38 s model budget, phone gives up at 45 s |
 | `api/forecast.js` | GET `lat`, `lon` | Meteomatics `precip_24h` and `t_max_2m_24h`, model mix | Response cached 3 hours. Ghana box only: lat −5..16, lon −10..6 |
 | `api/help.js` | POST | Gemini, with `data/help.json` in the prompt | 20 / 10 min / IP |
-| `api/twi.js` | GET and POST | GhanaNLP Khaya translate, TTS, ASR | Key stays on the server. Machine Twi. |
+| `api/twi.js` | GET `status`, `tts`; POST `translate`, `asr` | GhanaNLP Khaya: translate v2 (`en-tw` / `tw-en`), TTS v1, ASR v3. `KHAYA_API_KEY` is read on the server. A 403 or 429 sets a per-instance backoff and returns a plain “Twi is resting” error. Nothing the farmer typed or said is logged. |
 | `api/log.js` | POST | `console.log` of a whitelist of short fields | Body capped at 4 KB |
 | `api/_gemini.js` | shared | Gemini model list and generateContent | Used by diagnose and help. Not a public route worth calling on its own. |
 
@@ -96,7 +98,7 @@ Optional backup, Supabase project `walo`, ref `yceufknddlcrezefaivi`:
 
 ## Offline
 
-After one successful visit, the service worker can show What to plant, crop pages, My farm, and Sell from the cache. `data/app.json` → `offline.works` is the sentence the offline sheet uses. Plant Doctor, the live forecast, Twi voice, Get help, and backup need a network. Those controls carry `data-net`. While `body` has the class `offline`, they are greyed and tagged “Needs internet”.
+The live service worker cache is `walo-v21` (deployment `dpl_9N6fgjj6Xw7MQV4pcQELVu2MnWLt`). After one successful visit it can show What to plant, crop pages, My farm, and Sell from the cache. `js/net.js` sets `body.offline` from `navigator.onLine` and from a failed call to `/api/` or another origin. The top bar then shows a dark **Offline** chip. Controls with `data-net` (Plant Doctor, a fresh forecast, Twi voice, Talk, Get help, backup, Use my location) turn grey and carry a **Needs internet** tag; tapping one opens a sheet whose list is `data/app.json` → `offline.works`.
 
 ## What is not in the running app
 

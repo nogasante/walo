@@ -22,12 +22,16 @@ A farmer on a shared, low-cost Android phone, often outdoors, who reads a little
 | My farm | `#/farm` | Stage, harvest timing, today’s task, one alert, photos kept on the phone |
 | Sell | `#/sell` | When that field’s harvest usually sells best, and at which nearby market |
 | Plant Doctor | `#/doctor` | Photo, voice, or text. An AI names a likely problem and one careful next step |
-| Get help | `#/help` | An AI that knows Walo, then a person when a help-line number is set |
+| Get help | `#/help` | AI answers first (Gemini). Call and WhatsApp stay hidden until `support.phone` is set; it is empty, so the screen says a person is coming soon |
+| Twi | EN / Twi chip | Khaya translation, Listen voice, and Talk. `data/i18n-tw.json` has 126 of 222 fixed labels |
+| Offline | top bar | An Offline chip. Anything that needs a network is grey and tagged “Needs internet” |
 | Back up my fields | `#/backup` | Optional email one-time code. The app works with no account |
 
 Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the top bar changes the town everywhere that advice depends on place. On a wide screen the app sits in a phone-width column.
 
-English Listen uses the phone’s own voice. **Twi** (labels, Listen, and Plant Doctor speech) goes through GhanaNLP Khaya and still needs a Twi speaker’s review. See [docs/HANDOFF.md](docs/HANDOFF.md).
+English Listen uses the phone’s own voice. With Twi on, labels, answers, and Listen go through GhanaNLP Khaya (`api/twi.js`). The free Khaya quota ran out on 14 Nov 2026 after the dictionary reached 126 labels; it refills about **16 Nov 2026, 15:00 GMT**. Until then, missing labels stay in English and Listen falls back to the phone’s English voice. A Twi speaker still has to review the machine text. See [docs/HANDOFF.md](docs/HANDOFF.md).
+
+The live deployment of this app is `dpl_9N6fgjj6Xw7MQV4pcQELVu2MnWLt`. The service worker cache is `walo-v21`.
 
 ## How it works
 
@@ -185,7 +189,7 @@ Set these in Vercel. Names only here. Values stay in the dashboard.
 | `GEMINI_API_KEY` | `api/diagnose.js`, `api/help.js` | Plant Doctor and Get help say they are not set up |
 | `METEOMATICS_USER` | `api/forecast.js` | “What to plant now” uses the NASA climatology only |
 | `METEOMATICS_PASS` | `api/forecast.js` | Same as above |
-| `KHAYA_API_KEY` | `api/twi.js` | Twi stays off |
+| `KHAYA_API_KEY` | `api/twi.js` (Khaya translate v2 en-tw, TTS, ASR). The function backs off on quota errors | Twi stays in English |
 | `GEMINI_MODEL` | optional, `api/_gemini.js` | The server picks a current Flash model |
 
 The Supabase project URL and the **publishable** key are in `app/data/app.json` under `backup`. They are meant to be public. Row-level security limits each person to their own rows. Do not add a service-role key anywhere in this repository or in client code.
