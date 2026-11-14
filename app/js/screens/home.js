@@ -33,8 +33,8 @@ function focusCard(p, fs) {
   if (!id) return `<button type="button" class="focus empty" id="change-main"><span class="tile-ic">${icon("sprout")}</span><span class="fo-t"><b>Pick your main crop</b><small>Walo then opens on it everywhere</small></span>${icon("chevron-right")}</button>`;
   // only a field she actually made can say "ripening"; a demo field never speaks for her
   const c = crop(id), f = fs.find((x) => !x.demo && x.crop === id), pr = f ? farmProgress(f) : null;
-  const line = pr ? (pr.d < 0 ? `Plant ${roughDate(pr.start)}` : pr.frac >= 1 ? "Ready to harvest" : `${pr.stages[pr.si].name} · harvest ${roughDate(pr.harvest)}`) : statusLine(plantStatus(c, p));
-  return `<div class="focus"><a class="fo-main" href="${f ? `#/farm/${esc(f.id)}` : `#/crop/${c.id}`}">${cropImg(c, "fo-img")}<span class="fo-t"><small>My main crop</small><b>Your ${esc(c.name.toLowerCase())}</b><span>${esc(line)}</span></span></a>
+  const line = pr ? (pr.d < 0 ? `Plant ${roughDate(pr.start)}` : pr.frac >= 1 ? "Ready to harvest" : `${pr.stages[pr.si].name} · harvest ${roughDate(pr.harvest)}`) : `${statusLine(plantStatus(c, p))} · start a field`;
+  return `<div class="focus"><a class="fo-main" href="${f ? `#/farm/${esc(f.id)}` : `#/start/${c.id}`}">${cropImg(c, "fo-img")}<span class="fo-t"><small>My main crop</small><b>Your ${esc(c.name.toLowerCase())}</b><span>${esc(line)}</span></span></a>
     <button type="button" class="fo-change" id="change-main" aria-label="Change my main crop">Change</button></div>`;
 }
 /* a field as a photo card: latest photo, progress ring, name, stage and harvest */

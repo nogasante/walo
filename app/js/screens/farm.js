@@ -1,7 +1,9 @@
 /* My farm: where the field is now (stage from NASA temperatures), today's task, one alert, when to sell, photos. */
 import { farms, farm, updateFarm, removeFarm, saveBlob, placeLabel } from "../store.js";
 import { takePhotos, preparePhoto, lostPhoto, galleryButton, photoLabel, MSG } from "../photo.js";
-import { farmProgress, fetchGdd, farmAlert, sellAdvice, greenness, monthName, CFG } from "../data.js";
+import { farmProgress, fetchGdd, farmAlert, sellAdvice, greenness, monthName, CFG, fieldRain } from "../data.js";
+import { fieldTips } from "../tips.js";
+import { downloadSeason } from "../calendar.js";
 import { answer, whyBody, btn, sheet, note, icon, closeSheet, hero, ring } from "../ui.js";
 import { esc, fmt, roughDate, dayMonth, iso, today0, fromIso, MONTHS_LONG } from "../util.js";
 import { fieldCard } from "./home.js";
@@ -47,7 +49,7 @@ function farmView(f, many) {
   const t = pr.d < 0 ? `Plant on ${dayMonth(pr.start)}` : pr.frac >= 1 ? "Ready to harvest" : left <= CFG().farm.harvest_soon_days ? `Harvest soon: ${roughDate(pr.harvest)}` : `Harvest in ${roughDate(pr.harvest)}`;
   const stage = pr.si >= 0 ? pr.stages[pr.si].name : "Not planted yet";
   const task = pr.task ? pr.task.action : pr.d < 0 ? "Get seed ready. Plant after a good rain." : "";
-  const al = farmAlert(pr), sa = sellAdvice(c.id, pr.p, pr.harvest), g = greenness(pr.p);
+  const al = farmAlert(pr), sa = sellAdvice(c.id, pr.p, pr.harvest), g = greenness(pr.p), tips = fieldTips(pr), rain = fieldRain(f);
   const gddLine = pr.total ? `Growth counts warmth since planting (growing degree days, base ${pr.g.tb} °C${pr.g.tu != null ? `, top ${pr.g.tu} °C` : ""}): ${fmt(pr.gdd || 0)} of about ${fmt(pr.total)}. ${pr.obs && pr.obs.days ? `NASA POWER daily temperatures at the field up to ${pr.obs.last.replace(/(\d{4})(\d\d)(\d\d)/, "$3/$2/$1")}, usual weather after that.` : "Usual NASA weather for this place (live data loads when online)."} Stages follow FAO-56 Table 11.` : `Dates use a typical ${pr.days}-day season for ${esc(c.name.toLowerCase())}${pr.guessDays ? " (best guess)" : ""}.`;
   const why = whyBody([
     "Walo counts the warmth your crop has had since planting, from NASA temperatures. Warm days make it grow faster, so the harvest date moves a little.",
@@ -73,6 +75,8 @@ function farmView(f, many) {
     ${answer({ kind: pr.frac >= 1 ? "now" : "info", tone: pr.frac >= 1 ? "good" : "info", badge: ring(pr.d < 0 ? 0 : pr.frac, ic), title: t, sub: esc(stage), extra: `<ol class="stages" aria-label="Stage: ${esc(stage)}">${pr.stages.map((s, i) => `<li class="${i < pr.si ? "done" : i === pr.si ? "now" : ""}">${icon(s.icon)}<span>${esc(s.name)}</span></li>`).join("")}</ol>`, why: { title: "How Walo knows", html: why + remove }, say: `${f.name}. ${t}. ${stage}. ${task ? "Today: " + task : ""}` })}
     ${task ? `<div class="task">${icon("circle-check")}<div><small>Today</small><b>${esc(task)}</b></div></div>` : ""}
     ${al ? `<p class="alert">${icon(al.icon)}<span>${ALERT[al.kind]()}</span></p>` : ""}
+    ${tips.map((t) => `<div class="task">${icon(t.ic)}<div><small>${esc(t.k)}</small><b>${esc(t.text)}</b></div></div>`).join("")}
+    ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days <small>(NASA POWER)</small></b></div></div>` : ""}
     ${pr.late || pr.frac >= 1 ? `<a class="sellcard" href="#/sell/${c.id}/${esc(f.id)}"><span class="tile-ic sell">${icon("tag")}</span><span>${esc(sellLine(sa, pr))}</span>${icon("chevron-right")}</a>` : ""}
     ${addState(f)}
     <div class="actions3">
@@ -80,6 +84,7 @@ function farmView(f, many) {
       <a class="act" href="#/doctor/${c.id}/${esc(f.id)}"><span class="tile-ic doc">${icon("stethoscope")}</span><span>Check plant</span></a>
       <a class="act" href="#/sell/${c.id}/${esc(f.id)}"><span class="tile-ic sell">${icon("tag")}</span><span>Sell</span></a>
     </div>
+    ${btn("Add this season to my calendar", { kind: "secondary", ic: "calendar-days", attrs: `data-ics="${esc(f.id)}"` })}
     ${many ? btn("All my fields", { href: "#/farm", kind: "secondary", ic: "leaf" }) : btn("Add a field", { href: "#/start", kind: "secondary", ic: "plus" })}
     ${backupLink()}
   </div>`;
@@ -101,6 +106,8 @@ export function mount(root, _id, _b, rerender) {
   takePhotos("farm", (file, owner) => { const id = owner.slice(5); if (farm(id)) addPhoto(id, file, rerender); });
 }
 document.addEventListener("click", (e) => {
+  const ic = e.target.closest("[data-ics]");
+  if (ic) { const fl = farm(ic.dataset.ics); if (fl) downloadSeason(fl, farmProgress(fl)); return; }
   const r = e.target.closest("[data-remove]");
   if (r && confirm("Remove this field and its photos from this phone?")) { removeFarm(r.dataset.remove); closeSheet(true); location.hash = "#/farm"; }
 });

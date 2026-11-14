@@ -237,16 +237,28 @@ export async function fetchGdd(f) {
   const c = crop(f.crop), g = c && A().gddBase(c, R()), p = farmPlace(f), all = gddCache(), k = `${f.id}|${f.date}|${f.loc || ""}`, today = iso(today0());
   if (!g || !navigator.onLine || f.date >= today || (all[k] && all[k].fetched === today)) return false;
   try {
-    const r = await fetch(`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN&community=AG&longitude=${p.lon.toFixed(4)}&latitude=${p.lat.toFixed(4)}&start=${f.date.replace(/-/g, "")}&end=${today.replace(/-/g, "")}&format=JSON`);
+    const r = await fetch(`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN,PRECTOTCORR&community=AG&longitude=${p.lon.toFixed(4)}&latitude=${p.lat.toFixed(4)}&start=${f.date.replace(/-/g, "")}&end=${today.replace(/-/g, "")}&format=JSON`);
     if (!r.ok) return false;
     const P = (await r.json()).properties.parameter, ks = Object.keys(P.T2M_MAX).sort();
-    let gdd = 0, days = 0;
-    for (const day of ks) { const tx = P.T2M_MAX[day], tn = P.T2M_MIN[day]; if (tx == null || tn == null || tx <= -900 || tn <= -900) break; gdd += A().gddDay(tx, tn, g); days++; }
-    all[k] = { gdd: Math.round(gdd), days, last: days ? ks[days - 1] : null, fetched: today };
+    let gdd = 0, days = 0, rain = 0;
+    const rains = [];
+    for (const day of ks) {
+      const tx = P.T2M_MAX[day], tn = P.T2M_MIN[day];
+      if (tx == null || tn == null || tx <= -900 || tn <= -900) break;
+      gdd += A().gddDay(tx, tn, g); days++;
+      const mm = P.PRECTOTCORR ? P.PRECTOTCORR[day] : null;
+      if (mm != null && mm > -900) { rain += mm; rains.push(mm); } else rains.push(0);
+    }
+    const rain7 = rains.slice(-7).reduce((a, b) => a + b, 0);
+    // rain since sowing is what tells a farmer whether this season is wet or dry at HER field,
+    // not at the district: NASA POWER daily precipitation, same call as the temperatures.
+    all[k] = { gdd: Math.round(gdd), days, last: days ? ks[days - 1] : null, rain: Math.round(rain), rain7: Math.round(rain7), fetched: today };
     localStorage.setItem("walo.gdd", JSON.stringify(all));
     return true;
   } catch { return false; }
 }
+/* what NASA POWER says fell at this field: total since planting and the last 7 days */
+export const fieldRain = (f) => { const c = gddCache()[`${f.id}|${f.date}|${f.loc || ""}`]; return c && c.rain != null ? c : null; };
 /* one alert for the stage the field is in now (or none) */
 export function farmAlert(pr) {
   const { c, fit, ag, si, harvest } = pr;
