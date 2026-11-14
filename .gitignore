@@ -1,0 +1,19 @@
+# Dependencies and local tooling
+node_modules/
+
+# Vercel local project link
+.vercel/
+
+# Secrets. .env.example is the only env file that belongs in git.
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+
+# Python and OS clutter
+__pycache__/
+*.py[cod]
+.DS_Store
