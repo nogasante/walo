@@ -192,6 +192,12 @@
       }
     ]
   },
+  "languages": {
+    "_note": "Languages shown in the app. English only until after NASA Space Apps 2026: Twi (js/twi.js, api/twi.js, GhanaNLP Khaya) stays dormant until \"tw\" is added here and the labels are complete and checked by a Twi speaker.",
+    "enabled": [
+      "en"
+    ]
+  },
   "twi": {
     "_note": "Twi by GhanaNLP Khaya through /api/twi (machine translation and voice; needs a Twi speaker's check). Fixed labels: data/i18n-tw.json, built once by scripts/build_i18n_tw.py.",
     "endpoint": "/api/twi",

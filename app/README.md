@@ -48,7 +48,7 @@ js/store.js                       state on the phone: place, crop, fields (local
 js/ui.js                          components: answer card + Why? sheet, Listen, buttons, rows, bottom sheet
 js/screens/*.js                   home, now, crop, farm, start, sell, doctor, about, pickers, words
 js/photo.js                       the one photo path (Plant Doctor, Add photo, Start planting): two static inputs in index.html opened by <label for> (gallery has no capture), file copied into memory at once, instant preview, resize with a time limit, HEIC fallback, "phone closed Walo" notice
-js/twi.js                         Twi (GhanaNLP Khaya via api/twi.js): EN/Twi chip, swaps page words (data/i18n-tw.json, then on-the-fly), Twi Listen, Twi Talk
+js/twi.js                         DORMANT (languages.enabled = en): Twi (GhanaNLP Khaya via api/twi.js): EN/Twi chip, swaps page words (data/i18n-tw.json, then on-the-fly), Twi Listen, Twi Talk
 js/net.js                         online/offline (navigator.onLine + failed /api or outside calls): Offline chip, [data-net] "Needs internet" tags
 js/screens/help.js                Get help: AI helper (api/help.js) first, Call/WhatsApp to data/app.json support.phone second
 js/log.js                         tiny client log (event names, sizes, types, browser family; no photos, words or places) -> api/log.js
@@ -60,7 +60,7 @@ api/diagnose.js                   Plant Doctor (Vercel function): photo(s) + NAS
 api/forecast.js                   Meteomatics 10-day forecast proxy, cached 3 h
 api/twi.js                        GhanaNLP Khaya: translate (v2 en-tw / tw-en), TTS v1 (tw, CDN-cached wav), ASR v3 (twi); limits, timeouts, no content logs
 api/help.js, api/_gemini.js       Get help (Gemini, data/help.json facts); shared Gemini model choice for diagnose + help
-sw.js, manifest.json, icon.svg    offline cache (walo-v21, exactly the shipped files; /api/ never cached), Add to Home Screen
+sw.js, manifest.json, icon.svg    offline cache (walo-v22, exactly the shipped files; /api/ never cached), Add to Home Screen
 data/app.json                     settings: default place/crop, endpoints, Plant Doctor photo size, demo field, zone names
 data/rules.json                   every method threshold + its source
 data/places.json                  17 towns: coordinates, region, FAO zone
@@ -78,7 +78,7 @@ scripts/                          data builders and their full outputs (not depl
 | --- | --- |
 | `GEMINI_API_KEY` | `api/diagnose.js` (optional `GEMINI_MODEL` to pin a model) |
 | `METEOMATICS_USER`, `METEOMATICS_PASS` | `api/forecast.js` |
-| `KHAYA_API_KEY` | `api/twi.js` (GhanaNLP Khaya; Twi) |
+| `KHAYA_API_KEY` | `api/twi.js` (GhanaNLP Khaya; Twi, dormant while `languages.enabled` is English only) |
 
 `GEMINI_API_KEY` is also used by `api/help.js`.
 
@@ -120,8 +120,8 @@ python3 -m http.server 8000   # then open http://localhost:8000 (the /api functi
 - Prices: WFP/HDX to July 2023 for 20 markets; MoFA SRID 2025 for one market and without units. Distances are straight-line.
 - EcoCrop ranges are global. NDVI at town points includes built-up land. Plant Doctor is AI and can be wrong.
 - Backup: email codes need the dashboard settings above; there is no phone-number sign-in yet. Only one phone should edit the same field at a time (the newest change wins).
-- Twi (EN/Twi chip) is machine translation and voice by GhanaNLP Khaya and needs a Twi speaker's check. The Khaya key's free quota is small (it ran out after about 100 calls on 14 Nov and refills after ~48 h); when it is out, words stay in English, Listen falls back to the English phone voice with a note, and Twi Talk shows an error. English Listen uses the phone's own voice.
-- Offline: What to plant, crop pages, My farm and Sell work from the offline copy; Plant Doctor, forecast, Twi, Talk, Get help, backup and "Use my location" show "Needs internet".
+- English only for now (`data/app.json` → `languages.enabled: ["en"]`). The Twi code (`js/twi.js`, `api/twi.js`, `data/i18n-tw.json`, GhanaNLP Khaya) is dormant: no chip, nothing sent to Khaya, `/api/twi` returns 404. To re-enable after the hackathon: refill the Khaya quota, complete the labels with `scripts/build_i18n_tw.py`, have a Twi speaker check them, then add "tw" to `languages.enabled`. The Khaya free quota ran out after about 100 calls on 14 Nov. Listen uses the phone's own English voice.
+- Offline: What to plant, crop pages, My farm and Sell work from the offline copy; Plant Doctor, forecast, Talk, Get help, backup and "Use my location" show "Needs internet".
 - Get help's person option is hidden until `support.phone` is set in `data/app.json`. The demo field is made-up data and is tagged "Demo".
 
 Licence: Apache 2.0.

@@ -26,3 +26,11 @@ First public history of Walo, Simply Zero’s NASA Space Apps Challenge 2026 ent
 - GhanaNLP Khaya through `api/twi.js` (translate v2, TTS, ASR, quota backoff) and the EN/Twi chip. `data/i18n-tw.json` has 126 of 222 labels.
 - Offline chip and “Needs internet” tags (`js/net.js`).
 - AI-first Get help (`api/help.js`, `api/_gemini.js`). Talk to a person stays hidden while `support.phone` is empty.
+
+## 2026-11-14 — English only
+
+`app/` replaced with deploy `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ` (service worker `walo-v22`).
+
+### Changed
+
+- `data/app.json` → `languages.enabled` is `["en"]`. That flag gates `js/twi.js`. `api/twi.js` returns 404. The EN/Twi chip and Twi messages are gone, and a saved Twi preference is cleared on load. `data/i18n-tw.json` stays in the repo for after the hackathon.

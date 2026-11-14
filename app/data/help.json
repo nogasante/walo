@@ -11,18 +11,39 @@
     "The place chip at the top changes the town; 'Use my location' uses the phone's GPS.",
     "My main crop: Sell, Plant Doctor and crop pages open on it. Change it on Home or in About.",
     "Back up my fields (optional): sign in with a code sent to email so fields come back on a new phone. Walo works without it.",
-    "Twi: tap EN / Twi at the top. Twi words and the Twi voice are machine-made by GhanaNLP Khaya and need a Twi speaker's check.",
-    "Offline: after opening Walo once, what to plant, crop pages, My farm and Sell work without internet using data stored on the phone. Plant Doctor, the 10-day forecast, Twi voice, Talk, this helper and backup need internet.",
+    "Walo is in English for now. Twi and other Ghanaian languages are planned.",
+    "Offline: after opening Walo once, what to plant, crop pages, My farm and Sell work without internet using data stored on the phone. Plant Doctor, the 10-day forecast, Talk, this helper and backup need internet.",
     "Listen buttons read the answer aloud.",
     "Tree crops (cocoa, cashew) are not followed as fields yet. Weather data covers about 50 km, not one exact field."
   ],
   "go": {
-    "now": ["What to plant now", "#/now"],
-    "doctor": ["Plant Doctor", "#/doctor"],
-    "sell": ["Sell", "#/sell"],
-    "farm": ["My farm", "#/farm"],
-    "start": ["Start planting", "#/start"],
-    "backup": ["Back up my fields", "#/backup"],
-    "about": ["About Walo", "#/about"]
+    "now": [
+      "What to plant now",
+      "#/now"
+    ],
+    "doctor": [
+      "Plant Doctor",
+      "#/doctor"
+    ],
+    "sell": [
+      "Sell",
+      "#/sell"
+    ],
+    "farm": [
+      "My farm",
+      "#/farm"
+    ],
+    "start": [
+      "Start planting",
+      "#/start"
+    ],
+    "backup": [
+      "Back up my fields",
+      "#/backup"
+    ],
+    "about": [
+      "About Walo",
+      "#/about"
+    ]
   }
 }

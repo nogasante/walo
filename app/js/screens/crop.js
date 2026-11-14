@@ -1,4 +1,5 @@
 /* Crop answer: can I plant this crop here, and when. "Where else" shows the best towns for it. */
+import { twiOn } from "../twi.js";
 import { place, placeLabel, setPlace, setCrop, focusCrop } from "../store.js";
 import { crop, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, D, zoneOf, zoneName, forecastFor, fcOnset, confFor } from "../data.js";
 import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts } from "../ui.js";
@@ -45,7 +46,7 @@ export function render(id, sub) {
   const why = whyBody(reasons(c, sc).concat(outZone ? [`FAO does not list ${c.name.toLowerCase()} for the ${zoneName(z).toLowerCase()}.`] : []), details(c, p, sc, cm, st));
   const where = whereSheet(c);
   if (sub === "where") { history.replaceState(null, "", `#/crop/${id}`); setTimeout(() => openSheet(where), 60); }
-  const twi = c.twi ? ` · <span lang="ak">${esc(c.twi.split(" / ")[0].split(" (")[0])}</span>` : "";
+  const twi = c.twi && twiOn() ? ` · <span lang="ak">${esc(c.twi.split(" / ")[0].split(" (")[0])}</span>` : "";
   const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : "leaf", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "clock", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">

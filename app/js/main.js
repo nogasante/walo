@@ -15,7 +15,7 @@ import * as about from "./screens/about.js";
 import * as backup from "./screens/backup.js";
 import * as help from "./screens/help.js";
 import { startSync } from "./sync.js";
-import { isTwi, setLang, apply as applyLang } from "./twi.js";
+import { isTwi, twiOn, setLang, apply as applyLang } from "./twi.js";
 import { openPlacePicker } from "./screens/pickers.js";
 
 /* route -> screen, tab, whether the answer depends on the chosen place */
@@ -40,7 +40,7 @@ function topbar(r, rt) {
   return `${rt.root ? `<a class="brand" href="#/about" aria-label="About Walo">${icon("info")}</a>` : `<button type="button" class="back" id="back" aria-label="Back">${icon("chevron-left")}</button>`}
     <h1 class="tb-title">${esc(t)}</h1>
     ${online() ? "" : `<button type="button" class="offchip" id="offchip" aria-label="Offline. What works">${icon("wifi-off")}<span>Offline</span></button>`}
-    <button type="button" class="langchip" id="langchip" data-notw aria-label="${isTwi() ? "Language: Twi. Switch to English" : "Language: English. Switch to Twi"}"><span${isTwi() ? "" : ' class="on"'}>EN</span><span${isTwi() ? ' class="on"' : ""}>Twi</span></button>
+    ${twiOn() ? `<button type="button" class="langchip" id="langchip" data-notw aria-label="${isTwi() ? "Language: Twi. Switch to English" : "Language: English. Switch to Twi"}"><span${isTwi() ? "" : ' class="on"'}>EN</span><span${isTwi() ? ' class="on"' : ""}>Twi</span></button>` : ""}
     ${rt.chip && !farmCtx ? `<button type="button" class="placechip" id="placechip" aria-label="Place: ${esc(placeLabel(place()))}. Change">${icon("map-pin")}<span>${esc(placeLabel(place()))}</span></button>` : "<span class=\"tb-gap\"></span>"}`;
 }
 function tabbar(active) {
@@ -100,7 +100,7 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
   seedDemo();
   startSync(); // only does anything if this phone turned backup on
   ready = true;
-  applyLang(); // Twi on? start swapping the words (js/twi.js)
+  applyLang(); // English only unless data/app.json languages.enabled has "tw" (js/twi.js); clears a saved Twi choice
   subscribe(() => render(true));
   setForecastListener(() => render(true));
   render();

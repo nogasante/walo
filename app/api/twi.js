@@ -10,6 +10,7 @@
 "use strict";
 
 const BASE = "https://translation-api.ghananlp.org";
+const ON = require("../data/app.json").languages.enabled.includes("tw"); // English only for now: the whole route answers 404 until "tw" is enabled
 const KEY = () => process.env.KHAYA_API_KEY || "";
 const LIM = { texts: 40, chars: 500, total: 8000, tts_chars: 400, audio_b64: 1_400_000 }; // ~30 s of 16 kHz mono WAV; under Vercel's 4.5 MB body limit
 const TIMEOUT = { translate: 15000, tts: 25000, asr: 55000 };
@@ -62,6 +63,7 @@ const send = (res, code, obj) => { res.statusCode = code; res.setHeader("Content
 const quotaMsg = (s) => (s === 429 || s === 403 ? "Twi is resting now (too many requests). Try again later." : "Twi did not work. Try again.");
 
 module.exports = async (req, res) => {
+  if (!ON) { res.statusCode = 404; res.setHeader("Cache-Control", "no-store"); return res.end(); }
   const url = new URL(req.url, "http://x"), action = url.searchParams.get("action") || "";
   const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "?";
   if (action === "status") return send(res, 200, { ok: true, translate: !!KEY(), tts: !!KEY(), asr: !!KEY() });

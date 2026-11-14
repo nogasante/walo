@@ -11,7 +11,8 @@ let DICT = null, dictP = null, MEM = null, STATUS = null, statusP = null, obs = 
 const ORIG = new WeakMap(), LIVE = new Set(); // text node -> { en, tw }
 const SKIP = "script,style,textarea,input,select,svg,[data-notw],.vh-input";
 
-export const lang = () => { try { return localStorage.getItem(LS) === "tw" ? "tw" : "en"; } catch { return "en"; } };
+export const twiOn = () => CFG().languages.enabled.includes("tw"); // data/app.json languages.enabled: English only for now
+export const lang = () => { if (!twiOn()) return "en"; try { return localStorage.getItem(LS) === "tw" ? "tw" : "en"; } catch { return "en"; } };
 export const isTwi = () => lang() === "tw";
 
 /* ---------- capability (no call to Khaya) ---------- */
@@ -110,6 +111,7 @@ export function setLang(l) {
   document.dispatchEvent(new Event("walo-refresh"));
 }
 export function apply() {
+  if (!twiOn()) { try { localStorage.removeItem(LS); localStorage.removeItem(LC); } catch { /* */ } } // phones left in Twi mode come back to English
   document.documentElement.lang = isTwi() ? "tw" : "en";
   if (isTwi()) { status(); dict(); startDom(); } else stopDom();
 }
