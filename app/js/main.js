@@ -81,6 +81,7 @@ function render(keepScroll = false) {
 document.addEventListener("click", (e) => {
   if (e.target.closest("#back")) { if (history.length > 1) history.back(); else location.hash = "#/"; return; }
   const pc = e.target.closest("#placechip"); if (pc) { openPlacePicker(null, pc); }
+  const po = e.target.closest("[data-place-open]"); if (po) { openPlacePicker("#/now", po); }
   if (e.target.closest("#langchip")) setLang(isTwi() ? "en" : "tw");
 });
 /* over a photo band the top bar is clear; once the page scrolls it turns solid again */

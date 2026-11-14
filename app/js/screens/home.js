@@ -18,7 +18,7 @@ export function render() {
   <div class="stack lift">
     ${focusCard(p, fs)}
     <div class="pgrid">
-      ${card({ href: "#/now", ph: P.plant_here, ic: "map-pin", title: "What to plant here", sub: `Now, in ${esc(placeLabel(p))}` })}
+      ${card({ tag: "button", id: "pick-place", ph: P.plant_here, ic: "map-pin", title: "What to plant here", sub: `Now, in ${esc(placeLabel(p))}` })}
       ${card({ tag: "button", id: "pick-crop", ph: P.where_crop, ic: "sprout", title: "Where my crop grows best", sub: "Pick a crop" })}
       ${card({ href: "#/doctor", ph: P.doctor, ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", wide: true, attrs: "data-net" })}
     </div>
@@ -47,6 +47,7 @@ export function fieldCard(f) {
 }
 export function mount(root) {
   root.querySelector("#change-main").addEventListener("click", (e) => openMainCropPicker(e.currentTarget));
+  root.querySelector("#pick-place").addEventListener("click", (e) => openPlacePicker("#/now", e.currentTarget));
   root.querySelector("#pick-crop").addEventListener("click", (e) => openCropPicker("where", e.currentTarget, (id) => { setCrop(id); location.hash = `#/crop/${id}/where`; }));
 }
 export { openPlacePicker };

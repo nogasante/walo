@@ -2,7 +2,7 @@
 import { online } from "../net.js";
 import { place, placeLabel } from "../store.js";
 import { cropGroups, forecastFor, fcOnset, agroOf, CFG } from "../data.js";
-import { answer, whyBody, note, icon, hero, cropTile, groupedCrops } from "../ui.js";
+import { answer, whyBody, note, icon, hero, cropTile, groupedCrops, btn } from "../ui.js";
 import { esc, weekday, MONTHS_LONG } from "../util.js";
 import { statusLine, rainDetails, yearsOf, rainStrip } from "./words.js";
 
@@ -32,6 +32,7 @@ export function render() {
   return `${hero({ img: P.img, pos: P.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: "What to plant here now" })}
   <div class="stack lift">
     ${answer({ ...a, extra: rainStrip(p), why: { title: "Why this answer", html: why }, say, credit: fo ? "NASA data + forecast" : "NASA data" })}
+    ${btn(`Not ${esc(placeLabel(p))}? Change location`, { kind: "secondary", ic: "map-pin", attrs: "data-place-open" })}
     ${online() ? "" : note(fo ? "You are offline: Walo uses the last forecast it saved." : "Using usual weather (no forecast offline).", "wifi-off")}
     ${groupedCrops(groups, tile)}
     ${note(`Usual weather is not a promise: watch your own rain too.`)}
