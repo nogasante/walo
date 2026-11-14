@@ -2,11 +2,11 @@
 
 ## 2026-11-14 — first run, a real sign-in door, and looking stops moving the farm
 
-Cache `walo-v28`.
+Cache `walo-v29`.
 
 ### Added
 
-- **First run** (`#/welcome`, `js/screens/welcome.js`): one screen asking *where is your farm*, then *what do you mainly grow*, with **Use my location** and a town list. No town is chosen for her. It only appears when no place has ever been chosen and there is no real field to read one from — an existing farmer never sees it.
+- **First run** (`#/welcome`, `js/screens/welcome.js`): the two questions Walo exists to answer, as two doors — **I have a farm / What can I grow there?** and **I want to plant a crop / Where should I plant it?** — then only the one thing that door needs. Door one asks the place (Use my location, or the town list) and answers with the crops that do well there; door two asks the crop and opens its best places. No town is chosen for her. It only appears when no place has ever been chosen and there is no real field to read one from, so an existing farmer never sees it.
 - **Sign-in door**: the backup screen is now **"Sign in or back up"**, and the first-run screen links to it, so a farmer with a new phone can find her way back to her fields. Nothing was added to accounts: it is still an email plus a one-time code, and it is still optional.
 
 ### Changed
