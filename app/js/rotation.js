@@ -96,8 +96,16 @@ function buildOption(c, after, p, { soil, rainFactor, health, pass = 60, same = 
     "Rain is a NASA POWER grid of about 50 km, not a gauge in your field.",
     sa.kind === "index" ? `The price pattern is from ${(sa.years && sa.years[sa.years.length - 1]) || "the last recorded years"}, before this season.` : "No price pattern here, so money is not part of this card.",
   ];
+  // one sentence a person can read at a glance, for the comparison list: no numbers to hold in the head
+  const obits = [];
+  if (w.pct != null) obits.push(w.pct >= 80 ? "the rain carries it" : `the rain covers ${w.pct}% of its water`);
+  if (r.n_fix) obits.push("it adds nitrogen");
+  else if (r.cover >= 3) obits.push("it covers the ground");
+  else if (r.cover === 1) obits.push("it leaves the ground bare");
+  if (same) obits.push("the same family as now, so its pests come back");
+  const oneLine = obits.join(", ").replace(/^./, (ch) => ch.toUpperCase()) + ".";
   return {
-    c, r, same, sa, days, hot, heatT,
+    c, r, same, sa, days, hot, heatT, oneLine,
     need: w.need, peff: w.usable, usualRain: w.usual, rainPct: w.pct,
     deficit: w.deficit, waterPct: w.pct,
     soilPts: sp.pts, erosion: sp.erosion, omLow: sp.omLow,

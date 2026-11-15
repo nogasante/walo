@@ -1,9 +1,10 @@
-/* After this crop: the Field Shift answer. One recommendation, the evidence behind it, and everything else folded
-   away — because a farmer deciding what to plant should not have to read five cards and four controls to get there.
+/* After this crop: the Field Shift answer. One recommendation, the evidence for it, and a comparison she can read
+   at a glance — not the same wall of cards behind a tap.
 
-   On the screen: the answer, the NASA rain picture (with the ground facts in one line), the one recommended crop,
-   and a single row to change what Walo goes by. The other crops are one tap away under "Compare"; the rain
-   scenario, her limit and her soil are all inside that one row's sheet. */
+   On the screen: the answer, the NASA rain picture (ground facts in one line), one card for the recommended crop,
+   then a list of the other crops where each is a single sentence, and one row to change what Walo goes by.
+   The sheet behind that row asks one question at a time: rain, limit, soil — three taps, never nine options at once.
+   Nothing in the reasoning was cut; it is the reading that got smaller. */
 import { place, placeLabel, limit, setLimit, rainPlan, setRainPlan, soilChoice, setSoilChoice, farm } from "../store.js";
 import { crop, farmPlace, farmProgress, monthName, soilFor, scoreCrop, agroOf, CFG } from "../data.js";
 import { rotationOptions, LIMITS, RAIN_PLANS, SOILS, fitChip, PASS_AT } from "../rotation.js";
@@ -12,12 +13,11 @@ import { esc, fmt } from "../util.js";
 
 export const title = (id) => { const c = crop(id); return c ? `After ${c.name.toLowerCase()}` : "After this crop"; };
 
-let PLACE_NOW = null; // the place the cards were built for, so the Why? text uses the same one
+let PLACE_NOW = null;
 const placeNow = () => PLACE_NOW || place();
 const soilLabel = (id) => (SOILS.find((s) => s.id === id) || SOILS[1]).label.toLowerCase();
 const limitOf = (id) => LIMITS.find((x) => x.id === id) || LIMITS[0];
 const rainOf = (id) => RAIN_PLANS.find((x) => x.id === id) || RAIN_PLANS[1];
-/* NDVI is a number for us, a word for her */
 const coverWord = (h) => ((h.ndvi_peak || 0) >= 0.45 ? "thick" : (h.ndvi_peak || 0) >= 0.3 ? "patchy" : "thin");
 
 /* the water line: NASA rain against what this crop needs, after this soil has taken its share */
@@ -25,65 +25,70 @@ function waterLine(o) {
   if (o.waterPct == null) return `<p class="wline small"><span>${icon("droplets")}Walo has no water balance for this crop yet.</span></p>`;
   const tone = o.waterPct >= 80 ? "good" : o.waterPct >= 60 ? "wait" : "bad";
   const enough = o.waterPct >= 100;
-  return `<div class="wline"><div class="wline-h"><span>${icon("cloud-rain")}${enough ? "The rain here covers all the water it needs" : `The rain covers ${o.waterPct}% of the water it needs`}</span><small>${fmt(o.peff)} mm of ${fmt(o.need)}</small></div>
+  return `<div class="wline"><div class="wline-h"><span>${icon("cloud-rain")}${enough ? "The rain covers all the water it needs" : `The rain covers ${o.waterPct}% of the water it needs`}</span><small>${fmt(o.peff)} of ${fmt(o.need)} mm</small></div>
     <div class="nbar ${tone}"><i style="width:${Math.max(4, Math.min(100, o.waterPct))}%"></i></div></div>`;
 }
-function heatLine(o) {
-  if (!o.hot || o.hot < 3) return "";
-  return `<p class="wline small"><span>${icon("thermometer-sun")}About ${o.hot} days above ${o.heatT} °C while it flowers</span></p>`;
-}
-function forageLine(o) {
+/* the one extra fact worth a line on the lead card: what the field gives back after harvest */
+function sideFact(o) {
   const f = o.r && o.r.forage;
-  return f ? `<p class="wline small"><span>${icon("wheat")}Livestock: ${esc(f.line)}</span></p>` : "";
-}
-/* money is a note, not a ranking term, and the line says so */
-function priceLine(o) {
-  const sa = o.sa || {};
-  if (sa.kind === "index") return `<p class="wline small"><span>${icon("tag")}${sa.store ? `Prices usually rise by ${monthName(sa.store.month)}: it can be stored.` : "Prices do not usually rise much after harvest."}</span></p>`;
-  if (sa.kind === "spot") return `<p class="wline small"><span>${icon("tag")}Sold at ${esc(sa.spot.market)} market${sa.spot.km != null ? `, ${fmt(sa.spot.km)} km away` : ""}.</span></p>`;
-  return `<p class="wline small"><span>${icon("tag")}No price record here yet.</span></p>`;
+  if (f) return `<p class="wline small"><span>${icon("wheat")}${esc(f.line)}</span></p>`;
+  if (o.hot >= 6) return `<p class="wline small"><span>${icon("thermometer-sun")}About ${o.hot} days above ${o.heatT} °C while it flowers</span></p>`;
+  return "";
 }
 
-function optionCard(o, pass, { lead = false } = {}) {
-  const role = (o.r && o.r.role) || "";
-  const chip = fitChip(o, pass);
-  const p = placeNow(), fit = scoreCrop(o.c, p).fit || {};
-  const why = whyBody(
+/* everything Walo knows about one crop, in the sheet — this is where the detail is allowed to live */
+function whyFor(o) {
+  const fit = scoreCrop(o.c, placeNow()).fit || {}, sa = o.sa || {};
+  return whyBody(
     [
-      o.same ? `This is what grows in the field now, so it is the one to beat. ${role}.` : role ? `${role}.` : "",
+      o.same ? `This is what grows in the field now, so it is the one to beat. ${(o.r && o.r.role) || ""}.` : (o.r && o.r.role ? `${o.r.role}.` : ""),
       ...o.reasons.slice(0, 3),
+      o.r && o.r.forage ? `Livestock: ${o.r.forage.line}` : "",
     ].filter(Boolean),
     [
       o.need != null
         ? `Water, from NASA POWER rain for this season through the FAO-56 balance: it needs about ${fmt(o.need)} mm, the usual rain gives ${fmt(o.usualRain)} mm, and after this soil holds its share that is ${fmt(o.peff)} mm (${o.waterPct}% of the need). WRSI ${fit.wrsi ?? "not judged"}.`
         : "A long-season crop: Walo does not judge its water against one rainy season.",
-      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"} — a legume, ground cover, and whether it is the same family as the crop already there. These are counted, not weighted.`,
+      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"}, counted not weighted — a legume, ground cover, whether it is the same family, and whether the ground here can wash.`,
       o.hot ? `About ${o.hot} days above ${o.heatT} °C usually fall while it flowers.` : "",
+      sa.kind === "index" ? (sa.store ? `Prices usually rise by ${monthName(sa.store.month)}, so it can be stored. Shown here, never counted in the order.` : "Prices do not usually rise much after harvest. Shown here, never counted in the order.")
+        : sa.kind === "spot" ? `Sold at ${sa.spot.market} market${sa.spot.km != null ? `, ${fmt(sa.spot.km)} km away` : ""}. Shown here, never counted.` : "No price record here, so money plays no part.",
       o.r && o.r.src ? `Crop traits: ${o.r.src} (guides listed in About). Rules of thumb, not measurements of your field.` : "Crop traits are extension rules of thumb; rain, heat and slope come from NASA POWER, MODIS and a DEM sample.",
       ...o.gaps.map((g) => `What Walo does not know: ${g}`),
     ].filter(Boolean),
   );
-  return `<article class="nextcard${lead ? " lead" : ""}">
+}
+
+/* the recommended crop: photo, chip, the water bar, one fact, two buttons. That is the whole card. */
+function leadCard(o, pass) {
+  const chip = fitChip(o, pass);
+  return `<article class="nextcard lead">
     <div class="nc-top">
       ${o.c.img ? `<img class="nc-img" src="${esc(o.c.img)}" alt="" loading="lazy" style="object-position:${esc(o.c.pos || "50% 50%")}">` : ""}
-      <div class="nc-t"><b>${esc(o.same ? `${o.c.name} again` : o.c.name)}</b><small>${esc(role)}</small></div>
+      <div class="nc-t"><b>${esc(o.c.name)}</b><small>${esc((o.r && o.r.role) || "")}</small></div>
       <span class="chip ${chip.kind}">${chip.text}</span>
     </div>
-    ${o.reasons[0] && !o.same && !lead ? `<p class="nc-why">${esc(o.reasons[0])}</p>` : ""}
     ${waterLine(o)}
-    ${heatLine(o)}
-    ${forageLine(o)}
-    ${priceLine(o)}
-    ${o.risks.length ? `<p class="nc-risk">${icon("triangle-alert")}<span>${esc(o.risks[0])}</span></p>` : ""}
-    ${lead ? "" : `<p class="wline small gap"><span>${icon("info")}${esc(o.gaps[0])}</span></p>`}
+    ${sideFact(o)}
     <div class="nc-acts">
-      ${btn(o.same ? "Plant it again" : "Plant this", { href: `#/start/${esc(o.c.id)}`, ic: "sprout" })}
-      <button type="button" class="btn secondary" data-sheet="${sheet(`Why ${o.c.name}?`, why)}">Why?</button>
+      ${btn("Plant this", { href: `#/start/${esc(o.c.id)}`, ic: "sprout" })}
+      <button type="button" class="btn secondary" data-sheet="${sheet(`Why ${o.c.name}?`, whyFor(o))}">Why?</button>
     </div>
   </article>`;
 }
 
-/* the rain here, and in one line the ground under it: the whole environmental picture in a single card */
+/* the alternatives: one row each, one sentence each. Tap a row for the full case. */
+function compareRows(list, pass) {
+  return list.map((o) => {
+    const chip = fitChip(o, pass);
+    return `<button type="button" class="cmprow" data-sheet="${sheet(`Why ${o.c.name}?`, whyFor(o))}">
+      <span class="cmp-t"><b>${esc(o.same ? `${o.c.name} again` : o.c.name)}</b><small>${esc(o.oneLine)}</small></span>
+      <span class="chip ${chip.kind}">${chip.text}</span>${icon("chevron-right")}
+    </button>`;
+  }).join("");
+}
+
+/* the rain here, and in one line the ground under it: the environmental picture in a single card */
 function nasaCard(p, h) {
   const ag = agroOf(p), months = (ag && ag.months) || [];
   if (!months.length) return "";
@@ -97,26 +102,42 @@ function nasaCard(p, h) {
   </div>`;
 }
 
-/* every control in one sheet: the rain she is planning for, what limits her, and her soil */
+/* one question at a time, three questions, then it closes and the screen has changed. Nothing is applied until
+   she finishes, so a half-finished sheet never leaves the screen in a state she did not ask for. */
 function tuneSheet(p, soil, lim, rain) {
   const auto = soilFor(p);
-  const html = `<div class="stack">
-    <p class="pick-h">Rain this season</p>
-    <div class="pick">${RAIN_PLANS.map((x) => `<button type="button" class="pickrow${x.id === rain ? " on" : ""}" data-scen="${x.id}">${icon("cloud-rain")}<span><b>${x.label}</b><small>${x.line}</small></span></button>`).join("")}</div>
-    <p class="pick-h">What limits you this season?</p>
-    <div class="pick">${LIMITS.map((x) => `<button type="button" class="pickrow${x.id === lim ? " on" : ""}" data-limit="${x.id}">${icon(x.ic)}<span><b>${x.label}</b><small>${x.line}</small></span></button>`).join("")}</div>
-    <p class="pick-h">What is your soil like when you squeeze a handful?</p>
-    <div class="pick">${SOILS.map((x) => `<button type="button" class="pickrow${x.id === soil ? " on" : ""}" data-soil="${x.id}">${icon("droplets")}<span><b>${x.label}</b><small>${x.feel}</small></span></button>`).join("")}</div>
-    <p class="note-text">${esc(auto.note)} Walo starts from that and you can correct it any time.</p>
-  </div>`;
-  return { title: "Change what Walo goes by", html, onOpen: (b) => b.addEventListener("click", (e) => {
-    const rs = e.target.closest("[data-scen]");
-    if (rs) { setRainPlan(rs.dataset.scen); closeSheet(true); return; }
-    const li = e.target.closest("[data-limit]");
-    if (li) { setLimit(li.dataset.limit); closeSheet(true); return; }
-    const so = e.target.closest("[data-soil]");
-    if (so) { setSoilChoice(so.dataset.soil); closeSheet(true); }
-  }) };
+  let i = 0;
+  const pick = { rain, limit: lim, soil };
+  const steps = [
+    { q: "Rain this season", sub: "Walo plans for the usual rain unless you tell it otherwise.", attr: "data-scen", value: pick.rain, rows: RAIN_PLANS.map((x) => ({ id: x.id, ic: "cloud-rain", label: x.label, line: x.line })) },
+    { q: "What limits you this season?", sub: "This decides what Walo puts first, not what it hides.", attr: "data-limit", value: pick.limit, rows: LIMITS.map((x) => ({ id: x.id, ic: x.ic, label: x.label, line: x.line })) },
+    { q: "Your soil, in your hand", sub: auto.note, attr: "data-soil", value: pick.soil, rows: SOILS.map((x) => ({ id: x.id, ic: "droplets", label: x.label, line: x.feel })) },
+  ];
+  const html = (k) => {
+    const s = steps[k];
+    return `<div class="stack">
+      <p class="step-n">Question ${k + 1} of ${steps.length}</p>
+      <p class="pick-h">${esc(s.q)}</p>
+      ${s.sub ? `<p class="note-text">${esc(s.sub)}</p>` : ""}
+      <div class="pick">${s.rows.map((x) => `<button type="button" class="pickrow${x.id === s.value ? " on" : ""}" ${s.attr}="${x.id}">${icon(x.ic)}<span><b>${esc(x.label)}</b><small>${esc(x.line)}</small></span></button>`).join("")}</div>
+      <p class="note-text">Step ${k + 1} of ${steps.length}: pick one and Walo asks the next.</p>
+    </div>`;
+  };
+  return {
+    title: "Change what Walo goes by",
+    html: html(0),
+    onOpen: (b) => b.addEventListener("click", (e) => {
+      const r = e.target.closest("[data-scen],[data-limit],[data-soil]");
+      if (!r) return;
+      if (r.dataset.scen) pick.rain = r.dataset.scen;
+      else if (r.dataset.limit) pick.limit = r.dataset.limit;
+      else pick.soil = r.dataset.soil;
+      if (i + 1 < steps.length) { i++; b.innerHTML = html(i); return; }
+      // all three applied at once, so the screen reorders once and the sheet closes on the last answer
+      setRainPlan(pick.rain); setLimit(pick.limit); setSoilChoice(pick.soil);
+      closeSheet(true);
+    }),
+  };
 }
 
 export function render(id, fid) {
@@ -137,8 +158,8 @@ export function render(id, fid) {
   const sub = `${when}${top.reasons[0] || ""}${top.reasons[1] ? ` ${top.reasons[1]}` : ""}`;
   const why = whyBody(
     [
-      "Walo does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown on each card and never counted in that order.",
-      `Right now: ${plan.label.toLowerCase()} (${plan.line}), ${limitOf(lim).label.toLowerCase()}, ${soilLabel(soil)} ground. Change any of them and the order follows that same rule.`,
+      "Walo does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown and never counted.",
+      `Right now: ${plan.label.toLowerCase()} (${plan.line}), ${limitOf(lim).label.toLowerCase()}, ${soilLabel(soil)} ground.`,
     ],
     [
       `NASA POWER daily rain and temperature 1991–2025 at ${p.lat.toFixed(2)}°, ${p.lon.toFixed(2)}°; FAO-56 stage lengths and crop coefficients; EcoCrop temperature limits.`,
@@ -151,12 +172,9 @@ export function render(id, fid) {
   <div class="stack lift">
     ${answer({ kind: top.same || !anyPass ? "info" : "now", tone: top.same || !anyPass ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
     ${nasaCard(p, health)}
-    ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is ordered below, and each card says what it costs.`, "triangle-alert") : ""}
-    ${optionCard(top, pass, { lead: true })}
-    ${others.length ? `<details class="more">
-      <summary>${icon("chevron-down")}<span>Compare with ${others.length} other ${others.length === 1 ? "crop" : "crops"}, including ${esc(after.name.toLowerCase())} again</span></summary>
-      <div class="more-body">${others.map((o) => optionCard(o, pass)).join("")}</div>
-    </details>` : ""}
+    ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is below, and each row says what it costs.`, "triangle-alert") : ""}
+    ${leadCard(top, pass)}
+    ${others.length ? `<div class="cmp"><p class="cmp-h">What else could follow it</p>${compareRows(others, pass)}</div>` : ""}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
       ${icon("leaf")}<span><b>Change what Walo goes by</b><small>${esc(limitOf(lim).label)} · ${esc(soilLabel(soil))} ground · ${esc(plan.label.toLowerCase())}</small></span>${icon("chevron-right")}
     </button>
@@ -173,7 +191,6 @@ export function mount(root) {
   root.addEventListener("click", (e) => {
     const fb = e.target.closest("[data-fb]");
     if (!fb) return;
-    // an honest count of whether the answer helped: no name, no place, no field, just crop and verdict
     const box = fb.closest("[data-fb-crop]"), vote = fb.dataset.fb;
     try { fetch("/api/log", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ev: "rot_help", owner: "next", kind: vote, type: box ? box.dataset.fbCrop : "" }) }).catch(() => {}); } catch { /* offline is fine */ }
     if (box) box.innerHTML = `<p class="fb-done">${icon("circle-check")}<span>Thank you. Walo counts these to know if the advice is useful.</span></p>`;

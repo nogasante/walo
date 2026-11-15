@@ -535,12 +535,13 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .ground-line { display: flex; align-items: center; gap: 7px; margin: 2px 0 0; padding-top: 8px; border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--muted); }
 .ground-line .ic { width: 16px; height: 16px; color: var(--brand); flex: none; }
 .ground-line b { color: var(--ink); }
-.more { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
-.more summary { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 10px 14px; font-size: var(--fs-s); font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; }
-.more summary::-webkit-details-marker { display: none; }
-.more summary .ic { width: 20px; height: 20px; color: var(--muted); flex: none; transition: transform .2s; }
-.more[open] summary .ic { transform: rotate(180deg); }
-.more summary span { flex: 1; }
-.more-body { display: flex; flex-direction: column; gap: 12px; padding: 0 12px 12px; }
-.more-body .nextcard { margin: 0; }
+.cmp { display: flex; flex-direction: column; gap: 8px; }
+.cmp-h { margin: 0 2px; font-size: var(--fs-s); font-weight: 700; color: var(--ink); }
+.cmprow { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.cmprow .cmp-t { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cmprow b { font-size: var(--fs-s); }
+.cmprow small { font-size: var(--fs-xs); line-height: 1.35; color: var(--muted); }
+.cmprow > .chip { flex: none; }
+.cmprow > .ic:last-child { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.step-n { margin: 0; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
 .nextcard.lead { border-color: var(--brand); }
