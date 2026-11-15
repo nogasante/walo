@@ -13,7 +13,7 @@ export function openPlacePicker(next, from) {
     <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
     <p class="muted small" data-none hidden>No town matches that.</p>
     <div class="list">${towns().sort((a, b) => a.name.localeCompare(b.name)).map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`;
-  openSheet({ title: "Where is your farm?", html, onOpen: (b) => {
+  openSheet({ title: "Choose the town nearest your farm", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
       const t = e.target.closest("[data-town]");
       if (t) { setPlace(t.dataset.town); closeSheet(true); go(next); return; }
@@ -35,7 +35,7 @@ export function openCountryPicker(from, host) {
       <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
     </button>`;
   }).join("");
-  openSheet({ title: "Which country?", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
+  openSheet({ title: "Choose your country", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${cards}</div>
     <p class="muted small">You will pick your town again: a town belongs to one country. "Dates not checked yet" means the planting dates come from published calendars, not from a farmer there.</p>`, onOpen: (b) => {
@@ -82,7 +82,7 @@ export function openCropPicker(mode, from, onPick) {
     <p class="muted small" data-none hidden>No crop matches that.</p>
     <div class="tiles">${list.map(tile).join("")}</div>
     ${mode !== "where" ? `<p class="muted small">${esc(placeLabel(p))}: crops that grow in this zone come first.</p>` : ""}`;
-  openSheet({ title: mode === "where" ? "Which crop?" : "Pick your crop", html, onOpen: (b) => {
+  openSheet({ title: mode === "where" ? "Choose a crop" : "Choose your crop", html, onOpen: (b) => {
     b.addEventListener("click", (e) => { const t = e.target.closest("[data-crop]"); if (t && !t.disabled) { closeSheet(true); onPick(t.dataset.crop); } });
   } }, from);
 }
@@ -95,7 +95,7 @@ export function openMainCropPicker(from) {
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-main="${c.id}" ${c.id === cur ? 'aria-current="true"' : ""}>${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
     <p class="muted small">Sell, Plant Doctor and crop pages open on this crop.</p>`;
-  openSheet({ title: "My main crop", html, onOpen: (b) => {
+  openSheet({ title: "Choose your main crop", html, onOpen: (b) => {
     b.addEventListener("click", (e) => { const t = e.target.closest("[data-main]"); if (t) { setMainCrop(t.dataset.main || null); closeSheet(true); } });
   } }, from);
 }

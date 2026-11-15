@@ -50,6 +50,8 @@ body[data-route="welcome"] .topbar { display: none; }
 .door-t small { font-size: var(--fs-xs); color: var(--muted); line-height: 1.3; }
 .wl-signin { margin-top: var(--sp); }
 /* country choices: flag on top, name under, two per row */
+/* a filtered-out item must really go: .tile, .ccard and .door set their own display, which beats [hidden] */
+[hidden] { display: none !important; }
 .search-in { width: 100%; min-height: var(--tap); margin: 0 0 10px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font: inherit; color: var(--ink); }
 .search-in::placeholder { color: var(--muted); }
 .ccards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

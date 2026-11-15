@@ -48,7 +48,7 @@ function countryStep() {
   const cur = (country() || {}).id;
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">Which country do you farm in?</h1>
+    <h1 class="q wl-q">Choose the country you farm in</h1>
     <input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${countryIds().map((k) => {
@@ -66,7 +66,7 @@ function placeStep() {
   const list = towns().slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">Where is your farm?</h1>
+    <h1 class="q wl-q">Choose the town nearest your farm</h1>
     ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
     ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'data-wchange' }) : ""}
@@ -86,8 +86,8 @@ function cropStep() {
   const cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">${asking ? "Which crop do you want to plant?" : `What can you grow in ${esc(placeLabel(place()))}?`}</h1>
-    ${note(asking ? "Walo will show you where it does best." : "The crops that do well here come first. Pick the one you grow.", "sprout")}
+    <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : `Crops that grow well in ${esc(placeLabel(place()))}`}</h1>
+    ${note(asking ? "Walo will show you where it does best." : "Best matches first. Tap the crop you grow.", "sprout")}
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <p class="muted small" data-none hidden>No crop matches that.</p>
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
@@ -102,7 +102,7 @@ function placesStep() {
   if (!c) { W.step = "doors"; return doors(); }
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">Where should you plant ${esc(c.name.toLowerCase())}?</h1>
+    <h1 class="q wl-q">Towns where ${esc(c.name.toLowerCase())} grows well</h1>
     ${placesHtml(c, "Tap the town where you will plant it.")}
   </div>`;
 }
