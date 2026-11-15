@@ -117,6 +117,14 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
   subscribe(() => render(true));
   setForecastListener(() => render(true));
   render();
+  // she just picked a country: show that country's towns straight away, not a Home with no place
+  try {
+    if (localStorage.getItem("walo.asktown")) {
+      localStorage.removeItem("walo.asktown");
+      if (parse().name === "welcome") { welcome.askPlace(); render(); }
+      else openPlacePicker();
+    }
+  } catch { /* private mode */ }
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
     navigator.serviceWorker.register("sw.js").then((reg) => {
       // a new deploy should reach a phone that is never fully closed: check on return to the screen, and hourly

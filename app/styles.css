@@ -34,21 +34,27 @@ img { display: block; max-width: 100%; }
 .brand { color: var(--muted); }
 .brand-logo { width: 30px; height: 30px; }
 
-/* ---------- first run: two doors, one look, centred ---------- */
-.wl { align-items: stretch; text-align: center; padding-top: var(--sp-s); }
-.wl-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--sp-s); }
-.wl-doors { display: grid; gap: 12px; }
-.door { display: flex; align-items: center; gap: 14px; width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+/* ---------- first run: no top bar, the brand centred, two column cards ---------- */
+body[data-route="welcome"] .topbar { display: none; }
+.wl { align-items: stretch; text-align: center; padding-top: var(--sp); }
+.wl-hero { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0 2px; }
+.wl-to { font-size: var(--fs-s); color: var(--muted); letter-spacing: .02em; }
+.wl-mark { width: 96px; height: 96px; margin: 2px 0; }
+.wl-name { font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--ink); }
+.wl-doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: var(--sp); }
+.door { display: flex; flex-direction: column; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); font: inherit; text-align: center; cursor: pointer; }
 .door:active { transform: scale(.985); }
-.door-pic { width: 84px; height: 84px; flex: none; border-radius: 14px; object-fit: cover; }
-.door-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.door-t b { font-size: var(--fs-h); line-height: 1.25; }
-.door-t small { font-size: var(--fs-s); color: var(--muted); line-height: 1.3; }
-.door-go { color: var(--muted); display: grid; place-items: center; padding-right: 6px; }
-.door-go .ic { width: 20px; height: 20px; }
-.wl-signin { margin-top: var(--sp-s); }
-.wback { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: -6px 0 -8px -8px; padding: 0 10px 0 4px; border: 0; background: none; color: var(--brand); font: inherit; font-weight: 700; cursor: pointer; }
-.wback .ic { width: 20px; height: 20px; }
+.door-pic { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.door-t { display: flex; flex-direction: column; gap: 2px; padding: 10px 10px 14px; }
+.door-t b { font-size: var(--fs); line-height: 1.25; }
+.door-t small { font-size: var(--fs-xs); color: var(--muted); line-height: 1.3; }
+.wl-signin { margin-top: var(--sp); }
+/* the steps after the doors: back far left, brand centred, no bar */
+.whead { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; margin: -4px 0 2px; }
+.wback { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--ink); cursor: pointer; }
+.wbrand { display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: var(--ink); font-size: var(--fs-h); font-weight: 700; text-decoration: none; }
+.wbrand img { width: 26px; height: 26px; }
+.wl-q { text-align: center; }
 .tb-gap { width: var(--sp-s); }
 .placechip { display: inline-flex; align-items: center; gap: 6px; max-width: 46%; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--fs-s); font-weight: 600; cursor: pointer; }
 .placechip .ic { width: 18px; height: 18px; color: var(--brand); }

@@ -37,9 +37,12 @@ export function openCountryPicker(from, host) {
       if (!t || t.dataset.country === cur) return;
       setCountry(t.dataset.country);
       try { await loadCountryData(); } catch { /* planting still works without prices */ }
+      // a new country means new towns, map and prices everywhere, so start cleanly - and land on that
+      // country's towns straight away instead of dropping her on Home with no place
+      try { localStorage.setItem("walo.asktown", "1"); } catch { /* full */ }
       closeSheet(true);
       location.hash = "#/";
-      location.reload(); // a new country means new towns, map and prices everywhere: start the app again cleanly
+      location.reload();
     });
   } }, from || host);
 }
