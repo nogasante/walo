@@ -53,13 +53,14 @@ function countryStep() {
     <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${countryIds().map((k) => {
       // no "Selected" badge: a tap on a country moves her on to its towns, so there is no state to show
-      const c = country(k), sub = c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+      // the line says where the planting dates come from, in words a farmer would use
+      const c = country(k), sub = c.status === "live" ? "Dates checked with a farmer" : "Dates from crop calendars";
       return `<button type="button" class="ccard" data-wcountry="${k}">
         <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
         <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
       </button>`;
     }).join("")}</div>
-    ${note("Your town comes next. Walo only covers these countries for now.", "map-pin")}
+    ${note("Dates come from published crop calendars. In Ghana a farmer there also checked them.", "map-pin")}
   </div>`;
 }
 

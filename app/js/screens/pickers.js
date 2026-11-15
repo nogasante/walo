@@ -29,7 +29,7 @@ const go = (next) => { if (next && location.hash !== next) location.hash = next;
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
   const cards = countryIds().map((k) => {
-    const c = country(k), sub = c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+    const c = country(k), sub = c.status === "live" ? "Dates checked with a farmer" : "Dates from crop calendars";
     return `<button type="button" class="ccard" data-country="${k}">
       <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
       <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
@@ -38,7 +38,7 @@ export function openCountryPicker(from, host) {
   openSheet({ title: "Choose your country", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${cards}</div>
-    <p class="muted small">You will pick your town again: a town belongs to one country. "Dates not checked yet" means the planting dates come from published calendars, not from a farmer there.</p>`, onOpen: (b) => {
+    <p class="muted small">You will pick your town again: a town belongs to one country. Dates come from published crop calendars; in Ghana a farmer there also checked them.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
       if (!t) return;
