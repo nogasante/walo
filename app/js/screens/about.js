@@ -27,6 +27,7 @@ export function render() {
     <h2 class="h2">${icon("info")}What Walo cannot do yet</h2>
     <ul class="plain">
       <li>NASA weather covers about 50 km, not your exact field.</li>
+      <li>Suitability compares a crop with the year's rainfall and temperature ranges, so a very wet highland can look less suitable than it really is. Where a planting window exists, that calendar is the firmer answer.</li>
       <li>Planting advice uses the usual weather and a 10-day forecast. It is not a promise.</li>
       <li>Price patterns stop in July 2023. They show the usual season, not this year's price: ask at the market before you sell.</li>
       <li>Walo is in English for now. Twi is planned; it needs checking by a Twi speaker first.</li>

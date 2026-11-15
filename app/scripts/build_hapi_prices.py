@@ -182,7 +182,10 @@ def main():
                 continue
             name = r.get("location_name") or name
             currency = r.get("currency_code") or currency
-            mk = f"{r.get('market_name')} ({r.get('admin1_name')})"
+            # HAPI's market name sometimes already ends with its county: "Eldoret town (Uasin Gishu)"
+            mn = " ".join((r.get("market_name") or "").split())
+            a1 = " ".join((r.get("admin1_name") or "").split())
+            mk = mn if not a1 or f"({a1})" in mn else f"{mn} ({a1})"
             markets[mk] = {"lat": round(r["lat"], 4), "lon": round(r["lon"], 4)} if r.get("lat") is not None and r.get("lon") is not None else {}
             ent = crops.setdefault(cid, {"label": r.get("commodity_name"), "mk": {}})
             slot = ent["mk"].setdefault(mk, {})
