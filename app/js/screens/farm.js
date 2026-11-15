@@ -1,5 +1,5 @@
 /* My farm: where the field is now (stage from NASA temperatures), today's task, one alert, when to sell, photos. */
-import { farms, farm, updateFarm, removeFarm, saveBlob, placeLabel } from "../store.js";
+import { farms, farmsHere, farmsElsewhere, farm, updateFarm, removeFarm, saveBlob, placeLabel } from "../store.js";
 import { takePhotos, preparePhoto, lostPhoto, galleryButton, photoLabel, MSG } from "../photo.js";
 import { farmProgress, fetchGdd, farmAlert, sellAdvice, greenness, monthName, CFG, R, fieldRain, fieldSoil } from "../data.js";
 import { fieldTips } from "../tips.js";
@@ -11,13 +11,17 @@ import { hasSession } from "../sync.js";
 /* small, optional: back up fields so they follow the farmer to a new phone */
 export const backupLink = () => `<a class="sellcard" href="#/backup"><span class="tile-ic photo">${icon(hasSession() ? "cloud-check" : "cloud-upload")}</span><span>${hasSession() ? "Fields backed up" : "Sign in or back up"}<small>${hasSession() ? "They come back on a new phone" : "Your email is enough — no password"}</small></span>${icon("chevron-right")}</a>`;
 
-export const title = (id) => { const f = id && farm(id); return f ? f.name : farms().length === 1 ? farms()[0].name : "My fields"; };
+export const title = (id) => { const f = id && farmsHere().find((x) => x.id === id); return f ? f.name : farmsHere().length === 1 ? farmsHere()[0].name : "My fields"; };
 export function render(id) {
-  const all = farms();
+  // only the fields of the country in use: a field is tied to its town, and another country's markets and crop
+  // calendars do not apply to it
+  const all = farmsHere(), away = farmsElsewhere();
   if (!id && all.length === 1) id = all[0].id;
-  const f = id && farm(id);
+  const f = id && all.find((x) => x.id === id);
+  const awayNote = away.length ? note(`${away.length === 1 ? "One of your fields is" : `${away.length} of your fields are`} in another country. Switch country to follow ${away.length === 1 ? "it" : "them"}.`, "map-pin") : "";
   if (!f) {
     return `<div class="stack">
+      ${awayNote}
       ${all.length ? `<div class="fgrid">${all.map(fieldCard).join("")}</div>` : answer({ kind: "info", icon: "sprout", title: "No fields yet", sub: "Pick a crop and tap Start planting. Walo then follows your field to harvest." })}
       ${btn("Add a field", { href: "#/start", ic: "plus" })}
       ${all.some((x) => !x.demo) ? backupLink() : ""}

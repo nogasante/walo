@@ -1,5 +1,5 @@
 /* Home: my main crop today, the two ways in (my place -> what to plant now; a crop -> where it grows best), Plant Doctor, my fields. */
-import { place, placeLabel, placeChosen, farms, setCrop, mainCrop } from "../store.js";
+import { place, placeLabel, placeChosen, farmsHere, setCrop, mainCrop } from "../store.js";
 import { crop, farmProgress, plantStatus, CFG } from "../data.js";
 import { icon, cropImg, hero, ring } from "../ui.js";
 import { esc, roughDate, MONTHS_LONG } from "../util.js";
@@ -13,7 +13,7 @@ const card = ({ tag = "a", href, id, ph, ic, title, sub, wide = false, attrs = "
     <span class="pc-pic"><img src="${ph.img}" alt="" loading="lazy" style="object-position:${ph.pos}"><span class="badge">${icon(ic)}</span></span>
     <span class="pc-t"><b>${title}</b><small>${sub}</small></span></${tag}>`;
 export function render() {
-  const p = place(), fs = farms(), P = CFG().photos;
+  const p = place(), fs = farmsHere(), P = CFG().photos;
   return `${hero({ img: P.home.img, pos: P.home.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: `${greeting()}.<br>What do you want to know?` })}
   <div class="stack lift">
     ${focusCard(p, fs)}

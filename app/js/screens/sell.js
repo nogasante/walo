@@ -1,14 +1,14 @@
 /* Sell: opens on the farmer's own crops (one card per field, main crop first); one field opens straight on it.
    For each: when it usually sells best near that field (WFP/HDX price pattern), tied to its harvest, with the data's years and unit.
    "Check another crop" is a small option at the bottom. */
-import { place, placeLabel, farm, farms, setCrop, mainCrop } from "../store.js";
+import { place, placeLabel, farm, farmsHere, setCrop, mainCrop } from "../store.js";
 import { crop, sellAdvice, farmProgress, monthName, currency, priceNear, D, CFG, country, pricesUnreachable } from "../data.js";
 import { answer, whyBody, note, icon, link, cropImg, hero, monthBars, btn, chip } from "../ui.js";
 import { esc, fmt, roughDate, dayMonth } from "../util.js";
 import { sellLine } from "./farm.js";
 import { openCropPicker } from "./pickers.js";
 
-export const title = (id) => (crop(id) ? `Sell ${crop(id).name.toLowerCase()}` : farms().length === 1 ? `Sell ${crop(farms()[0].crop).name.toLowerCase()}` : "When to sell");
+export const title = (id) => (crop(id) ? `Sell ${crop(id).name.toLowerCase()}` : farmsHere().length === 1 ? `Sell ${crop(farmsHere()[0].crop).name.toLowerCase()}` : "When to sell");
 const mk = (m) => `${esc(m.name)} market (${fmt(m.km)} km)`;
 const isoDM = (d) => dayMonth(new Date(d + "T00:00:00")); /* price dates come as 2025-10-30 */
 const dayYear = (d) => `${isoDM(d)} ${d.slice(0, 4)}`; /* prices span sources and years, so the year is always shown */
@@ -18,7 +18,7 @@ const stalePrice = (d) => (Date.now() - new Date(d + "T00:00:00").getTime()) / 8
 const priceLine = (p) => `${stalePrice(p.d) ? "Last recorded price" : "Price"} (${dayYear(p.d)}): ${currency()} ${fmt(p.v, 2)} per kg at ${esc(p.name)} (${fmt(p.km)} km)${p.type === "exchange" ? ", traded on the Ghana Commodity Exchange" : ", market price"}.`;
 const other = (mine) => `<button type="button" class="linkbtn center" id="check-crop">${icon("search")}<span>${mine ? "Check another crop" : "Check a crop"}</span></button>`;
 /* the farmer's fields, main crop first, then the soonest harvest */
-const myFields = () => { const m = mainCrop(); return farms().map((f) => ({ f, pr: farmProgress(f) })).sort((a, b) => (b.f.crop === m) - (a.f.crop === m) || a.pr.harvest - b.pr.harvest); };
+const myFields = () => { const m = mainCrop(); return farmsHere().map((f) => ({ f, pr: farmProgress(f) })).sort((a, b) => (b.f.crop === m) - (a.f.crop === m) || a.pr.harvest - b.pr.harvest); };
 export function render(id, farmId) {
   if (!crop(id)) { const mine = myFields(); return mine.length === 1 ? detail(mine[0].f.crop, mine[0].f) : list(mine); }
   return detail(id, farmId ? farm(farmId) : null);
@@ -92,9 +92,9 @@ function detail(id, f) {
     ${best && sa.kind === "index" ? note(priceLine(best), "tag") : ""}
     ${note(dataLine, "calendar-days")}
     ${sa.better ? note(`${esc(sa.better.market.name)} market (${fmt(sa.better.market.km)} km) usually pays more.`, "store") : ""}
-    ${farms().length > 1 && f ? btn("All my crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}
-    ${!f && farms().length ? btn("My crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}
-    ${other(!!farms().length)}
+    ${farmsHere().length > 1 && f ? btn("All my crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}
+    ${!f && farmsHere().length ? btn("My crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}
+    ${other(!!farmsHere().length)}
   </div>`;
 }
 export function mount(root) {

@@ -1,7 +1,7 @@
 /* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
 import { load, setForecastListener, CFG, setActiveCountry, loadCountryData } from "./data.js";
-import { place, placeLabel, focusCrop, subscribe, hydrate, farms, countryId } from "./store.js";
+import { place, placeLabel, focusCrop, subscribe, hydrate, farmsHere, placeChosen, countryId } from "./store.js";
 import { icon, wire, resetSheets, closeSheet, stopSpeaking, openSheet, toast, note } from "./ui.js";
 import { esc } from "./util.js";
 import * as home from "./screens/home.js";
@@ -35,8 +35,9 @@ const ROUTES = {
 };
 const TABS = [["home", "#/", "house", "Home"], ["farm", "#/farm", "sprout", "My farm"], ["sell", null, "tag", "Sell"], ["doctor", null, "stethoscope", "Doctor"]];
 
-/* first run: no place chosen yet, and no real field to read it from. The demo field does not count. */
-const needsSetup = () => { try { return !localStorage.getItem("walo.place") && !farms().some((f) => !f.demo); } catch { return false; } };
+/* first run, or a country she has not picked a town in yet: no place chosen and no real field in THIS country to read
+   one from. A field in another country does not count, and the demo field never does. */
+const needsSetup = () => { try { return !placeChosen() && !farmsHere().some((f) => !f.demo); } catch { return false; } };
 const parse = () => { const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent); return { name: ROUTES[parts[0]] ? parts[0] : "home", a: parts[1], b: parts[2] }; };
 function topbar(r, rt) {
   const farmCtx = (r.name === "sell" && !r.a) || ((r.name === "sell" || r.name === "doctor") && r.b); // the fields' own places, not the chip
