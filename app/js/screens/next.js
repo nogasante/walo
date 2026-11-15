@@ -1,9 +1,9 @@
-/* After this crop: the Field Shift answer. One recommendation, then the case for it in numbers a farmer can see:
-   the usual rain each month from NASA, how much of a crop's water that rain covers on her soil, the hot days at
-   flowering, what the crop leaves for livestock, and what a place's slope and cover say about erosion.
+/* After this crop: the Field Shift answer. One recommendation, the evidence behind it, and everything else folded
+   away — because a farmer deciding what to plant should not have to read five cards and four controls to get there.
 
-   Three controls, and none of them is a weight: what limits her this season (nothing / water / cash), what her soil
-   is like in the hand, and which rain year she is planning for (less / usual / more). */
+   On the screen: the answer, the NASA rain picture (with the ground facts in one line), the one recommended crop,
+   and a single row to change what Walo goes by. The other crops are one tap away under "Compare"; the rain
+   scenario, her limit and her soil are all inside that one row's sheet. */
 import { place, placeLabel, limit, setLimit, rainPlan, setRainPlan, soilChoice, setSoilChoice, farm } from "../store.js";
 import { crop, farmPlace, farmProgress, monthName, soilFor, scoreCrop, agroOf, CFG } from "../data.js";
 import { rotationOptions, LIMITS, RAIN_PLANS, SOILS, fitChip, PASS_AT } from "../rotation.js";
@@ -17,10 +17,12 @@ const placeNow = () => PLACE_NOW || place();
 const soilLabel = (id) => (SOILS.find((s) => s.id === id) || SOILS[1]).label.toLowerCase();
 const limitOf = (id) => LIMITS.find((x) => x.id === id) || LIMITS[0];
 const rainOf = (id) => RAIN_PLANS.find((x) => x.id === id) || RAIN_PLANS[1];
+/* NDVI is a number for us, a word for her */
+const coverWord = (h) => ((h.ndvi_peak || 0) >= 0.45 ? "thick" : (h.ndvi_peak || 0) >= 0.3 ? "patchy" : "thin");
 
-/* the water line: NASA rain against what this crop needs, after this soil has taken its share, as a bar */
+/* the water line: NASA rain against what this crop needs, after this soil has taken its share */
 function waterLine(o) {
-  if (o.waterPct == null) return `<p class="wline small"><span>${icon("droplets")}Long season: Walo does not judge its water.</span></p>`;
+  if (o.waterPct == null) return `<p class="wline small"><span>${icon("droplets")}Walo has no water balance for this crop yet.</span></p>`;
   const tone = o.waterPct >= 80 ? "good" : o.waterPct >= 60 ? "wait" : "bad";
   const enough = o.waterPct >= 100;
   return `<div class="wline"><div class="wline-h"><span>${icon("cloud-rain")}${enough ? "The rain here covers all the water it needs" : `The rain covers ${o.waterPct}% of the water it needs`}</span><small>${fmt(o.peff)} mm of ${fmt(o.need)}</small></div>
@@ -34,19 +36,15 @@ function forageLine(o) {
   const f = o.r && o.r.forage;
   return f ? `<p class="wline small"><span>${icon("wheat")}Livestock: ${esc(f.line)}</span></p>` : "";
 }
-/* money is a note, not a ranking term, and the line says so instead of pretending otherwise */
+/* money is a note, not a ranking term, and the line says so */
 function priceLine(o) {
   const sa = o.sa || {};
-  if (sa.kind === "index") return `<p class="wline small"><span>${icon("tag")}${sa.store ? `Prices usually rise by ${monthName(sa.store.month)}: it can be stored.` : "Prices do not usually rise much after harvest."} Money is shown here, not counted in the order.</span></p>`;
-  if (sa.kind === "spot") return `<p class="wline small"><span>${icon("tag")}Sold at ${esc(sa.spot.market)} market${sa.spot.km != null ? `, ${fmt(sa.spot.km)} km away` : ""}. Money is shown, not counted.</span></p>`;
-  return `<p class="wline small"><span>${icon("tag")}No price record here yet, so money plays no part in this card.</span></p>`;
-}
-/* the brief asks each suggestion to say where the information runs out. This is that line, on the card itself. */
-function gapLine(o) {
-  return `<p class="wline small gap"><span>${icon("info")}${esc(o.gaps[0])}</span></p>`;
+  if (sa.kind === "index") return `<p class="wline small"><span>${icon("tag")}${sa.store ? `Prices usually rise by ${monthName(sa.store.month)}: it can be stored.` : "Prices do not usually rise much after harvest."}</span></p>`;
+  if (sa.kind === "spot") return `<p class="wline small"><span>${icon("tag")}Sold at ${esc(sa.spot.market)} market${sa.spot.km != null ? `, ${fmt(sa.spot.km)} km away` : ""}.</span></p>`;
+  return `<p class="wline small"><span>${icon("tag")}No price record here yet.</span></p>`;
 }
 
-function optionCard(o, pass) {
+function optionCard(o, pass, { lead = false } = {}) {
   const role = (o.r && o.r.role) || "";
   const chip = fitChip(o, pass);
   const p = placeNow(), fit = scoreCrop(o.c, p).fit || {};
@@ -59,25 +57,25 @@ function optionCard(o, pass) {
       o.need != null
         ? `Water, from NASA POWER rain for this season through the FAO-56 balance: it needs about ${fmt(o.need)} mm, the usual rain gives ${fmt(o.usualRain)} mm, and after this soil holds its share that is ${fmt(o.peff)} mm (${o.waterPct}% of the need). WRSI ${fit.wrsi ?? "not judged"}.`
         : "A long-season crop: Walo does not judge its water against one rainy season.",
-      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"}, counted from what it leaves behind — a legume, ground cover, and whether it is the same family as the crop already there.`,
+      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"} — a legume, ground cover, and whether it is the same family as the crop already there. These are counted, not weighted.`,
       o.hot ? `About ${o.hot} days above ${o.heatT} °C usually fall while it flowers.` : "",
       o.r && o.r.src ? `Crop traits: ${o.r.src} (guides listed in About). Rules of thumb, not measurements of your field.` : "Crop traits are extension rules of thumb; rain, heat and slope come from NASA POWER, MODIS and a DEM sample.",
       ...o.gaps.map((g) => `What Walo does not know: ${g}`),
     ].filter(Boolean),
   );
-  return `<article class="nextcard">
+  return `<article class="nextcard${lead ? " lead" : ""}">
     <div class="nc-top">
       ${o.c.img ? `<img class="nc-img" src="${esc(o.c.img)}" alt="" loading="lazy" style="object-position:${esc(o.c.pos || "50% 50%")}">` : ""}
       <div class="nc-t"><b>${esc(o.same ? `${o.c.name} again` : o.c.name)}</b><small>${esc(role)}</small></div>
       <span class="chip ${chip.kind}">${chip.text}</span>
     </div>
-    ${o.reasons[0] && !o.same ? `<p class="nc-why">${esc(o.reasons[0])}</p>` : ""}
+    ${o.reasons[0] && !o.same && !lead ? `<p class="nc-why">${esc(o.reasons[0])}</p>` : ""}
     ${waterLine(o)}
     ${heatLine(o)}
     ${forageLine(o)}
     ${priceLine(o)}
-    ${gapLine(o)}
     ${o.risks.length ? `<p class="nc-risk">${icon("triangle-alert")}<span>${esc(o.risks[0])}</span></p>` : ""}
+    ${lead ? "" : `<p class="wline small gap"><span>${icon("info")}${esc(o.gaps[0])}</span></p>`}
     <div class="nc-acts">
       ${btn(o.same ? "Plant it again" : "Plant this", { href: `#/start/${esc(o.c.id)}`, ic: "sprout" })}
       <button type="button" class="btn secondary" data-sheet="${sheet(`Why ${o.c.name}?`, why)}">Why?</button>
@@ -85,51 +83,26 @@ function optionCard(o, pass) {
   </article>`;
 }
 
-/* the rain here, as the picture the whole screen is built on: NASA's usual month by month and the year's total */
-function nasaCard(p) {
+/* the rain here, and in one line the ground under it: the whole environmental picture in a single card */
+function nasaCard(p, h) {
   const ag = agroOf(p), months = (ag && ag.months) || [];
   if (!months.length) return "";
   const total = months.reduce((s, m) => s + (m.rain_mm || 0), 0), hi = Math.max(...months.map((m) => m.rain_mm || 0)) || 1;
+  const word = h ? ({ low: "low", medium: "medium", high: "high" }[(h.erosion && h.erosion.band) || ""] || null) : null;
   return `<div class="nasa">
     <div class="nasa-h">${icon("satellite")}<b>Rain here, from NASA</b></div>
     ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: m.lgp ? "g" : "r" })), { caption: `Usual rain each month · about ${fmt(total)} mm a year`, legend: [["g", "Wet months"], ["r", "Dry months"]] })}
-    <p class="nasa-src">NASA POWER daily rain 1991–2025 at this point. Every bar on the crops below is measured against it.</p>
+    ${h ? `<p class="ground-line">${icon("map-pin")}Ground: ${h.slope_pct}% slope, ${coverWord(h)} cover${word ? `, erosion risk <b>${word}</b>` : ""}</p>` : ""}
+    <p class="nasa-src">NASA POWER daily rain 1991–2025 at this point${h ? "; slope from a 3×3 elevation sample, cover from MODIS" : ""}. A screening for comparing towns, not a soil test.</p>
   </div>`;
 }
 
-/* what the ground itself looks like: slope, cover, erosion — the part of the answer that is about the place */
-function groundCard(h, soil) {
-  if (!h) return "";
-  const band = (h.erosion && h.erosion.band) || "unknown";
-  const word = { low: "Low", medium: "Medium", high: "High" }[band] || "Not known";
-  const om = { low: "Low", medium: "Medium", high: "High" }[(h.om && h.om.band) || ""] || "Not known";
-  return `<div class="nasa ground">
-    <div class="nasa-h">${icon("map-pin")}<b>The ground here</b></div>
-    <div class="grow2"><span>Erosion risk</span><b class="chip ${band === "high" ? "bad" : band === "medium" ? "wait" : "good"}">${word}</b></div>
-    <div class="grow2"><span>Organic matter likely</span><b>${om}</b></div>
-    <div class="grow2"><span>Slope</span><b>${h.slope_pct}%</b></div>
-    <div class="grow2"><span>Usual cover</span><b>${coverWord(h)}</b></div>
-    <p class="nasa-src">${esc(h.note || "")} Slope is a 3×3 elevation sample around the town; cover is ${esc(h.cover_src || "satellite cover")}. A screening for comparing towns, not a soil test: your own field may differ, and a local extension officer can say how.</p>
-  </div>`;
-}
-
-/* NDVI is a number for us, a word for her: how much of the ground is usually covered */
-const coverWord = (h) => {
-  const v = h.ndvi_peak || 0;
-  return v >= 0.45 ? "thick" : v >= 0.3 ? "patchy" : "thin";
-};
-/* which rain year she is planning for. The scenario only rescales the rain the ranking already uses. */
-function scenarioRow(rain) {
-  return `<div class="scen">
-    <p class="scen-h">${icon("cloud-rain")}Plan for this season</p>
-    <div class="scen-row">${RAIN_PLANS.map((r) => `<button type="button" class="scen-b${r.id === rain ? " on" : ""}" data-scen="${r.id}"><b>${r.label}</b><small>${r.line}</small></button>`).join("")}</div>
-  </div>`;
-}
-
-/* the choices in one sheet, said the way she would say them, so nothing on the screen is a bare label */
-function tuneSheet(p, soil, lim) {
+/* every control in one sheet: the rain she is planning for, what limits her, and her soil */
+function tuneSheet(p, soil, lim, rain) {
   const auto = soilFor(p);
   const html = `<div class="stack">
+    <p class="pick-h">Rain this season</p>
+    <div class="pick">${RAIN_PLANS.map((x) => `<button type="button" class="pickrow${x.id === rain ? " on" : ""}" data-scen="${x.id}">${icon("cloud-rain")}<span><b>${x.label}</b><small>${x.line}</small></span></button>`).join("")}</div>
     <p class="pick-h">What limits you this season?</p>
     <div class="pick">${LIMITS.map((x) => `<button type="button" class="pickrow${x.id === lim ? " on" : ""}" data-limit="${x.id}">${icon(x.ic)}<span><b>${x.label}</b><small>${x.line}</small></span></button>`).join("")}</div>
     <p class="pick-h">What is your soil like when you squeeze a handful?</p>
@@ -137,6 +110,8 @@ function tuneSheet(p, soil, lim) {
     <p class="note-text">${esc(auto.note)} Walo starts from that and you can correct it any time.</p>
   </div>`;
   return { title: "Change what Walo goes by", html, onOpen: (b) => b.addEventListener("click", (e) => {
+    const rs = e.target.closest("[data-scen]");
+    if (rs) { setRainPlan(rs.dataset.scen); closeSheet(true); return; }
     const li = e.target.closest("[data-limit]");
     if (li) { setLimit(li.dataset.limit); closeSheet(true); return; }
     const so = e.target.closest("[data-soil]");
@@ -152,22 +127,22 @@ export function render(id, fid) {
   const p = f ? farmPlace(f) : place();
   PLACE_NOW = p;
   const pr = f ? farmProgress(f) : null;
-  const autoSoil = soilFor(p), soil = soilChoice() || autoSoil.id; // her tap wins, otherwise the zone's usual soil
+  const autoSoil = soilFor(p), soil = soilChoice() || autoSoil.id;
   const lim = limit(), rain = rainPlan(), pass = PASS_AT[lim] ?? PASS_AT.none;
   const { options, health, anyPass } = rotationOptions(after.id, p, { soil, limit: lim, rain });
   if (!options.length) return emptyState({ ic: "sprout", title: `No crops to follow ${after.name.toLowerCase()} here`, sub: "Walo has no other crop for this place yet.", action: "Try another place", href: "#/welcome" });
-  const top = options[0], tune = tuneSheet(p, soil, lim), plan = rainOf(rain);
+  const top = options[0], others = options.slice(1), tune = tuneSheet(p, soil, lim, rain), plan = rainOf(rain);
   const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1)}. ` : "";
   const headline = top.same ? `Keep ${after.name.toLowerCase()} in this field` : `Plant ${top.c.name.toLowerCase()} after your ${after.name.toLowerCase()}`;
   const sub = `${when}${top.reasons[0] || ""}${top.reasons[1] ? ` ${top.reasons[1]}` : ""}`;
   const why = whyBody(
     [
-      "Walo does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown on every card and never counted in that order.",
-      `Right now: ${plan.label.toLowerCase()} (${plan.line}), ${limitOf(lim).label.toLowerCase()}, ${soilLabel(soil)} ground. Change any of them and the list reorders by that same rule, not by a different one.`,
+      "Walo does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown on each card and never counted in that order.",
+      `Right now: ${plan.label.toLowerCase()} (${plan.line}), ${limitOf(lim).label.toLowerCase()}, ${soilLabel(soil)} ground. Change any of them and the order follows that same rule.`,
     ],
     [
       `NASA POWER daily rain and temperature 1991–2025 at ${p.lat.toFixed(2)}°, ${p.lon.toFixed(2)}°; FAO-56 stage lengths and crop coefficients; EcoCrop temperature limits.`,
-      health ? `Ground: slope from a 3×3 DEM sample, cover from ${(health.cover_src || "").toLowerCase()}, rain from NASA POWER. Bands compare towns; they are not a soil test.` : "",
+      health ? `Ground: slope from a 3×3 elevation sample, cover from ${health.cover_src || "satellite data"}, erosion band from slope × rain × cover. It compares towns; it is not a soil test on your field.` : "",
       `Soil water holding: ${autoSoil.source || "zone soil"}${soilChoice() ? ", corrected by you" : ""}.`,
       "Crop rotation traits for nitrogen, cover and family come from the IITA and MoFA guides cited per crop; the price pattern from WFP and MoFA records, shown but not scored.",
     ].filter(Boolean),
@@ -175,13 +150,15 @@ export function render(id, fid) {
   return `${hero({ img: CFG().photos.home.img, pos: CFG().photos.home.pos, eyeIcon: "refresh-cw", eyebrow: `${esc(after.name)} · ${esc(placeLabel(p))}`, title: after.name === "Maize" ? "After the maize" : `After the ${after.name.toLowerCase()}` })}
   <div class="stack lift">
     ${answer({ kind: top.same || !anyPass ? "info" : "now", tone: top.same || !anyPass ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
-    ${nasaCard(p)}
-    ${scenarioRow(rain)}
-    ${groundCard(health, soil)}
-    ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is ordered below, and each card says what it costs. Watering, mulch or a wetter season changes this, and so does a local opinion on what your ground can carry.`, "triangle-alert") : ""}
-    ${options.map((o) => optionCard(o, pass)).join("")}
+    ${nasaCard(p, health)}
+    ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is ordered below, and each card says what it costs.`, "triangle-alert") : ""}
+    ${optionCard(top, pass, { lead: true })}
+    ${others.length ? `<details class="more">
+      <summary>${icon("chevron-down")}<span>Compare with ${others.length} other ${others.length === 1 ? "crop" : "crops"}, including ${esc(after.name.toLowerCase())} again</span></summary>
+      <div class="more-body">${others.map((o) => optionCard(o, pass)).join("")}</div>
+    </details>` : ""}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
-      ${icon("leaf")}<span><b>Change what Walo goes by</b><small>${esc(limitOf(lim).label)} · ${esc(soilLabel(soil))} ground here</small></span>${icon("chevron-right")}
+      ${icon("leaf")}<span><b>Change what Walo goes by</b><small>${esc(limitOf(lim).label)} · ${esc(soilLabel(soil))} ground · ${esc(plan.label.toLowerCase())}</small></span>${icon("chevron-right")}
     </button>
     <div class="fb" data-fb-crop="${esc(after.id)}">
       <p>Did this help you decide?</p>
@@ -192,10 +169,8 @@ export function render(id, fid) {
   </div>`;
 }
 
-export function mount(root, a, b, rerender) {
+export function mount(root) {
   root.addEventListener("click", (e) => {
-    const sc = e.target.closest("[data-scen]");
-    if (sc) { setRainPlan(sc.dataset.scen); if (rerender) rerender(); return; }
     const fb = e.target.closest("[data-fb]");
     if (!fb) return;
     // an honest count of whether the answer helped: no name, no place, no field, just crop and verdict

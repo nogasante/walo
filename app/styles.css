@@ -531,17 +531,16 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .pickrow b { font-size: var(--fs-s); } .pickrow small { font-size: var(--fs-xs); color: var(--muted); }
 .pickrow.on { border-color: var(--brand); background: var(--brand-2); }
 
-/* ---------- rotation: the season she is planning for, and the ground under the field ---------- */
-.scen { display: flex; flex-direction: column; gap: 8px; }
-.scen-h { display: flex; align-items: center; gap: 7px; margin: 0; font-size: var(--fs-s); font-weight: 700; color: var(--ink); }
-.scen-h .ic { width: 18px; height: 18px; color: var(--brand); }
-.scen-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.scen-b { display: flex; flex-direction: column; gap: 2px; align-items: center; padding: 9px 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; text-align: center; cursor: pointer; }
-.scen-b b { font-size: var(--fs-xs); font-weight: 700; }
-.scen-b small { font-size: 10px; line-height: 1.25; color: var(--muted); }
-.scen-b.on { border-color: var(--brand); background: var(--brand-2); }
-.scen-b.on b { color: var(--brand); }
-.ground .grow2 { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--muted); }
-.ground .grow2 b { font-size: var(--fs-xs); color: var(--ink); }
-.ground .chip { margin: 0; }
-.gap span { font-style: normal; }
+/* ---------- rotation: one answer, the evidence, and the rest behind a tap ---------- */
+.ground-line { display: flex; align-items: center; gap: 7px; margin: 2px 0 0; padding-top: 8px; border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--muted); }
+.ground-line .ic { width: 16px; height: 16px; color: var(--brand); flex: none; }
+.ground-line b { color: var(--ink); }
+.more { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.more summary { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 10px 14px; font-size: var(--fs-s); font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary .ic { width: 20px; height: 20px; color: var(--muted); flex: none; transition: transform .2s; }
+.more[open] summary .ic { transform: rotate(180deg); }
+.more summary span { flex: 1; }
+.more-body { display: flex; flex-direction: column; gap: 12px; padding: 0 12px 12px; }
+.more-body .nextcard { margin: 0; }
+.nextcard.lead { border-color: var(--brand); }

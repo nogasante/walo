@@ -126,8 +126,28 @@ function render(keepScroll = false) {
     try { document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">This screen did not load</h1><p class="a-sub">Something went wrong showing this page. Go home and open it again, and tell the team if it keeps happening.</p></article><a class="btn primary" href="#/">Go home</a></div></div>`; } catch { /* nothing left to do */ }
   } finally { busy = false; }
 }
-/* Back stays inside Walo and goes to the screen's parent. Using the browser history instead could take her out of the
-   app, or to a screen that redirects straight back, which read as a dead button. */
+/* Back returns to the screen she actually came from. Every in-app link records the screen it was tapped on, so
+   Home -> a card -> Back lands on Home, not on some fixed parent. Only when there is no trail (a shared link, a
+   fresh open, a redirect) does it fall back to the screen's parent below. */
+const trail = [];
+const remember = () => {
+  const h = location.hash || "#/";
+  if (trail[trail.length - 1] !== h) trail.push(h);
+  if (trail.length > 40) trail.shift();
+};
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#/"], a[href="#/"]');
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  const to = a.getAttribute("href");
+  if (to && to !== location.hash) remember();
+}, true);
+function backHash() {
+  while (trail.length) {
+    const h = trail.pop();
+    if (h && h !== location.hash) return h;
+  }
+  return parentHash();
+}
 function parentHash() {
   const { name, a, b } = parse();
   if (name === "crop" && b === "where" && a) return `#/crop/${encodeURIComponent(a)}`;
@@ -139,7 +159,7 @@ function parentHash() {
   return "#/";
 }
 document.addEventListener("click", (e) => {
-  if (e.target.closest("#back")) { const h = parentHash(); if (location.hash !== h) location.hash = h; return; }
+  if (e.target.closest("#back")) { const h = backHash(); if (location.hash !== h) location.hash = h; return; }
   const pc = e.target.closest("#placechip"); if (pc) { openPlacePicker(null, pc); }
   const po = e.target.closest("[data-place-open]"); if (po) { openPlacePicker("#/now", po); }
   if (e.target.closest("#langchip")) setLang(isTwi() ? "en" : "tw");
