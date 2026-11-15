@@ -7,13 +7,6 @@ import { esc, weekday, MONTHS_LONG } from "../util.js";
 import { statusLine, rainDetails, yearsOf, rainStrip } from "./words.js";
 
 export const title = () => "What to plant now";
-/* a verdict group with nothing in it is worth saying out loud: an empty space reads as "Walo did not check" */
-function missingGroups(groups) {
-  const has = (k) => groups.some((g) => g.key === k), out = [];
-  if (!has("water")) out.push("No crop here is in the middle this month: each one either grows well or does not.");
-  if (!has("no")) out.push("Every crop Walo lists for this country can grow here.");
-  return out.length ? note(out.join(" "), "info") : "";
-}
 export function render() {
   const p = place(), groups = cropGroups(p), list = groups.filter((g) => g.key !== "no").flatMap((g) => g.items), fo = fcOnset(forecastFor(p));
   const now = list.filter((x) => x.st.kind === "now"), wait = list.filter((x) => x.st.kind === "wait"), water = list.filter((x) => x.st.kind === "water"), later = list.find((x) => x.st.kind === "later");
@@ -41,7 +34,5 @@ export function render() {
     ${answer({ ...a, extra: rainStrip(p), why: { title: "Why this answer", html: why }, say })}
     ${online() ? "" : note(fo ? "You are offline: Walo uses the last forecast it saved." : "Using usual weather (no forecast offline).", "wifi-off")}
     ${groupedCrops(groups, tile)}
-    ${missingGroups(groups)}
-    ${note(`Usual weather is not a promise: watch your own rain too.`)}
   </div>`;
 }

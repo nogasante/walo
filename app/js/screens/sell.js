@@ -90,8 +90,7 @@ function detail(id, f) {
   <div class="stack lift">
     ${answer({ ...a, extra: strip, why: { title: "Why this answer", html: why }, say: `${a.title}. ${a.sub.replace(/<[^>]+>/g, "")}` })}
     ${!best && pricesUnreachable() ? btn("Try again", { kind: "secondary", ic: "refresh-cw", attrs: 'id="sell-retry"' }) : ""}
-    ${best && sa.kind === "index" ? note(priceLine(best), "tag") : ""}
-    ${note(dataLine, "calendar-days")}
+    ${best && sa.kind === "index" ? note(`${priceLine(best)} ${dataLine}`, "tag") : note(dataLine, "calendar-days")}
     ${sa.better ? note(`${esc(sa.better.market.name)} market (${fmt(sa.better.market.km)} km) usually pays more.`, "store") : ""}
     ${farmsHere().length > 1 && f ? btn("All my crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}
     ${!f && farmsHere().length ? btn("My crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}

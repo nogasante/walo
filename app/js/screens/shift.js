@@ -3,7 +3,7 @@
    question that follows from it. Nothing here is a forecast; the Why? says exactly what it is and is not. */
 import { place, placeLabel, mainCrop } from "../store.js";
 import { shiftFor, crop, CFG } from "../data.js";
-import { answer, whyBody, btn, note, hero, facts, emptyState } from "../ui.js";
+import { answer, whyBody, btn, hero, emptyState } from "../ui.js";
 import { esc, fmt } from "../util.js";
 
 export const title = () => "How this place is changing";
@@ -59,15 +59,9 @@ export function render() {
   return `${hero({ img: CFG().photos.plant_here.img, pos: CFG().photos.plant_here.pos, eyeIcon: "satellite", eyebrow: `${esc(placeLabel(p))} · ${e0}–${r1}`, title: "How this place is changing" })}
   <div class="stack lift">
     ${answer({ kind: moved ? "info" : "good", tone: moved ? "info" : "good", ic: "satellite", title: esc(headline), sub: esc(sub), why: { title: "How this was worked out", html: why }, say: `${headline}. ${sub}` })}
-    ${facts([
-      { ic: "cloud-rain", tone: "info", text: d === 0 ? "First rain: no change" : `First rain ${d > 0 ? "later" : "earlier"} by ${Math.abs(d)} days` },
-      { ic: "droplets", tone: rp != null && rp < 0 ? "wait" : "good", text: rp === 0 ? "Season rain: no change" : `Season rain ${rp > 0 ? "+" : ""}${rp}%` },
-      { ic: "thermometer-sun", tone: dh > 0 ? "wait" : "good", text: !dh ? "Hot days: no change" : `Hot days ${dh > 0 ? "+" : ""}${dh}` },
-    ])}
     ${trBits.length ? `<div class="card stack"><b class="fix-h">The long trend, all 35 years</b><p class="a-sub">${esc(trBits.join(" "))}</p></div>` : ""}
     <div class="card stack"><b class="fix-h">What this means for planting</b><p class="a-sub">${esc(plan)}</p></div>
     ${mine ? btn(`When to plant ${crop(mine).name.toLowerCase()}`, { href: `#/crop/${esc(mine)}`, ic: "calendar-days" }) : btn("What to plant here", { href: "#/now", ic: "sprout" })}
     ${mine ? btn("What to plant after harvest", { href: `#/next/${esc(mine)}`, kind: "secondary", ic: "refresh-cw" }) : ""}
-    ${note("Two periods, not a promise: the last eleven years are still few. Walo shows what the record says and you weigh it with what you see.", "info")}
   </div>`;
 }
