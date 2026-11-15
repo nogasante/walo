@@ -5,8 +5,8 @@
    then a list of the other crops where each is a single sentence, and one row to change what Walo goes by.
    The sheet behind that row asks one question at a time: rain, limit, soil — three taps, never nine options at once.
    Nothing in the reasoning was cut; it is the reading that got smaller. */
-import { place, placeLabel, limit, setLimit, rainPlan, setRainPlan, soilChoice, setSoilChoice, farm } from "../store.js";
-import { crop, farmPlace, farmProgress, monthName, soilFor, scoreCrop, agroOf, CFG } from "../data.js";
+import { place, placeLabel, limit, setLimit, soilChoice, setSoilChoice, farm } from "../store.js";
+import { crop, farmPlace, farmProgress, monthName, soilFor, scoreCrop, agroOf, rainPlanFor, CFG } from "../data.js";
 import { rotationOptions, LIMITS, RAIN_PLANS, SOILS, fitChip, PASS_AT } from "../rotation.js";
 import { answer, whyBody, btn, note, hero, emptyState, icon, sheet, closeSheet, monthBars } from "../ui.js";
 import { esc, fmt } from "../util.js";
@@ -89,51 +89,49 @@ function compareRows(list, pass) {
 }
 
 /* the rain here, and in one line the ground under it: the environmental picture in a single card */
-function nasaCard(p, h) {
+function nasaCard(p, h, plan) {
   const ag = agroOf(p), months = (ag && ag.months) || [];
   if (!months.length) return "";
   const total = months.reduce((s, m) => s + (m.rain_mm || 0), 0), hi = Math.max(...months.map((m) => m.rain_mm || 0)) || 1;
   const word = h ? ({ low: "low", medium: "medium", high: "high" }[(h.erosion && h.erosion.band) || ""] || null) : null;
   return `<div class="nasa">
     <div class="nasa-h">${icon("satellite")}<b>Rain here, from NASA</b></div>
-    ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: m.lgp ? "g" : "r" })), { caption: `Usual rain each month · about ${fmt(total)} mm a year`, legend: [["g", "Wet months"], ["r", "Dry months"]] })}
+    ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: m.lgp ? "g" : "r" })), { caption: `Wet months in green · about ${fmt(total)} mm a year`, legend: [] })}
+    <p class="ground-line">${icon("refresh-cw")}${esc(plan.note)}</p>
     ${h ? `<p class="ground-line">${icon("map-pin")}Ground: ${h.slope_pct}% slope, ${coverWord(h)} cover${word ? `, erosion risk <b>${word}</b>` : ""}</p>` : ""}
-    <p class="nasa-src">NASA POWER daily rain 1991–2025 at this point${h ? "; slope from a 3×3 elevation sample, cover from MODIS" : ""}. A screening for comparing towns, not a soil test.</p>
+    <p class="nasa-src">NASA POWER, 1991–2025${h ? " · slope from a 3×3 elevation sample · cover from MODIS" : ""}</p>
   </div>`;
 }
 
 /* one question at a time, three questions, then it closes and the screen has changed. Nothing is applied until
    she finishes, so a half-finished sheet never leaves the screen in a state she did not ask for. */
-function tuneSheet(p, soil, lim, rain) {
+function tuneSheet(p, soil, lim) {
   const auto = soilFor(p);
   let i = 0;
-  const pick = { rain, limit: lim, soil };
+  const pick = { limit: lim, soil };
   const steps = [
-    { q: "Rain this season", sub: "Walo plans for the usual rain unless you tell it otherwise.", attr: "data-scen", value: pick.rain, rows: RAIN_PLANS.map((x) => ({ id: x.id, ic: "cloud-rain", label: x.label, line: x.line })) },
-    { q: "What limits you this season?", sub: "This decides what Walo puts first, not what it hides.", attr: "data-limit", value: pick.limit, rows: LIMITS.map((x) => ({ id: x.id, ic: x.ic, label: x.label, line: x.line })) },
-    { q: "Your soil, in your hand", sub: auto.note, attr: "data-soil", value: pick.soil, rows: SOILS.map((x) => ({ id: x.id, ic: "droplets", label: x.label, line: x.feel })) },
+    { q: "Your soil, in your hand", sub: `${auto.note} Walo already assumes that; change it only if you know better.`, attr: "data-soil", value: pick.soil, rows: SOILS.map((x) => ({ id: x.id, ic: "droplets", label: x.label, line: x.feel })) },
+    { q: "Anything limiting you this season?", sub: "Optional. Walo has already planned the rain from your town's record.", attr: "data-limit", value: pick.limit, rows: LIMITS.map((x) => ({ id: x.id, ic: x.ic, label: x.label, line: x.line })) },
   ];
   const html = (k) => {
-    const s = steps[k];
+    const st = steps[k];
     return `<div class="stack">
       <p class="step-n">Question ${k + 1} of ${steps.length}</p>
-      <p class="pick-h">${esc(s.q)}</p>
-      ${s.sub ? `<p class="note-text">${esc(s.sub)}</p>` : ""}
-      <div class="pick">${s.rows.map((x) => `<button type="button" class="pickrow${x.id === s.value ? " on" : ""}" ${s.attr}="${x.id}">${icon(x.ic)}<span><b>${esc(x.label)}</b><small>${esc(x.line)}</small></span></button>`).join("")}</div>
+      <p class="pick-h">${esc(st.q)}</p>
+      ${st.sub ? `<p class="note-text">${esc(st.sub)}</p>` : ""}
+      <div class="pick">${st.rows.map((x) => `<button type="button" class="pickrow${x.id === st.value ? " on" : ""}" ${st.attr}="${x.id}">${icon(x.ic)}<span><b>${esc(x.label)}</b><small>${esc(x.line)}</small></span></button>`).join("")}</div>
     </div>`;
   };
   return {
-    title: "Change what Walo goes by",
+    title: "Your soil, and your season",
     html: html(0),
     onOpen: (b) => b.addEventListener("click", (e) => {
-      const r = e.target.closest("[data-scen],[data-limit],[data-soil]");
+      const r = e.target.closest("[data-soil],[data-limit]");
       if (!r) return;
-      if (r.dataset.scen) pick.rain = r.dataset.scen;
-      else if (r.dataset.limit) pick.limit = r.dataset.limit;
-      else pick.soil = r.dataset.soil;
+      if (r.dataset.soil) pick.soil = r.dataset.soil;
+      else pick.limit = r.dataset.limit;
       if (i + 1 < steps.length) { i++; b.innerHTML = html(i); return; }
-      // all three applied at once, so the screen reorders once and the sheet closes on the last answer
-      setRainPlan(pick.rain); setLimit(pick.limit); setSoilChoice(pick.soil);
+      setSoilChoice(pick.soil); setLimit(pick.limit);
       closeSheet(true);
     }),
   };
@@ -148,17 +146,17 @@ export function render(id, fid) {
   PLACE_NOW = p;
   const pr = f ? farmProgress(f) : null;
   const autoSoil = soilFor(p), soil = soilChoice() || autoSoil.id;
-  const lim = limit(), rain = rainPlan(), pass = PASS_AT[lim] ?? PASS_AT.none;
+  const lim = limit(), derived = rainPlanFor(p), rain = derived.id, pass = PASS_AT[lim] ?? PASS_AT.none;
   const { options, health, anyPass } = rotationOptions(after.id, p, { soil, limit: lim, rain });
   if (!options.length) return emptyState({ ic: "sprout", title: `No crops to follow ${after.name.toLowerCase()} here`, sub: "Walo has no other crop for this place yet.", action: "Try another place", href: "#/welcome" });
-  const top = options[0], others = options.slice(1), tune = tuneSheet(p, soil, lim, rain), plan = rainOf(rain);
+  const top = options[0], others = options.slice(1), tune = tuneSheet(p, soil, lim), plan = rainOf(rain);
   const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1)}. ` : "";
   const headline = top.same ? `Keep ${after.name.toLowerCase()} in this field` : `Plant ${top.c.name.toLowerCase()} after your ${after.name.toLowerCase()}`;
   const sub = `${when}${top.reasons[0] || ""}${top.reasons[1] ? ` ${top.reasons[1]}` : ""}`;
   const why = whyBody(
     [
       "Walo does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown and never counted.",
-      `Right now: ${plan.label.toLowerCase()} (${plan.line}), ${limitOf(lim).label.toLowerCase()}, ${soilLabel(soil)} ground.`,
+      `Rain planned: ${plan.label.toLowerCase()} — ${derived.note} Soil: ${soilLabel(soil)}. ${limitOf(lim).label}.`,
     ],
     [
       `NASA POWER daily rain and temperature 1991–2025 at ${p.lat.toFixed(2)}°, ${p.lon.toFixed(2)}°; FAO-56 stage lengths and crop coefficients; EcoCrop temperature limits.`,
@@ -170,18 +168,17 @@ export function render(id, fid) {
   return `${hero({ img: CFG().photos.home.img, pos: CFG().photos.home.pos, eyeIcon: "refresh-cw", eyebrow: `${esc(after.name)} · ${esc(placeLabel(p))}`, title: after.name === "Maize" ? "After the maize" : `After the ${after.name.toLowerCase()}` })}
   <div class="stack lift">
     ${answer({ kind: top.same || !anyPass ? "info" : "now", tone: top.same || !anyPass ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
-    ${nasaCard(p, health)}
+    ${nasaCard(p, health, derived)}
     ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is below, and each row says what it costs.`, "triangle-alert") : ""}
     ${leadCard(top, pass)}
     ${others.length ? `<div class="cmp"><p class="cmp-h">What else could follow it</p>${compareRows(others, pass)}</div>` : ""}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
-      ${icon("leaf")}<span><b>Change what Walo goes by</b><small>${esc(limitOf(lim).label)} · ${esc(soilLabel(soil))} ground · ${esc(plan.label.toLowerCase())}</small></span>${icon("chevron-right")}
+      ${icon("leaf")}<span><b>Your soil, and your season</b><small>${esc(soilLabel(soil))} ground · ${esc(limitOf(lim).label.toLowerCase())}</small></span>${icon("chevron-right")}
     </button>
     <div class="fb" data-fb-crop="${esc(after.id)}">
       <p>Did this help you decide?</p>
       <div class="fb-btns"><button type="button" class="btn secondary" data-fb="yes">Yes</button><button type="button" class="btn secondary" data-fb="no">No</button></div>
     </div>
-    ${note("Walo compares what each crop does to the soil and the rain. You decide what fits your farm, and a local extension officer can check what the data cannot see.", "info")}
     ${f ? btn("Back to the field", { href: `#/farm/${esc(f.id)}`, kind: "secondary", ic: "sprout" }) : ""}
   </div>`;
 }

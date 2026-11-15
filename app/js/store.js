@@ -63,7 +63,7 @@ export const putMainCropRaw = (m) => { set("walo.main", m); emit(); };
    planning for: the scenario only scales the rain the ranking already uses, it does not invent a forecast. */
 export const limit = () => get("walo.limit", "none");
 export const setLimit = (v) => { set("walo.limit", v); emit(); };
-export const rainPlan = () => get("walo.rain", "usual");
+export const rainPlan = () => get("walo.rain", null); // null = let the record decide (data.js rainPlanFor)
 export const setRainPlan = (v) => { set("walo.rain", v); emit(); };
 export const soilChoice = () => get("walo.soil", null); // null = use the zone's usual soil
 export const setSoilChoice = (v) => { set("walo.soil", v); emit(); };

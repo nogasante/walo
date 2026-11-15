@@ -224,6 +224,20 @@ export function shiftFor(p) {
   return { ...s, dOnset, rainPct, dHot, periods: (D.shift && D.shift.periods) || { early: [1991, 2014], recent: [2015, 2025] }, note: D.shift && D.shift.method };
 }
 
+/* Which rain year to plan for, read from the same 35-year record the shift screen uses: when her town's last eleven
+   years came in meaningfully drier or wetter than 1991-2014, Walo plans that way without asking her to guess a
+   season. She can still override it; nothing here is a forecast. */
+export function rainPlanFor(p) {
+  const s = shiftFor(p);
+  if (!s || s.rainPct == null) return { id: "usual", pct: null, note: "Walo plans for the usual rain: there is no comparable record for this point yet." };
+  const pct = s.rainPct, id = pct <= -8 ? "less" : pct >= 8 ? "more" : "usual";
+  const years = `${s.periods.recent[0]}–${s.periods.recent[1]}`;
+  const note = id === "usual"
+    ? `Walo plans for the usual rain: the ${years} seasons here are within ${Math.abs(pct)}% of 1991–2014.`
+    : `Walo plans for ${id === "less" ? "less" : "more"} rain: the ${years} seasons here came in ${Math.abs(pct)}% ${pct < 0 ? "drier" : "wetter"} than 1991–2014.`;
+  return { id, pct, note };
+}
+
 /* ---------- 10-day forecast (Meteomatics via /api/forecast; the login stays on the server) ---------- */
 const FC = {};
 let onForecast = () => {};
