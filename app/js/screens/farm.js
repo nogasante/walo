@@ -1,7 +1,7 @@
 /* My farm: where the field is now (stage from NASA temperatures), today's task, one alert, when to sell, photos. */
 import { farms, farm, updateFarm, removeFarm, saveBlob, placeLabel } from "../store.js";
 import { takePhotos, preparePhoto, lostPhoto, galleryButton, photoLabel, MSG } from "../photo.js";
-import { farmProgress, fetchGdd, farmAlert, sellAdvice, greenness, monthName, CFG, fieldRain, fieldSoil } from "../data.js";
+import { farmProgress, fetchGdd, farmAlert, sellAdvice, greenness, monthName, CFG, R, fieldRain, fieldSoil } from "../data.js";
 import { fieldTips } from "../tips.js";
 import { downloadSeason } from "../calendar.js";
 import { answer, whyBody, btn, sheet, note, icon, closeSheet, hero, ring } from "../ui.js";
@@ -49,7 +49,7 @@ function farmView(f, many) {
   const t = pr.d < 0 ? `Plant on ${dayMonth(pr.start)}` : pr.frac >= 1 ? "Ready to harvest" : left <= CFG().farm.harvest_soon_days ? `Harvest soon: ${roughDate(pr.harvest)}` : `Harvest in ${roughDate(pr.harvest)}`;
   const stage = pr.si >= 0 ? pr.stages[pr.si].name : "Not planted yet";
   const task = pr.task ? pr.task.action : pr.d < 0 ? "Get seed ready. Plant after a good rain." : "";
-  const al = farmAlert(pr), sa = sellAdvice(c.id, pr.p, pr.harvest), g = greenness(pr.p), tips = fieldTips(pr), rain = fieldRain(f), soil = fieldSoil(f);
+  const al = farmAlert(pr), sa = sellAdvice(c.id, pr.p, pr.harvest), g = greenness(pr.p), rain = fieldRain(f), soil = fieldSoil(f), tips = fieldTips(pr, rain);
   const gddLine = pr.total ? `Growth counts warmth since planting (growing degree days, base ${pr.g.tb} °C${pr.g.tu != null ? `, top ${pr.g.tu} °C` : ""}): ${fmt(pr.gdd || 0)} of about ${fmt(pr.total)}. ${pr.obs && pr.obs.days ? `NASA POWER daily temperatures at the field up to ${pr.obs.last.replace(/(\d{4})(\d\d)(\d\d)/, "$3/$2/$1")}, usual weather after that.` : "Usual NASA weather for this place (live data loads when online)."} Stages follow FAO-56 Table 11.` : `Dates use a typical ${pr.days}-day season for ${esc(c.name.toLowerCase())}${pr.guessDays ? " (best guess)" : ""}.`;
   const why = whyBody([
     "Walo counts the warmth your crop has had since planting, from NASA temperatures. Warm days make it grow faster, so the harvest date moves a little.",
@@ -63,6 +63,7 @@ function farmView(f, many) {
     al && al.kind === "water" ? `Usual rain leaves a water deficit of about ${fmt(al.fit.deficit_mm)} mm this season (WRSI ${al.fit.wrsi}).` : "",
     rain && rain.last ? `Rain comes from daily rain data at this point; the newest day in it is ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}.` : "",
     soil ? `Root-zone soil wetness ${fmt(soil.soil, 2)} on a 0–1 scale (0 dry, 1 saturated), average of the last ${soil.soilDays} day(s). It is a model of the soil, not a satellite picture of your field.` : "",
+    soil && soil.rh != null ? `Air humidity at this field averaged ${soil.rh}% over the last 7 days. Leaves stay wet for hours above ${R().field_risk.rh_wet.value}%, which is when leaf and pod diseases spread; below ${R().field_risk.rh_dry.value}% with a dry week is when thrips and mites build up. These are extension rules of thumb, not a model of a named disease.` : "",
     f.demo ? "This is a demo field so you can see how Walo works. Remove it any time." : "",
   ].filter(Boolean));
   const remove = `<button type="button" class="btn danger wide" data-remove="${esc(f.id)}">${icon("trash-2")}<span>Remove this field</span></button>`;

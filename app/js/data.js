@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "credits", "ghana-map", "help"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "credits", "ghana-map", "help"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -238,11 +238,11 @@ export async function fetchGdd(f) {
   // an entry saved before soil wetness was asked for is fetched once more, so the card appears today
   if (!g || !navigator.onLine || f.date >= today || (all[k] && all[k].fetched === today && all[k].soil !== undefined)) return false;
   try {
-    const r = await fetch(`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN,PRECTOTCORR,GWETROOT&community=AG&longitude=${p.lon.toFixed(4)}&latitude=${p.lat.toFixed(4)}&start=${f.date.replace(/-/g, "")}&end=${today.replace(/-/g, "")}&format=JSON`);
+    const r = await fetch(`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN,PRECTOTCORR,GWETROOT,RH2M&community=AG&longitude=${p.lon.toFixed(4)}&latitude=${p.lat.toFixed(4)}&start=${f.date.replace(/-/g, "")}&end=${today.replace(/-/g, "")}&format=JSON`);
     if (!r.ok) return false;
     const P = (await r.json()).properties.parameter, ks = Object.keys(P.T2M_MAX).sort();
     let gdd = 0, days = 0, rain = 0;
-    const rains = [], soils = [];
+    const rains = [], soils = [], rhs = [];
     for (const day of ks) {
       const tx = P.T2M_MAX[day], tn = P.T2M_MIN[day];
       if (tx == null || tn == null || tx <= -900 || tn <= -900) break;
@@ -251,6 +251,8 @@ export async function fetchGdd(f) {
       if (mm != null && mm > -900) { rain += mm; rains.push(mm); } else rains.push(0);
       const sm = P.GWETROOT ? P.GWETROOT[day] : null;
       if (sm != null && sm > -900) soils.push(sm);
+      const hu = P.RH2M ? P.RH2M[day] : null;
+      if (hu != null && hu > -900) rhs.push(hu);
     }
     const rain7 = rains.slice(-7).reduce((a, b) => a + b, 0);
     // root-zone soil wetness (0 dry, 1 saturated) is the one number that says whether the rain
@@ -259,7 +261,9 @@ export async function fetchGdd(f) {
     const soil = soilLast7.length ? +(soilLast7.reduce((a, b) => a + b, 0) / soilLast7.length).toFixed(2) : null;
     // rain since sowing is what tells a farmer whether this season is wet or dry at HER field,
     // not at the district: NASA POWER daily precipitation, same call as the temperatures.
-    all[k] = { gdd: Math.round(gdd), days, last: days ? ks[days - 1] : null, rain: Math.round(rain), rain7: Math.round(rain7), soil, soilDays: soilLast7.length, fetched: today };
+    const rhLast7 = rhs.slice(-7);
+    const rh = rhLast7.length ? Math.round(rhLast7.reduce((a, b) => a + b, 0) / rhLast7.length) : null;
+    all[k] = { gdd: Math.round(gdd), days, last: days ? ks[days - 1] : null, rain: Math.round(rain), rain7: Math.round(rain7), soil, soilDays: soilLast7.length, rh, fetched: today };
     localStorage.setItem("walo.gdd", JSON.stringify(all));
     return true;
   } catch { return false; }
@@ -319,6 +323,26 @@ export function sellAdvice(cropId, pt, harvest = null) {
   return out;
 }
 export const monthName = (m) => MONTHS_LONG[m - 1];
+
+/* ---------- what markets pay now: MoFA SRID's two-weekly collection, per kilogram ---------- */
+/* WFP's Ghana series stops in July 2023, so the seasonal index says when prices usually rise, and this
+   says what a market actually paid in the last fortnight. Nearest markets first, wholesale preferred
+   because that is what a farmer selling a bag gets. */
+export function priceNear(cropId, pt, n = 3) {
+  const P = D.prices && D.prices.crops[cropId];
+  if (!P) return [];
+  const out = [];
+  for (const [name, mk] of Object.entries(P.mk)) {
+    const m = D.prices.markets[name];
+    if (!m) continue;
+    // SRID's newest week is not the same for retail and wholesale in every market, so show the newer one
+    const pick = [mk.w && { type: "wholesale", v: mk.w.v, d: mk.w.d, prev: mk.w4 || null }, mk.r && { type: "retail", v: mk.r.v, d: mk.r.d, prev: null }]
+      .filter(Boolean).sort((a, b) => b.d.localeCompare(a.d))[0];
+    if (!pick) continue;
+    out.push({ name, km: Math.round(km(pt, m)), ...pick, label: P.label });
+  }
+  return out.sort((a, b) => a.km - b.km).slice(0, n);
+}
 
 /* ---------- "Use my location": NASA POWER daily for this point, summarised on the phone with the same methods ---------- */
 export async function fetchLive(lat, lon) {

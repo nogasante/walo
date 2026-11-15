@@ -17,7 +17,7 @@ export function render() {
       <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind, sunshine and root-zone soil wetness, ${ag.years.join("–")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
       <li><b>NASA MODIS</b> greenness (NDVI, MOD13Q1), read through ${link(D.ndvi.url, "Microsoft Planetary Computer")}.</li>
       <li><b>${esc(CFG().forecast.label)}</b>: rain forecast for the next 10 days.</li>
-      <li><b>Prices</b>: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023; ${link(D.market.srid_source.url, "MoFA SRID")} 2025.</li>
+      <li><b>Prices</b>: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023, for the usual season; ${link(D.prices.source.url, "MoFA SRID commodity prices")}, per kilogram, every two weeks, newest ${D.prices.covered[1].slice(8, 10)}/${D.prices.covered[1].slice(5, 7)}/${D.prices.covered[1].slice(0, 4)} in ${Object.keys(D.prices.markets).length} markets.</li>
       <li><b>Crops</b>: FAO crop calendar for ${esc((country() || {}).name || "the country")}'s zones, FAO EcoCrop, FAO-56, and local research (sources below).</li>
       <li>${link(CFG().geocode.credit_url, CFG().geocode.credit)}. Map: Natural Earth.</li>
     </ul>

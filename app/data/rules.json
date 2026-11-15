@@ -290,5 +290,26 @@
   "usual_band": 0.05,
   "default": true,
   "note": "NDVI within ±0.05 of the 2016–2025 mean for that month is shown as 'about usual'. Walo default (MODIS NDVI noise is a few hundredths)."
+ },
+ "field_risk": {
+  "_about": "Weather-driven pest and disease pressure at one field, used by the tips on the field screen. These are extension rules of thumb applied to the field, not a model of a named disease and not crop-specific.",
+  "rh_wet": {
+   "value": 85,
+   "unit": "%",
+   "default": true,
+   "note": "Air this humid keeps leaves wet for hours, which is the condition leaf and pod fungi need in order to spread."
+  },
+  "rh_dry": {
+   "value": 55,
+   "unit": "%",
+   "default": true,
+   "note": "Air this dry, in a week with little rain, is when thrips and mites build up."
+  },
+  "dry7_mm": {
+   "value": 5,
+   "unit": "mm",
+   "default": true,
+   "note": "Rain below this over seven days counts as a dry week."
+  }
  }
 }
