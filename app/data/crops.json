@@ -11,15 +11,15 @@
    "url": "https://github.com/OpenCLIM/ecocrop/blob/main/EcoCrop_DB.csv"
   },
   "FAO_CROPCAL": {
-   "title": "FAO Crop Calendar – Ghana (per agro-ecological zone; last updated 26/02/2021)",
+   "title": "FAO Crop Calendar \u2013 Ghana (per agro-ecological zone; last updated 26/02/2021)",
    "url": "https://cropcalendar.apps.fao.org/"
   },
   "FAO_AEZ": {
-   "title": "FAO Crop Calendar – Ghana agro-ecological zones (Coastal savanna, Rain forest, Transitional, Guinea savanna)",
+   "title": "FAO Crop Calendar \u2013 Ghana agro-ecological zones (Coastal savanna, Rain forest, Transitional, Guinea savanna)",
    "url": "https://api-cropcalendar.apps.fao.org/api/v1/countries/GH/aez?language=en"
   },
   "FAOSTAT": {
-   "title": "FAOSTAT Crops and livestock products (QCL), Africa bulk file, Ghana, 2020–2024",
+   "title": "FAOSTAT Crops and livestock products (QCL), Africa bulk file, Ghana, 2020\u20132024",
    "url": "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Africa.zip"
   },
   "WFP_HDX": {
@@ -27,7 +27,7 @@
    "url": "https://data.humdata.org/dataset/wfp-food-prices-for-ghana"
   },
   "WALO_PRICES": {
-   "title": "Walo crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024–2026, news)",
+   "title": "Walo crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024\u20132026, news)",
    "url": "file:/workspace/walo-ghana-crop-prices.csv"
   },
   "MOFA_MAIZE": {
@@ -63,15 +63,15 @@
    "url": "https://cgspace.cgiar.org/server/api/core/bitstreams/f75202b0-ecbc-4773-8ee3-b799e2d59a2d/content"
   },
   "APNI_MAIZE_NG": {
-   "title": "Njoroge S. et al. Maize Cropping Guide – 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
+   "title": "Njoroge S. et al. Maize Cropping Guide \u2013 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
    "url": "https://www.apni.net/wp-content/uploads/2023/06/4R-Maize-Guide-N-Ghana.pdf"
   },
   "APNI_GNUT_NG": {
-   "title": "Groundnut Cropping Guide – 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
+   "title": "Groundnut Cropping Guide \u2013 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
    "url": "https://www.apni.net/wp-content/uploads/2023/06/4R-Groundnut-Guide-N-Ghana.pdf"
   },
   "APNI_SOY_NG": {
-   "title": "Soybean Cropping Guide – 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
+   "title": "Soybean Cropping Guide \u2013 4R Nutrient Management and Best Agronomic Practices, Northern Ghana",
    "url": "https://www.apni.net/wp-content/uploads/2023/06/4R-Soybean-Guide-N-Ghana.pdf"
   },
   "SARI_COWPEA": {
@@ -79,7 +79,7 @@
    "url": "https://csirsavannah.wordpress.com/2012/12/04/production-guide-on-cowpea-vigna-unguiculata-l-walp/"
   },
   "AFRICARISING_2012": {
-   "title": "Annual Report of Africa RISING subprojects carried out by CSIR-SARI, Jul–Dec 2012 (cowpea planting-date results, preliminary)",
+   "title": "Annual Report of Africa RISING subprojects carried out by CSIR-SARI, Jul\u2013Dec 2012 (cowpea planting-date results, preliminary)",
    "url": "https://hdl.handle.net/10568/25201"
   },
   "SONGOTRA_2026": {
@@ -87,7 +87,7 @@
    "url": "https://doi.org/10.3390/agronomy16020156"
   },
   "IITA_CASSAVA": {
-   "title": "James B., Yaninek J., Tumanteh A., Maroya N., Dixon A., Salawu R., Kwarteng J. Starting a Cassava Farm – IPM Field Guide for Extension Agents (ESCaPP project with MoFA Ghana and others)",
+   "title": "James B., Yaninek J., Tumanteh A., Maroya N., Dixon A., Salawu R., Kwarteng J. Starting a Cassava Farm \u2013 IPM Field Guide for Extension Agents (ESCaPP project with MoFA Ghana and others)",
    "url": "https://cgspace.cgiar.org/server/api/core/bitstreams/235db80f-e404-414e-8a18-579377a84479/content"
   },
   "IITA_YAM": {
@@ -111,7 +111,7 @@
    "url": "https://academicjournals.org/journal/AJPS/article-full-text-pdf/9C878B568237"
   },
   "SP_WEEVIL_GH": {
-   "title": "Agbessenou A. Sweetpotato weevils (Cylas puncticollis, C. brunneus) – farmer brochure, Ghana",
+   "title": "Agbessenou A. Sweetpotato weevils (Cylas puncticollis, C. brunneus) \u2013 farmer brochure, Ghana",
    "url": "https://taxonomy.naturalsciences.be/wp-content/uploads/2021/09/Sweet_potato_weevil_brochure_ghana_EN.pdf"
   },
   "CASHEW_GIZ_TECA": {
@@ -135,7 +135,7 @@
    "url": "https://doi.org/10.1017/s0007485324000154"
   },
   "LOBELL_2011": {
-   "title": "Lobell D.B., Bänziger M., Magorokosho C., Vivek B. (2011). Nonlinear heat effects on African maize as evidenced by historical yield trials. Nature Climate Change 1:42-45",
+   "title": "Lobell D.B., B\u00e4nziger M., Magorokosho C., Vivek B. (2011). Nonlinear heat effects on African maize as evidenced by historical yield trials. Nature Climate Change 1:42-45",
    "url": "https://www.nature.com/articles/nclimate1043"
   },
   "TWI_LEARNAKAN": {
@@ -147,11 +147,11 @@
    "url": "https://www.cbd.int/doc/nbsap/agriculture/WestAfricaTables.pdf"
   },
   "FAO_CWR": {
-   "title": "FAO Irrigation Water Management Training Manual No. 3 (Brouwer & Heibloem, 1986), Ch. 2, Table 2: approximate seasonal crop water needs (sorghum/millet 450–650 mm per growing period)",
+   "title": "FAO Irrigation Water Management Training Manual No. 3 (Brouwer & Heibloem, 1986), Ch. 2, Table 2: approximate seasonal crop water needs (sorghum/millet 450\u2013650 mm per growing period)",
    "url": "https://www.fao.org/4/u3160e/u3160e04.htm"
   },
   "FAO_LW_SORGHUM": {
-   "title": "FAO Land & Water, Crop information: Sorghum (water requirement of a 110–130-day crop 450–650 mm)",
+   "title": "FAO Land & Water, Crop information: Sorghum (water requirement of a 110\u2013130-day crop 450\u2013650 mm)",
    "url": "https://www.fao.org/land-water/databases-and-software/crop-information/sorghum/en/"
   },
   "ANSAH_2023": {
@@ -167,23 +167,23 @@
    "url": "https://www.modernghana.com/news/245333/farmers-in-upper-west-region-evaluate-millet-genotypes-in-wa.html"
   },
   "IITA_PLANTAIN": {
-   "title": "Swennen (1990). Plantain cultivation under West African conditions: a reference manual (plant through the rainy season but not in its last months; bunches 9–12 months after planting)",
+   "title": "Swennen (1990). Plantain cultivation under West African conditions: a reference manual (plant through the rainy season but not in its last months; bunches 9\u201312 months after planting)",
    "url": "https://www.iita.org/wp-content/uploads/2016/05/Plantain-cultivation-under-West-African-conditions-a-reference-manual.pdf"
   },
   "MADE_VEG_2015": {
-   "title": "Vegetables Market Diagnostics (tomato, garden egg, okra, watermelon): rain-fed garden egg and okra production March–September in the south incl. Brong Ahafo",
+   "title": "Vegetables Market Diagnostics (tomato, garden egg, okra, watermelon): rain-fed garden egg and okra production March\u2013September in the south incl. Brong Ahafo",
    "url": "https://ghana-made.org/wp-content/uploads/2015/11/Vegetables-Market-Dignostics.pdf"
   },
   "KUGBE_OKRA_2019": {
-   "title": "Kugbe, Salifu & Sam (2019). Growth and yield of okra as affected by planting date and weeding regime in Northern Ghana. Journal of Agriculture and Crops 5(4): 43–47 (sown 17 Jun–15 Jul; planting date had no significant effect on yield)",
+   "title": "Kugbe, Salifu & Sam (2019). Growth and yield of okra as affected by planting date and weeding regime in Northern Ghana. Journal of Agriculture and Crops 5(4): 43\u201347 (sown 17 Jun\u201315 Jul; planting date had no significant effect on yield)",
    "url": "https://doi.org/10.32861/jac.54.43.47"
   },
   "IFPRI_CHILI_2021": {
-   "title": "Vigneri, Kolavalli, Agandin & Moyo (2021). Production and marketing of chili in the Brong-Ahafo area of Ghana. GSSP Working Paper 55 (71% plant in the major season, April–July)",
+   "title": "Vigneri, Kolavalli, Agandin & Moyo (2021). Production and marketing of chili in the Brong-Ahafo area of Ghana. GSSP Working Paper 55 (71% plant in the major season, April\u2013July)",
    "url": "https://cgspace.cgiar.org/server/api/core/bitstreams/3046b564-967f-422a-9035-a855464cfe8d/content"
   },
   "MOFA_IFPRI_CHILI_2020": {
-   "title": "Ghana's chili market. MoFA-IFPRI Market Brief No. 4, April 2020 (rain-fed chili production May–November)",
+   "title": "Ghana's chili market. MoFA-IFPRI Market Brief No. 4, April 2020 (rain-fed chili production May\u2013November)",
    "url": "https://cgspace.cgiar.org/server/api/core/bitstreams/7fae63ba-edb7-4100-9cb1-854f6277d81f/content"
   }
  },
@@ -234,8 +234,8 @@
     "T": [
      {
       "label": "First season",
-      "sow_text": "20 Mar – 30 Apr",
-      "harvest_text": "10 Aug – 20 Sep",
+      "sow_text": "20 Mar \u2013 30 Apr",
+      "harvest_text": "10 Aug \u2013 20 Sep",
       "sow": [
        3,
        4
@@ -251,8 +251,8 @@
      },
      {
       "label": "Second season",
-      "sow_text": "20 Jul – 1 Sep",
-      "harvest_text": "1 Nov – 10 Dec",
+      "sow_text": "20 Jul \u2013 1 Sep",
+      "harvest_text": "1 Nov \u2013 10 Dec",
       "sow": [
        7,
        8,
@@ -271,8 +271,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "20 May – 20 Jun",
-      "harvest_text": "10 Sep – 30 Oct",
+      "sow_text": "20 May \u2013 20 Jun",
+      "harvest_text": "10 Sep \u2013 30 Oct",
       "sow": [
        5,
        6
@@ -290,8 +290,8 @@
     "F": [
      {
       "label": "First season",
-      "sow_text": "10 Mar – 30 Apr",
-      "harvest_text": "10 Aug – 20 Sep",
+      "sow_text": "10 Mar \u2013 30 Apr",
+      "harvest_text": "10 Aug \u2013 20 Sep",
       "sow": [
        3,
        4
@@ -307,8 +307,8 @@
      },
      {
       "label": "Second season",
-      "sow_text": "20 Jul – 20 Sep",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "20 Jul \u2013 20 Sep",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        7,
        8,
@@ -327,8 +327,8 @@
     "C": [
      {
       "label": "First season",
-      "sow_text": "20 Mar – 30 Apr",
-      "harvest_text": "10 Aug – 20 Sep",
+      "sow_text": "20 Mar \u2013 30 Apr",
+      "harvest_text": "10 Aug \u2013 20 Sep",
       "sow": [
        3,
        4
@@ -344,8 +344,8 @@
      },
      {
       "label": "Second season",
-      "sow_text": "20 Jul – 20 Aug",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "20 Jul \u2013 20 Aug",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        7,
        8
@@ -363,8 +363,8 @@
     "KH": [
      {
       "label": null,
-      "sow_text": "20 Mar – 30 Apr",
-      "harvest_text": "Oct – Nov",
+      "sow_text": "20 Mar \u2013 30 Apr",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        3,
        4
@@ -382,8 +382,8 @@
     "KM": [
      {
       "label": "Long rains",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -399,8 +399,8 @@
      },
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Feb – Mar",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Feb \u2013 Mar",
       "sow": [
        10,
        11
@@ -418,8 +418,8 @@
     "KE": [
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Feb – Mar",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Feb \u2013 Mar",
       "sow": [
        10,
        11
@@ -435,8 +435,8 @@
      },
      {
       "label": "Long rains (risky)",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jun – Jul",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jun \u2013 Jul",
       "sow": [
        3,
        4
@@ -455,7 +455,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -472,8 +472,8 @@
     "NS": [
      {
       "label": "Rainy season",
-      "sow_text": "Jun – Jul",
-      "harvest_text": "Sep – Oct",
+      "sow_text": "Jun \u2013 Jul",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6,
        7
@@ -491,8 +491,8 @@
     "NG": [
      {
       "label": "Rainy season",
-      "sow_text": "Jun – Jul",
-      "harvest_text": "Sep – Oct",
+      "sow_text": "Jun \u2013 Jul",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6,
        7
@@ -510,8 +510,8 @@
     "SG": [
      {
       "label": "Rainy season",
-      "sow_text": "Mid May – Jun",
-      "harvest_text": "Aug – Sep",
+      "sow_text": "Mid May \u2013 Jun",
+      "harvest_text": "Aug \u2013 Sep",
       "sow": [
        5,
        6
@@ -529,8 +529,8 @@
     "DS": [
      {
       "label": "Early maize",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -563,8 +563,8 @@
     "HF": [
      {
       "label": "First season",
-      "sow_text": "Late Feb – Mar",
-      "harvest_text": "Jun – Jul",
+      "sow_text": "Late Feb \u2013 Mar",
+      "harvest_text": "Jun \u2013 Jul",
       "sow": [
        2,
        3
@@ -580,7 +580,7 @@
      },
      {
       "label": "Second season",
-      "sow_text": "Late Jul – Aug",
+      "sow_text": "Late Jul \u2013 Aug",
       "harvest_text": "Nov",
       "sow": [
        7,
@@ -599,7 +599,7 @@
      {
       "label": "saison unique",
       "sow_text": "May",
-      "harvest_text": "Jul – Nov",
+      "harvest_text": "Jul \u2013 Nov",
       "sow": [
        5
       ],
@@ -618,9 +618,9 @@
     ],
     "TG002": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Oct",
+      "harvest_text": "Jun \u2013 Oct",
       "sow": [
        3
       ],
@@ -639,9 +639,9 @@
     ],
     "TG003": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Oct",
+      "harvest_text": "Jun \u2013 Oct",
       "sow": [
        3
       ],
@@ -658,9 +658,9 @@
       "best": true
      },
      {
-      "label": "2ème saison",
+      "label": "2\u00e8me saison",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        7
       ],
@@ -677,9 +677,9 @@
     ],
     "TG004": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Sep",
+      "harvest_text": "Jun \u2013 Sep",
       "sow": [
        3
       ],
@@ -699,7 +699,7 @@
      {
       "label": "un cycle",
       "sow_text": "May",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        5
       ],
@@ -718,7 +718,7 @@
      {
       "label": "un cycle",
       "sow_text": "May",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        5
       ],
@@ -737,7 +737,7 @@
      {
       "label": "cultures pluviales",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -755,7 +755,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -773,7 +773,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -793,7 +793,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -811,9 +811,9 @@
     ],
     "NE003": [
      {
-      "label": "Hivernage: Variété utlisés: P3KOLO, CET, MAKA, JFS",
+      "label": "Hivernage: Vari\u00e9t\u00e9 utlis\u00e9s: P3KOLO, CET, MAKA, JFS",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -829,7 +829,7 @@
     ],
     "NE004": [
      {
-      "label": "Hivernage: Variété utlisés: P3KOLO, CET, MAKA, JFS",
+      "label": "Hivernage: Vari\u00e9t\u00e9 utlis\u00e9s: P3KOLO, CET, MAKA, JFS",
       "sow_text": "Jul",
       "harvest_text": "Oct",
       "sow": [
@@ -919,7 +919,11 @@
     "cover": 2,
     "water": 3,
     "role": "Heavy feeder: takes a lot from the soil",
-    "src": "MOFA_MAIZE, IITA_MAIZE_2025"
+    "src": "MOFA_MAIZE, IITA_MAIZE_2025",
+    "forage": {
+     "kind": "stover",
+     "line": "The stalks and leaves left after picking feed cattle and goats through the dry season."
+    }
    }
   },
   {
@@ -968,8 +972,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "1 Aug – 20 Sep",
-      "harvest_text": "1 Nov – 31 Dec",
+      "sow_text": "1 Aug \u2013 20 Sep",
+      "harvest_text": "1 Nov \u2013 31 Dec",
       "sow": [
        8,
        9
@@ -987,8 +991,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "20 Apr – 10 Aug",
-      "harvest_text": "10 Oct – 20 Nov",
+      "sow_text": "20 Apr \u2013 10 Aug",
+      "harvest_text": "10 Oct \u2013 20 Nov",
       "sow": [
        4,
        5,
@@ -1009,8 +1013,8 @@
     "C": [
      {
       "label": null,
-      "sow_text": "20 Sep – 10 Oct",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "20 Sep \u2013 10 Oct",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        9,
        10
@@ -1028,8 +1032,8 @@
     "KM": [
      {
       "label": "Long rains",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jun – Jul",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jun \u2013 Jul",
       "sow": [
        3,
        4
@@ -1047,8 +1051,8 @@
     "KE": [
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Jan – Feb",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Jan \u2013 Feb",
       "sow": [
        10,
        11
@@ -1064,8 +1068,8 @@
      },
      {
       "label": "Long rains (risky)",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jun – Jul",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jun \u2013 Jul",
       "sow": [
        3,
        4
@@ -1084,7 +1088,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -1102,7 +1106,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -1119,7 +1123,7 @@
     "NG": [
      {
       "label": "Rainy season",
-      "sow_text": "Jul – Aug",
+      "sow_text": "Jul \u2013 Aug",
       "harvest_text": "Oct",
       "sow": [
        7,
@@ -1137,7 +1141,7 @@
     "SG": [
      {
       "label": "Rainy season",
-      "sow_text": "Jul – Aug",
+      "sow_text": "Jul \u2013 Aug",
       "harvest_text": "Oct",
       "sow": [
        7,
@@ -1155,7 +1159,7 @@
     "DS": [
      {
       "label": "Late cowpea",
-      "sow_text": "Aug – Sep",
+      "sow_text": "Aug \u2013 Sep",
       "harvest_text": "Nov",
       "sow": [
        8,
@@ -1174,7 +1178,7 @@
      {
       "label": "saison unique",
       "sow_text": "May",
-      "harvest_text": "Jul – Sep",
+      "harvest_text": "Jul \u2013 Sep",
       "sow": [
        5
       ],
@@ -1191,9 +1195,9 @@
     ],
     "TG002": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Sep",
+      "harvest_text": "Jul \u2013 Sep",
       "sow": [
        3
       ],
@@ -1208,9 +1212,9 @@
       "best": true
      },
      {
-      "label": "2 ème saison",
+      "label": "2 \u00e8me saison",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        7
       ],
@@ -1228,9 +1232,9 @@
     ],
     "TG003": [
      {
-      "label": "1ème saison",
+      "label": "1\u00e8me saison",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Sep",
+      "harvest_text": "Jul \u2013 Sep",
       "sow": [
        3
       ],
@@ -1245,9 +1249,9 @@
       "best": true
      },
      {
-      "label": "2 ème saison",
+      "label": "2 \u00e8me saison",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        7
       ],
@@ -1265,9 +1269,9 @@
     ],
     "TG004": [
      {
-      "label": "1ème saison",
+      "label": "1\u00e8me saison",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Sep",
+      "harvest_text": "Jul \u2013 Sep",
       "sow": [
        3
       ],
@@ -1282,9 +1286,9 @@
       "best": true
      },
      {
-      "label": "2 ème saison",
+      "label": "2 \u00e8me saison",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        7
       ],
@@ -1302,9 +1306,9 @@
     ],
     "CI004": [
      {
-      "label": "En association généralement",
+      "label": "En association g\u00e9n\u00e9ralement",
       "sow_text": "Apr",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        4
       ],
@@ -1322,7 +1326,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        6
       ],
@@ -1341,7 +1345,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        7
       ],
@@ -1360,7 +1364,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        7
       ],
@@ -1379,7 +1383,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        6
       ],
@@ -1399,7 +1403,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -1419,7 +1423,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -1437,9 +1441,9 @@
     ],
     "NE002": [
      {
-      "label": "Saison des pluiues:Les variétéz utilisées au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
+      "label": "Saison des pluiues:Les vari\u00e9t\u00e9z utilis\u00e9es au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
       "sow_text": "Jun",
-      "harvest_text": "Aug – Dec",
+      "harvest_text": "Aug \u2013 Dec",
       "sow": [
        6
       ],
@@ -1458,9 +1462,9 @@
     ],
     "NE003": [
      {
-      "label": "Saison des pluiues:Les variétéz utilisées au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
+      "label": "Saison des pluiues:Les vari\u00e9t\u00e9z utilis\u00e9es au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
       "sow_text": "Jun",
-      "harvest_text": "Aug – Dec",
+      "harvest_text": "Aug \u2013 Dec",
       "sow": [
        6
       ],
@@ -1479,9 +1483,9 @@
     ],
     "NE004": [
      {
-      "label": "Saison des pluiues:Les variétéz utilisées au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
+      "label": "Saison des pluiues:Les vari\u00e9t\u00e9z utilis\u00e9es au niger: TN-5-78; KVX30-309-6G; TN 88-63; TN-27-80",
       "sow_text": "Jun",
-      "harvest_text": "Aug – Dec",
+      "harvest_text": "Aug \u2013 Dec",
       "sow": [
        6
       ],
@@ -1568,13 +1572,17 @@
     "cover": 2,
     "water": 1,
     "role": "Adds nitrogen and covers the ground",
-    "src": "SARI_COWPEA"
+    "src": "SARI_COWPEA",
+    "forage": {
+     "kind": "haulms",
+     "line": "The haulms after picking pods are one of the best dry-season feeds in the north."
+    }
    }
   },
   {
    "id": "groundnut",
    "name": "Groundnut",
-   "twi": "nkateɛ",
+   "twi": "nkate\u025b",
    "kind": "seasonal",
    "img": "img/groundnut.webp",
    "pos": "50% 50%",
@@ -1597,8 +1605,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "1 Jul – 31 Jul",
-      "harvest_text": "10 Nov – 31 Dec",
+      "sow_text": "1 Jul \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 31 Dec",
       "sow": [
        7
       ],
@@ -1615,8 +1623,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "1 May – 20 Jun",
-      "harvest_text": "10 Sep – 20 Oct",
+      "sow_text": "1 May \u2013 20 Jun",
+      "harvest_text": "10 Sep \u2013 20 Oct",
       "sow": [
        5,
        6
@@ -1634,8 +1642,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "1 Apr – 31 May",
-      "harvest_text": "10 Jul – 31 Aug",
+      "sow_text": "1 Apr \u2013 31 May",
+      "harvest_text": "10 Jul \u2013 31 Aug",
       "sow": [
        4,
        5
@@ -1671,7 +1679,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -1688,7 +1696,7 @@
     "NG": [
      {
       "label": "Rainy season",
-      "sow_text": "May – Jun",
+      "sow_text": "May \u2013 Jun",
       "harvest_text": "Sep",
       "sow": [
        5,
@@ -1790,7 +1798,11 @@
     "cover": 2,
     "water": 1,
     "role": "Adds nitrogen and covers the ground",
-    "src": "APNI_GNUT_NG"
+    "src": "APNI_GNUT_NG",
+    "forage": {
+     "kind": "haulms",
+     "line": "Haulms feed livestock, and the shells go back into the soil or the fire."
+    }
    }
   },
   {
@@ -1839,8 +1851,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "30 Apr – 31 Jul",
-      "harvest_text": "10 Nov – 10 Jan",
+      "sow_text": "30 Apr \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 10 Jan",
       "sow": [
        4,
        5,
@@ -1861,8 +1873,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "20 Jun – 20 Aug",
-      "harvest_text": "10 Nov – 10 Jan",
+      "sow_text": "20 Jun \u2013 20 Aug",
+      "harvest_text": "10 Nov \u2013 10 Jan",
       "sow": [
        6,
        7,
@@ -1882,8 +1894,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "30 Apr – 31 Jul",
-      "harvest_text": "10 Nov – 10 Jan",
+      "sow_text": "30 Apr \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 10 Jan",
       "sow": [
        4,
        5,
@@ -1904,8 +1916,8 @@
     "C": [
      {
       "label": null,
-      "sow_text": "10 Apr – 10 Jul",
-      "harvest_text": "10 Nov – 10 Jan",
+      "sow_text": "10 Apr \u2013 10 Jul",
+      "harvest_text": "10 Nov \u2013 10 Jan",
       "sow": [
        4,
        5,
@@ -1926,8 +1938,8 @@
     "KM": [
      {
       "label": null,
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jan – Mar, the year after",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jan \u2013 Mar, the year after",
       "sow": [
        3,
        4
@@ -1946,8 +1958,8 @@
     "KE": [
      {
       "label": null,
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Oct – Dec, the year after",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Oct \u2013 Dec, the year after",
       "sow": [
        10,
        11
@@ -1966,8 +1978,8 @@
     "NS": [
      {
       "label": null,
-      "sow_text": "Jul – Aug",
-      "harvest_text": "Jul – Dec, the year after",
+      "sow_text": "Jul \u2013 Aug",
+      "harvest_text": "Jul \u2013 Dec, the year after",
       "sow": [
        7,
        8
@@ -1989,8 +2001,8 @@
     "NG": [
      {
       "label": null,
-      "sow_text": "Jul – Aug",
-      "harvest_text": "Jul – Dec, the year after",
+      "sow_text": "Jul \u2013 Aug",
+      "harvest_text": "Jul \u2013 Dec, the year after",
       "sow": [
        7,
        8
@@ -2012,8 +2024,8 @@
     "SG": [
      {
       "label": null,
-      "sow_text": "May – Jul",
-      "harvest_text": "May – Dec, the year after",
+      "sow_text": "May \u2013 Jul",
+      "harvest_text": "May \u2013 Dec, the year after",
       "sow": [
        5,
        6,
@@ -2038,8 +2050,8 @@
     "DS": [
      {
       "label": null,
-      "sow_text": "Apr – Aug",
-      "harvest_text": "Apr – Dec, the year after",
+      "sow_text": "Apr \u2013 Aug",
+      "harvest_text": "Apr \u2013 Dec, the year after",
       "sow": [
        4,
        5,
@@ -2067,8 +2079,8 @@
     "HF": [
      {
       "label": null,
-      "sow_text": "Mar – Nov",
-      "harvest_text": "Mar – Dec, the year after",
+      "sow_text": "Mar \u2013 Nov",
+      "harvest_text": "Mar \u2013 Dec, the year after",
       "sow": [
        3,
        4,
@@ -2102,7 +2114,7 @@
      {
       "label": "Culture annuel",
       "sow_text": "Apr",
-      "harvest_text": "Dec – May",
+      "harvest_text": "Dec \u2013 May",
       "sow": [
        4
       ],
@@ -2122,7 +2134,7 @@
      {
       "label": "culture bi-annuelle",
       "sow_text": "May",
-      "harvest_text": "May – Jun",
+      "harvest_text": "May \u2013 Jun",
       "sow": [
        5
       ],
@@ -2140,7 +2152,7 @@
      {
       "label": "Culture annuel",
       "sow_text": "Mar",
-      "harvest_text": "Oct – Jun",
+      "harvest_text": "Oct \u2013 Jun",
       "sow": [
        3
       ],
@@ -2163,7 +2175,7 @@
      {
       "label": "culture bi-annuelle",
       "sow_text": "Mar",
-      "harvest_text": "Apr – Sep",
+      "harvest_text": "Apr \u2013 Sep",
       "sow": [
        3
       ],
@@ -2185,7 +2197,7 @@
      {
       "label": "Culture annuel",
       "sow_text": "Mar",
-      "harvest_text": "Oct – Jun",
+      "harvest_text": "Oct \u2013 Jun",
       "sow": [
        3
       ],
@@ -2208,7 +2220,7 @@
      {
       "label": "culture bi-annuelle",
       "sow_text": "Mar",
-      "harvest_text": "Apr – Sep",
+      "harvest_text": "Apr \u2013 Sep",
       "sow": [
        3
       ],
@@ -2230,7 +2242,7 @@
      {
       "label": "Culture annuel",
       "sow_text": "Apr",
-      "harvest_text": "Dec – Sep",
+      "harvest_text": "Dec \u2013 Sep",
       "sow": [
        4
       ],
@@ -2254,7 +2266,7 @@
      {
       "label": "culture bi-annuelle",
       "sow_text": "Apr",
-      "harvest_text": "May – Jul",
+      "harvest_text": "May \u2013 Jul",
       "sow": [
        4
       ],
@@ -2273,7 +2285,7 @@
      {
       "label": "Boutures: 20-25 cm",
       "sow_text": "Mar",
-      "harvest_text": "Jan – May",
+      "harvest_text": "Jan \u2013 May",
       "sow": [
        3
       ],
@@ -2294,7 +2306,7 @@
      {
       "label": "Boutures: 20-25 cm",
       "sow_text": "Apr",
-      "harvest_text": "Dec – Mar",
+      "harvest_text": "Dec \u2013 Mar",
       "sow": [
        4
       ],
@@ -2314,7 +2326,7 @@
      {
       "label": "Boutures: 20-25 cm",
       "sow_text": "Apr",
-      "harvest_text": "Dec – Mar",
+      "harvest_text": "Dec \u2013 Mar",
       "sow": [
        4
       ],
@@ -2334,7 +2346,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -2362,7 +2374,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -2390,7 +2402,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -2418,7 +2430,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -2446,7 +2458,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -2472,9 +2484,9 @@
     ],
     "NE003": [
      {
-      "label": "Saison pluivieuse ou saison sèche froide: Le manioc a une grande faculté d’adaptation tant pour le climat que pour le sol",
+      "label": "Saison pluivieuse ou saison s\u00e8che froide: Le manioc a une grande facult\u00e9 d\u2019adaptation tant pour le climat que pour le sol",
       "sow_text": "Jul",
-      "harvest_text": "May – Dec",
+      "harvest_text": "May \u2013 Dec",
       "sow": [
        7
       ],
@@ -2496,9 +2508,9 @@
     ],
     "NE004": [
      {
-      "label": "Saison pluivieuse ou saison sèche froide: Le manioc a une grande faculté d’adaptation tant pour le climat que pour le sol",
+      "label": "Saison pluivieuse ou saison s\u00e8che froide: Le manioc a une grande facult\u00e9 d\u2019adaptation tant pour le climat que pour le sol",
       "sow_text": "Jul",
-      "harvest_text": "May – Dec",
+      "harvest_text": "May \u2013 Dec",
       "sow": [
        7
       ],
@@ -2588,13 +2600,17 @@
     "cover": 1,
     "water": 2,
     "role": "Leaves little behind but reaches deep water",
-    "src": "IITA_CASSAVA"
+    "src": "IITA_CASSAVA",
+    "forage": {
+     "kind": "peels",
+     "line": "Peels and leaves are fed to livestock; the leaves are also eaten as a vegetable."
+    }
    }
   },
   {
    "id": "yam",
    "name": "Yam",
-   "twi": "bayerɛ",
+   "twi": "bayer\u025b",
    "kind": "seasonal",
    "img": "img/yam.webp",
    "pos": "50% 50%",
@@ -2623,8 +2639,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "10 Dec – 10 Mar",
-      "harvest_text": "10 Jul – 10 Dec",
+      "sow_text": "10 Dec \u2013 10 Mar",
+      "harvest_text": "10 Jul \u2013 10 Dec",
       "sow": [
        12,
        1,
@@ -2648,8 +2664,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "10 Dec – 10 Mar",
-      "harvest_text": "10 Jul – 10 Dec",
+      "sow_text": "10 Dec \u2013 10 Mar",
+      "harvest_text": "10 Jul \u2013 10 Dec",
       "sow": [
        12,
        1,
@@ -2672,9 +2688,9 @@
     ],
     "TG001": [
      {
-      "label": "nouvelle défriche ou tête de culture",
+      "label": "nouvelle d\u00e9friche ou t\u00eate de culture",
       "sow_text": "Apr",
-      "harvest_text": "Sep – Mar",
+      "harvest_text": "Sep \u2013 Mar",
       "sow": [
        4
       ],
@@ -2695,9 +2711,9 @@
     ],
     "TG002": [
      {
-      "label": "nouvelle défriche ou tête de culture",
+      "label": "nouvelle d\u00e9friche ou t\u00eate de culture",
       "sow_text": "Mar",
-      "harvest_text": "Aug – Jan",
+      "harvest_text": "Aug \u2013 Jan",
       "sow": [
        3
       ],
@@ -2719,7 +2735,7 @@
      {
       "label": "Bas fond",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Dec",
+      "harvest_text": "Jul \u2013 Dec",
       "sow": [
        3
       ],
@@ -2739,9 +2755,9 @@
     ],
     "CI002": [
      {
-      "label": "Igname précoce",
+      "label": "Igname pr\u00e9coce",
       "sow_text": "Mar",
-      "harvest_text": "Oct – Feb",
+      "harvest_text": "Oct \u2013 Feb",
       "sow": [
        3
       ],
@@ -2760,7 +2776,7 @@
      {
       "label": "Igname tardive",
       "sow_text": "Apr",
-      "harvest_text": "Nov – Feb",
+      "harvest_text": "Nov \u2013 Feb",
       "sow": [
        4
       ],
@@ -2780,7 +2796,7 @@
      {
       "label": "Igname tardive",
       "sow_text": "Apr",
-      "harvest_text": "Nov – Feb",
+      "harvest_text": "Nov \u2013 Feb",
       "sow": [
        4
       ],
@@ -2800,7 +2816,7 @@
      {
       "label": "Igname tardive",
       "sow_text": "Apr",
-      "harvest_text": "Nov – Feb",
+      "harvest_text": "Nov \u2013 Feb",
       "sow": [
        4
       ],
@@ -2920,8 +2936,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "20 Aug – 20 Sep",
-      "harvest_text": "10 Nov – 31 Dec",
+      "sow_text": "20 Aug \u2013 20 Sep",
+      "harvest_text": "10 Nov \u2013 31 Dec",
       "sow": [
        8,
        9
@@ -2939,8 +2955,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "10 Jul – 31 Jul",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "10 Jul \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        7
       ],
@@ -2957,8 +2973,8 @@
     "KM": [
      {
       "label": "Long rains",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -2976,8 +2992,8 @@
     "KE": [
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Feb – Mar",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Feb \u2013 Mar",
       "sow": [
        10,
        11
@@ -2993,8 +3009,8 @@
      },
      {
       "label": "Long rains (risky)",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -3029,8 +3045,8 @@
     "NS": [
      {
       "label": "Rainy season",
-      "sow_text": "Jun – Jul",
-      "harvest_text": "Oct – Nov",
+      "sow_text": "Jun \u2013 Jul",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        6,
        7
@@ -3066,7 +3082,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jun",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        6
       ],
@@ -3083,8 +3099,8 @@
     "DS": [
      {
       "label": "Rainy season",
-      "sow_text": "Apr – May",
-      "harvest_text": "Sep – Oct",
+      "sow_text": "Apr \u2013 May",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        4,
        5
@@ -3103,7 +3119,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Apr",
-      "harvest_text": "Aug – Sep",
+      "harvest_text": "Aug \u2013 Sep",
       "sow": [
        4
       ],
@@ -3121,7 +3137,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        6
       ],
@@ -3140,7 +3156,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        5
       ],
@@ -3159,7 +3175,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        4
       ],
@@ -3179,7 +3195,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        5
       ],
@@ -3197,7 +3213,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        6
       ],
@@ -3215,7 +3231,7 @@
      {
       "label": "cultures pluviales",
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -3233,7 +3249,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        7
       ],
@@ -3251,7 +3267,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3269,7 +3285,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -3289,7 +3305,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -3307,9 +3323,9 @@
     ],
     "NE002": [
      {
-      "label": "Hivernage: Varité utilisé; Sepon 82, NAD1, BDF, IRAT 204,S-39, Mota maradi",
+      "label": "Hivernage: Varit\u00e9 utilis\u00e9; Sepon 82, NAD1, BDF, IRAT 204,S-39, Mota maradi",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        7
       ],
@@ -3325,9 +3341,9 @@
     ],
     "NE003": [
      {
-      "label": "Hivernage: Varité utilisé; Sepon 82, NAD1, BDF, IRAT 204,S-39, Mota maradi",
+      "label": "Hivernage: Varit\u00e9 utilis\u00e9; Sepon 82, NAD1, BDF, IRAT 204,S-39, Mota maradi",
       "sow_text": "Jun",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        6
       ],
@@ -3345,7 +3361,7 @@
      {
       "label": "Hivernage",
       "sow_text": "May",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        5
       ],
@@ -3398,7 +3414,7 @@
     "opt_min": 750,
     "opt_max": 1300,
     "abs_max": null,
-    "text": "FAO's Ghana crop calendar grows sorghum in zones with 750–1,000 mm (Guinea savanna) and 1,000–1,300 mm (Transitional) of rain a year; FAO puts its water need at 450–650 mm per season.",
+    "text": "FAO's Ghana crop calendar grows sorghum in zones with 750\u20131,000 mm (Guinea savanna) and 1,000\u20131,300 mm (Transitional) of rain a year; FAO puts its water need at 450\u2013650 mm per season.",
     "sources": [
      "FAO_CROPCAL",
      "FAO_CWR",
@@ -3437,7 +3453,11 @@
     "cover": 2,
     "water": 1,
     "role": "Hardy cereal: leaves stalks and some cover",
-    "src": "IITA_SORGHUM_2025"
+    "src": "IITA_SORGHUM_2025",
+    "forage": {
+     "kind": "stover",
+     "line": "Thick stalks and leaves: good dry-season fodder, and the stalks can be kept for fencing."
+    }
    }
   },
   {
@@ -3472,8 +3492,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "early Jun – late Jul",
-      "harvest_text": "Aug – Oct",
+      "sow_text": "early Jun \u2013 late Jul",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        6,
        7
@@ -3491,8 +3511,8 @@
     "KM": [
      {
       "label": "Long rains",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -3510,8 +3530,8 @@
     "KE": [
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Feb – Mar",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Feb \u2013 Mar",
       "sow": [
        10,
        11
@@ -3527,8 +3547,8 @@
      },
      {
       "label": "Long rains (risky)",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -3547,7 +3567,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3565,7 +3585,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3583,7 +3603,7 @@
      {
       "label": "Rainy season",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3601,7 +3621,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3617,9 +3637,9 @@
     ],
     "SN002": [
      {
-      "label": "cultures du diéri",
+      "label": "cultures du di\u00e9ri",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -3637,7 +3657,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        5
       ],
@@ -3655,7 +3675,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        4
       ],
@@ -3673,7 +3693,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        5
       ],
@@ -3692,7 +3712,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        5
       ],
@@ -3772,13 +3792,17 @@
     "cover": 1,
     "water": 1,
     "role": "Hardy cereal: thin cover, little residue",
-    "src": "MILLET_AJPS_2021"
+    "src": "MILLET_AJPS_2021",
+    "forage": {
+     "kind": "stover",
+     "line": "Thin stalks, but livestock will eat them when there is nothing greener."
+    }
    }
   },
   {
    "id": "rice",
    "name": "Rice",
-   "twi": "ɛmo",
+   "twi": "\u025bmo",
    "kind": "seasonal",
    "img": "img/rice.webp",
    "pos": "50% 50%",
@@ -3816,8 +3840,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "1 Jun – 31 Jul",
-      "harvest_text": "10 Oct – 20 Dec",
+      "sow_text": "1 Jun \u2013 31 Jul",
+      "harvest_text": "10 Oct \u2013 20 Dec",
       "sow": [
        6,
        7
@@ -3836,8 +3860,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "10 Jun – 31 Jul",
-      "harvest_text": "10 Nov – 10 Dec",
+      "sow_text": "10 Jun \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 10 Dec",
       "sow": [
        6,
        7
@@ -3855,8 +3879,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "1 May – 20 Jun",
-      "harvest_text": "1 Oct – 20 Nov",
+      "sow_text": "1 May \u2013 20 Jun",
+      "harvest_text": "1 Oct \u2013 20 Nov",
       "sow": [
        5,
        6
@@ -3925,8 +3949,8 @@
     "SG": [
      {
       "label": "Rainfed",
-      "sow_text": "Mid May – Jun",
-      "harvest_text": "Sep – Oct",
+      "sow_text": "Mid May \u2013 Jun",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        5,
        6
@@ -3944,8 +3968,8 @@
     "DS": [
      {
       "label": "Rainfed",
-      "sow_text": "Apr – May",
-      "harvest_text": "Sep – Oct",
+      "sow_text": "Apr \u2013 May",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        4,
        5
@@ -3963,7 +3987,7 @@
     "HF": [
      {
       "label": "Rainfed",
-      "sow_text": "Mid Mar – Apr",
+      "sow_text": "Mid Mar \u2013 Apr",
       "harvest_text": "Aug",
       "sow": [
        3,
@@ -3980,9 +4004,9 @@
     ],
     "TG001": [
      {
-      "label": "Plaine et plateaux non exondés",
+      "label": "Plaine et plateaux non exond\u00e9s",
       "sow_text": "Jun",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        6
       ],
@@ -3999,7 +4023,7 @@
      {
       "label": "bas fonds",
       "sow_text": "May",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        5
       ],
@@ -4016,9 +4040,9 @@
     ],
     "TG002": [
      {
-      "label": "Plaine et plateaux non exondés",
+      "label": "Plaine et plateaux non exond\u00e9s",
       "sow_text": "May",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        5
       ],
@@ -4035,7 +4059,7 @@
      {
       "label": "bas fonds",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Dec",
+      "harvest_text": "Jun \u2013 Dec",
       "sow": [
        3
       ],
@@ -4056,9 +4080,9 @@
     ],
     "TG003": [
      {
-      "label": "Plaine et plateaux non exondés",
+      "label": "Plaine et plateaux non exond\u00e9s",
       "sow_text": "May",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        5
       ],
@@ -4075,7 +4099,7 @@
      {
       "label": "bas fonds",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Dec",
+      "harvest_text": "Jun \u2013 Dec",
       "sow": [
        3
       ],
@@ -4096,9 +4120,9 @@
     ],
     "TG004": [
      {
-      "label": "Irrigué 1ère saison",
+      "label": "Irrigu\u00e9 1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Aug",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3
       ],
@@ -4116,7 +4140,7 @@
      {
       "label": "Cycle court",
       "sow_text": "Apr",
-      "harvest_text": "Jul – Aug",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        4
       ],
@@ -4132,7 +4156,7 @@
      {
       "label": "Cycle long",
       "sow_text": "May",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        5
       ],
@@ -4151,7 +4175,7 @@
      {
       "label": "Cycle court",
       "sow_text": "Mar",
-      "harvest_text": "Jul – Aug",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3
       ],
@@ -4167,7 +4191,7 @@
      {
       "label": "Cycle long",
       "sow_text": "May",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        5
       ],
@@ -4185,7 +4209,7 @@
      {
       "label": "Cycle court",
       "sow_text": "Jul",
-      "harvest_text": "Feb – Apr",
+      "harvest_text": "Feb \u2013 Apr",
       "sow": [
        7
       ],
@@ -4202,7 +4226,7 @@
      {
       "label": "Cycle long",
       "sow_text": "May",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        5
       ],
@@ -4220,7 +4244,7 @@
      {
       "label": "Cycle court",
       "sow_text": "Jul",
-      "harvest_text": "Feb – Apr",
+      "harvest_text": "Feb \u2013 Apr",
       "sow": [
        7
       ],
@@ -4237,7 +4261,7 @@
      {
       "label": "Cycle long",
       "sow_text": "May",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        5
       ],
@@ -4255,7 +4279,7 @@
      {
       "label": "saison humide ou hivernage",
       "sow_text": "Jun",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        6
       ],
@@ -4272,7 +4296,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        6
       ],
@@ -4291,7 +4315,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        5
       ],
@@ -4310,7 +4334,7 @@
      {
       "label": null,
       "sow_text": "May",
-      "harvest_text": "Aug – Nov",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        5
       ],
@@ -4328,9 +4352,9 @@
     ],
     "ML002": [
      {
-      "label": "Riziculture: irriguée hivernage",
+      "label": "Riziculture: irrigu\u00e9e hivernage",
       "sow_text": "May",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        5
       ],
@@ -4350,7 +4374,7 @@
      {
       "label": "Hivernage",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -4366,9 +4390,9 @@
     ],
     "NE003": [
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -4382,9 +4406,9 @@
       "best": true
      },
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        7
       ],
@@ -4398,9 +4422,9 @@
       "best": false
      },
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        7
       ],
@@ -4416,9 +4440,9 @@
     ],
     "NE004": [
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -4432,9 +4456,9 @@
       "best": true
      },
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        7
       ],
@@ -4448,9 +4472,9 @@
       "best": false
      },
      {
-      "label": "Riziculture Irriguée: Variétés utlisées: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
+      "label": "Riziculture Irrigu\u00e9e: Vari\u00e9t\u00e9s utlis\u00e9es: IR 22, NERICA, BG-90-2;SINTANE DIOFFOR, Vita1, Vita6; Vita9",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Nov",
+      "harvest_text": "Oct \u2013 Nov",
       "sow": [
        7
       ],
@@ -4529,7 +4553,11 @@
     "cover": 2,
     "water": 3,
     "role": "Wants the most water of any cereal here",
-    "src": "MOFA_RICE"
+    "src": "MOFA_RICE",
+    "forage": {
+     "kind": "straw",
+     "line": "Straw after threshing is used for feed and bedding; much of it is burned here."
+    }
    }
   },
   {
@@ -4566,8 +4594,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "1 Jul – 31 Jul",
-      "harvest_text": "10 Nov – 20 Nov",
+      "sow_text": "1 Jul \u2013 31 Jul",
+      "harvest_text": "10 Nov \u2013 20 Nov",
       "sow": [
        7
       ],
@@ -4583,8 +4611,8 @@
     "G": [
      {
       "label": null,
-      "sow_text": "1 Jun – 20 Jul",
-      "harvest_text": "1 Oct – 20 Nov",
+      "sow_text": "1 Jun \u2013 20 Jul",
+      "harvest_text": "1 Oct \u2013 20 Nov",
       "sow": [
        6,
        7
@@ -4602,8 +4630,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "20 Apr – 10 Jul",
-      "harvest_text": "10 Oct – 10 Nov",
+      "sow_text": "20 Apr \u2013 10 Jul",
+      "harvest_text": "10 Oct \u2013 10 Nov",
       "sow": [
        4,
        5,
@@ -4623,8 +4651,8 @@
     "C": [
      {
       "label": null,
-      "sow_text": "20 Apr – 10 Jul",
-      "harvest_text": "20 Oct – 10 Nov",
+      "sow_text": "20 Apr \u2013 10 Jul",
+      "harvest_text": "20 Oct \u2013 10 Nov",
       "sow": [
        4,
        5,
@@ -4645,7 +4673,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Oct – Dec",
+      "harvest_text": "Oct \u2013 Dec",
       "sow": [
        7
       ],
@@ -4662,9 +4690,9 @@
     ],
     "TG002": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        6
       ],
@@ -4682,9 +4710,9 @@
     ],
     "TG004": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Dec",
+      "harvest_text": "Sep \u2013 Dec",
       "sow": [
        6
       ],
@@ -4704,7 +4732,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Nov – Dec",
+      "harvest_text": "Nov \u2013 Dec",
       "sow": [
        7
       ],
@@ -4722,7 +4750,7 @@
      {
       "label": null,
       "sow_text": "Jul",
-      "harvest_text": "Nov – Dec",
+      "harvest_text": "Nov \u2013 Dec",
       "sow": [
        7
       ],
@@ -4740,7 +4768,7 @@
      {
       "label": "Saison des pluies",
       "sow_text": "May",
-      "harvest_text": "Sep – Nov",
+      "harvest_text": "Sep \u2013 Nov",
       "sow": [
        5
       ],
@@ -4820,13 +4848,17 @@
     "cover": 2,
     "water": 2,
     "role": "Adds nitrogen and holds the soil",
-    "src": "APNI_SOY_NG"
+    "src": "APNI_SOY_NG",
+    "forage": {
+     "kind": "haulms",
+     "line": "Haulms make decent fodder, though they break down fast if left in the rain."
+    }
    }
   },
   {
    "id": "plantain",
    "name": "Plantain",
-   "twi": "borɔdeɛ / brode",
+   "twi": "bor\u0254de\u025b / brode",
    "kind": "seasonal",
    "img": "img/plantain.webp",
    "pos": "50% 50%",
@@ -4847,8 +4879,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "Apr – Jun",
-      "harvest_text": "Jan – Jun (next year)",
+      "sow_text": "Apr \u2013 Jun",
+      "harvest_text": "Jan \u2013 Jun (next year)",
       "sow": [
        4,
        5,
@@ -4870,8 +4902,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "Apr – Jun",
-      "harvest_text": "Jan – Jun (next year)",
+      "sow_text": "Apr \u2013 Jun",
+      "harvest_text": "Jan \u2013 Jun (next year)",
       "sow": [
        4,
        5,
@@ -4964,8 +4996,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "1 Apr – 30 Jun",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "1 Apr \u2013 30 Jun",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        4,
        5,
@@ -4985,8 +5017,8 @@
     "F": [
      {
       "label": null,
-      "sow_text": "1 Apr – 30 Jun",
-      "harvest_text": "10 Nov – 20 Dec",
+      "sow_text": "1 Apr \u2013 30 Jun",
+      "harvest_text": "10 Nov \u2013 20 Dec",
       "sow": [
        4,
        5,
@@ -5004,9 +5036,9 @@
     ],
     "TG001": [
      {
-      "label": "Cultivé en champ de case",
+      "label": "Cultiv\u00e9 en champ de case",
       "sow_text": "May",
-      "harvest_text": "Dec – Feb",
+      "harvest_text": "Dec \u2013 Feb",
       "sow": [
        5
       ],
@@ -5025,7 +5057,7 @@
      {
       "label": "Ecologie de culture bas fonds",
       "sow_text": "Mar",
-      "harvest_text": "Oct – Jan",
+      "harvest_text": "Oct \u2013 Jan",
       "sow": [
        3
       ],
@@ -5045,7 +5077,7 @@
      {
       "label": "Ecologie de culture bas fonds",
       "sow_text": "Mar",
-      "harvest_text": "Oct – Jan",
+      "harvest_text": "Oct \u2013 Jan",
       "sow": [
        3
       ],
@@ -5121,7 +5153,11 @@
     "cover": 3,
     "water": 3,
     "role": "Keeps the ground covered all year",
-    "src": "ONYEKA_2014"
+    "src": "ONYEKA_2014",
+    "forage": {
+     "kind": "leaves",
+     "line": "Leaves are used as fodder and as a vegetable."
+    }
    }
   },
   {
@@ -5176,7 +5212,7 @@
    "heat_sensitive_stage": null,
    "root_crop": false,
    "stages": null,
-   "price_note": "No market price series in WFP or Walo file (cocoa is sold at COCOBOD's fixed producer price – not collected).",
+   "price_note": "No market price series in WFP or Walo file (cocoa is sold at COCOBOD's fixed producer price \u2013 not collected).",
    "rotation": {
     "family": "tree",
     "n_fix": false,
@@ -5189,7 +5225,7 @@
   {
    "id": "tomato",
    "name": "Tomato",
-   "twi": "ntoosi / nɛnkyemɔɔno",
+   "twi": "ntoosi / n\u025bnkyem\u0254\u0254no",
    "kind": "seasonal",
    "img": "img/tomato.webp",
    "pos": "50% 50%",
@@ -5221,9 +5257,9 @@
    "windows": {
     "T": [
      {
-      "label": "Opt. Temp: 21ºC-24ºC",
-      "sow_text": "1 Jan – 31 Dec",
-      "harvest_text": "1 Jan – 31 Dec",
+      "label": "Opt. Temp: 21\u00baC-24\u00baC",
+      "sow_text": "1 Jan \u2013 31 Dec",
+      "harvest_text": "1 Jan \u2013 31 Dec",
       "sow": [
        1,
        2,
@@ -5260,9 +5296,9 @@
     ],
     "TG001": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Jun",
-      "harvest_text": "Aug – Oct",
+      "harvest_text": "Aug \u2013 Oct",
       "sow": [
        6
       ],
@@ -5279,9 +5315,9 @@
     ],
     "TG002": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Apr",
-      "harvest_text": "Jun – Nov",
+      "harvest_text": "Jun \u2013 Nov",
       "sow": [
        4
       ],
@@ -5301,9 +5337,9 @@
     ],
     "TG003": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "Mar",
-      "harvest_text": "Jun – Nov",
+      "harvest_text": "Jun \u2013 Nov",
       "sow": [
        3
       ],
@@ -5323,9 +5359,9 @@
     ],
     "TG004": [
      {
-      "label": "1ère saison",
+      "label": "1\u00e8re saison",
       "sow_text": "May",
-      "harvest_text": "Jul – Nov",
+      "harvest_text": "Jul \u2013 Nov",
       "sow": [
        5
       ],
@@ -5346,7 +5382,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "Jun – Sep",
+      "harvest_text": "Jun \u2013 Sep",
       "sow": [
        3
       ],
@@ -5366,7 +5402,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "Jun – Sep",
+      "harvest_text": "Jun \u2013 Sep",
       "sow": [
        3
       ],
@@ -5386,7 +5422,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jul – Oct",
+      "harvest_text": "Jul \u2013 Oct",
       "sow": [
        4
       ],
@@ -5406,7 +5442,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jul – Oct",
+      "harvest_text": "Jul \u2013 Oct",
       "sow": [
        4
       ],
@@ -5426,7 +5462,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -5454,7 +5490,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -5572,8 +5608,8 @@
     "T": [
      {
       "label": "Major season",
-      "sow_text": "Apr – Jul",
-      "harvest_text": "Aug – Nov",
+      "sow_text": "Apr \u2013 Jul",
+      "harvest_text": "Aug \u2013 Nov",
       "sow": [
        4,
        5,
@@ -5594,8 +5630,8 @@
     "C": [
      {
       "label": null,
-      "sow_text": "10 Aug – 10 Nov",
-      "harvest_text": "20 Sep – 10 Jan",
+      "sow_text": "10 Aug \u2013 10 Nov",
+      "harvest_text": "20 Sep \u2013 10 Jan",
       "sow": [
        8,
        9,
@@ -5686,8 +5722,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "10 Aug – 10 Nov",
-      "harvest_text": "Dec – Mar",
+      "sow_text": "10 Aug \u2013 10 Nov",
+      "harvest_text": "Dec \u2013 Mar",
       "sow": [
        8,
        9,
@@ -5811,8 +5847,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "Mar – Jul",
-      "harvest_text": "May – Sep",
+      "sow_text": "Mar \u2013 Jul",
+      "harvest_text": "May \u2013 Sep",
       "sow": [
        3,
        4,
@@ -5828,15 +5864,15 @@
        9
       ],
       "all_year": false,
-      "src": "MADE vegetable market study: rain-fed okra March–September in the south",
+      "src": "MADE vegetable market study: rain-fed okra March\u2013September in the south",
       "best": false
      }
     ],
     "G": [
      {
       "label": null,
-      "sow_text": "mid Jun – mid Jul",
-      "harvest_text": "Aug – Sep",
+      "sow_text": "mid Jun \u2013 mid Jul",
+      "harvest_text": "Aug \u2013 Sep",
       "sow": [
        6,
        7
@@ -5853,8 +5889,8 @@
     "F": [
      {
       "label": "Requires full sunlight.",
-      "sow_text": "1 Jan – 31 Dec",
-      "harvest_text": "1 Jan – 31 Dec",
+      "sow_text": "1 Jan \u2013 31 Dec",
+      "harvest_text": "1 Jan \u2013 31 Dec",
       "sow": [
        1,
        2,
@@ -5893,7 +5929,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "May – Feb",
+      "harvest_text": "May \u2013 Feb",
       "sow": [
        3
       ],
@@ -5919,7 +5955,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "May – Feb",
+      "harvest_text": "May \u2013 Feb",
       "sow": [
        3
       ],
@@ -5945,7 +5981,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "Apr – Aug",
+      "harvest_text": "Apr \u2013 Aug",
       "sow": [
        3
       ],
@@ -5966,7 +6002,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "Apr – Aug",
+      "harvest_text": "Apr \u2013 Aug",
       "sow": [
        3
       ],
@@ -5987,7 +6023,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "May – Sep",
+      "harvest_text": "May \u2013 Sep",
       "sow": [
        4
       ],
@@ -6008,7 +6044,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "May – Sep",
+      "harvest_text": "May \u2013 Sep",
       "sow": [
        4
       ],
@@ -6027,9 +6063,9 @@
     ],
     "NE002": [
      {
-      "label": "Saison des pluies: Variétés cultivées au Niger « Locales» , « Clemson Spineless », « Indiana »",
+      "label": "Saison des pluies: Vari\u00e9t\u00e9s cultiv\u00e9es au Niger \u00ab Locales\u00bb , \u00ab Clemson Spineless \u00bb, \u00ab Indiana \u00bb",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -6043,9 +6079,9 @@
       "best": true
      },
      {
-      "label": "Contre saison: Variétés cultivées au Niger « Locales» , « Clemson Spineless », « Indiana »",
+      "label": "Contre saison: Vari\u00e9t\u00e9s cultiv\u00e9es au Niger \u00ab Locales\u00bb , \u00ab Clemson Spineless \u00bb, \u00ab Indiana \u00bb",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -6061,9 +6097,9 @@
     ],
     "NE003": [
      {
-      "label": "Contre saison: Variétés cultivées au Niger « Locales» , « Clemson Spineless », « Indiana »",
+      "label": "Contre saison: Vari\u00e9t\u00e9s cultiv\u00e9es au Niger \u00ab Locales\u00bb , \u00ab Clemson Spineless \u00bb, \u00ab Indiana \u00bb",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -6079,9 +6115,9 @@
     ],
     "NE004": [
      {
-      "label": "Hivernage: Variétés cultivées au Niger « Locales» , « Clemson Spineless », « Indiana »",
+      "label": "Hivernage: Vari\u00e9t\u00e9s cultiv\u00e9es au Niger \u00ab Locales\u00bb , \u00ab Clemson Spineless \u00bb, \u00ab Indiana \u00bb",
       "sow_text": "Jun",
-      "harvest_text": "Sep – Oct",
+      "harvest_text": "Sep \u2013 Oct",
       "sow": [
        6
       ],
@@ -6183,8 +6219,8 @@
     "T": [
      {
       "label": null,
-      "sow_text": "Mar – Jun",
-      "harvest_text": "Jun – Sep",
+      "sow_text": "Mar \u2013 Jun",
+      "harvest_text": "Jun \u2013 Sep",
       "sow": [
        3,
        4,
@@ -6198,15 +6234,15 @@
        9
       ],
       "all_year": false,
-      "src": "MADE vegetable market study: rain-fed garden egg March–September incl. Brong Ahafo",
+      "src": "MADE vegetable market study: rain-fed garden egg March\u2013September incl. Brong Ahafo",
       "best": false
      }
     ],
     "F": [
      {
       "label": "Does best in warm season",
-      "sow_text": "1 Jan – 31 Dec",
-      "harvest_text": "1 Jan – 31 Dec",
+      "sow_text": "1 Jan \u2013 31 Dec",
+      "harvest_text": "1 Jan \u2013 31 Dec",
       "sow": [
        1,
        2,
@@ -6245,7 +6281,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "May – Oct",
+      "harvest_text": "May \u2013 Oct",
       "sow": [
        3
       ],
@@ -6267,7 +6303,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "May – Oct",
+      "harvest_text": "May \u2013 Oct",
       "sow": [
        3
       ],
@@ -6289,7 +6325,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jun – Nov",
+      "harvest_text": "Jun \u2013 Nov",
       "sow": [
        4
       ],
@@ -6311,7 +6347,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jun – Nov",
+      "harvest_text": "Jun \u2013 Nov",
       "sow": [
        4
       ],
@@ -6333,7 +6369,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6361,7 +6397,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6389,7 +6425,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6417,7 +6453,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6445,7 +6481,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6557,8 +6593,8 @@
     "G": [
      {
       "label": "This is normally planted in the Upper East Region, serves as \"hunger breaker\".",
-      "sow_text": "10 Dec – 10 Mar",
-      "harvest_text": "10 Mar – 20 Jun",
+      "sow_text": "10 Dec \u2013 10 Mar",
+      "harvest_text": "10 Mar \u2013 20 Jun",
       "sow": [
        12,
        1,
@@ -6580,8 +6616,8 @@
     "C": [
      {
       "label": null,
-      "sow_text": "1 Mar – 30 Sep",
-      "harvest_text": "10 Jun – 31 Dec",
+      "sow_text": "1 Mar \u2013 30 Sep",
+      "harvest_text": "10 Jun \u2013 31 Dec",
       "sow": [
        3,
        4,
@@ -6609,8 +6645,8 @@
     "KM": [
      {
       "label": "Long rains",
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Aug",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Aug",
       "sow": [
        3,
        4
@@ -6628,8 +6664,8 @@
     "KE": [
      {
       "label": "Short rains",
-      "sow_text": "Oct – Nov",
-      "harvest_text": "Feb – Mar",
+      "sow_text": "Oct \u2013 Nov",
+      "harvest_text": "Feb \u2013 Mar",
       "sow": [
        10,
        11
@@ -6647,8 +6683,8 @@
     "KH": [
      {
       "label": null,
-      "sow_text": "Mar – Apr",
-      "harvest_text": "Jul – Sep",
+      "sow_text": "Mar \u2013 Apr",
+      "harvest_text": "Jul \u2013 Sep",
       "sow": [
        3,
        4
@@ -6668,7 +6704,7 @@
      {
       "label": null,
       "sow_text": "Jun",
-      "harvest_text": "Sep – Jan",
+      "harvest_text": "Sep \u2013 Jan",
       "sow": [
        6
       ],
@@ -6689,7 +6725,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jul – Dec",
+      "harvest_text": "Jul \u2013 Dec",
       "sow": [
        4
       ],
@@ -6711,7 +6747,7 @@
      {
       "label": null,
       "sow_text": "Mar",
-      "harvest_text": "May – Dec",
+      "harvest_text": "May \u2013 Dec",
       "sow": [
        3
       ],
@@ -6735,7 +6771,7 @@
      {
       "label": null,
       "sow_text": "Apr",
-      "harvest_text": "Jul – Dec",
+      "harvest_text": "Jul \u2013 Dec",
       "sow": [
        4
       ],
@@ -6757,7 +6793,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6785,7 +6821,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6813,7 +6849,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6841,7 +6877,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6869,7 +6905,7 @@
      {
       "label": null,
       "sow_text": "All year",
-      "harvest_text": "Jan – Dec",
+      "harvest_text": "Jan \u2013 Dec",
       "sow": [
        1
       ],
@@ -6895,9 +6931,9 @@
     ],
     "NE003": [
      {
-      "label": "Saison pluivieuse:Variétés utilisées au Niger : A tubercules blancs, jaunes ou rouges. Sols meubles, riches en matières organiques, légers et perméables avec pH de 6 à 7.",
+      "label": "Saison pluivieuse:Vari\u00e9t\u00e9s utilis\u00e9es au Niger : A tubercules blancs, jaunes ou rouges. Sols meubles, riches en mati\u00e8res organiques, l\u00e9gers et perm\u00e9ables avec pH de 6 \u00e0 7.",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Feb",
+      "harvest_text": "Oct \u2013 Feb",
       "sow": [
        7
       ],
@@ -6916,9 +6952,9 @@
     ],
     "NE004": [
      {
-      "label": "Saison pluivieuse:Variétés utilisées au Niger : A tubercules blancs, jaunes ou rouges. Sols meubles, riches en matières organiques, légers et perméables avec pH de 6 à 7.",
+      "label": "Saison pluivieuse:Vari\u00e9t\u00e9s utilis\u00e9es au Niger : A tubercules blancs, jaunes ou rouges. Sols meubles, riches en mati\u00e8res organiques, l\u00e9gers et perm\u00e9ables avec pH de 6 \u00e0 7.",
       "sow_text": "Jul",
-      "harvest_text": "Oct – Feb",
+      "harvest_text": "Oct \u2013 Feb",
       "sow": [
        7
       ],
@@ -7000,7 +7036,11 @@
     "cover": 3,
     "water": 1,
     "role": "Creeps over the ground and holds it",
-    "src": "FAO_CROPCAL"
+    "src": "FAO_CROPCAL",
+    "forage": {
+     "kind": "vines",
+     "line": "Vines are cut and fed to goats and cattle while the roots are in the ground."
+    }
    }
   },
   {

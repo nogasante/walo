@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift", "soil"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift", "soil", "soilhealth"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -199,6 +199,16 @@ export function soilFor(p) {
   const zones = (D.soil && D.soil.zones) || {}, z = zoneOf(p);
   const hit = zones[z] || (D.soil && D.soil.default) || { id: "loam", note: "" };
   return { ...hit, zone: z, zoneName: z == null ? "" : zoneName(z), source: D.soil && D.soil.source };
+}
+
+/* ---------- soil health screening for this place (data/soilhealth.json, built by scripts/build_soilhealth.py) ---------- */
+/* Three open inputs: slope from a 3x3 DEM sample, cover from MODIS NDVI (or rain-season length where NDVI is not
+   held), and POWER rain. The bands are for comparing towns, not a soil test, and the app says so wherever it shows
+   them. A phone location borrows its nearest town's screening. */
+export function soilHealthFor(p) {
+  const all = (D.soilhealth && D.soilhealth.places) || {};
+  const h = all[p.id] || (p.kind === "gps" ? all[(nearestTown(p) || {}).t.id] : null);
+  return h ? { ...h, source: D.soilhealth.source, method: D.soilhealth.method } : null;
 }
 
 /* ---------- how this place is changing: two periods of the same NASA POWER record (data/shift.json) ---------- */

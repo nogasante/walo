@@ -1,0 +1,1176 @@
+{
+ "source": "Slope from a 3x3 Copernicus DEM sample (via Open-Meteo); cover from NASA MODIS NDVI (MOD13Q1) in data/ndvi.json; rain from NASA POWER in data/agro.json.",
+ "method": "Erosion screening = steepness x rain x (1 / vegetation cover). Organic matter is read from peak vegetation cover. Both are bands for comparing towns, not a soil test and not RUSLE; ask locally before spending money on it.",
+ "places": {
+  "ejura": {
+   "lat": 7.38558,
+   "lon": -1.35617,
+   "elev_m": 188,
+   "slope_pct": 1.6,
+   "ndvi_peak": 0.519,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1242,
+   "erosion": {
+    "band": "low",
+    "score": 1.35
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.6% slope), cover is good (NDVI peaks at 0.519)."
+  },
+  "tamale": {
+   "lat": 9.40079,
+   "lon": -0.8393,
+   "elev_m": 158,
+   "slope_pct": 2.5,
+   "ndvi_peak": 0.27,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1081,
+   "erosion": {
+    "band": "medium",
+    "score": 2.46
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.5% slope), cover is thin (NDVI peaks at 0.27)."
+  },
+  "techiman": {
+   "lat": 7.59054,
+   "lon": -1.93947,
+   "elev_m": 280,
+   "slope_pct": 3.2,
+   "ndvi_peak": 0.339,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1270,
+   "erosion": {
+    "band": "medium",
+    "score": 2.35
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is steep here (about 3.2% slope), cover is good (NDVI peaks at 0.339)."
+  },
+  "accra": {
+   "lat": 5.55,
+   "lon": -0.2,
+   "elev_m": 28,
+   "slope_pct": 2.2,
+   "ndvi_peak": 0.251,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1192,
+   "erosion": {
+    "band": "medium",
+    "score": 2.81
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is fairly flat (2.2% slope), cover is thin (NDVI peaks at 0.251)."
+  },
+  "kumasi": {
+   "lat": 6.7,
+   "lon": -1.625,
+   "elev_m": 222,
+   "slope_pct": 2.2,
+   "ndvi_peak": 0.257,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1461,
+   "erosion": {
+    "band": "high",
+    "score": 3.27
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks high: the ground is fairly flat (2.2% slope), cover is thin (NDVI peaks at 0.257), and rain is heavy (1461 mm a year)."
+  },
+  "koforidua": {
+   "lat": 6.0833,
+   "lon": -0.25,
+   "elev_m": 108,
+   "slope_pct": 13.8,
+   "ndvi_peak": 0.538,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1178,
+   "erosion": {
+    "band": "medium",
+    "score": 2.38
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is steep here (about 13.8% slope), cover is good (NDVI peaks at 0.538)."
+  },
+  "cape_coast": {
+   "lat": 5.1,
+   "lon": -1.25,
+   "elev_m": 30,
+   "slope_pct": 1.9,
+   "ndvi_peak": 0.406,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1465,
+   "erosion": {
+    "band": "medium",
+    "score": 2.04
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.9% slope), cover is good (NDVI peaks at 0.406), and rain is heavy (1465 mm a year)."
+  },
+  "takoradi": {
+   "lat": 4.9167,
+   "lon": -1.7667,
+   "elev_m": 49,
+   "slope_pct": 0.9,
+   "ndvi_peak": 0.372,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1567,
+   "erosion": {
+    "band": "medium",
+    "score": 2.23
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks medium: the ground is fairly flat (0.9% slope), cover is good (NDVI peaks at 0.372), and rain is heavy (1567 mm a year)."
+  },
+  "sefwi_wiawso": {
+   "lat": 6.2158,
+   "lon": -2.485,
+   "elev_m": 160,
+   "slope_pct": 3.5,
+   "ndvi_peak": 0.619,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1590,
+   "erosion": {
+    "band": "low",
+    "score": 1.57
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks low: the ground is steep here (about 3.5% slope), cover is good (NDVI peaks at 0.619), and rain is heavy (1590 mm a year)."
+  },
+  "ho": {
+   "lat": 6.6114,
+   "lon": 0.4703,
+   "elev_m": 114,
+   "slope_pct": 8.9,
+   "ndvi_peak": 0.424,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1146,
+   "erosion": {
+    "band": "medium",
+    "score": 2.4
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is steep here (about 8.9% slope), cover is good (NDVI peaks at 0.424)."
+  },
+  "dambai": {
+   "lat": 8.0689,
+   "lon": 0.1792,
+   "elev_m": 132,
+   "slope_pct": 2.7,
+   "ndvi_peak": 0.456,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1542,
+   "erosion": {
+    "band": "medium",
+    "score": 1.99
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.7% slope), cover is good (NDVI peaks at 0.456), and rain is heavy (1542 mm a year)."
+  },
+  "sunyani": {
+   "lat": 7.3333,
+   "lon": -2.3333,
+   "elev_m": 280,
+   "slope_pct": 2.6,
+   "ndvi_peak": 0.493,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1302,
+   "erosion": {
+    "band": "low",
+    "score": 1.58
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks low: the ground is steep here (about 2.6% slope), cover is good (NDVI peaks at 0.493)."
+  },
+  "goaso": {
+   "lat": 6.8,
+   "lon": -2.5167,
+   "elev_m": 246,
+   "slope_pct": 2.2,
+   "ndvi_peak": 0.579,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1337,
+   "erosion": {
+    "band": "low",
+    "score": 1.34
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks low: the ground is fairly flat (2.2% slope), cover is good (NDVI peaks at 0.579), and rain is heavy (1337 mm a year)."
+  },
+  "damongo": {
+   "lat": 9.0833,
+   "lon": -1.8167,
+   "elev_m": 204,
+   "slope_pct": 2.3,
+   "ndvi_peak": 0.637,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1058,
+   "erosion": {
+    "band": "low",
+    "score": 1.01
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks low: the ground is fairly flat (2.3% slope), cover is good (NDVI peaks at 0.637)."
+  },
+  "nalerigu": {
+   "lat": 10.5333,
+   "lon": -0.3667,
+   "elev_m": 198,
+   "slope_pct": 2.0,
+   "ndvi_peak": 0.576,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1226,
+   "erosion": {
+    "band": "low",
+    "score": 1.24
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks low: the ground is fairly flat (2.0% slope), cover is good (NDVI peaks at 0.576)."
+  },
+  "bolgatanga": {
+   "lat": 10.7833,
+   "lon": -0.85,
+   "elev_m": 231,
+   "slope_pct": 1.8,
+   "ndvi_peak": 0.503,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1062,
+   "erosion": {
+    "band": "low",
+    "score": 1.23
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.8% slope), cover is good (NDVI peaks at 0.503)."
+  },
+  "wa": {
+   "lat": 10.0667,
+   "lon": -2.5,
+   "elev_m": 283,
+   "slope_pct": 1.5,
+   "ndvi_peak": 0.468,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1038,
+   "erosion": {
+    "band": "low",
+    "score": 1.27
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.5% slope), cover is good (NDVI peaks at 0.468)."
+  },
+  "kitale": {
+   "lat": 1.0157,
+   "lon": 35.0062,
+   "elev_m": 2098,
+   "slope_pct": 3.2,
+   "ndvi_peak": 0.675,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1844,
+   "erosion": {
+    "band": "low",
+    "score": 1.6
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks low: the ground is steep here (about 3.2% slope), cover is good (NDVI peaks at 0.675), and rain is heavy (1844 mm a year)."
+  },
+  "eldoret": {
+   "lat": 0.5143,
+   "lon": 35.2698,
+   "elev_m": 1810,
+   "slope_pct": 4.0,
+   "ndvi_peak": 0.502,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1946,
+   "erosion": {
+    "band": "medium",
+    "score": 2.34
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks medium: the ground is steep here (about 4.0% slope), cover is good (NDVI peaks at 0.502), and rain is heavy (1946 mm a year)."
+  },
+  "nakuru": {
+   "lat": -0.3031,
+   "lon": 36.08,
+   "elev_m": 2338,
+   "slope_pct": 2.8,
+   "ndvi_peak": 0.488,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1261,
+   "erosion": {
+    "band": "low",
+    "score": 1.58
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 11,
+   "note": "Erosion risk looks low: the ground is steep here (about 2.8% slope), cover is good (NDVI peaks at 0.488)."
+  },
+  "nyeri": {
+   "lat": -0.4167,
+   "lon": 36.95,
+   "elev_m": 2116,
+   "slope_pct": 4.8,
+   "ndvi_peak": 0.666,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1271,
+   "erosion": {
+    "band": "low",
+    "score": 1.31
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks low: the ground is steep here (about 4.8% slope), cover is good (NDVI peaks at 0.666)."
+  },
+  "meru": {
+   "lat": 0.0463,
+   "lon": 37.6559,
+   "elev_m": 1911,
+   "slope_pct": 7.4,
+   "ndvi_peak": 0.654,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1164,
+   "erosion": {
+    "band": "low",
+    "score": 1.46
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks low: the ground is steep here (about 7.4% slope), cover is good (NDVI peaks at 0.654)."
+  },
+  "kakamega": {
+   "lat": 0.2827,
+   "lon": 34.7519,
+   "elev_m": 1810,
+   "slope_pct": 3.7,
+   "ndvi_peak": 0.645,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1946,
+   "erosion": {
+    "band": "medium",
+    "score": 1.8
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks medium: the ground is steep here (about 3.7% slope), cover is good (NDVI peaks at 0.645), and rain is heavy (1946 mm a year)."
+  },
+  "bungoma": {
+   "lat": 0.5635,
+   "lon": 34.5606,
+   "elev_m": 1305,
+   "slope_pct": 1.5,
+   "ndvi_peak": 0.678,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1774,
+   "erosion": {
+    "band": "low",
+    "score": 1.42
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.5% slope), cover is good (NDVI peaks at 0.678), and rain is heavy (1774 mm a year)."
+  },
+  "kisumu": {
+   "lat": -0.0917,
+   "lon": 34.768,
+   "elev_m": 1619,
+   "slope_pct": 2.8,
+   "ndvi_peak": 0.464,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 2026,
+   "erosion": {
+    "band": "medium",
+    "score": 2.48
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 11,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.8% slope), cover is good (NDVI peaks at 0.464), and rain is heavy (2026 mm a year)."
+  },
+  "homabay": {
+   "lat": -0.5273,
+   "lon": 34.4571,
+   "elev_m": 1259,
+   "slope_pct": 7.1,
+   "ndvi_peak": 0.59,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 1692,
+   "erosion": {
+    "band": "medium",
+    "score": 2.04
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks medium: the ground is steep here (about 7.1% slope), cover is good (NDVI peaks at 0.59), and rain is heavy (1692 mm a year)."
+  },
+  "machakos": {
+   "lat": -1.5177,
+   "lon": 37.2634,
+   "elev_m": 1328,
+   "slope_pct": 3.3,
+   "ndvi_peak": 0.595,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 677,
+   "erosion": {
+    "band": "low",
+    "score": 0.85
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 4,
+   "note": "Erosion risk looks low: the ground is steep here (about 3.3% slope), cover is good (NDVI peaks at 0.595)."
+  },
+  "kitui": {
+   "lat": -1.3667,
+   "lon": 38.0167,
+   "elev_m": 839,
+   "slope_pct": 3.6,
+   "ndvi_peak": 0.636,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 598,
+   "erosion": {
+    "band": "low",
+    "score": 0.75
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is steep here (about 3.6% slope), cover is good (NDVI peaks at 0.636)."
+  },
+  "garissa": {
+   "lat": -0.4536,
+   "lon": 39.6461,
+   "elev_m": 258,
+   "slope_pct": 0.8,
+   "ndvi_peak": 0.322,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 528,
+   "erosion": {
+    "band": "low",
+    "score": 0.94
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 2,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.8% slope), cover is good (NDVI peaks at 0.322)."
+  },
+  "mombasa": {
+   "lat": -4.0435,
+   "lon": 39.6682,
+   "elev_m": 185,
+   "slope_pct": 1.6,
+   "ndvi_peak": 0.287,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 925,
+   "erosion": {
+    "band": "medium",
+    "score": 1.89
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 4,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.6% slope), cover is thin (NDVI peaks at 0.287)."
+  },
+  "isiolo": {
+   "lat": 0.3546,
+   "lon": 37.5822,
+   "elev_m": 1234,
+   "slope_pct": 2.2,
+   "ndvi_peak": 0.547,
+   "cover_src": "MODIS NDVI (MOD13Q1)",
+   "rain_mm": 742,
+   "erosion": {
+    "band": "low",
+    "score": 0.88
+   },
+   "om": {
+    "band": "high"
+   },
+   "wet_months": 2,
+   "note": "Erosion risk looks low: the ground is fairly flat (2.2% slope), cover is good (NDVI peaks at 0.547)."
+  },
+  "sokoto": {
+   "lat": 13.06,
+   "lon": 5.24,
+   "elev_m": 276,
+   "slope_pct": 2.6,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 739,
+   "erosion": {
+    "band": "medium",
+    "score": 2.22
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.6% slope), only about 3 wet months keep cover on the ground."
+  },
+  "maiduguri": {
+   "lat": 11.83,
+   "lon": 13.15,
+   "elev_m": 318,
+   "slope_pct": 0.8,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 545,
+   "erosion": {
+    "band": "low",
+    "score": 1.39
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.8% slope), only about 3 wet months keep cover on the ground."
+  },
+  "katsina": {
+   "lat": 12.99,
+   "lon": 7.6,
+   "elev_m": 475,
+   "slope_pct": 1.2,
+   "ndvi_peak": 0.25,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 751,
+   "erosion": {
+    "band": "low",
+    "score": 1.74
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 4,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.2% slope), only about 4 wet months keep cover on the ground."
+  },
+  "kano": {
+   "lat": 12.0,
+   "lon": 8.52,
+   "elev_m": 442,
+   "slope_pct": 0.7,
+   "ndvi_peak": 0.25,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 720,
+   "erosion": {
+    "band": "low",
+    "score": 1.58
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 4,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.7% slope), only about 4 wet months keep cover on the ground."
+  },
+  "bauchi": {
+   "lat": 10.31,
+   "lon": 9.84,
+   "elev_m": 519,
+   "slope_pct": 1.0,
+   "ndvi_peak": 0.275,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 928,
+   "erosion": {
+    "band": "medium",
+    "score": 1.87
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 5,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.0% slope), only about 5 wet months keep cover on the ground."
+  },
+  "kaduna": {
+   "lat": 10.52,
+   "lon": 7.44,
+   "elev_m": 624,
+   "slope_pct": 1.3,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1778,
+   "erosion": {
+    "band": "medium",
+    "score": 2.94
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.3% slope), a 7-month wet season keeps cover on the ground, and rain is heavy (1778 mm a year)."
+  },
+  "jos": {
+   "lat": 9.9,
+   "lon": 8.86,
+   "elev_m": 981,
+   "slope_pct": 3.7,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1428,
+   "erosion": {
+    "band": "medium",
+    "score": 2.77
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is steep here (about 3.7% slope), a 7-month wet season keeps cover on the ground, and rain is heavy (1428 mm a year)."
+  },
+  "abuja": {
+   "lat": 9.06,
+   "lon": 7.49,
+   "elev_m": 407,
+   "slope_pct": 1.7,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1326,
+   "erosion": {
+    "band": "medium",
+    "score": 2.3
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.7% slope), a 7-month wet season keeps cover on the ground, and rain is heavy (1326 mm a year)."
+  },
+  "ilorin": {
+   "lat": 8.5,
+   "lon": 4.55,
+   "elev_m": 345,
+   "slope_pct": 2.1,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1274,
+   "erosion": {
+    "band": "medium",
+    "score": 2.28
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is fairly flat (2.1% slope), a 7-month wet season keeps cover on the ground."
+  },
+  "makurdi": {
+   "lat": 7.73,
+   "lon": 8.54,
+   "elev_m": 131,
+   "slope_pct": 2.3,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1320,
+   "erosion": {
+    "band": "medium",
+    "score": 2.38
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is fairly flat (2.3% slope), a 7-month wet season keeps cover on the ground, and rain is heavy (1320 mm a year)."
+  },
+  "ibadan": {
+   "lat": 7.38,
+   "lon": 3.9,
+   "elev_m": 189,
+   "slope_pct": 2.7,
+   "ndvi_peak": 0.35,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1708,
+   "erosion": {
+    "band": "medium",
+    "score": 2.83
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.7% slope), a 8-month wet season keeps cover on the ground, and rain is heavy (1708 mm a year)."
+  },
+  "enugu": {
+   "lat": 6.44,
+   "lon": 7.5,
+   "elev_m": 151,
+   "slope_pct": 3.8,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1543,
+   "erosion": {
+    "band": "medium",
+    "score": 2.96
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is steep here (about 3.8% slope), a 7-month wet season keeps cover on the ground, and rain is heavy (1543 mm a year)."
+  },
+  "port_harcourt": {
+   "lat": 4.82,
+   "lon": 7.03,
+   "elev_m": 27,
+   "slope_pct": 1.0,
+   "ndvi_peak": 0.375,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 2444,
+   "erosion": {
+    "band": "high",
+    "score": 3.39
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks high: the ground is fairly flat (1.0% slope), a 9-month wet season keeps cover on the ground, and rain is heavy (2444 mm a year)."
+  },
+  "calabar": {
+   "lat": 4.98,
+   "lon": 8.34,
+   "elev_m": 39,
+   "slope_pct": 1.3,
+   "ndvi_peak": 0.4,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 2852,
+   "erosion": {
+    "band": "high",
+    "score": 3.73
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 10,
+   "note": "Erosion risk looks high: the ground is fairly flat (1.3% slope), a 10-month wet season keeps cover on the ground, and rain is heavy (2852 mm a year)."
+  },
+  "lome": {
+   "lat": 6.1319,
+   "lon": 1.2228,
+   "elev_m": 15,
+   "slope_pct": 0.7,
+   "ndvi_peak": 0.35,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1106,
+   "erosion": {
+    "band": "low",
+    "score": 1.68
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 8,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.7% slope), a 8-month wet season keeps cover on the ground."
+  },
+  "sokode": {
+   "lat": 8.9833,
+   "lon": 1.1333,
+   "elev_m": 367,
+   "slope_pct": 1.5,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1245,
+   "erosion": {
+    "band": "medium",
+    "score": 2.15
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.5% slope), a 7-month wet season keeps cover on the ground."
+  },
+  "kara": {
+   "lat": 9.5511,
+   "lon": 1.1861,
+   "elev_m": 402,
+   "slope_pct": 2.5,
+   "ndvi_peak": 0.325,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1140,
+   "erosion": {
+    "band": "medium",
+    "score": 2.14
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 7,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.5% slope), a 7-month wet season keeps cover on the ground."
+  },
+  "dapaong": {
+   "lat": 10.8623,
+   "lon": 0.2074,
+   "elev_m": 245,
+   "slope_pct": 1.8,
+   "ndvi_peak": 0.3,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1097,
+   "erosion": {
+    "band": "medium",
+    "score": 2.13
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.8% slope), a 6-month wet season keeps cover on the ground."
+  },
+  "abidjan": {
+   "lat": 5.3599,
+   "lon": -4.0083,
+   "elev_m": 54,
+   "slope_pct": 1.5,
+   "ndvi_peak": 0.375,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1449,
+   "erosion": {
+    "band": "medium",
+    "score": 2.13
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.5% slope), a 9-month wet season keeps cover on the ground, and rain is heavy (1449 mm a year)."
+  },
+  "yamoussoukro": {
+   "lat": 6.8276,
+   "lon": -5.2893,
+   "elev_m": 179,
+   "slope_pct": 1.8,
+   "ndvi_peak": 0.375,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1238,
+   "erosion": {
+    "band": "medium",
+    "score": 1.89
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.8% slope), a 9-month wet season keeps cover on the ground."
+  },
+  "bouake": {
+   "lat": 7.6906,
+   "lon": -5.0301,
+   "elev_m": 225,
+   "slope_pct": 2.0,
+   "ndvi_peak": 0.375,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1348,
+   "erosion": {
+    "band": "medium",
+    "score": 2.06
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 9,
+   "note": "Erosion risk looks medium: the ground is fairly flat (2.0% slope), a 9-month wet season keeps cover on the ground, and rain is heavy (1348 mm a year)."
+  },
+  "korhogo": {
+   "lat": 9.458,
+   "lon": -5.6296,
+   "elev_m": 352,
+   "slope_pct": 2.6,
+   "ndvi_peak": 0.3,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1000,
+   "erosion": {
+    "band": "medium",
+    "score": 2.1
+   },
+   "om": {
+    "band": "medium"
+   },
+   "wet_months": 6,
+   "note": "Erosion risk looks medium: the ground is steep here (about 2.6% slope), a 6-month wet season keeps cover on the ground."
+  },
+  "dakar": {
+   "lat": 14.7167,
+   "lon": -17.4677,
+   "elev_m": 0,
+   "slope_pct": 1.3,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 543,
+   "erosion": {
+    "band": "low",
+    "score": 1.5
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.3% slope), only about 3 wet months keep cover on the ground."
+  },
+  "thies": {
+   "lat": 14.7886,
+   "lon": -16.926,
+   "elev_m": 31,
+   "slope_pct": 1.0,
+   "ndvi_peak": 0.2,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 522,
+   "erosion": {
+    "band": "low",
+    "score": 1.55
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 2,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.0% slope), only about 2 wet months keep cover on the ground."
+  },
+  "kaolack": {
+   "lat": 14.1519,
+   "lon": -16.0728,
+   "elev_m": 15,
+   "slope_pct": 0.5,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 722,
+   "erosion": {
+    "band": "low",
+    "score": 1.72
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.5% slope), only about 3 wet months keep cover on the ground."
+  },
+  "tambacounda": {
+   "lat": 13.7708,
+   "lon": -13.6673,
+   "elev_m": 48,
+   "slope_pct": 1.2,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 680,
+   "erosion": {
+    "band": "low",
+    "score": 1.78
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.2% slope), only about 3 wet months keep cover on the ground."
+  },
+  "bamako": {
+   "lat": 12.6392,
+   "lon": -8.0029,
+   "elev_m": 393,
+   "slope_pct": 1.0,
+   "ndvi_peak": 0.25,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1010,
+   "erosion": {
+    "band": "medium",
+    "score": 2.22
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 4,
+   "note": "Erosion risk looks medium: the ground is fairly flat (1.0% slope), only about 4 wet months keep cover on the ground."
+  },
+  "sikasso": {
+   "lat": 11.3176,
+   "lon": -5.6667,
+   "elev_m": 392,
+   "slope_pct": 2.1,
+   "ndvi_peak": 0.275,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 1014,
+   "erosion": {
+    "band": "medium",
+    "score": 2.23
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 5,
+   "note": "Erosion risk looks medium: the ground is fairly flat (2.1% slope), only about 5 wet months keep cover on the ground."
+  },
+  "segou": {
+   "lat": 13.4317,
+   "lon": -6.2656,
+   "elev_m": 289,
+   "slope_pct": 0.5,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 678,
+   "erosion": {
+    "band": "low",
+    "score": 1.62
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.5% slope), only about 3 wet months keep cover on the ground."
+  },
+  "mopti": {
+   "lat": 14.4843,
+   "lon": -4.1828,
+   "elev_m": 273,
+   "slope_pct": 0.5,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 552,
+   "erosion": {
+    "band": "low",
+    "score": 1.34
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.5% slope), only about 3 wet months keep cover on the ground."
+  },
+  "niamey": {
+   "lat": 13.5116,
+   "lon": 2.1254,
+   "elev_m": 242,
+   "slope_pct": 1.4,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 546,
+   "erosion": {
+    "band": "low",
+    "score": 1.52
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.4% slope), only about 3 wet months keep cover on the ground."
+  },
+  "zinder": {
+   "lat": 13.8072,
+   "lon": 8.9881,
+   "elev_m": 462,
+   "slope_pct": 0.9,
+   "ndvi_peak": 0.2,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 425,
+   "erosion": {
+    "band": "low",
+    "score": 1.29
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 2,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.9% slope), only about 2 wet months keep cover on the ground."
+  },
+  "maradi": {
+   "lat": 13.5,
+   "lon": 7.1017,
+   "elev_m": 372,
+   "slope_pct": 1.3,
+   "ndvi_peak": 0.225,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 589,
+   "erosion": {
+    "band": "low",
+    "score": 1.6
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 3,
+   "note": "Erosion risk looks low: the ground is fairly flat (1.3% slope), only about 3 wet months keep cover on the ground."
+  },
+  "agadez": {
+   "lat": 16.9733,
+   "lon": 7.9911,
+   "elev_m": 536,
+   "slope_pct": 0.6,
+   "ndvi_peak": 0.15,
+   "cover_src": "rain-season length (NASA POWER)",
+   "rain_mm": 167,
+   "erosion": {
+    "band": "low",
+    "score": 0.76
+   },
+   "om": {
+    "band": "low"
+   },
+   "wet_months": 0,
+   "note": "Erosion risk looks low: the ground is fairly flat (0.6% slope), only about 0 wet months keep cover on the ground."
+  }
+ }
+}

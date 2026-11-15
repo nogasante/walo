@@ -59,8 +59,12 @@ export const putMainCropRaw = (m) => { set("walo.main", m); emit(); };
 /* ---------- what she wants from a rotation, and the soil she farms ---------- */
 /* Both are her choices, remembered on the phone: the same crops are scored differently for water, soil or money,
    and a sandy soil holds water differently from clay. */
-export const priority = () => get("walo.priority", "soil");
-export const setPriority = (v) => { set("walo.priority", v); emit(); };
+/* what limits her this season (store.js keeps it, rotation.js decides what it changes), and the rain she is
+   planning for: the scenario only scales the rain the ranking already uses, it does not invent a forecast. */
+export const limit = () => get("walo.limit", "none");
+export const setLimit = (v) => { set("walo.limit", v); emit(); };
+export const rainPlan = () => get("walo.rain", "usual");
+export const setRainPlan = (v) => { set("walo.rain", v); emit(); };
 export const soilChoice = () => get("walo.soil", null); // null = use the zone's usual soil
 export const setSoilChoice = (v) => { set("walo.soil", v); emit(); };
 
