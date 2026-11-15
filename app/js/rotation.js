@@ -149,12 +149,13 @@ export function rotationOptions(afterId, p, { soil = "loam", limit = "none", rai
   return { after, options: chosen, health, rainFactor, limit, soil, anyPass: chosen.some((o) => !o.same && o.waterPct != null && o.waterPct >= pass) };
 }
 
-/* the chip: a sentence about the soil and the rain, not a percentage of a model */
+/* the chip says one true thing about the soil, never a verdict on the whole crop: "Best for soil" read as "best
+   overall", which the water line under it might contradict. Water gets its own chip only when it fails. */
 export function fitChip(o, pass = 60) {
   if (o.waterPct != null && o.waterPct < pass) return { kind: "bad", text: "Needs water" };
-  if (o.soilPts >= 4) return { kind: "good", text: "Best for soil" };
-  if (o.soilPts >= 2) return { kind: "good", text: "Good for soil" };
-  if (o.soilPts >= 0) return { kind: "wait", text: "Can work" };
+  if (o.soilPts >= 4) return { kind: "good", text: "Adds most to soil" };
+  if (o.soilPts >= 2) return { kind: "good", text: "Adds to soil" };
+  if (o.soilPts >= 0) return { kind: "wait", text: "Little back" };
   return { kind: "bad", text: "Takes from soil" };
 }
 export const PASS_AT = PASS;
