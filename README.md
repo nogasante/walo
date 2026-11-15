@@ -127,6 +127,18 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 | GhanaNLP Khaya | Twi translation, voice, and speech-to-text, on the server | [ghananlp.org](https://ghananlp.org/) |
 | OpenStreetMap Nominatim | Place name for “Use my location” | [Copyright](https://www.openstreetmap.org/copyright) |
 
+Bundled assets and libraries, cited because Space Apps asks for every source, including free and open-source ones:
+
+| Asset | Licence | Where |
+| --- | --- | --- |
+| 24 crop, field, market and hero photographs | Wikimedia Commons, CC BY-SA 4.0 / 2.0, author and source link per photo | `app/data/credits.json`, and the About screen in the app |
+| Plus Jakarta Sans | SIL OFL 1.1 | `app/licenses/PlusJakartaSans-OFL.txt` |
+| Lucide icons | ISC | `app/licenses/Lucide-ISC.txt` |
+| supabase-js (optional backup) | MIT, included unmodified | `app/licenses/supabase-js-MIT.txt` |
+| Natural Earth map outline | Public domain | `app/data/ghana-map.json`, About screen |
+| OpenStreetMap Nominatim | ODbL, place name for "Use my location" | About screen and the table above |
+| No AI-generated images, audio or video | — | See `app/AI_USE.md` |
+
 Every threshold the app applies is in `app/data/rules.json` with its source, or marked `default: true` when no single standard exists. Per-crop citations are in [docs/walo-crops-sources.md](docs/walo-crops-sources.md).
 
 ## Repository layout
