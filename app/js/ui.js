@@ -78,6 +78,8 @@ export function wireSearch(root) {
       el.hidden = !hit;
       if (hit) shown++;
     });
+    // a match inside a folded group would stay out of sight, so a search opens every group it hits
+    root.querySelectorAll("details").forEach((d) => { if (q && [...d.querySelectorAll("[data-crop],[data-town],[data-main]")].some((el) => !el.hidden)) d.open = true; });
     if (!box) return;
     if (!q || shown) { box.hidden = true; box.innerHTML = ""; return; }
     box.hidden = false;

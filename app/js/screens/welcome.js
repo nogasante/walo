@@ -2,9 +2,9 @@
    Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
    Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
-import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
+import { towns, cropsHere, crop, scoreCrop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
-import { btn, icon, note, row, cropImg, wireSearch, emptyState } from "../ui.js";
+import { btn, icon, row, cropImg, wireSearch, emptyState, groupedCrops } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
 import { openCountryPicker } from "./pickers.js";
@@ -52,15 +52,13 @@ function countryStep() {
     <input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <div data-none hidden></div>
     <div class="ccards">${countryIds().map((k) => {
-      // no "Selected" badge: a tap on a country moves her on to its towns, so there is no state to show
-      // the line says where the planting dates come from, in words a farmer would use
-      const c = country(k), sub = c.status === "live" ? "Dates checked with a farmer" : "Dates from crop calendars";
+      // flag and name only: a card is a choice, not a place to explain ourselves
+      const c = country(k);
       return `<button type="button" class="ccard" data-wcountry="${k}">
         <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
-        <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
+        <span class="ccard-t"><b>${esc(c.name)}</b></span>
       </button>`;
     }).join("")}</div>
-    ${note("Dates come from published crop calendars. In Ghana a farmer there also checked them.", "map-pin")}
   </div>`;
 }
 
@@ -89,22 +87,23 @@ function placeStep() {
 }
 
 function cropStep() {
-  const asking = W.order === "crop";
-  const here = new Set(cropsHere(place()).map((c) => c.id));
-  // door 1: the crops that do well here come first. Door 2: she already knows the crop, so keep it A-Z.
-  const list = crops().slice().sort((a, b) => (asking ? 0 : here.has(b.id) - here.has(a.id)) || a.name.localeCompare(b.name));
-  const cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
+  const asking = W.order === "crop", p = place(), cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
+  // A crop list sorted "best first" still put crops Walo rates poorly under a heading promising otherwise, so the
+  // tiles are grouped by what Walo actually found: grows well, can grow, grows poorly. Nothing is hidden.
+  const list = cropsHere(p).slice().sort((a, b) => scoreCrop(b, p).score - scoreCrop(a, p).score || a.name.localeCompare(b.name));
+  const band = (c) => scoreCrop(c, p).score;
+  const groups = [
+    { title: "Grows well here", icon: "leaf", tone: "good", items: list.filter((c) => band(c) >= 4) },
+    { title: "Can grow here", icon: "sprout", tone: "wait", items: list.filter((c) => band(c) === 3) },
+    { title: "Grows poorly here", icon: "circle-x", tone: "bad", items: list.filter((c) => band(c) <= 2), collapsed: true },
+  ].filter((g) => g.items.length);
+  const tile = (c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`;
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : `Crops that grow well in ${esc(placeLabel(place()))}`}</h1>
-    ${note(asking ? "Walo will show you where it does best." : "Best matches first. Tap the crop you grow.", "sprout")}
+    <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : "Choose the crop you grow"}</h1>
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <div data-none hidden></div>
-    ${list.length
-      ? `<div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>`
-      : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country. Change country and try again." })}
-    ${asking ? "" : btn("I grow more than one", { kind: "secondary", attrs: "data-later" })}
-    ${note("Sell, Plant Doctor and crop pages open on this crop. You can change it later.")}
+    ${groups.length ? groupedCrops(groups, tile, "tiles") : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country. Change country and try again." })}
   </div>`;
 }
 
@@ -114,8 +113,8 @@ function placesStep() {
   if (!c) { W.step = "doors"; return doors(); }
   return `<div class="stack">
     ${whead()}
-    <h1 class="q wl-q">Towns where ${esc(c.name.toLowerCase())} grows well</h1>
-    ${placesHtml(c, "Tap the town where you will plant it.")}
+    <h1 class="q wl-q">How ${esc(c.name.toLowerCase())} grows in each town</h1>
+    ${placesHtml(c)}
   </div>`;
 }
 

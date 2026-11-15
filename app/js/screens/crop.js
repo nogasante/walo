@@ -56,17 +56,19 @@ export function render(id, sub) {
   </div>`;
 }
 /* the map and the best towns for a crop. Used on the crop page, and by first run, which has no place yet. */
-export function placesHtml(c, hint = "Tap a town to see how it does there. Your farm does not change.") {
-  const list = placeList(c), cur = place(), hers = placeChosen(), g = mapFor();
+export function placesHtml(c, hint = "") {
+  // every town in the country, best first, each with its own verdict: hiding the "can grow" and "poorly" ones
+  // left her unable to answer "what about my town?"
+  const list = placeList(c).slice().sort((a, b) => b.sc.score - a.sc.score || a.p.name.localeCompare(b.p.name));
+  const cur = place(), hers = placeChosen(), g = mapFor();
+  const tone = (x) => (x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad");
   const P = (lat, lon) => [(lon - g.x0) * g.s, (g.y1 - lat) * g.s];
-  const pins = g ? list.slice().reverse().map((x) => { const [px, py] = P(x.p.lat, x.p.lon), w = fitWord(x.sc), sel = hers && x.p.id === cur.id; return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${sel ? 9 : 6}" class="pin ${x.listed ? w.cls : "bad"}${sel ? " sel" : ""}"><title>${esc(x.p.name)}</title></circle>`; }).join("") : "";
+  const pins = g ? list.slice().reverse().map((x) => { const [px, py] = P(x.p.lat, x.p.lon), sel = hers && x.p.id === cur.id; return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${sel ? 9 : 6}" class="pin ${tone(x)}${sel ? " sel" : ""}"><title>${esc(x.p.name)}</title></circle>`; }).join("") : "";
   // a country with no outline in data/ just shows the list: no map is better than another country's map
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
-  const top = list.filter((x) => x.listed).slice(0, 6);
-  const body = top.length
-    ? `<div class="list">${top.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: fitWord(x.sc).text, status: x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad" })).join("")}</div>
-    <p class="muted small">${hint}</p>`
-    : emptyState({ ic: "map-pin", title: `No town in ${(country() || {}).name || "this country"} suits ${c.name.toLowerCase()} yet`, sub: "Every town Walo covers was checked. Try another crop, or a nearby country." });
+  const body = list.length
+    ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: esc(fitWord(x.sc).text), status: tone(x) })).join("")}</div>${hint ? `<p class="muted small">${hint}</p>` : ""}`
+    : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns in this country before it can say where a crop grows." });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
 /* where it grows best, as a sheet on the crop page */
@@ -83,7 +85,7 @@ function whereSheet(c) {
       ${btn("Back to the map", { kind: "secondary", attrs: "data-backmap" })}
     </div>`;
   };
-  return { title: `Where ${c.name.toLowerCase()} grows best`, html, onOpen: (b) => b.addEventListener("click", (e) => {
+  return { title: `How ${c.name.toLowerCase()} grows in each town`, html, onOpen: (b) => b.addEventListener("click", (e) => {
     const t = e.target.closest("[data-town]");
     if (t) { b.innerHTML = detail(t.dataset.town); return; }
     const mk = e.target.closest("[data-makefarm]");

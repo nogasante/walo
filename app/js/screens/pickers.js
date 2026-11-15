@@ -31,16 +31,15 @@ const go = (next) => { if (next && location.hash !== next) location.hash = next;
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
   const cards = countryIds().map((k) => {
-    const c = country(k), sub = c.status === "live" ? "Dates checked with a farmer" : "Dates from crop calendars";
+    const c = country(k);
     return `<button type="button" class="ccard" data-country="${k}">
       <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
-      <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
+      <span class="ccard-t"><b>${esc(c.name)}</b></span>
     </button>`;
   }).join("");
   openSheet({ title: "Choose your country", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <div data-none hidden></div>
-    <div class="ccards">${cards}</div>
-    <p class="muted small">You will pick your town again: a town belongs to one country. Dates come from published crop calendars; in Ghana a farmer there also checked them.</p>`, onOpen: (b) => {
+    <div class="ccards">${cards}</div>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
       if (!t) return;
