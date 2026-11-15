@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -191,6 +191,20 @@ export function cropMonths(c, p) {
     ws.forEach(add);
     return { sow: sow.sort((a, b) => a - b), harvest, windows: ws, guess: true, allYear: false };
   });
+}
+
+
+/* ---------- how this place is changing: two periods of the same NASA POWER record (data/shift.json) ---------- */
+/* The Field Shift brief is about changing conditions, so the app compares 1991-2014 with 2015-2025 at the same
+   point it gives advice for: when the major rains start, the rain in that window, and days above 35 C. */
+export function shiftFor(p) {
+  const all = (D.shift && D.shift.places) || {};
+  const s = all[p.id] || (p.kind === "gps" ? all[(nearestTown(p) || {}).id] : null);
+  if (!s || !s.early || !s.recent || s.early.onset_doy == null || s.recent.onset_doy == null) return null;
+  const dOnset = Math.round(s.recent.onset_doy - s.early.onset_doy);
+  const rainPct = s.early.season_rain ? Math.round((s.recent.season_rain / s.early.season_rain - 1) * 100) : null;
+  const dHot = s.early.hot_days != null && s.recent.hot_days != null ? Math.round(s.recent.hot_days - s.early.hot_days) : null;
+  return { ...s, dOnset, rainPct, dHot, periods: (D.shift && D.shift.periods) || { early: [1991, 2014], recent: [2015, 2025] }, note: D.shift && D.shift.method };
 }
 
 /* ---------- 10-day forecast (Meteomatics via /api/forecast; the login stays on the server) ---------- */

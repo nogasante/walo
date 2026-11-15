@@ -85,6 +85,7 @@ function farmView(f, many) {
     ${tips.map((t) => `<div class="task">${icon(t.ic)}<div><small>${esc(t.k)}</small><b>${esc(t.text)}</b></div></div>`).join("")}
     ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days</b></div></div>` : ""}
     ${soil ? `<div class="task">${icon("droplets")}<div><small>Soil at this field</small><b>${soilWord(soil.soil)}</b></div></div>` : ""}
+    <a class="sellcard" href="#/next/${c.id}/${esc(f.id)}"><span class="tile-ic">${icon("refresh-cw")}</span><span>After harvest<b>What to plant next</b></span>${icon("chevron-right")}</a>
     ${pr.late || pr.frac >= 1 ? `<a class="sellcard" href="#/sell/${c.id}/${esc(f.id)}"><span class="tile-ic sell">${icon("tag")}</span><span>${esc(sellLine(sa, pr))}</span>${icon("chevron-right")}</a>` : ""}
     ${addState(f)}
     <div class="actions3">

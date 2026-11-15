@@ -63,6 +63,7 @@ export function render(id, sub) {
     ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${placeLabel(p)}`) : ""}
     ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walo cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
     ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", href: `#/crop/${c.id}/where` })}
+    ${isTree(c) ? "" : btn("What to plant after it", { kind: "secondary", ic: "refresh-cw", href: `#/next/${c.id}` })}
   </div>`;
 }
 /* the map and the best towns for a crop. Used on the crop page, and by first run, which has no place yet. */

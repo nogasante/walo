@@ -464,3 +464,42 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .vc-state { display: flex; flex-direction: column; gap: 2px; margin: 0; } .vc-state b { font-size: var(--fs-h); } .vc-state small { color: var(--muted); }
 .vc .btn { width: 100%; }
 @media (prefers-reduced-motion: reduce) { .vc .vc-orb { animation: none; } }
+
+/* ---------- Home: a card that is obviously tappable, and one tall photo card for planting ---------- */
+.fcard.empty .fc-pic { height: 152px; }
+.fcard.empty .fc-t { flex-direction: row; align-items: center; gap: 10px; padding: 12px 14px 16px; }
+.fcard.empty .fc-mid { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.fcard.empty .fc-mid b { font-size: var(--fs); line-height: 1.25; }
+.fcard.empty .fc-mid small { font-size: var(--fs-xs); color: var(--muted); }
+.fcard.empty .fc-go { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--brand-2); color: var(--brand); }
+.fcard.empty:active { transform: scale(.99); }
+.plantbig { display: flex; flex-direction: column; width: 100%; padding: 0; border: 0; border-radius: 18px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-2); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.plantbig:active { transform: scale(.99); }
+.pb-pic { position: relative; display: block; height: 138px; background: var(--brand-2); }
+.pb-pic img { width: 100%; height: 100%; object-fit: cover; }
+.pb-badge { position: absolute; left: 12px; bottom: -22px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--brand); color: #fff; box-shadow: var(--shadow-2); }
+.pb-badge .ic { width: 24px; height: 24px; }
+.pb-row { display: flex; align-items: center; gap: 10px; min-height: 66px; padding: 14px 14px 14px 72px; }
+.pb-t { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.pb-t b { font-size: var(--fs); } .pb-t small { color: var(--muted); font-size: var(--fs-xs); line-height: 1.3; }
+.pb-row > .ic:last-child { width: 20px; color: var(--muted); }
+
+/* ---------- rotation: what matters most, the soil, and one card per crop ---------- */
+.seg3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.seg { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; font-weight: 600; font-size: var(--fs-s); cursor: pointer; }
+.seg .ic { width: 20px; height: 20px; }
+.seg.on { background: var(--brand-2); border-color: var(--brand); color: var(--brand); }
+.seg-line { margin: -4px 2px 0; font-size: var(--fs-xs); color: var(--muted); }
+.soilline { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); }
+.soilchip { min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs-xs); font-weight: 600; cursor: pointer; }
+.soilchip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.nextcard { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }
+.nc-top { display: flex; align-items: center; gap: 10px; }
+.nc-img { flex: none; width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+.nc-t { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.nc-t b { font-size: var(--fs); } .nc-t small { font-size: var(--fs-xs); color: var(--muted); line-height: 1.25; }
+.nc-why { font-size: var(--fs-s); color: var(--ink); }
+.nc-risk { display: flex; gap: 8px; font-size: var(--fs-xs); color: var(--wait); }
+.nc-risk .ic { width: 16px; height: 16px; margin-top: 1px; flex: none; }
+.nc-acts { display: flex; gap: 8px; } .nc-acts .btn { flex: 1; }
+.note-text { font-size: var(--fs-xs); color: var(--muted); margin: 0 2px; }

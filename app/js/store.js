@@ -55,6 +55,15 @@ export function setMainCrop(id) { set("walo.main", { crop: id && crop(id) ? id :
 export const mainCropRaw = mainRaw;
 export const putMainCropRaw = (m) => { set("walo.main", m); emit(); };
 
+
+/* ---------- what she wants from a rotation, and the soil she farms ---------- */
+/* Both are her choices, remembered on the phone: the same crops are scored differently for water, soil or money,
+   and a sandy soil holds water differently from clay. */
+export const priority = () => get("walo.priority", "soil");
+export const setPriority = (v) => { set("walo.priority", v); emit(); };
+export const soilChoice = () => get("walo.soil", "loam");
+export const setSoilChoice = (v) => { set("walo.soil", v); emit(); };
+
 /* ---------- farms ---------- */
 export const farms = () => get("walo.farms", []).filter((f) => crop(f.crop));
 export const farm = (id) => farms().find((f) => f.id === id) || null;

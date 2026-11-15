@@ -1,0 +1,1456 @@
+{
+ "method": "NASA POWER daily PRECTOTCORR and T2M_MAX, AG community, compared over 1991-2014 and 2015-2025 at each town point. Onset uses the same rule as the rest of Walo; see DESIGN.md method 4. Figures are usual values for each period, not a forecast.",
+ "hot_threshold_c": 35.0,
+ "periods": {
+  "early": [
+   1991,
+   2014
+  ],
+  "recent": [
+   2015,
+   2025
+  ]
+ },
+ "places": {
+  "ejura": {
+   "early": {
+    "onset_doy": 94.0,
+    "season_rain": 649.0,
+    "hot_days": 33.0
+   },
+   "recent": {
+    "onset_doy": 80,
+    "season_rain": 690.0,
+    "hot_days": 28.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "tamale": {
+   "early": {
+    "onset_doy": 110.0,
+    "season_rain": 559.0,
+    "hot_days": 49.0
+   },
+   "recent": {
+    "onset_doy": 121,
+    "season_rain": 512.0,
+    "hot_days": 64.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "techiman": {
+   "early": {
+    "onset_doy": 94.0,
+    "season_rain": 636.0,
+    "hot_days": 26.0
+   },
+   "recent": {
+    "onset_doy": 76,
+    "season_rain": 775.0,
+    "hot_days": 14.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "accra": {
+   "early": {
+    "onset_doy": 80.0,
+    "season_rain": 710.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 67,
+    "season_rain": 825.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kumasi": {
+   "early": {
+    "onset_doy": 72.0,
+    "season_rain": 748.0,
+    "hot_days": 9.0
+   },
+   "recent": {
+    "onset_doy": 67,
+    "season_rain": 895.0,
+    "hot_days": 4.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "koforidua": {
+   "early": {
+    "onset_doy": 80.0,
+    "season_rain": 645.0,
+    "hot_days": 2.0
+   },
+   "recent": {
+    "onset_doy": 71,
+    "season_rain": 755.0,
+    "hot_days": 1.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "cape_coast": {
+   "early": {
+    "onset_doy": 76.0,
+    "season_rain": 921.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 70,
+    "season_rain": 927.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "takoradi": {
+   "early": {
+    "onset_doy": 70.0,
+    "season_rain": 943.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 69,
+    "season_rain": 999.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "sefwi_wiawso": {
+   "early": {
+    "onset_doy": 66.0,
+    "season_rain": 850.0,
+    "hot_days": 4.0
+   },
+   "recent": {
+    "onset_doy": 67,
+    "season_rain": 1001.0,
+    "hot_days": 1.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "ho": {
+   "early": {
+    "onset_doy": 91.0,
+    "season_rain": 627.0,
+    "hot_days": 8.0
+   },
+   "recent": {
+    "onset_doy": 79,
+    "season_rain": 645.0,
+    "hot_days": 12.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "dambai": {
+   "early": {
+    "onset_doy": 100.0,
+    "season_rain": 746.0,
+    "hot_days": 7.0
+   },
+   "recent": {
+    "onset_doy": 78,
+    "season_rain": 946.0,
+    "hot_days": 3.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "sunyani": {
+   "early": {
+    "onset_doy": 92.0,
+    "season_rain": 694.0,
+    "hot_days": 20.0
+   },
+   "recent": {
+    "onset_doy": 74,
+    "season_rain": 768.0,
+    "hot_days": 18.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "goaso": {
+   "early": {
+    "onset_doy": 77.0,
+    "season_rain": 726.0,
+    "hot_days": 12.0
+   },
+   "recent": {
+    "onset_doy": 76,
+    "season_rain": 803.0,
+    "hot_days": 14.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "damongo": {
+   "early": {
+    "onset_doy": 105.0,
+    "season_rain": 537.0,
+    "hot_days": 53.0
+   },
+   "recent": {
+    "onset_doy": 136,
+    "season_rain": 529.0,
+    "hot_days": 60.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "nalerigu": {
+   "early": {
+    "onset_doy": 116.0,
+    "season_rain": 567.0,
+    "hot_days": 69.0
+   },
+   "recent": {
+    "onset_doy": 126,
+    "season_rain": 722.0,
+    "hot_days": 72.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bolgatanga": {
+   "early": {
+    "onset_doy": 119.0,
+    "season_rain": 496.0,
+    "hot_days": 81.0
+   },
+   "recent": {
+    "onset_doy": 129,
+    "season_rain": 567.0,
+    "hot_days": 84.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "wa": {
+   "early": {
+    "onset_doy": 140.0,
+    "season_rain": 479.0,
+    "hot_days": 73.0
+   },
+   "recent": {
+    "onset_doy": 113,
+    "season_rain": 634.0,
+    "hot_days": 70.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kitale": {
+   "early": {
+    "onset_doy": 85.0,
+    "season_rain": 662.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 83,
+    "season_rain": 895.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "eldoret": {
+   "early": {
+    "onset_doy": 82.0,
+    "season_rain": 736.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 74,
+    "season_rain": 1015.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "nakuru": {
+   "early": {
+    "onset_doy": 83.0,
+    "season_rain": 457.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 73,
+    "season_rain": 731.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "nyeri": {
+   "early": {
+    "onset_doy": 79.0,
+    "season_rain": 480.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 80,
+    "season_rain": 695.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "meru": {
+   "early": {
+    "onset_doy": 82,
+    "season_rain": 414.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 83,
+    "season_rain": 645.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "kakamega": {
+   "early": {
+    "onset_doy": 82.0,
+    "season_rain": 736.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 74,
+    "season_rain": 1015.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "bungoma": {
+   "early": {
+    "onset_doy": 76.0,
+    "season_rain": 704.0,
+    "hot_days": 5.0
+   },
+   "recent": {
+    "onset_doy": 77,
+    "season_rain": 856.0,
+    "hot_days": 4.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "kisumu": {
+   "early": {
+    "onset_doy": 75.0,
+    "season_rain": 780.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 74,
+    "season_rain": 1132.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "homabay": {
+   "early": {
+    "onset_doy": 75.0,
+    "season_rain": 650.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 68,
+    "season_rain": 901.0,
+    "hot_days": 1.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "machakos": {
+   "early": {
+    "onset_doy": 81.0,
+    "season_rain": 275.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 92,
+    "season_rain": 275.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "kitui": {
+   "early": {
+    "onset_doy": 85.0,
+    "season_rain": 211.0,
+    "hot_days": 4.0
+   },
+   "recent": {
+    "onset_doy": 96,
+    "season_rain": 227.0,
+    "hot_days": 12.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "garissa": {
+   "early": {
+    "onset_doy": 100.0,
+    "season_rain": 213.0,
+    "hot_days": 39.0
+   },
+   "recent": {
+    "onset_doy": 101.0,
+    "season_rain": 236.0,
+    "hot_days": 39.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "mombasa": {
+   "early": {
+    "onset_doy": 86.0,
+    "season_rain": 451.0,
+    "hot_days": 14.0
+   },
+   "recent": {
+    "onset_doy": 91,
+    "season_rain": 626.0,
+    "hot_days": 18.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "isiolo": {
+   "early": {
+    "onset_doy": 94,
+    "season_rain": 249.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 98.0,
+    "season_rain": 387.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "06-30"
+   ]
+  },
+  "sokoto": {
+   "early": {
+    "onset_doy": 178.0,
+    "season_rain": 284.0,
+    "hot_days": 114.0
+   },
+   "recent": {
+    "onset_doy": 153,
+    "season_rain": 441.0,
+    "hot_days": 110.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "maiduguri": {
+   "early": {
+    "onset_doy": 178.0,
+    "season_rain": 248.0,
+    "hot_days": 124.0
+   },
+   "recent": {
+    "onset_doy": 175,
+    "season_rain": 230.0,
+    "hot_days": 127.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "katsina": {
+   "early": {
+    "onset_doy": 181.0,
+    "season_rain": 271.0,
+    "hot_days": 106.0
+   },
+   "recent": {
+    "onset_doy": 157,
+    "season_rain": 533.0,
+    "hot_days": 102.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kano": {
+   "early": {
+    "onset_doy": 154.0,
+    "season_rain": 339.0,
+    "hot_days": 110.0
+   },
+   "recent": {
+    "onset_doy": 183.0,
+    "season_rain": 361.0,
+    "hot_days": 122.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bauchi": {
+   "early": {
+    "onset_doy": 159.0,
+    "season_rain": 368.0,
+    "hot_days": 90.0
+   },
+   "recent": {
+    "onset_doy": 141,
+    "season_rain": 755.0,
+    "hot_days": 80.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kaduna": {
+   "early": {
+    "onset_doy": 118.0,
+    "season_rain": 722.0,
+    "hot_days": 35.0
+   },
+   "recent": {
+    "onset_doy": 117,
+    "season_rain": 1636.0,
+    "hot_days": 37.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "jos": {
+   "early": {
+    "onset_doy": 128,
+    "season_rain": 545.0,
+    "hot_days": 32.0
+   },
+   "recent": {
+    "onset_doy": 121,
+    "season_rain": 1652.0,
+    "hot_days": 34.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "abuja": {
+   "early": {
+    "onset_doy": 116.0,
+    "season_rain": 717.0,
+    "hot_days": 23.0
+   },
+   "recent": {
+    "onset_doy": 132,
+    "season_rain": 649.0,
+    "hot_days": 40.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "ilorin": {
+   "early": {
+    "onset_doy": 109.0,
+    "season_rain": 640.0,
+    "hot_days": 15.0
+   },
+   "recent": {
+    "onset_doy": 100,
+    "season_rain": 677.0,
+    "hot_days": 15.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "makurdi": {
+   "early": {
+    "onset_doy": 110.0,
+    "season_rain": 719.0,
+    "hot_days": 6.0
+   },
+   "recent": {
+    "onset_doy": 130,
+    "season_rain": 607.0,
+    "hot_days": 26.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "ibadan": {
+   "early": {
+    "onset_doy": 98.0,
+    "season_rain": 868.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 85,
+    "season_rain": 947.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "enugu": {
+   "early": {
+    "onset_doy": 92.0,
+    "season_rain": 832.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 119,
+    "season_rain": 664.0,
+    "hot_days": 3.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "port_harcourt": {
+   "early": {
+    "onset_doy": 82.0,
+    "season_rain": 1207.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 78,
+    "season_rain": 1289.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "calabar": {
+   "early": {
+    "onset_doy": 74.0,
+    "season_rain": 1426.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 78,
+    "season_rain": 1354.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "lome": {
+   "early": {
+    "onset_doy": 90.0,
+    "season_rain": 630.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 69,
+    "season_rain": 753.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "sokode": {
+   "early": {
+    "onset_doy": 106.0,
+    "season_rain": 651.0,
+    "hot_days": 30.0
+   },
+   "recent": {
+    "onset_doy": 112,
+    "season_rain": 619.0,
+    "hot_days": 38.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kara": {
+   "early": {
+    "onset_doy": 114.0,
+    "season_rain": 598.0,
+    "hot_days": 37.0
+   },
+   "recent": {
+    "onset_doy": 108,
+    "season_rain": 554.0,
+    "hot_days": 50.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "dapaong": {
+   "early": {
+    "onset_doy": 130.0,
+    "season_rain": 515.0,
+    "hot_days": 70.0
+   },
+   "recent": {
+    "onset_doy": 130,
+    "season_rain": 582.0,
+    "hot_days": 77.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "cotonou": {
+   "early": {
+    "onset_doy": 90.0,
+    "season_rain": 748.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 75,
+    "season_rain": 741.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bohicon": {
+   "early": {
+    "onset_doy": 91.0,
+    "season_rain": 664.0,
+    "hot_days": 8.0
+   },
+   "recent": {
+    "onset_doy": 74,
+    "season_rain": 641.0,
+    "hot_days": 12.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "parakou": {
+   "early": {
+    "onset_doy": 120.0,
+    "season_rain": 539.0,
+    "hot_days": 43.0
+   },
+   "recent": {
+    "onset_doy": 123,
+    "season_rain": 548.0,
+    "hot_days": 53.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "natitingou": {
+   "early": {
+    "onset_doy": 122.0,
+    "season_rain": 611.0,
+    "hot_days": 50.0
+   },
+   "recent": {
+    "onset_doy": 117,
+    "season_rain": 831.0,
+    "hot_days": 43.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "abidjan": {
+   "early": {
+    "onset_doy": 74.0,
+    "season_rain": 853.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 63,
+    "season_rain": 902.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "yamoussoukro": {
+   "early": {
+    "onset_doy": 84.0,
+    "season_rain": 689.0,
+    "hot_days": 14.0
+   },
+   "recent": {
+    "onset_doy": 76,
+    "season_rain": 700.0,
+    "hot_days": 19.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bouake": {
+   "early": {
+    "onset_doy": 90.0,
+    "season_rain": 722.0,
+    "hot_days": 16.0
+   },
+   "recent": {
+    "onset_doy": 73,
+    "season_rain": 735.0,
+    "hot_days": 18.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "korhogo": {
+   "early": {
+    "onset_doy": 119.0,
+    "season_rain": 498.0,
+    "hot_days": 56.0
+   },
+   "recent": {
+    "onset_doy": 114,
+    "season_rain": 487.0,
+    "hot_days": 64.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "ouagadougou": {
+   "early": {
+    "onset_doy": 158.0,
+    "season_rain": 361.0,
+    "hot_days": 110.0
+   },
+   "recent": {
+    "onset_doy": 155,
+    "season_rain": 437.0,
+    "hot_days": 107.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bobo_dioulasso": {
+   "early": {
+    "onset_doy": 130.0,
+    "season_rain": 529.0,
+    "hot_days": 79.0
+   },
+   "recent": {
+    "onset_doy": 130,
+    "season_rain": 630.0,
+    "hot_days": 80.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "fada_ngourma": {
+   "early": {
+    "onset_doy": 155.0,
+    "season_rain": 383.0,
+    "hot_days": 96.0
+   },
+   "recent": {
+    "onset_doy": 153,
+    "season_rain": 352.0,
+    "hot_days": 103.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "dakar": {
+   "early": {
+    "onset_doy": 199.0,
+    "season_rain": 91.0,
+    "hot_days": 0.0
+   },
+   "recent": {
+    "onset_doy": 193,
+    "season_rain": 155.0,
+    "hot_days": 0.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "thies": {
+   "early": {
+    "onset_doy": 197,
+    "season_rain": 96.0,
+    "hot_days": 43.0
+   },
+   "recent": {
+    "onset_doy": 188,
+    "season_rain": 198.0,
+    "hot_days": 36.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "kaolack": {
+   "early": {
+    "onset_doy": 181,
+    "season_rain": 186.0,
+    "hot_days": 112.0
+   },
+   "recent": {
+    "onset_doy": 188,
+    "season_rain": 204.0,
+    "hot_days": 111.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "tambacounda": {
+   "early": {
+    "onset_doy": 176.0,
+    "season_rain": 209.0,
+    "hot_days": 129.0
+   },
+   "recent": {
+    "onset_doy": 174.0,
+    "season_rain": 228.0,
+    "hot_days": 125.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "bamako": {
+   "early": {
+    "onset_doy": 153.0,
+    "season_rain": 430.0,
+    "hot_days": 105.0
+   },
+   "recent": {
+    "onset_doy": 144.0,
+    "season_rain": 526.0,
+    "hot_days": 103.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "sikasso": {
+   "early": {
+    "onset_doy": 146.0,
+    "season_rain": 474.0,
+    "hot_days": 91.0
+   },
+   "recent": {
+    "onset_doy": 138,
+    "season_rain": 526.0,
+    "hot_days": 94.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "segou": {
+   "early": {
+    "onset_doy": 177,
+    "season_rain": 307.0,
+    "hot_days": 116.0
+   },
+   "recent": {
+    "onset_doy": 164.0,
+    "season_rain": 284.0,
+    "hot_days": 119.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "mopti": {
+   "early": {
+    "onset_doy": 182.0,
+    "season_rain": 238.0,
+    "hot_days": 129.0
+   },
+   "recent": {
+    "onset_doy": 174,
+    "season_rain": 241.0,
+    "hot_days": 131.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "niamey": {
+   "early": {
+    "onset_doy": 186,
+    "season_rain": 245.0,
+    "hot_days": 125.0
+   },
+   "recent": {
+    "onset_doy": 179,
+    "season_rain": 262.0,
+    "hot_days": 125.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "zinder": {
+   "early": {
+    "onset_doy": 192,
+    "season_rain": 174.0,
+    "hot_days": 120.0
+   },
+   "recent": {
+    "onset_doy": 189,
+    "season_rain": 192.0,
+    "hot_days": 125.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "maradi": {
+   "early": {
+    "onset_doy": 177,
+    "season_rain": 239.0,
+    "hot_days": 115.0
+   },
+   "recent": {
+    "onset_doy": 180,
+    "season_rain": 306.0,
+    "hot_days": 115.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  },
+  "agadez": {
+   "early": {
+    "onset_doy": 202,
+    "season_rain": 62.0,
+    "hot_days": 138.0
+   },
+   "recent": {
+    "onset_doy": 192.0,
+    "season_rain": 83.0,
+    "hot_days": 139.0
+   },
+   "years": {
+    "early": 24,
+    "recent": 11
+   },
+   "window": [
+    "03-01",
+    "07-31"
+   ]
+  }
+ }
+}

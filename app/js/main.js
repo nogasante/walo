@@ -14,6 +14,8 @@ import * as doctor from "./screens/doctor.js";
 import * as about from "./screens/about.js";
 import * as backup from "./screens/backup.js";
 import * as help from "./screens/help.js";
+import * as nextScreen from "./screens/next.js";
+import * as shift from "./screens/shift.js";
 import * as welcome from "./screens/welcome.js";
 import { startSync } from "./sync.js";
 import { isTwi, twiOn, setLang, apply as applyLang } from "./twi.js";
@@ -32,6 +34,8 @@ const ROUTES = {
   about: { s: about, tab: "home" },
   backup: { s: backup, tab: "farm" },
   help: { s: help, tab: "home" },
+  next: { s: nextScreen, tab: "farm", chip: true },
+  shift: { s: shift, tab: "home", chip: true },
 };
 const TABS = [["home", "#/", "house", "Home"], ["farm", "#/farm", "sprout", "My farm"], ["sell", null, "tag", "Sell"], ["doctor", null, "stethoscope", "Doctor"]];
 
@@ -49,6 +53,11 @@ function canonical(r) {
     if (r.b && r.b !== "where") return `#/crop/${r.a}`;
   }
   if (r.name === "farm" && r.a && !farmsHere().some((f) => f.id === r.a)) return "#/farm"; // fields elsewhere are not this farm
+  if (r.name === "next") {
+    if (!crop(r.a)) return `#/next/${focusCrop()}`;
+    if (isTree(crop(r.a))) return `#/crop/${r.a}`; // a tree has no season to follow with a rotation
+    if (r.b && !farmsHere().some((f) => f.id === r.b)) return `#/next/${r.a}`;
+  }
   if (r.name === "start" && r.a) {
     if (!crop(r.a)) return "#/start";
     if (isTree(crop(r.a))) return `#/crop/${r.a}`; // a tree cannot be followed as a field, and the crop page says so
@@ -119,6 +128,8 @@ function parentHash() {
   const { name, a, b } = parse();
   if (name === "crop" && b === "where" && a) return `#/crop/${encodeURIComponent(a)}`;
   if (name === "start" && a) return `#/crop/${encodeURIComponent(a)}`;
+  if (name === "next" && b) return `#/farm/${encodeURIComponent(b)}`;
+  if (name === "next" && a) return `#/crop/${encodeURIComponent(a)}`;
   if (name === "doctor" && b) return `#/doctor/${encodeURIComponent(a)}`;
   if (name === "help" && a) return "#/help";
   return "#/";

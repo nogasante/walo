@@ -15,14 +15,20 @@ export function render() {
     <div class="h2row"><h2 class="h2">Your crops</h2>${mine.length > 2 ? `<a class="h2link" href="#/farm">All ${mine.length}</a>` : ""}</div>
     ${mine.length
       ? `<div class="fgrid${mine.length === 1 ? " one" : ""}">${mine.slice(0, 2).map(fieldCard).join("")}</div>`
-      : `<a class="fcard" href="#/now"><span class="fc-pic"><img src="${P.plant_here.img}" alt="" loading="lazy" style="object-position:${P.plant_here.pos}"></span>
-          <span class="fc-t"><b>Nothing growing yet</b><small>See what you can plant in ${esc(placeLabel(p))} this month.</small></span></a>`}
+      : `<a class="fcard empty" href="#/now"><span class="fc-pic"><img src="${P.plant_here.img}" alt="" loading="lazy" style="object-position:${P.plant_here.pos}"></span>
+          <span class="fc-t"><span class="fc-mid"><b>Nothing growing yet</b><small>See what you can plant in ${esc(placeLabel(p))} this month.</small></span><span class="fc-go">${icon("chevron-right")}</span></span></a>`}
     ${plantNow(p)}
-    ${btn(mine.length ? "Plant again" : "Plant something", { ic: "sprout", attrs: 'id="plant-more"' })}
+    ${plantBig(mine.length ? "Plant again" : "Plant something", P)}
     ${row({ href: "#/doctor", ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", attrs: "data-net" })}
+    ${row({ href: "#/shift", ic: "satellite", title: "How this place is changing", sub: `Rain, heat and the season in ${esc(placeLabel(p))}` })}
     <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
   </div>`;
 }
+/* the one way to plant something: a tall photo card, so the biggest thing on Home is obviously a thing you tap */
+const plantBig = (label, P) => `<button type="button" class="plantbig" id="plant-more" aria-label="${esc(label)}">
+    <span class="pb-pic"><img src="${P.plant_here.img}" alt="" loading="lazy" style="object-position:${P.plant_here.pos}"><span class="pb-badge">${icon("sprout")}</span></span>
+    <span class="pb-row"><span class="pb-t"><b>${esc(label)}</b><small>Pick a crop, then follow it to harvest</small></span>${icon("chevron-right")}</span>
+  </button>`;
 /* what is worth planting in her town right now, as pictures: two or three crops, never a second full list */
 function plantNow(p) {
   const groups = cropGroups(p), g = groups.find((x) => x.key === "now") || groups.find((x) => x.key === "water");
