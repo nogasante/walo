@@ -96,7 +96,11 @@ export function scoreCrop(c, p) {
     const best = seasons(ag).map((s) => ({ s, f: fitAt(c, ag, ag.onset[s].median) })).filter((x) => x.f).sort((a, b) => b.f.wrsi - a.f.wrsi)[0] || null;
     const f = best && best.f, water = usesWater(c, f);
     const ecoCls = eco ? A().classOf(eco.suit, R()) : cl[cl.length - 1];
-    const score = Math.min(ecoCls.dots, water ? f.water_dots : 5), cls = cl.find((k) => k.dots === score) || ecoCls;
+    // A sourced planting window for this zone means people do grow the crop here, so a global rainfall envelope
+    // (EcoCrop's maize range stops at 1,800 mm a year, and the Kenyan highlands are wetter than that) can say at
+    // worst "can grow" — never "does not grow" — where the calendar itself says it is planted.
+    const windowHere = ((c.windows || {})[zoneOf(p)] || []).length > 0;
+    const score = Math.max(windowHere ? 3 : 0, Math.min(ecoCls.dots, water ? f.water_dots : 5)), cls = cl.find((k) => k.dots === score) || ecoCls;
     return { score, cls, ecoCls, eco, fit: f, season: best && best.s, water, fine: (eco ? eco.suit : 0) + (water ? f.wrsi / 100 : 1) };
   });
 }
