@@ -49,6 +49,8 @@ function countryStep() {
   return `<div class="stack">
     ${whead()}
     <h1 class="q wl-q">Which country do you farm in?</h1>
+    <input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
+    <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${countryIds().map((k) => {
       const c = country(k), sub = k === cur ? "Selected" : c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
       return `<button type="button" class="ccard${k === cur ? " sel" : ""}" data-wcountry="${k}">
