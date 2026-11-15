@@ -164,7 +164,6 @@ app/                  Vercel root. The running app.
   AI_USE.md           Space Apps AI disclosure
   DESIGN.md           Design record and the methods chapter
 proof/                Stdlib NASA POWER proof script
-presentation/         Check-in deck (walo-checkin-v2.pptx)
 supabase/schema.sql   Table, row-level security, photo bucket, and the daily AI budget
 docs/                 Per-crop source notes
 ```
