@@ -27,13 +27,13 @@ export function render() {
   }
   if (S.step === "code") {
     return `<div class="stack">
-      ${head("mail", "wait", "Type the code we sent", `Check your email: <b>${esc(S.email)}</b>. Type the ${b.code_min}-number code, or tap the link in the email.`)}
+      ${head("mail", "wait", "Open the email we sent", `We sent a sign-in link to <b>${esc(S.email)}</b>. Tap it on this phone and you are signed in. If the email also shows a ${b.code_min}-number code, you can type it below instead.`)}
       ${err}
       <form class="card stack" id="bk-code-form" novalidate>
-        <label class="field">Code<input id="bk-code" class="code-in" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" minlength="${b.code_min}" maxlength="${b.code_max}" required></label>
-        ${btn(S.wait ? "Checking…" : "Check code", { ic: "circle-check", type: "submit", attrs: S.wait ? "disabled data-net" : "data-net" })}
+        <label class="field">Code from the email<input id="bk-code" class="code-in" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" minlength="${b.code_min}" maxlength="${b.code_max}" required></label>
+        ${btn(S.wait ? "Checking…" : "Sign in with the code", { ic: "circle-check", type: "submit", attrs: S.wait ? "disabled data-net" : "data-net" })}
       </form>
-      <div class="row2">${btn("Send a new code", { kind: "secondary", attrs: 'id="bk-resend" data-net' })}${btn("Use another email", { kind: "secondary", attrs: 'id="bk-back"' })}</div>
+      <div class="row2">${btn("Send a new link", { kind: "secondary", attrs: 'id="bk-resend" data-net' })}${btn("Use another email", { kind: "secondary", attrs: 'id="bk-back"' })}</div>
     </div>`;
   }
   return `<div class="stack">
@@ -41,7 +41,7 @@ export function render() {
     ${err}
     <form class="card stack" id="bk-email-form" novalidate>
       <label class="field">Your email<input id="bk-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" value="${esc(S.email)}" required></label>
-      ${btn(S.wait ? "Sending…" : "Send me a code", { ic: "mail", type: "submit", attrs: S.wait ? "disabled data-net" : "data-net" })}
+      ${btn(S.wait ? "Sending…" : "Email me a sign-in link", { ic: "mail", type: "submit", attrs: S.wait ? "disabled data-net" : "data-net" })}
     </form>
     ${note("No password. We only use your email to sign you in and keep your fields. You can use Walo without this.")}
   </div>`;

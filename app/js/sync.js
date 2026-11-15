@@ -58,10 +58,10 @@ export async function signOut() {
 }
 function plain(e) {
   const m = (e && e.message) || "", s = e && e.status;
-  if (/rate|too many|security purposes/i.test(m) || s === 429) return new Error("Too many tries. Wait a minute, then try again.");
-  if (/expired|invalid|otp/i.test(m)) return new Error("That code did not work. Check it, or ask for a new code.");
+  if (/rate|too many|security purposes/i.test(m) || s === 429) return new Error("Too many sign-in emails just now. Wait a minute, then try again.");
+  if (/expired|invalid|otp/i.test(m)) return new Error("That did not work. It may have expired: ask for a new link.");
   if (/fetch|network|offline/i.test(m)) return new Error("No internet. Try again when you are online.");
-  if (/not authorized|sending|smtp/i.test(m)) return new Error("Walo could not send the email right now. Try again later.");
+  if (/not authorized|sending|smtp/i.test(m)) return new Error("Walo could not send the email right now. Try again in a few minutes.");
   return new Error("Something went wrong. Try again.");
 }
 
@@ -135,11 +135,23 @@ export const isBusy = () => busy;
 /* start: only if this phone has signed in before (otherwise nothing loads and nothing is sent) */
 let linkErr = "";
 export const takeLinkError = () => { const e = linkErr; linkErr = ""; return e; };
+/* A sign-in email can come back three ways: the older link puts its tokens in the hash (#access_token=…),
+   the newer one brings ?code=…, and a failed one carries error/error_description. All of them have to be
+   handed to the client, or a farmer who taps her link lands on Home with nothing happening. */
+const LINK = /access_token=|refresh_token=|error_description=|\berror=|\bcode=|token_hash=/;
 export function startSync() {
-  const fromLink = /access_token=|error_description=/.test(location.hash);
+  const url = location.search + location.hash;
+  const fromLink = LINK.test(url);
+  if (fromLink && /error(_description)?=/.test(url)) linkErr = "That link did not work or is too old. Ask for a new one.";
   if (!hasSession() && !fromLink) return;
-  if (fromLink && /error_description=/.test(location.hash)) linkErr = "That link did not work or is too old. Ask for a new code.";
-  sb().then(() => { if (fromLink) location.hash = "#/backup"; if (user) syncNow().catch(() => {}); }).catch(() => {});
+  sb().then(async () => {
+    if (fromLink) {
+      await new Promise((r) => setTimeout(r, 0)); // let detectSessionInUrl finish reading the URL
+      if (user) { document.dispatchEvent(new Event("walo-refresh")); location.hash = "#/backup"; }
+      else if (!linkErr) linkErr = "That link did not work or is too old. Ask for a new one.";
+    }
+    if (user) syncNow().catch(() => {});
+  }).catch(() => {});
   watch();
 }
 let watching = false;

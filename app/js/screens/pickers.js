@@ -27,11 +27,11 @@ const go = (next) => { if (next && location.hash !== next) location.hash = next;
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
   const rows = countryIds().map((k) => {
-    const c = country(k), sub = c.status === "live" ? "Checked by someone farming there" : "Preview: nobody has checked the planting windows here yet";
+    const c = country(k), sub = c.status === "live" ? `Planting dates checked by a farmer in ${c.name}` : `Planting dates not checked by a farmer in ${c.name} yet`;
     return row({ attrs: `data-country="${k}"`, ic: "map-pin", title: esc(c.name), sub: sub, status: k === cur ? "good" : "" });
   }).join("");
   openSheet({ title: "Which country?", html: `<div class="list">${rows}</div>
-    <p class="muted small">Your farm's town is asked again after you change country, because towns belong to one country.</p>`, onOpen: (b) => {
+    <p class="muted small">You will pick your town again: a town belongs to one country.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
       if (!t || t.dataset.country === cur) return;
