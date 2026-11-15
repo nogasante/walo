@@ -15,10 +15,10 @@ export function render() {
   const p = place(), P = CFG().photos;
   const mine = farmsHere().filter((f) => !f.demo); // the demo field is never "your crops"
   return `${hero({ img: P.home.img, pos: P.home.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: `${greeting()}.<br>What do you want to know?` })}
-  <div class="stack lift">
+  <div class="stack">
     <div class="h2row"><h2 class="h2">Your crops</h2>${mine.length > 2 ? `<a class="h2link" href="#/farm">All ${mine.length}</a>` : ""}</div>
     ${mine.length
-      ? `<div class="fgrid">${mine.slice(0, 2).map(fieldCard).join("")}</div>`
+      ? `<div class="fgrid${mine.length === 1 ? " one" : ""}">${mine.slice(0, 2).map(fieldCard).join("")}</div>`
       : note("Nothing growing yet. Add a crop and Walo follows it from planting to harvest.", "sprout")}
     ${card({ href: "#/doctor", ph: P.doctor, ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", wide: true, attrs: "data-net" })}
     ${btn(mine.length ? "Plant again" : "Plant something", { ic: "sprout", attrs: 'id="plant-more"' })}
