@@ -52,6 +52,11 @@ body[data-route="welcome"] .topbar { display: none; }
 /* country choices: flag on top, name under, two per row */
 /* a filtered-out item must really go: .tile, .ccard and .door set their own display, which beats [hidden] */
 [hidden] { display: none !important; }
+/* the steps for a place where a crop only "can grow" or grows poorly */
+.fixes { border-left: 3px solid var(--brand); }
+.fix-h { font-size: var(--fs); font-weight: 700; }
+.fixlist { margin: 0; padding-left: 18px; display: grid; gap: 8px; color: var(--ink); }
+.fixlist li { line-height: 1.4; }
 /* nothing to show: what is missing, why, and one way out */
 .nores { display: grid; justify-items: center; gap: 6px; padding: 28px 18px; border: 1px dashed var(--line); border-radius: var(--r); background: var(--surface); text-align: center; }
 .nores-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--brand-2); color: var(--brand); }

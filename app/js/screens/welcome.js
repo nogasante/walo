@@ -10,7 +10,7 @@ import { esc } from "../util.js";
 import { openCountryPicker } from "./pickers.js";
 
 /* step: "doors" | "place" | "crop" | "places".  order: which of the two she picked first. */
-let W = { step: "doors", order: "place", crop: null };
+let W = { step: "doors", order: "place", crop: null, near: null }; // near: her position, to order towns by how close they are
 export const title = () => "Welcome";
 
 export function render() {
@@ -114,8 +114,22 @@ function placesStep() {
   return `<div class="stack">
     ${whead()}
     <h1 class="q wl-q">How ${esc(c.name.toLowerCase())} grows in each town</h1>
-    ${placesHtml(c)}
+    ${btn(W.near ? "Best for this crop first" : "Towns near me first", { kind: "secondary", ic: "locate-fixed", attrs: 'id="w-near"' })}
+    <p class="gps-msg" id="w-near-msg" aria-live="polite"></p>
+    ${placesHtml(c, { near: W.near })}
   </div>`;
+}
+/* "near me first" asks the phone once; the order only changes, the verdicts do not */
+function nearMe(root) {
+  if (W.near) { W.near = null; refresh(); return; }
+  const msg = root.querySelector("#w-near-msg");
+  if (!("geolocation" in navigator)) { if (msg) msg.textContent = "This phone cannot share its location."; return; }
+  if (msg) msg.textContent = "Finding you…";
+  navigator.geolocation.getCurrentPosition(
+    (pos) => { W.near = { lat: pos.coords.latitude, lon: pos.coords.longitude }; refresh(); },
+    () => { if (msg) msg.textContent = "Location was not shared. The towns are still listed."; },
+    { timeout: 15000, maximumAge: 6e5 },
+  );
 }
 
 /* every step after the two doors: back on the far left, the brand centred, nothing else in the bar */
@@ -163,6 +177,7 @@ export function mount(root) {
     if (c) { chooseCrop(c.dataset.crop); return; }
     if (e.target.closest("[data-later]")) { setMainCrop(null); location.hash = "#/"; return; }
     if (e.target.closest("#w-gps")) useGps(root);
+    if (e.target.closest("#w-near")) nearMe(root);
     if (e.target.closest("#w-country")) openCountryPicker(null, root);
   });
 }

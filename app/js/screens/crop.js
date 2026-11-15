@@ -1,9 +1,9 @@
 /* Crop answer: can I plant this crop here, and when. "Where else" shows the best towns for it. */
 import { twiOn } from "../twi.js";
 import { place, placeLabel, placeChosen, setPlace, setCrop, focusCrop } from "../store.js";
-import { crop, town, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor, mapFor } from "../data.js";
+import { crop, town, scoreCrop, fitWord, growFixes, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor, mapFor } from "../data.js";
 import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts, emptyState } from "../ui.js";
-import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText } from "../util.js";
+import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText, km } from "../util.js";
 import { rainDetails, rainStrip } from "./words.js";
 
 export const title = (id) => crop(crop(id) ? id : focusCrop()).name;
@@ -28,6 +28,10 @@ function reasons(c, sc) {
   if (f && f.hot_days > 0 && (f.heat.cited || c.heat_sensitive_stage)) out.push("Some very hot days usually come while it flowers.");
   return out;
 }
+/* the steps for a "can grow" or "poorly" place, in a card she can act on */
+function fixesCard(items, title) {
+  return `<div class="card stack fixes"><b class="fix-h">${esc(title)}</b><ul class="fixlist">${items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
+}
 function details(c, p, sc, cm, st) {
   const e = sc.eco, f = sc.fit, out = [`Class ${sc.cls.code} (${sc.cls.label}), ${sc.score} of 5: the lower of the climate class (EcoCrop) and the water class (FAO-56). Data confidence: ${confFor(c, p)}.`];
   if (e) out.push(`EcoCrop: rain ${fmt(e.rain_mm)} mm a year vs ideal ${fmt(e.rain_rng.opt_min)}–${fmt(e.rain_rng.opt_max)} mm${e.gh ? " (Ghana figure)" : ""}; temperature fit ${Math.round(e.temp * 100)}% over its ${e.months}-month season (ideal ${e.temp_rng.opt_min}–${e.temp_rng.opt_max} °C).`);
@@ -51,15 +55,17 @@ export function render(id, sub) {
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">
     ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}` })}
+    ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${placeLabel(p)}`) : ""}
     ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walo cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
     ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", attrs: `data-sheet="${sheet(where.title, where.html, where.onOpen)}"` })}
   </div>`;
 }
 /* the map and the best towns for a crop. Used on the crop page, and by first run, which has no place yet. */
-export function placesHtml(c, hint = "") {
-  // every town in the country, best first, each with its own verdict: hiding the "can grow" and "poorly" ones
-  // left her unable to answer "what about my town?"
-  const list = placeList(c).slice().sort((a, b) => b.sc.score - a.sc.score || a.p.name.localeCompare(b.p.name));
+export function placesHtml(c, opts = {}) {
+  // every town in the country, each with its own verdict: hiding the "can grow" and "poorly" ones left her unable
+  // to answer "what about my town?". With opts.near the same list is ordered by how close each town is to her.
+  const base = placeList(c), near = opts.near || null;
+  const list = near ? base.slice().sort((a, b) => km(near, a.p) - km(near, b.p)) : base.slice().sort((a, b) => b.sc.score - a.sc.score || a.p.name.localeCompare(b.p.name));
   const cur = place(), hers = placeChosen(), g = mapFor();
   const tone = (x) => (x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad");
   const P = (lat, lon) => [(lon - g.x0) * g.s, (g.y1 - lat) * g.s];
@@ -67,7 +73,7 @@ export function placesHtml(c, hint = "") {
   // a country with no outline in data/ just shows the list: no map is better than another country's map
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const body = list.length
-    ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: esc(fitWord(x.sc).text), status: tone(x) })).join("")}</div>${hint ? `<p class="muted small">${hint}</p>` : ""}`
+    ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: esc(near ? `${fitWord(x.sc).text} · ${Math.round(km(near, x.p))} km away` : fitWord(x.sc).text), status: tone(x) })).join("")}</div>`
     : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns in this country before it can say where a crop grows." });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
@@ -81,6 +87,7 @@ function whereSheet(c) {
     return `<div class="stack">
       <p class="list-h">${esc(p.name)}${isCur ? " · your farm" : ""}</p>
       ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.` })}
+      ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${esc(p.name)}`) : ""}
       ${isCur ? "" : btn("Make this my farm", { ic: "map-pin", attrs: `data-makefarm="${p.id}"` })}
       ${btn("Back to the map", { kind: "secondary", attrs: "data-backmap" })}
     </div>`;

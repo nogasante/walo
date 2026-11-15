@@ -134,6 +134,27 @@ export function scoreCrop(c, p) {
     return { score, cls, ecoCls, eco, fit: f, season: best && best.s, water, sourced: !!season, fine: (eco ? (season ? eco.temp : eco.suit) : 0) + (water ? f.wrsi / 100 : 1) };
   });
 }
+/* A "can grow" or "grows poorly" verdict is only useful with what to do about it. These come from the same water
+   balance and temperature fit that gave the verdict: no brand names, no doses, steps a farmer can take this season. */
+export function growFixes(c, p) {
+  const sc = scoreCrop(c, p), eco = sc.eco, f = sc.fit, out = [], n = (x) => Math.round(x);
+  // a crop Walo rates well needs no fixing advice: an annual-rain shortfall would contradict its own verdict
+  if (!eco || sc.score >= 4) return out;
+  const need = f && f.need_mm, def = f && f.deficit_mm;
+  if (sc.water && f && def > 0 && f.water_class.cls !== "good") {
+    const pct = need ? def / need : 0;
+    out.push(`Rain gives it about ${n(def)} mm less than it needs over the season: water at the base in dry spells, and mulch so the soil holds that water.`);
+    if (pct >= 0.25) out.push("Choose a short-season or drought-tolerant variety, so it finishes before the rain runs out.");
+  }
+  if (eco.rain_mm < eco.rain_rng.opt_min) out.push(`This place gets about ${n(eco.rain_mm)} mm of rain a year and it prefers at least ${n(eco.rain_rng.opt_min)} mm. Grow it where water collects, add compost, and keep the soil covered.`);
+  if (eco.rain_mm > eco.rain_rng.opt_max) out.push("It is wetter here than it likes: plant on ridges or raised beds so the roots are not sitting in water.");
+  if (eco.temp < 1) {
+    const hot = (f && f.hot_days) || 0;
+    if (hot) out.push(`About ${hot} days above ${f.heat.t} °C usually come while it is flowering: sow two to three weeks earlier so flowering misses that heat.`);
+    else out.push("It is a little cool here for it: give it your sunniest, most sheltered spot, and plant when the soil has warmed.");
+  }
+  return out.slice(0, 3);
+}
 /* plain words for the class: S1/S2 grows well, S3 can grow, below that grows poorly */
 export function fitWord(sc) {
   if (sc.score >= 4) return { cls: "good", text: "Grows well" };
