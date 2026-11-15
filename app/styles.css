@@ -40,7 +40,15 @@ img { display: block; max-width: 100%; }
 .placechip { position: relative; }
 #main:focus, #main:focus-visible { outline: none; }
 main { padding: var(--sp) var(--sp) calc(var(--tabs) + env(safe-area-inset-bottom) + var(--sp-l)); outline: none; }
-.loading { color: var(--muted); padding: var(--sp-l) 0; }
+/* ---------- first paint: the logo, centred, until the router has a screen ---------- */
+.boot { min-height: calc(100dvh - 2 * var(--sp)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.boot-mark { width: 104px; height: 104px; animation: boot-breathe 2.2s ease-in-out infinite; }
+.boot-name { font-size: 26px; font-weight: 700; letter-spacing: .01em; color: var(--ink); }
+.boot-say { font-size: var(--fs-s); color: var(--muted); }
+@keyframes boot-breathe { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.035); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .boot-mark { animation: none; opacity: 1; } }
+/* nothing to press before the first screen exists */
+body:not(.ready) .topbar, body:not(.ready) .tabbar { visibility: hidden; }
 .tabbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--col); z-index: 6; height: calc(var(--tabs) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); display: grid; grid-template-columns: repeat(4, 1fr); background: var(--surface); border-top: 1px solid var(--line); }
 .tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: var(--muted); font-size: var(--fs-xs); font-weight: 600; }
 .tabbar a[aria-current] { color: var(--brand); }

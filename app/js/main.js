@@ -76,6 +76,7 @@ function render(keepScroll = false) {
     document.getElementById("topbar").innerHTML = topbar(r, rt);
     const tb = document.getElementById("tabbar"); tb.innerHTML = rt.tab ? tabbar(rt.tab) : ""; tb.hidden = !rt.tab; tb.style.display = rt.tab ? "" : "none";
     document.body.dataset.route = r.name;
+    document.body.classList.add("ready"); // from here the bars belong to a real screen, not the boot splash
     document.body.classList.toggle("has-hero", !!main.querySelector(".hero"));
     document.title = `${rt.s.title(r.a, r.b)} · Walo`;
     if (rt.s.mount) rt.s.mount(main.firstElementChild, r.a, r.b, () => render(true)); // the .screen node is new each render, so listeners never pile up
