@@ -29,8 +29,8 @@ const go = (next) => { if (next && location.hash !== next) location.hash = next;
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
   const cards = countryIds().map((k) => {
-    const c = country(k), sub = k === cur ? "Selected" : c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
-    return `<button type="button" class="ccard${k === cur ? " sel" : ""}" data-country="${k}">
+    const c = country(k), sub = c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+    return `<button type="button" class="ccard" data-country="${k}">
       <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
       <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
     </button>`;
@@ -41,7 +41,8 @@ export function openCountryPicker(from, host) {
     <p class="muted small">You will pick your town again: a town belongs to one country. "Dates not checked yet" means the planting dates come from published calendars, not from a farmer there.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
-      if (!t || t.dataset.country === cur) return;
+      if (!t) return;
+      if (t.dataset.country === cur) { closeSheet(true); return; }
       setCountry(t.dataset.country);
       try { await loadCountryData(); } catch { /* planting still works without prices */ }
       // a new country means new towns, map and prices everywhere, so start cleanly - and land on that

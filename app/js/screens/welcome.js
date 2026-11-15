@@ -52,8 +52,9 @@ function countryStep() {
     <input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
     <p class="muted small" data-none hidden>No country matches that.</p>
     <div class="ccards">${countryIds().map((k) => {
-      const c = country(k), sub = k === cur ? "Selected" : c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
-      return `<button type="button" class="ccard${k === cur ? " sel" : ""}" data-wcountry="${k}">
+      // no "Selected" badge: a tap on a country moves her on to its towns, so there is no state to show
+      const c = country(k), sub = c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+      return `<button type="button" class="ccard" data-wcountry="${k}">
         <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
         <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
       </button>`;
@@ -62,16 +63,22 @@ function countryStep() {
   </div>`;
 }
 
+/* the country she is in, the GPS shortcut, then the towns: one column, in the order she needs them */
 function placeStep() {
   const list = towns().slice().sort((a, b) => a.name.localeCompare(b.name));
+  const c = country();
   return `<div class="stack">
     ${whead()}
     <h1 class="q wl-q">Choose the town nearest your farm</h1>
-    ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
+    <div class="loccard">
+      <img class="locflag" src="img/flags/${esc(c.flag || c.id.toLowerCase())}.png" alt="">
+      <span class="loctext"><b>${esc(c.name)}</b><small>Dates and prices for this country.</small></span>
+      ${countryIds().length > 1 ? `<button type="button" class="locchange" data-wchange>Change</button>` : ""}
+    </div>
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
-    ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'data-wchange' }) : ""}
     <p class="gps-msg" id="w-msg" aria-live="polite"></p>
-    <p class="list-h">Or pick the town nearest your farm</p>
+    <p class="muted small loc-note">Reads NASA rain and temperature for the spot. It stays on this phone.</p>
+    <div class="or"><span></span><em>or pick a town</em><span></span></div>
     <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
     <p class="muted small" data-none hidden>No town matches that.</p>
     <div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>

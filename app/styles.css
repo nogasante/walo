@@ -52,6 +52,16 @@ body[data-route="welcome"] .topbar { display: none; }
 /* country choices: flag on top, name under, two per row */
 /* a filtered-out item must really go: .tile, .ccard and .door set their own display, which beats [hidden] */
 [hidden] { display: none !important; }
+.loccard { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
+.locflag { width: 36px; height: 26px; border-radius: 5px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(20, 40, 25, .08) inset; }
+.loctext { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.loctext b { font-size: var(--fs); font-weight: 700; }
+.loctext small { font-size: var(--fs-xs); color: var(--muted); }
+.locchange { flex: none; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-2); color: var(--brand); font: inherit; font-size: var(--fs-s); font-weight: 700; cursor: pointer; }
+.loc-note { margin: -4px 0 0; }
+.or { display: flex; align-items: center; gap: 10px; margin: var(--sp) 0 var(--sp-s); font-size: var(--fs-s); color: var(--muted); }
+.or span { flex: 1; height: 1px; background: var(--line); }
+.or em { font-style: normal; font-weight: 600; }
 .search-in { width: 100%; min-height: var(--tap); margin: 0 0 10px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font: inherit; color: var(--ink); }
 .search-in::placeholder { color: var(--muted); }
 .ccards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
