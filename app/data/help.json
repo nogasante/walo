@@ -3,7 +3,7 @@
   "knowledge": [
     "Walo helps smallholder farmers in Ghana decide what to plant, where and when, from NASA POWER weather for their place (usual rain and temperature by month, 2001-2024) and a 10-day rain forecast.",
     "Home: the farmer's main crop, what to plant here now, Start planting, and Plant Doctor.",
-    "What to plant now: crops are grouped as Plant now, Plant now if you can water, Plant soon, Later this year, and Doesn't grow well here. The answer uses the usual start of the rains and the 10-day forecast. It is not a promise.",
+    "What to plant now: crops are grouped as Plant now, Plant now if you can water, Plant soon (within two months), Later this year, Next year, and Doesn't grow well here. The answer uses the usual start of the rains and the 10-day forecast. It is not a promise.",
     "A crop page shows the planting months for the place, where else in Ghana the crop grows best, and the usual rain by month.",
     "My farm: the farmer adds a field (crop, planting date, place). Walo follows it to harvest: growth stage, days to harvest, and what to check now. Photos of a field can be added. Fields stay on the phone.",
     "Sell: for each of the farmer's fields, when prices are usually best and at which nearby market, from WFP and MoFA SRID price records (2015-2023 and 2025). Today's price may differ.",
