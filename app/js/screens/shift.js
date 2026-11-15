@@ -28,6 +28,11 @@ export function render() {
   const sub = moved
     ? `Usual rain in the season is ${fmt(s.recent.season_rain)} mm against ${fmt(s.early.season_rain)} mm${hotLine}.`
     : "Walo compared the same 35 years of NASA rain and heat for this point in two halves.";
+  // the whole 35-year trend, so the screen is not just two halves compared
+  const tr = s.trend || {}, trBits = [];
+  if (tr.onset_days_per_decade != null && Math.abs(tr.onset_days_per_decade) >= 0.5) trBits.push(`The first rain comes about ${Math.abs(tr.onset_days_per_decade)} days ${tr.onset_days_per_decade > 0 ? "later" : "earlier"} every ten years.`);
+  if (tr.rain_mm_per_decade != null && Math.abs(tr.rain_mm_per_decade) >= 5) trBits.push(`Season rain has been ${tr.rain_mm_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.rain_mm_per_decade)} mm every ten years.`);
+  if (tr.hot_days_per_decade != null && Math.abs(tr.hot_days_per_decade) >= 1) trBits.push(`Very hot days have been ${tr.hot_days_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.hot_days_per_decade)} every ten years.`);
   const why = whyBody(
     [
       `Walo took the same NASA POWER daily record for this point and split it: ${e0}–${e1} and ${r0}–${r1}. For each year it found the day the main rains started, using the same rule it uses for planting advice (a day with rain, then 20 mm over three days, and no long dry spell after).`,
@@ -41,11 +46,6 @@ export function render() {
       esc(s.note || ""),
     ].filter(Boolean),
   );
-  // the whole 35-year trend, so the screen is not just two halves compared
-  const tr = s.trend || {}, trBits = [];
-  if (tr.onset_days_per_decade != null && Math.abs(tr.onset_days_per_decade) >= 0.5) trBits.push(`The first rain comes about ${Math.abs(tr.onset_days_per_decade)} days ${tr.onset_days_per_decade > 0 ? "later" : "earlier"} every ten years.`);
-  if (tr.rain_mm_per_decade != null && Math.abs(tr.rain_mm_per_decade) >= 5) trBits.push(`Season rain has been ${tr.rain_mm_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.rain_mm_per_decade)} mm every ten years.`);
-  if (tr.hot_days_per_decade != null && Math.abs(tr.hot_days_per_decade) >= 1) trBits.push(`Very hot days have been ${tr.hot_days_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.hot_days_per_decade)} every ten years.`);
   const mine = mainCrop();
   const plan = moved
     ? d >= 3
