@@ -120,7 +120,6 @@ function tuneSheet(p, soil, lim, rain) {
       <p class="pick-h">${esc(s.q)}</p>
       ${s.sub ? `<p class="note-text">${esc(s.sub)}</p>` : ""}
       <div class="pick">${s.rows.map((x) => `<button type="button" class="pickrow${x.id === s.value ? " on" : ""}" ${s.attr}="${x.id}">${icon(x.ic)}<span><b>${esc(x.label)}</b><small>${esc(x.line)}</small></span></button>`).join("")}</div>
-      <p class="note-text">Step ${k + 1} of ${steps.length}: pick one and Walo asks the next.</p>
     </div>`;
   };
   return {
