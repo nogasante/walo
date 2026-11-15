@@ -1,5 +1,5 @@
 /* Start planting: crop -> field photo (optional) -> when -> saved to My farm. One question per step. */
-import { place, placeLabel, addFarm, saveBlob, photoUrlNow, clearResumeTask } from "../store.js";
+import { place, placeLabel, addFarm, saveBlob, photoUrlNow } from "../store.js";
 import { takePhotos, preparePhoto, lostPhoto, galleryButton, photoLabel, MSG } from "../photo.js";
 import { crop, cropGroups, isTree, nextSowDate } from "../data.js";
 import { btn, icon, cropImg, note, groupedCrops } from "../ui.js";
@@ -47,7 +47,7 @@ function save(date) {
   const f = { name: name.trim().slice(0, 40), crop: c.id, date, loc: p.kind === "gps" ? null : p.id, place: p.kind === "gps" ? p : undefined,
     photos: F.photo ? [{ src: F.photo, stage: "Field", date: iso(today0()) }] : [] };
   const id = addFarm(f);
-  if (id) { clearResumeTask(); F = { crop: null, step: 0 }; location.hash = `#/farm/${id}`; }
+  if (id) { F = { crop: null, step: 0 }; location.hash = `#/farm/${id}`; }
 }
 async function fieldPhoto(file, rerender) {
   const flow = F, url = URL.createObjectURL(file);

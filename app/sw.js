@@ -5,7 +5,7 @@
    missing file can no longer fail the whole install and leave a farmer with no offline copy at all.
    Any file that fails is reported to /api/log (app/api/log.js) as "sw_missing" so it shows up in the
    server log instead of failing silently. Bump CACHE whenever FILES or a shipped asset changes. */
-const CACHE = "walo-v78";
+const CACHE = "walo-v79";
 const FILES = ["./", "index.html", "styles.css", "icon.svg", "manifest.json", "fonts/jakarta-var.woff2", "lib/agro.js",
   "img/flags/gh.png", "img/flags/ke.png", "img/flags/ng.png", "img/flags/tg.png", "img/flags/ci.png", "img/flags/sn.png", "img/flags/ml.png", "img/flags/ne.png", "img/logo-mark.png", "img/logo-mark-192.png", "img/logo-mark-512-maskable.png", "img/favicon-32.png", "img/apple-touch-icon.png",
   "js/main.js", "js/data.js", "js/store.js", "js/ui.js", "js/util.js", "js/icons.js",

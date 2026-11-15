@@ -3,7 +3,7 @@
    Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
 import { towns, cropsHere, crop, scoreCrop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
-import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry, setResumeTask } from "../store.js";
+import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
 import { btn, icon, row, cropImg, wireSearch, emptyState, groupedCrops } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
@@ -195,8 +195,6 @@ function chooseCrop(id) {
 /* chose a town */
 function choosePlace(id) {
   setPlace(id);
-  // she picked a crop and a town for it: remember that, so leaving before "Start planting" does not lose the job
-  if (W.order === "crop" && W.crop) setResumeTask({ crop: W.crop, place: id, country: (country() || {}).id || null, at: new Date().toISOString() });
   if (W.order === "crop") { W.step = "doors"; location.hash = `#/crop/${W.crop}`; }
   else { W.step = "crop"; refresh(); }
 }
