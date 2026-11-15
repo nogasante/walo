@@ -7,10 +7,6 @@ import { openCropPicker } from "./pickers.js";
 
 export const title = () => "Walo";
 const greeting = () => { const h = new Date().getHours(); return CFG().greetings.filter(([from]) => h >= from).pop()[1]; };
-const card = ({ tag = "a", href, id, ph, ic, title, sub, wide = false, attrs = "" }) =>
-  `<${tag} class="pcard${wide ? " wide" : ""}" ${tag === "a" ? `href="${href}"` : `type="button" id="${id}"`} ${attrs}>
-    <span class="pc-pic"><img src="${ph.img}" alt="" loading="lazy" style="object-position:${ph.pos}"><span class="badge">${icon(ic)}</span></span>
-    <span class="pc-t"><b>${title}</b><small>${sub}</small></span></${tag}>`;
 export function render() {
   const p = place(), P = CFG().photos;
   const mine = farmsHere().filter((f) => !f.demo); // the demo field is never "your crops"
@@ -20,7 +16,7 @@ export function render() {
     ${mine.length
       ? `<div class="fgrid${mine.length === 1 ? " one" : ""}">${mine.slice(0, 2).map(fieldCard).join("")}</div>`
       : note("Nothing growing yet. Add a crop and Walo follows it from planting to harvest.", "sprout")}
-    ${card({ href: "#/doctor", ph: P.doctor, ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", wide: true, attrs: "data-net" })}
+    ${row({ href: "#/doctor", ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", attrs: "data-net" })}
     ${btn(mine.length ? "Plant again" : "Plant something", { ic: "sprout", attrs: 'id="plant-more"' })}
     <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
   </div>`;
