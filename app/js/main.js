@@ -85,8 +85,17 @@ function render(keepScroll = false) {
     window.scrollTo(0, keepScroll ? y : 0); onScroll();
   } finally { busy = false; }
 }
+/* Back stays inside Walo and goes to the screen's parent. Using the browser history instead could take her out of the
+   app, or to a screen that redirects straight back, which read as a dead button. */
+function parentHash() {
+  const { name, a, b } = parse();
+  if (name === "start" && a) return `#/crop/${encodeURIComponent(a)}`;
+  if (name === "doctor" && b) return `#/doctor/${encodeURIComponent(a)}`;
+  if (name === "help" && a) return "#/help";
+  return "#/";
+}
 document.addEventListener("click", (e) => {
-  if (e.target.closest("#back")) { if (history.length > 1) history.back(); else location.hash = "#/"; return; }
+  if (e.target.closest("#back")) { const h = parentHash(); if (location.hash !== h) location.hash = h; return; }
   const pc = e.target.closest("#placechip"); if (pc) { openPlacePicker(null, pc); }
   const po = e.target.closest("[data-place-open]"); if (po) { openPlacePicker("#/now", po); }
   if (e.target.closest("#langchip")) setLang(isTwi() ? "en" : "tw");

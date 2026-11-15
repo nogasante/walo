@@ -144,10 +144,10 @@ export const cropImg = (c, cls = "") => (c.img ? `<img class="${cls}" src="${c.i
 export const note = (text, ic = "info") => `<p class="note">${icon(ic)}<span>${text}</span></p>`;
 export const link = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)}</a>`;
 /* a tappable row: picture or icon, a line, a small second line, a status icon */
-export function row({ href, attrs = "", img = "", ic = "", title, sub = "", status = "", disabled = false }) {
+export function row({ href, attrs = "", img = "", ic = "", icTone = "", title, sub = "", status = "", disabled = false }) {
   const tag = href ? "a" : "button", h = href ? `href="${href}"` : `type="button"`;
   return `<${tag} class="row${disabled ? " off" : ""}" ${h} ${attrs} ${disabled ? 'aria-disabled="true" tabindex="-1"' : ""}>
-    ${img || (ic ? `<span class="row-ic">${icon(ic)}</span>` : "")}
+    ${img || (ic ? `<span class="row-ic${icTone ? ` t-${icTone}` : ""}">${icon(ic)}</span>` : "")}
     <span class="row-t"><b>${title}</b>${sub ? `<small>${sub}</small>` : ""}</span>
     ${status ? `<span class="row-s ${(STATUS[status] || STATUS.info)[1]}">${icon((STATUS[status] || STATUS.info)[0])}</span>` : icon("chevron-right", "row-go")}
   </${tag}>`;
