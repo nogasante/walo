@@ -92,7 +92,6 @@ function buildOption(c, after, p, { soil, rainFactor, health, pass = 60, same = 
   if (same) risks.push("The same crop every season brings the same pests, weeds and hungry soil back, and the ground is worked the same way.");
   if (w.pct != null && w.pct < pass) risks.push(`The rain here covers ${w.pct}% of its water: the rest has to come from watering or a wetter year.`);
   if (hot >= 6) risks.push(`About ${hot} days above ${heatT} °C usually come while it flowers.`);
-  if (sa.kind === "guess") risks.push("Walo has no price record for it near here.");
   const gaps = [
     "The crop traits are rules of thumb from extension guides, not a soil test on your field.",
     "Rain is a NASA POWER grid of about 50 km, not a gauge in your field.",
