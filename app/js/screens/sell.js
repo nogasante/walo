@@ -27,7 +27,7 @@ function list(mine) {
   const P = CFG().photos.sell;
   const top = hero({ img: P.img, pos: P.pos, eyeIcon: "tag", eyebrow: mine.length ? `${mine.length} fields` : esc(placeLabel(place())), title: "When to sell your crops" });
   if (!mine.length) return `${top}<div class="stack lift">
-    ${answer({ kind: "info", icon: "tag", title: "Add your field to see when to sell", sub: "Walo follows your field to harvest, then says when and where to sell.", say: "Add your field to see when to sell.", credit: "Price data" })}
+    ${answer({ kind: "info", icon: "tag", title: "Add your field to see when to sell", sub: "Walo follows your field to harvest, then says when and where to sell.", say: "Add your field to see when to sell." })}
     ${btn("Add a field", { href: "#/start", ic: "plus" })}${other(false)}</div>`;
   const card = ({ f, pr }) => {
     const c = crop(f.crop), sa = sellAdvice(c.id, pr.p, pr.harvest), s = summary(sa, pr), last = (f.photos || []).slice(-1)[0];
@@ -46,8 +46,8 @@ function detail(id, f) {
   let a, dataLine = "";
   if (sa.kind === "index") {
     const m = sa.market, last = sa.s.last, newest = `${monthName(+last.slice(5, 7))} ${last.slice(0, 4)}`; // the newest price in the data, said in the answer itself
-    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. At ${mk(m)}. Prices to ${last.slice(0, 4)}.` };
-    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}. Prices to ${last.slice(0, 4)}.` };
+    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. At ${mk(m)}.` };
+    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}.` };
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else if (sa.kind === "spot") {
     const s = sa.spot;
@@ -82,7 +82,7 @@ function detail(id, f) {
   const P = CFG().photos.sell;
   return `${hero({ img: P.img, pos: P.pos, eyeIcon: "tag", eyebrow: `${esc(c.name)} · ${esc(placeLabel(p))}`, title: `When to sell ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">
-    ${answer({ ...a, extra: strip, why: { title: "Why this answer", html: why }, say: `${a.title}. ${a.sub.replace(/<[^>]+>/g, "")}`, credit: "Price data" })}
+    ${answer({ ...a, extra: strip, why: { title: "Why this answer", html: why }, say: `${a.title}. ${a.sub.replace(/<[^>]+>/g, "")}` })}
     ${note(dataLine, "calendar-days")}
     ${sa.better ? note(`${esc(sa.better.market.name)} market (${fmt(sa.better.market.km)} km) usually pays more.`, "store") : ""}
     ${farms().length > 1 && f ? btn("All my crops", { href: "#/sell", kind: "secondary", ic: "leaf" }) : ""}

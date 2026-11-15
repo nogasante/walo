@@ -18,7 +18,7 @@ export function render(id) {
   const f = id && farm(id);
   if (!f) {
     return `<div class="stack">
-      ${all.length ? `<div class="fgrid">${all.map(fieldCard).join("")}</div>` : answer({ kind: "info", icon: "sprout", title: "No fields yet", sub: "Pick a crop and tap Start planting. Walo then follows your field to harvest.", credit: "On this phone" })}
+      ${all.length ? `<div class="fgrid">${all.map(fieldCard).join("")}</div>` : answer({ kind: "info", icon: "sprout", title: "No fields yet", sub: "Pick a crop and tap Start planting. Walo then follows your field to harvest." })}
       ${btn("Add a field", { href: "#/start", ic: "plus" })}
       ${all.some((x) => !x.demo) ? backupLink() : ""}
     </div>`;
@@ -61,6 +61,7 @@ function farmView(f, many) {
     al && al.kind === "wet" ? `Harvest month: usual rain ${fmt(al.hm.rain_mm)} mm vs ${fmt(al.hm.et0_mm)} mm that dries off (FAO-56 ET0).` : "",
     al && al.kind === "heat" ? `About ${al.fit.hot_days} day(s) above ${al.fit.heat.t} °C usually fall while it flowers.` : "",
     al && al.kind === "water" ? `Usual rain leaves a water deficit of about ${fmt(al.fit.deficit_mm)} mm this season (WRSI ${al.fit.wrsi}).` : "",
+    rain && rain.last ? `Rain comes from daily rain data at this point; the newest day in it is ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}.` : "",
     f.demo ? "This is a demo field so you can see how Walo works. Remove it any time." : "",
   ].filter(Boolean));
   const remove = `<button type="button" class="btn danger wide" data-remove="${esc(f.id)}">${icon("trash-2")}<span>Remove this field</span></button>`;
@@ -76,7 +77,7 @@ function farmView(f, many) {
     ${task ? `<div class="task">${icon("circle-check")}<div><small>Today</small><b>${esc(task)}</b></div></div>` : ""}
     ${al ? `<p class="alert">${icon(al.icon)}<span>${ALERT[al.kind]()}</span></p>` : ""}
     ${tips.map((t) => `<div class="task">${icon(t.ic)}<div><small>${esc(t.k)}</small><b>${esc(t.text)}</b></div></div>`).join("")}
-    ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days<br><span class="muted">NASA POWER${rain.last ? `, data to ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}` : ""}</span></b></div></div>` : ""}
+    ${rain ? `<div class="task">${icon("cloud-rain")}<div><small>Rain at this field</small><b>${fmt(rain.rain)} mm since planting · ${fmt(rain.rain7)} mm in the last 7 days</b></div></div>` : ""}
     ${pr.late || pr.frac >= 1 ? `<a class="sellcard" href="#/sell/${c.id}/${esc(f.id)}"><span class="tile-ic sell">${icon("tag")}</span><span>${esc(sellLine(sa, pr))}</span>${icon("chevron-right")}</a>` : ""}
     ${addState(f)}
     <div class="actions3">

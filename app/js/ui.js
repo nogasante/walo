@@ -80,8 +80,10 @@ export function wire() {
 
 /* ---------- building blocks ---------- */
 const CREDIT_ICON = { "AI answer": "sparkles", "Price data": "tag", "On this phone": "info" };
-/* the answer: one icon, one plain line, an optional second line, a quiet source line. Tap = the "Why?" sheet. */
-export function answer({ kind = "info", icon: ic, badge = "", title, sub = "", extra = "", credit = "NASA data", why = null, say = "", tone }) {
+/* the answer: one icon, one plain line, an optional second line. Tap = the "Why?" sheet.
+   No credit line by default: the sources live in About and in the Why? details. Pass credit only
+   when the label is the point (Plant Doctor's "AI answer"). */
+export function answer({ kind = "info", icon: ic, badge = "", title, sub = "", extra = "", credit = "", why = null, say = "", tone }) {
   const [i, t] = STATUS[kind] || STATUS.info, sid = why ? sheet(why.title || "Why?", why.html) : null;
   // The card stays tappable for sighted users (data-sheet), but it is deliberately NOT a button: the
   // "Why?" control below is a real <button>, so TalkBack and VoiceOver get one focusable control
@@ -91,7 +93,7 @@ export function answer({ kind = "info", icon: ic, badge = "", title, sub = "", e
     <h1 class="a-title">${title}</h1>
     ${sub ? `<p class="a-sub">${sub}</p>` : ""}
     ${extra}
-    <p class="a-foot"><span class="credit">${icon(CREDIT_ICON[credit] || "satellite")}${esc(credit)}</span>${sid ? `<button type="button" class="why-link" data-sheet="${sid}">Why?${icon("chevron-right")}</button>` : ""}</p>
+    ${sid || credit ? `<p class="a-foot">${credit ? `<span class="credit">${icon(CREDIT_ICON[credit] || "satellite")}${esc(credit)}</span>` : ""}${sid ? `<button type="button" class="why-link" data-sheet="${sid}">Why?${icon("chevron-right")}</button>` : ""}</p>` : ""}
   </article>`;
 }
 /* inside a Why? sheet: 1-3 plain sentences, then numbers and sources folded under Details */

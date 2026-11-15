@@ -50,7 +50,7 @@ export function render(id, sub) {
   const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : "leaf", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "clock", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">
-    ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}`, credit: fo ? "NASA data + forecast" : "NASA data" })}
+    ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}` })}
     ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walo cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
     ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", attrs: `data-sheet="${sheet(where.title, where.html, where.onOpen)}"` })}
   </div>`;
@@ -75,7 +75,7 @@ function whereSheet(c) {
     const sc = scoreCrop(c, p), st = plantStatus(c, p), isCur = p.id === cur.id;
     return `<div class="stack">
       <p class="list-h">${esc(p.name)}${isCur ? " · your farm" : ""}</p>
-      ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.`, credit: "NASA data" })}
+      ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.` })}
       ${isCur ? "" : btn("Make this my farm", { ic: "map-pin", attrs: `data-makefarm="${p.id}"` })}
       ${btn("Back to the map", { kind: "secondary", attrs: "data-backmap" })}
     </div>`;
