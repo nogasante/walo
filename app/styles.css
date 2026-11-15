@@ -58,7 +58,8 @@ body[data-route="welcome"] .topbar { display: none; }
 .loctext b { font-size: var(--fs); font-weight: 700; }
 .loctext small { font-size: var(--fs-xs); color: var(--muted); }
 .locchange { flex: none; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-2); color: var(--brand); font: inherit; font-size: var(--fs-s); font-weight: 700; cursor: pointer; }
-.loc-note { margin: -4px 0 0; }
+.loc-note { margin: 8px 0 0; }
+.gps-msg:empty { display: none; }
 .or { display: flex; align-items: center; gap: 10px; margin: var(--sp) 0 var(--sp-s); font-size: var(--fs-s); color: var(--muted); }
 .or span { flex: 1; height: 1px; background: var(--line); }
 .or em { font-style: normal; font-weight: 600; }
