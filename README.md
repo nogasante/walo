@@ -111,7 +111,8 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 | FAO Agro-ecological Zones and the Ghana crop calendar | Zone, growing period, planting windows | [Crop calendar](https://cropcalendar.apps.fao.org/) · [Ghana AEZ](https://api-cropcalendar.apps.fao.org/api/v1/countries/GH/aez?language=en) |
 | FAO land evaluation (1976) and Frère & Popov (1979) | Suitability class names; water requirement satisfaction index | [Soils Bulletin 32](https://www.fao.org/4/x5310e/x5310e00.htm) |
 | MoFA production guides | Ghana crop practice per crop | [mofa.gov.gh](https://mofa.gov.gh/) |
-| MoFA SRID commodity prices | Market prices per kilogram, retail and wholesale, every two weeks, April–October 2025 in 16 markets | [SRID prices](https://srid.mofa.gov.gh/node/18) · built by `app/scripts/build_srid_prices.py` |
+| MoFA SRID commodity prices | Market prices per kilogram, retail and wholesale, every two weeks, April–October 2025 in 16 markets (SRID has published no newer public file) | [SRID prices](https://srid.mofa.gov.gh/node/18) · built by `app/scripts/build_srid_prices.py` |
+| Ghana Commodity Exchange | Traded closing prices per kilogram for white maize and soya bean at the Tamale, Kumasi and Sandema warehouses, 2026 | [GCX market data](https://www.gcx.com.gh/market-data) · built by `app/scripts/build_gcx_prices.py` |
 | IITA and CSIR-SARI (and related Ghana trials) | Crop guides for maize, sorghum, cassava, yam, plantain, cowpea, millet | Per-crop list in [docs/walo-crops-sources.md](docs/walo-crops-sources.md) |
 | WFP food prices for Ghana, via HDX | Seasonal price index, 20 markets, observations through July 2023 | [HDX dataset](https://data.humdata.org/dataset/wfp-food-prices-for-ghana) |
 | Meteomatics Weather API | 10-day rain and maximum temperature. Climatology stays NASA POWER | [Getting started](https://www.meteomatics.com/en/api/getting-started/) |

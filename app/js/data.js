@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "credits", "ghana-map", "help"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "help"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -341,7 +341,14 @@ export function priceNear(cropId, pt, n = 3) {
     if (!pick) continue;
     out.push({ name, km: Math.round(km(pt, m)), ...pick, label: P.label });
   }
-  return out.sort((a, b) => a.km - b.km).slice(0, n);
+  // the exchange's warehouses are places too, and its trades are months newer than the last SRID file
+  const X = D.exchange && D.exchange.crops[cropId];
+  if (X) for (const [name, v] of Object.entries(X.mk)) {
+    const m = D.exchange.markets[name];
+    if (!m) continue;
+    out.push({ name, km: Math.round(km(pt, m)), v: v.v, d: v.d, type: "exchange", src: "GCX", prev: null, label: X.label });
+  }
+  return out.sort((a, b) => a.km - b.km || b.d.localeCompare(a.d)).slice(0, n);
 }
 
 /* ---------- "Use my location": NASA POWER daily for this point, summarised on the phone with the same methods ---------- */
