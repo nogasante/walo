@@ -173,7 +173,7 @@ export function render(id, fid) {
     ${leadCard(top, pass)}
     ${others.length ? `<div class="cmp"><p class="cmp-h">What else could follow it</p>${compareRows(others, pass)}</div>` : ""}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
-      ${icon("leaf")}<span><b>Your soil, and your season</b><small>${esc(soilLabel(soil))} ground · ${esc(limitOf(lim).label.toLowerCase())}</small></span>${icon("chevron-right")}
+      ${icon("leaf")}<span><b>Your soil, and your season</b><small>${esc(soilLabel(soil))} ground${lim === "none" ? "" : ` · ${esc(limitOf(lim).label.toLowerCase())}`}</small></span>${icon("chevron-right")}
     </button>
     <div class="fb" data-fb-crop="${esc(after.id)}">
       <p>Did this help you decide?</p>
