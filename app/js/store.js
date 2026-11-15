@@ -60,8 +60,8 @@ export const farms = () => get("walo.farms", []).filter((f) => crop(f.crop));
 export const farm = (id) => farms().find((f) => f.id === id) || null;
 /* A field belongs to the country of its town. When she switches country her Ghanaian field must not be priced with
    another country's markets and crop calendars, so the screens use these two lists and say where the others are. */
-export const farmsHere = () => farms().filter((f) => !!town(f.place));
-export const farmsElsewhere = () => farms().filter((f) => !town(f.place));
+export const farmsHere = () => farms().filter((f) => !!town(f.loc)); // a field keeps its town in f.loc
+export const farmsElsewhere = () => farms().filter((f) => !town(f.loc));
 function saveFarms(list) {
   if (!set("walo.farms", list)) { alert("Phone storage is full. Remove a field and try again."); return false; }
   emit(); return true;
