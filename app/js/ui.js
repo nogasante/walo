@@ -58,23 +58,39 @@ export function openSheet(idOrSheet, from) {
   wireSearch(b);
   document.dispatchEvent(new CustomEvent("sheet-open", { detail: b }));
 }
-/* a search box over any list of towns, countries, crops or main-crop choices */
+/* the one way Walo says "there is nothing here": what is missing, why, and a way out of it */
+export const emptyState = ({ ic = "info", title, sub = "", action = "", attrs = "" }) =>
+  `<div class="nores"><span class="nores-ic">${icon(ic)}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}${action ? `<button type="button" class="btn secondary" ${attrs}>${esc(action)}</button>` : ""}</div>`;
+
+/* a search box over any list of towns, countries, crops or main-crop choices. It says what was typed,
+   instead of a bare "no results", and offers to clear the box. */
 export function wireSearch(root) {
   const inp = root.querySelector("[data-filter]");
   if (!inp) return;
+  const box = root.querySelector("[data-none]");
+  const what = root.querySelector("[data-town]") ? "town" : root.querySelector("[data-country], .ccard") ? "country" : "crop";
   const items = () => root.querySelectorAll("[data-town],[data-country],[data-crop],[data-main],.ccard");
   const run = () => {
-    const q = inp.value.trim().toLowerCase();
+    const q = inp.value.trim(), lq = q.toLowerCase();
     let shown = 0;
     items().forEach((el) => {
-      const hit = !q || el.textContent.toLowerCase().includes(q);
+      const hit = !lq || el.textContent.toLowerCase().includes(lq);
       el.hidden = !hit;
       if (hit) shown++;
     });
-    const none = root.querySelector("[data-none]");
-    if (none) none.hidden = shown > 0;
+    if (!box) return;
+    if (!q || shown) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = emptyState({ ic: "search", title: `No ${what} matches "${q}"`, sub: "Try a shorter word, or clear the search.", action: "Clear search", attrs: "data-clear" });
   };
   inp.addEventListener("input", run);
+  root.addEventListener("click", (e) => {
+    if (!e.target.closest("[data-clear]")) return;
+    e.preventDefault();
+    inp.value = "";
+    run();
+    inp.focus();
+  });
 }
 export function closeSheet(now = false) {
   const d = document.getElementById("sheet"); if (!d || !d.open) return;

@@ -100,7 +100,7 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
 (async function boot() {
   wire();
   try { await load(); } catch {
-    document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">Could not load Walo</h1><p class="a-sub">Check your connection and try again.</p></article></div></div>`;
+    document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">Could not load Walo</h1><p class="a-sub">Walo needs its data files the first time it opens. Check your connection, then try again.</p></article><a class="btn primary" href="./">Try again</a></div></div>`;
     return;
   }
   // which country this phone chose last time (Ghana if it never chose), and that country's price file

@@ -35,11 +35,19 @@ export const inCountry = (lat, lon) => { const c = country(); return !!c && ["li
 export const mapFor = () => { const c = country(), g = c && c.map; return g ? D[g.replace(/-/g, "_")] || null : null; };
 /* a country other than the default keeps its own prices in data/prices-<code>.json, fetched the first time it is
    chosen so a Ghanaian phone never downloads another country's markets */
+const PRICE_FAIL = new Set();
+/* true when this country's price file could not be fetched, which is not the same as that country having no
+   prices for a crop: Sell says "prices could not load", never "no price records". */
+export const pricesUnreachable = () => PRICE_FAIL.has(activeId());
 export async function loadCountryData(cc = activeId()) {
   if (cc === COUNTRIES().default) return true;
   const key = "prices_" + cc.toLowerCase();
-  if (D[key]) return true;
-  try { const r = await fetch(`data/prices-${cc.toLowerCase()}.json`); if (!r.ok) return false; D[key] = await r.json(); return true; } catch { return false; }
+  if (D[key]) { PRICE_FAIL.delete(cc); return true; }
+  try {
+    const r = await fetch(`data/prices-${cc.toLowerCase()}.json`);
+    if (!r.ok) { PRICE_FAIL.add(cc); return false; }
+    D[key] = await r.json(); PRICE_FAIL.delete(cc); return true;
+  } catch { PRICE_FAIL.add(cc); return false; }
 }
 /* rules.json holds the physical onset rule; the country holds where to look for the season. A southern-hemisphere
    country points these windows at its own rainy months; nothing else in the method changes. */

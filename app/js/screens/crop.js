@@ -2,7 +2,7 @@
 import { twiOn } from "../twi.js";
 import { place, placeLabel, placeChosen, setPlace, setCrop, focusCrop } from "../store.js";
 import { crop, town, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor, mapFor } from "../data.js";
-import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts } from "../ui.js";
+import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts, emptyState } from "../ui.js";
 import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText } from "../util.js";
 import { rainDetails, rainStrip } from "./words.js";
 
@@ -63,9 +63,11 @@ export function placesHtml(c, hint = "Tap a town to see how it does there. Your 
   // a country with no outline in data/ just shows the list: no map is better than another country's map
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const top = list.filter((x) => x.listed).slice(0, 6);
-  return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>
-    <div class="list">${top.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: fitWord(x.sc).text, status: x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad" })).join("")}</div>
-    <p class="muted small">${hint}</p>`;
+  const body = top.length
+    ? `<div class="list">${top.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: fitWord(x.sc).text, status: x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad" })).join("")}</div>
+    <p class="muted small">${hint}</p>`
+    : emptyState({ ic: "map-pin", title: `No town in ${(country() || {}).name || "this country"} suits ${c.name.toLowerCase()} yet`, sub: "Every town Walo covers was checked. Try another crop, or a nearby country." });
+  return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
 /* where it grows best, as a sheet on the crop page */
 function whereSheet(c) {

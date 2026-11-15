@@ -2,7 +2,7 @@
    For each: when it usually sells best near that field (WFP/HDX price pattern), tied to its harvest, with the data's years and unit.
    "Check another crop" is a small option at the bottom. */
 import { place, placeLabel, farm, farms, setCrop, mainCrop } from "../store.js";
-import { crop, sellAdvice, farmProgress, monthName, currency, priceNear, D, CFG, country } from "../data.js";
+import { crop, sellAdvice, farmProgress, monthName, currency, priceNear, D, CFG, country, pricesUnreachable } from "../data.js";
 import { answer, whyBody, note, icon, link, cropImg, hero, monthBars, btn, chip } from "../ui.js";
 import { esc, fmt, roughDate, dayMonth } from "../util.js";
 import { sellLine } from "./farm.js";
@@ -27,7 +27,7 @@ export function render(id, farmId) {
 function summary(sa, pr) {
   if (sa.kind === "index") return { line: `Usually best in ${monthName(sa.peak)} at ${mk(sa.market)}`, tone: sa.store ? "wait" : "now", act: sa.store ? `Store if you can: prices rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", data: `Price pattern to ${monthName(+sa.s.last.slice(5, 7))} ${sa.s.last.slice(0, 4)} · per ${esc(sa.unit)}` };
   if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: ${currency()} ${fmt(sa.spot.lo)}–${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
-  return { line: "No price records yet", tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "Sell when stores run low", data: "" };
+  return { line: pricesUnreachable() ? "Prices could not load" : "No price records yet", tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "Sell when stores run low", data: "" };
 }
 function list(mine) {
   const P = CFG().photos.sell;
@@ -56,7 +56,9 @@ function detail(id, f) {
     else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}.` };
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else {
-    a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: best ? `${stalePrice(best.d) ? "Last recorded price" : "Latest price"}: ${currency()} ${fmt(best.v, 2)} per kg at ${esc(best.name)} (${fmt(best.km)} km), ${dayYear(best.d)}.` : `No price records for ${esc(c.name.toLowerCase())} yet.` };
+    a = !best && pricesUnreachable()
+      ? { kind: "info", icon: "wifi-off", title: "Prices could not load", sub: `Walo could not reach its price file for ${esc((country() || {}).name || "this country")}. Check your connection, then open Sell again.` }
+      : { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: best ? `${stalePrice(best.d) ? "Last recorded price" : "Latest price"}: ${currency()} ${fmt(best.v, 2)} per kg at ${esc(best.name)} (${fmt(best.km)} km), ${dayYear(best.d)}.` : `No price records for ${esc(c.name.toLowerCase())} yet.` };
     dataLine = best ? `Price from ${best.src === "GCX" ? "the Ghana Commodity Exchange's traded prices" : gh ? "MoFA SRID's market collection" : "WFP market prices via OCHA's HDX HAPI"}, per kilogram. The newest row for ${esc(c.name.toLowerCase())} near you is ${dayYear(best.d)}.` : "Best guess: a few months after harvest, when stores run low.";
   }
   const det = [];

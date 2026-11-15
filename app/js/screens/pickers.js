@@ -1,7 +1,7 @@
 /* The two pickers every path uses: place (towns + "Use my location") and crop. Both open as a bottom sheet. */
 import { towns, crops, cropsHere, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, setPlace, setGps, placeLabel, mainCrop, mainIsAuto, autoMainCrop, setMainCrop, setCountry } from "../store.js";
-import { openSheet, closeSheet, icon, cropImg, row } from "../ui.js";
+import { openSheet, closeSheet, icon, cropImg, row, emptyState } from "../ui.js";
 import { esc } from "../util.js";
 
 export function openPlacePicker(next, from) {
@@ -11,8 +11,10 @@ export function openPlacePicker(next, from) {
     ${countryIds().length > 1 ? `<button type="button" class="btn secondary wide" id="pick-country">${icon("map-pin")}<span>Country: ${esc(country().name)}</span></button>` : ""}
     <p class="list-h">Or pick the town nearest your farm</p>
     <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
-    <p class="muted small" data-none hidden>No town matches that.</p>
-    <div class="list">${towns().sort((a, b) => a.name.localeCompare(b.name)).map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`;
+    <div data-none hidden></div>
+    ${(() => { const l = towns().sort((a, b) => a.name.localeCompare(b.name)); return l.length
+      ? `<div class="list">${l.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`
+      : emptyState({ ic: "map-pin", title: `No towns in ${esc(country().name)} yet`, sub: "Choose another country, or tell us your town and Walo will add it." }); })()}`;
   openSheet({ title: "Choose the town nearest your farm", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
       const t = e.target.closest("[data-town]");
@@ -36,7 +38,7 @@ export function openCountryPicker(from, host) {
     </button>`;
   }).join("");
   openSheet({ title: "Choose your country", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
-    <p class="muted small" data-none hidden>No country matches that.</p>
+    <div data-none hidden></div>
     <div class="ccards">${cards}</div>
     <p class="muted small">You will pick your town again: a town belongs to one country. Dates come from published crop calendars; in Ghana a farmer there also checked them.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
@@ -80,7 +82,7 @@ export function openCropPicker(mode, from, onPick) {
   const list = crops().slice().sort((a, b) => (mode === "where" ? 0 : here.has(b.id) - here.has(a.id)) || a.name.localeCompare(b.name));
   const tile = (c) => `<button type="button" class="tile" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`;
   const html = `<input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
-    <p class="muted small" data-none hidden>No crop matches that.</p>
+    <div data-none hidden></div>
     <div class="tiles">${list.map(tile).join("")}</div>
     ${mode !== "where" ? `<p class="muted small">${esc(placeLabel(p))}: crops that grow in this zone come first.</p>` : ""}`;
   openSheet({ title: mode === "where" ? "Choose a crop" : "Choose your crop", html, onOpen: (b) => {

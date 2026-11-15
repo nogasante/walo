@@ -4,7 +4,7 @@
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
 import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
-import { btn, icon, note, row, cropImg, wireSearch } from "../ui.js";
+import { btn, icon, note, row, cropImg, wireSearch, emptyState } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
 import { openCountryPicker } from "./pickers.js";
@@ -50,7 +50,7 @@ function countryStep() {
     ${whead()}
     <h1 class="q wl-q">Choose the country you farm in</h1>
     <input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
-    <p class="muted small" data-none hidden>No country matches that.</p>
+    <div data-none hidden></div>
     <div class="ccards">${countryIds().map((k) => {
       // no "Selected" badge: a tap on a country moves her on to its towns, so there is no state to show
       // the line says where the planting dates come from, in words a farmer would use
@@ -81,8 +81,10 @@ function placeStep() {
     <p class="muted small loc-note">Reads NASA rain and temperature for the spot. It stays on this phone.</p>
     <div class="or"><span></span><em>or pick a town</em><span></span></div>
     <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
-    <p class="muted small" data-none hidden>No town matches that.</p>
-    <div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>
+    <div data-none hidden></div>
+    ${list.length
+      ? `<div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>`
+      : emptyState({ ic: "map-pin", title: `No towns in ${c.name} yet`, sub: "Change country, or tell us your town and Walo will add it.", action: "Change country", attrs: "data-wchange" })}
   </div>`;
 }
 
@@ -97,8 +99,10 @@ function cropStep() {
     <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : `Crops that grow well in ${esc(placeLabel(place()))}`}</h1>
     ${note(asking ? "Walo will show you where it does best." : "Best matches first. Tap the crop you grow.", "sprout")}
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
-    <p class="muted small" data-none hidden>No crop matches that.</p>
-    <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
+    <div data-none hidden></div>
+    ${list.length
+      ? `<div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>`
+      : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country. Change country and try again." })}
     ${asking ? "" : btn("I grow more than one", { kind: "secondary", attrs: "data-later" })}
     ${note("Sell, Plant Doctor and crop pages open on this crop. You can change it later.")}
   </div>`;
