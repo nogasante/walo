@@ -62,6 +62,13 @@ export const farm = (id) => farms().find((f) => f.id === id) || null;
    another country's markets and crop calendars, so the screens use these two lists and say where the others are. */
 export const farmsHere = () => farms().filter((f) => !!town(f.loc)); // a field keeps its town in f.loc
 export const farmsElsewhere = () => farms().filter((f) => !town(f.loc));
+
+/* ---------- where she left off ---------- */
+/* Choosing a crop and a town is a job she may not finish in one go. This remembers the pair so Home can offer it back
+   until she starts the field, and is cleared the moment a field exists or she dismisses the card. */
+export const resumeTask = () => get("walo.resume", null);
+export const setResumeTask = (t) => { set("walo.resume", t); emit(); };
+export const clearResumeTask = () => { set("walo.resume", null); emit(); };
 function saveFarms(list) {
   if (!set("walo.farms", list)) { alert("Phone storage is full. Remove a field and try again."); return false; }
   emit(); return true;

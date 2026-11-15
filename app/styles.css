@@ -52,6 +52,14 @@ body[data-route="welcome"] .topbar { display: none; }
 /* country choices: flag on top, name under, two per row */
 /* a filtered-out item must really go: .tile, .ccard and .door set their own display, which beats [hidden] */
 [hidden] { display: none !important; }
+/* where she left off: crop + town chosen, no field yet */
+.resume { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); }
+.resume .tile-ic { flex: none; }
+.resume-t { flex: 1; min-width: 0; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); }
+.resume-t small { font-size: var(--fs-xs); color: var(--muted); }
+.resume-t b { font-size: var(--fs); }
+.resume-t span { font-size: var(--fs-s); color: var(--brand); font-weight: 700; }
+.resume-x { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--muted); cursor: pointer; }
 /* the steps for a place where a crop only "can grow" or grows poorly */
 .fixes { border-left: 3px solid var(--brand); }
 .fix-h { font-size: var(--fs); font-weight: 700; }
@@ -153,7 +161,7 @@ body:not(.ready) .topbar, body:not(.ready) .tabbar { visibility: hidden; }
 .row-t { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .row-t b { font-weight: 700; } .row-t small { font-size: var(--fs-s); color: var(--muted); }
 .row-go { color: var(--muted); width: 20px; height: 20px; }
-.row-s .ic { width: 24px; height: 24px; } .row-s.good { color: var(--good); } .row-s.wait { color: var(--wait); } .row-s.bad { color: var(--bad); } .row-s.info { color: var(--info); }
+.row-s .ic { width: 24px; height: 24px; } .row-s.good { color: var(--good); } .row-s.wait { color: var(--wait); } .row-s.bad { color: var(--bad); } .row-s.poor { color: #b9b4aa; } .row-s.info { color: var(--info); }
 .tag { display: inline-block; font-style: normal; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--wait-bg); color: var(--wait); vertical-align: 2px; }
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .tile { display: flex; flex-direction: column; gap: 6px; padding: 0 0 8px; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--surface); overflow: hidden; font-size: var(--fs-s); font-weight: 600; cursor: pointer; text-align: center; }

@@ -1,5 +1,5 @@
 /* Home: my main crop today, the two ways in (my place -> what to plant now; a crop -> where it grows best), Plant Doctor, my fields. */
-import { place, placeLabel, placeChosen, farmsHere, setCrop, mainCrop } from "../store.js";
+import { place, placeLabel, placeChosen, farmsHere, setCrop, mainCrop, resumeTask, clearResumeTask } from "../store.js";
 import { crop, farmProgress, plantStatus, CFG } from "../data.js";
 import { icon, cropImg, hero, ring } from "../ui.js";
 import { esc, roughDate, MONTHS_LONG } from "../util.js";
@@ -16,6 +16,7 @@ export function render() {
   const p = place(), fs = farmsHere(), P = CFG().photos;
   return `${hero({ img: P.home.img, pos: P.home.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: `${greeting()}.<br>What do you want to know?` })}
   <div class="stack lift">
+    ${resumeCard(p)}
     ${focusCard(p, fs)}
     <div class="pgrid">
       ${card({ tag: "button", id: "pick-place", ph: P.plant_here, ic: "map-pin", title: "What to plant here", sub: `Now, in ${esc(placeLabel(p))}` })}
@@ -25,6 +26,17 @@ export function render() {
     <div class="h2row"><h2 class="h2">My fields</h2>${fs.length > 2 ? `<a class="h2link" href="#/farm">All ${fs.length}</a>` : ""}</div>
     <div class="fgrid">${fs.slice(0, 2).map(fieldCard).join("")}${fs.length < 2 ? `<a class="fcard add" href="#/start">${icon("plus")}<b>Add a field</b><small>Walo follows it to harvest</small></a>` : ""}</div>
     <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
+  </div>`;
+}
+/* what she was in the middle of: a crop and a town picked, but no field started yet */
+function resumeCard(p) {
+  const r = resumeTask();
+  if (!r || !crop(r.crop) || r.place !== p.id) return "";
+  const c = crop(r.crop);
+  return `<div class="resume">
+    <span class="tile-ic">${icon("sprout")}</span>
+    <a class="resume-t" href="#/start/${esc(c.id)}"><small>Where you left off</small><b>${esc(c.name)} in ${esc(placeLabel(p))}</b><span>Start planting</span></a>
+    <button type="button" class="resume-x" id="drop-resume" aria-label="Dismiss">${icon("x")}</button>
   </div>`;
 }
 /* my main crop: one line for today (its field if there is one, else planting here), and a small Change */
@@ -47,6 +59,7 @@ export function fieldCard(f) {
     <span class="fc-t"><b>${esc(f.name)}</b><small>${esc(sub)}</small></span></a>`;
 }
 export function mount(root) {
+  const drop = root.querySelector("#drop-resume"); if (drop) drop.addEventListener("click", () => clearResumeTask());
   root.querySelector("#change-main").addEventListener("click", (e) => openMainCropPicker(e.currentTarget));
   // she already told Walo where her farm is: answer, do not ask again
   root.querySelector("#pick-place").addEventListener("click", (e) => { if (placeChosen()) location.hash = "#/now"; else openPlacePicker("#/now", e.currentTarget); });

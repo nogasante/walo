@@ -7,6 +7,7 @@ export { icon };
 export const STATUS = { // answer kind -> icon + tone
   now: ["circle-check", "good"], wait: ["clock", "wait"], later: ["clock", "wait"], water: ["droplets", "wait"], no: ["circle-x", "bad"],
   good: ["circle-check", "good"], bad: ["circle-x", "bad"], info: ["info", "info"],
+  poor: ["circle-x", "poor"], // the grey of the "Poorly" legend dot, so a row cannot show a different colour than the key
 };
 
 /* ---------- speech: Twi by GhanaNLP Khaya (js/twi.js) when Twi is on, else the phone's own English voice ---------- */

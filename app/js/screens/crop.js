@@ -67,13 +67,14 @@ export function placesHtml(c, opts = {}) {
   const base = placeList(c), near = opts.near || null;
   const list = near ? base.slice().sort((a, b) => km(near, a.p) - km(near, b.p)) : base.slice().sort((a, b) => b.sc.score - a.sc.score || a.p.name.localeCompare(b.p.name));
   const cur = place(), hers = placeChosen(), g = mapFor();
-  const tone = (x) => (x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad");
+  // the icon carries the verdict in the legend's own colours (green / amber / grey); no words per row, the legend says it
+  const tone = (x) => (x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "poor");
   const P = (lat, lon) => [(lon - g.x0) * g.s, (g.y1 - lat) * g.s];
   const pins = g ? list.slice().reverse().map((x) => { const [px, py] = P(x.p.lat, x.p.lon), sel = hers && x.p.id === cur.id; return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${sel ? 9 : 6}" class="pin ${tone(x)}${sel ? " sel" : ""}"><title>${esc(x.p.name)}</title></circle>`; }).join("") : "";
   // a country with no outline in data/ just shows the list: no map is better than another country's map
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const body = list.length
-    ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: esc(near ? `${fitWord(x.sc).text} · ${Math.round(km(near, x.p))} km away` : fitWord(x.sc).text), status: tone(x) })).join("")}</div>`
+    ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: near ? `${Math.round(km(near, x.p))} km away` : "", status: tone(x) })).join("")}</div>`
     : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns in this country before it can say where a crop grows." });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
