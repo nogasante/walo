@@ -25,7 +25,7 @@ export function render() {
   const why = whyBody([
     `Walo checks when the rains usually start here, from ${yearsOf(p)} years of NASA rain data.`,
     fo ? "It also checks the weather forecast for the next 10 days, so you plant after a good rain." : (online() ? "There is no forecast right now, so Walo used the usual start of the rains." : "Using usual weather (no forecast offline)."),
-    "Crops are grouped: plant now, plant now if you can water, plant soon, later this year, and crops that do not grow well here.",
+    "Crops are grouped by when they can be planted, and each one carries its month. A crop whose next sowing falls in the new year says so.",
   ], rainDetails(p, (list[0] || {}).st));
   const tile = (x, g) => cropTile({ href: `#/crop/${x.c.id}`, c: x.c, kind: g.key === "no" ? "no" : x.st.kind === "now" ? "now" : "wait", text: g.key === "no" ? "Grows poorly here" : statusLine(x.st) });
   const P = CFG().photos.plant_here;

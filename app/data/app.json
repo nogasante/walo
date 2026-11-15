@@ -1,244 +1,250 @@
 {
-  "_about": "Walo app settings. Place-, crop- or service-specific settings that are not NASA, price or crop data live here, so the code has no fixed place, market or crop names.",
-  "default_place": "ejura",
-  "default_crop": "maize",
-  "map_labels": [
-    "ejura",
-    "tamale",
-    "accra",
-    "kumasi"
+ "_about": "Walo app settings. Place-, crop- or service-specific settings that are not NASA, price or crop data live here, so the code has no fixed place, market or crop names.",
+ "default_place": "ejura",
+ "default_crop": "maize",
+ "map_labels": [
+  "ejura",
+  "tamale",
+  "accra",
+  "kumasi"
+ ],
+ "periods": {
+  "live": [
+   2016,
+   2025
   ],
-  "periods": {
-    "live": [
-      2016,
-      2025
-    ],
-    "agro": [
-      1991,
-      2025
-    ],
-    "agro_fetched": "2026-11-14"
-  },
-  "demo_farm": {
-    "id": "demo",
-    "name": "Maize by the road",
-    "crop": "maize",
-    "loc": "ejura",
-    "days_ago": 75,
-    "photos": [
-      {
-        "src": "img/maize-field.webp",
-        "stage": "Sprout",
-        "day_offset": 10
-      },
-      {
-        "src": "img/maize.webp",
-        "stage": "Flowering",
-        "day_offset": 55
-      }
-    ]
-  },
-  "plant_doctor": {
-    "endpoint": "/api/diagnose",
-    "timeout_ms": 45000,
-    "stages_ms": [
-      0,
-      3000,
-      8000
-    ],
-    "speech_langs": [
-      "en-GH",
-      "en-US"
-    ],
-    "max_words_chars": 600
-  },
-  "forecast": {
-    "endpoint": "/api/forecast",
-    "max_age_h": 3,
-    "label": "Meteomatics"
-  },
-  "zones": {
-    "_source": "FAO Ghana agro-ecological zones (crop calendar region text)",
-    "F": {
-      "name": "Rain forest zone",
-      "short": "Forest"
-    },
-    "T": {
-      "name": "Transitional zone",
-      "short": "Transition"
-    },
-    "G": {
-      "name": "Guinea savanna zone",
-      "short": "Savanna (north)"
-    },
-    "C": {
-      "name": "Coastal savanna zone",
-      "short": "Coastal savanna"
-    }
-  },
-  "geocode": {
-    "endpoint": "https://nominatim.openstreetmap.org/reverse",
-    "zoom": 14,
-    "credit": "Place names © OpenStreetMap contributors",
-    "credit_url": "https://www.openstreetmap.org/copyright"
-  },
-  "farm": {
-    "harvest_soon_days": 14,
-    "_note": "default (Walo wording choice, no standard): within this many days of the estimated harvest the field says 'Harvest soon'."
-  },
-  "photos": {
-    "_note": "Photos used as labels on cards and photo bands (credits in data/credits.json).",
-    "home": {
-      "img": "img/hero.webp",
-      "pos": "50% 30%"
-    },
-    "plant_here": {
-      "img": "img/field.webp",
-      "pos": "50% 60%"
-    },
-    "where_crop": {
-      "img": "img/grain.webp",
-      "pos": "50% 40%"
-    },
-    "doctor": {
-      "img": "img/maize.webp",
-      "pos": "50% 50%"
-    },
-    "sell": {
-      "img": "img/market.webp",
-      "pos": "50% 40%"
-    }
-  },
-  "greetings": [
-    [
-      0,
-      "Good morning"
-    ],
-    [
-      12,
-      "Good afternoon"
-    ],
-    [
-      17,
-      "Good evening"
-    ]
+  "agro": [
+   1991,
+   2025
   ],
-  "backup": {
-    "_note": "Optional sign-in to back up fields (Supabase project 'walo'). Only the publishable key is here; it is safe in a browser because every table and photo is locked to its owner by row-level security.",
-    "url": "https://yceufknddlcrezefaivi.supabase.co",
-    "key": "sb_publishable_2vH4LkZTNhmt25hqu8Tpew_wHmhmuH1",
-    "table": "fields",
-    "bucket": "field-photos",
-    "code_min": 6,
-    "code_max": 8,
-    "push_delay_ms": 1500,
-    "settings_id": "00000000-0000-4000-8000-000000000001",
-    "_note_settings": "settings_id: the one row per person (same table) that keeps the main crop choice; it is not a field."
+  "agro_fetched": "2026-11-14"
+ },
+ "demo_farm": {
+  "id": "demo",
+  "name": "Maize by the road",
+  "crop": "maize",
+  "loc": "ejura",
+  "days_ago": 75,
+  "photos": [
+   {
+    "src": "img/maize-field.webp",
+    "stage": "Sprout",
+    "day_offset": 10
+   },
+   {
+    "src": "img/maize.webp",
+    "stage": "Flowering",
+    "day_offset": 55
+   }
+  ]
+ },
+ "plant_doctor": {
+  "endpoint": "/api/diagnose",
+  "timeout_ms": 45000,
+  "stages_ms": [
+   0,
+   3000,
+   8000
+  ],
+  "speech_langs": [
+   "en-GH",
+   "en-US"
+  ],
+  "max_words_chars": 600
+ },
+ "forecast": {
+  "endpoint": "/api/forecast",
+  "max_age_h": 3,
+  "label": "Meteomatics"
+ },
+ "zones": {
+  "_source": "FAO Ghana agro-ecological zones (crop calendar region text)",
+  "F": {
+   "name": "Rain forest zone",
+   "short": "Forest"
   },
-  "photo": {
-    "_note": "One photo path (js/photo.js): the camera and gallery inputs sit in index.html and are opened by <label for>, never by script. Photos are copied into memory at once, shrunk to this size, and if the browser cannot open one, Plant Doctor may send the original when it is small enough.",
-    "max_side_px": 768,
-    "jpeg_quality": 0.7,
-    "decode_timeout_ms": 20000,
-    "original_max_bytes": 2400000,
-    "original_types": [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-      "image/heic",
-      "image/heif"
-    ]
+  "T": {
+   "name": "Transitional zone",
+   "short": "Transition"
   },
-  "log": {
-    "_note": "Client log for real-phone problems (js/log.js -> api/log.js): event names, counts, sizes and types only; no photos, words or places.",
-    "enabled": true,
-    "endpoint": "/api/log"
+  "G": {
+   "name": "Guinea savanna zone",
+   "short": "Savanna (north)"
   },
-  "crop_groups": {
-    "_note": "Crop lists for a place are grouped by when you can plant (js/data.js cropGroups, from the same onset/FAO-56/forecast rules as Plant now). 'soon' = the next planting month is within soon_months; 'no' = outside the crop's FAO zones, no planting month here, or FAO class below 'can grow' (score below min_score).",
-    "soon_months": 2,
-    "min_score": 3,
-    "groups": [
-      {
-        "key": "now",
-        "title": "Plant now",
-        "icon": "sprout",
-        "tone": "good"
-      },
-      {
-        "key": "water",
-        "title": "Plant now if you can water",
-        "icon": "droplets",
-        "tone": "info"
-      },
-      {
-        "key": "soon",
-        "title": "Plant soon",
-        "icon": "clock",
-        "tone": "wait"
-      },
-      {
-        "key": "later",
-        "title": "Later this year",
-        "icon": "calendar-days",
-        "tone": "later"
-      },
-      {
-        "key": "no",
-        "title": "Doesn't grow well here",
-        "icon": "circle-x",
-        "tone": "bad",
-        "collapsed": true
-      }
-    ]
-  },
-  "languages": {
-    "_note": "Languages shown in the app. English only until after NASA Space Apps 2026: Twi (js/twi.js, api/twi.js, GhanaNLP Khaya) stays dormant until \"tw\" is added here and the labels are complete and checked by a Twi speaker.",
-    "enabled": [
-      "en"
-    ]
-  },
-  "twi": {
-    "_note": "Twi by GhanaNLP Khaya through /api/twi (machine translation and voice; needs a Twi speaker's check). Fixed labels: data/i18n-tw.json, built once by scripts/build_i18n_tw.py.",
-    "endpoint": "/api/twi",
-    "dict": "data/i18n-tw.json",
-    "batch": 40,
-    "cache_max": 3000,
-    "tts_chars": 350,
-    "audio_cache": "walo-tts",
-    "asr_max_s": 30,
-    "asr_timeout_ms": 60000,
-    "rest_ms": 600000
-  },
-  "support": {
-    "_note": "Get help: the AI helper (/api/help) answers first; 'Talk to a person' shows Call and WhatsApp to this number. Empty phone = the person option is hidden and the app says the help line is coming soon. International format without +, e.g. 233XXXXXXXXX.",
-    "phone": "",
-    "whatsapp": "",
-    "endpoint": "/api/help",
-    "timeout_ms": 25000,
-    "max_messages": 8,
-    "person_words": [
-      "person",
-      "human",
-      "call",
-      "customer care",
-      "someone",
-      "onipa"
-    ],
-    "voice": {
-      "_note": "Hands-free voice chat in Get help: stop after this many silent turns; pause between speaking and listening; safety limit if the phone never says speech ended.",
-      "silent_turns": 2,
-      "gap_ms": 350,
-      "max_speak_ms_per_char": 90
-    }
-  },
-  "offline": {
-    "_note": "What still works without internet (said in the Needs internet sheet).",
-    "works": [
-      "What to plant here",
-      "Where a crop grows best",
-      "My farm",
-      "Sell (prices kept on the phone)"
-    ]
+  "C": {
+   "name": "Coastal savanna zone",
+   "short": "Coastal savanna"
   }
+ },
+ "geocode": {
+  "endpoint": "https://nominatim.openstreetmap.org/reverse",
+  "zoom": 14,
+  "credit": "Place names \u00a9 OpenStreetMap contributors",
+  "credit_url": "https://www.openstreetmap.org/copyright"
+ },
+ "farm": {
+  "harvest_soon_days": 14,
+  "_note": "default (Walo wording choice, no standard): within this many days of the estimated harvest the field says 'Harvest soon'."
+ },
+ "photos": {
+  "_note": "Photos used as labels on cards and photo bands (credits in data/credits.json).",
+  "home": {
+   "img": "img/hero.webp",
+   "pos": "50% 30%"
+  },
+  "plant_here": {
+   "img": "img/field.webp",
+   "pos": "50% 60%"
+  },
+  "where_crop": {
+   "img": "img/grain.webp",
+   "pos": "50% 40%"
+  },
+  "doctor": {
+   "img": "img/maize.webp",
+   "pos": "50% 50%"
+  },
+  "sell": {
+   "img": "img/market.webp",
+   "pos": "50% 40%"
+  }
+ },
+ "greetings": [
+  [
+   0,
+   "Good morning"
+  ],
+  [
+   12,
+   "Good afternoon"
+  ],
+  [
+   17,
+   "Good evening"
+  ]
+ ],
+ "backup": {
+  "_note": "Optional sign-in to back up fields (Supabase project 'walo'). Only the publishable key is here; it is safe in a browser because every table and photo is locked to its owner by row-level security.",
+  "url": "https://yceufknddlcrezefaivi.supabase.co",
+  "key": "sb_publishable_2vH4LkZTNhmt25hqu8Tpew_wHmhmuH1",
+  "table": "fields",
+  "bucket": "field-photos",
+  "code_min": 6,
+  "code_max": 8,
+  "push_delay_ms": 1500,
+  "settings_id": "00000000-0000-4000-8000-000000000001",
+  "_note_settings": "settings_id: the one row per person (same table) that keeps the main crop choice; it is not a field."
+ },
+ "photo": {
+  "_note": "One photo path (js/photo.js): the camera and gallery inputs sit in index.html and are opened by <label for>, never by script. Photos are copied into memory at once, shrunk to this size, and if the browser cannot open one, Plant Doctor may send the original when it is small enough.",
+  "max_side_px": 768,
+  "jpeg_quality": 0.7,
+  "decode_timeout_ms": 20000,
+  "original_max_bytes": 2400000,
+  "original_types": [
+   "image/jpeg",
+   "image/png",
+   "image/webp",
+   "image/heic",
+   "image/heif"
+  ]
+ },
+ "log": {
+  "_note": "Client log for real-phone problems (js/log.js -> api/log.js): event names, counts, sizes and types only; no photos, words or places.",
+  "enabled": true,
+  "endpoint": "/api/log"
+ },
+ "crop_groups": {
+  "_note": "Crop lists for a place are grouped by when you can plant (js/data.js cropGroups, from the same onset/FAO-56/forecast rules as Plant now). 'soon' = the next planting month is within soon_months; 'no' = outside the crop's FAO zones, no planting month here, or FAO class below 'can grow' (score below min_score). 'next' = a sowing month that falls in the next calendar year.",
+  "soon_months": 2,
+  "min_score": 3,
+  "groups": [
+   {
+    "key": "now",
+    "title": "Plant now",
+    "icon": "sprout",
+    "tone": "good"
+   },
+   {
+    "key": "water",
+    "title": "Plant now if you can water",
+    "icon": "droplets",
+    "tone": "info"
+   },
+   {
+    "key": "soon",
+    "title": "Plant soon",
+    "icon": "clock",
+    "tone": "wait"
+   },
+   {
+    "key": "later",
+    "title": "Later this year",
+    "icon": "calendar-days",
+    "tone": "later"
+   },
+   {
+    "key": "next",
+    "title": "Next year",
+    "icon": "calendar-days",
+    "tone": "later"
+   },
+   {
+    "key": "no",
+    "title": "Doesn't grow well here",
+    "icon": "circle-x",
+    "tone": "bad",
+    "collapsed": true
+   }
+  ]
+ },
+ "languages": {
+  "_note": "Languages shown in the app. English only until after NASA Space Apps 2026: Twi (js/twi.js, api/twi.js, GhanaNLP Khaya) stays dormant until \"tw\" is added here and the labels are complete and checked by a Twi speaker.",
+  "enabled": [
+   "en"
+  ]
+ },
+ "twi": {
+  "_note": "Twi by GhanaNLP Khaya through /api/twi (machine translation and voice; needs a Twi speaker's check). Fixed labels: data/i18n-tw.json, built once by scripts/build_i18n_tw.py.",
+  "endpoint": "/api/twi",
+  "dict": "data/i18n-tw.json",
+  "batch": 40,
+  "cache_max": 3000,
+  "tts_chars": 350,
+  "audio_cache": "walo-tts",
+  "asr_max_s": 30,
+  "asr_timeout_ms": 60000,
+  "rest_ms": 600000
+ },
+ "support": {
+  "_note": "Get help: the AI helper (/api/help) answers first; 'Talk to a person' shows Call and WhatsApp to this number. Empty phone = the person option is hidden and the app says the help line is coming soon. International format without +, e.g. 233XXXXXXXXX.",
+  "phone": "",
+  "whatsapp": "",
+  "endpoint": "/api/help",
+  "timeout_ms": 25000,
+  "max_messages": 8,
+  "person_words": [
+   "person",
+   "human",
+   "call",
+   "customer care",
+   "someone",
+   "onipa"
+  ],
+  "voice": {
+   "_note": "Hands-free voice chat in Get help: stop after this many silent turns; pause between speaking and listening; safety limit if the phone never says speech ended.",
+   "silent_turns": 2,
+   "gap_ms": 350,
+   "max_speak_ms_per_char": 90
+  }
+ },
+ "offline": {
+  "_note": "What still works without internet (said in the Needs internet sheet).",
+  "works": [
+   "What to plant here",
+   "Where a crop grows best",
+   "My farm",
+   "Sell (prices kept on the phone)"
+  ]
+ }
 }

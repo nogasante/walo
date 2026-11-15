@@ -302,11 +302,18 @@ const KIND_ORDER = { now: 0, wait: 1, water: 2, later: 3, no: 9 };
 export function cropGroups(p) {
   const G = CFG().crop_groups, here = new Set(cropsHere(p).map((c) => c.id));
   const items = crops().map((c) => ({ c, sc: scoreCrop(c, p), conf: confFor(c, p), st: plantStatus(c, p), here: here.has(c.id) }));
+  const curM = new Date().getMonth() + 1;
   const keyOf = (x) => {
     if (!x.here || x.st.kind === "no" || x.sc.score < G.min_score) return "no";
     if (x.st.kind === "now") return "now";
     if (x.st.kind === "water") return "water";
-    if (x.st.kind === "wait" || (x.st.kind === "later" && x.st.months <= G.soon_months)) return "soon";
+    if (x.st.kind === "wait") return "soon";
+    if (x.st.kind === "later") {
+      if (x.st.months <= G.soon_months) return "soon";
+      // "Later this year" can only mean a month still ahead in this calendar year: in November, a March sowing is
+      // four months away and next year, and saying "later this year" there was simply wrong.
+      return x.st.month > curM ? "later" : "next";
+    }
     return "later";
   };
   const sort = (a, b) => KIND_ORDER[a.st.kind] - KIND_ORDER[b.st.kind] || (a.st.months || 0) - (b.st.months || 0) || b.sc.score - a.sc.score || CONF_ORDER[a.conf] - CONF_ORDER[b.conf] || b.sc.fine - a.sc.fine || a.c.name.localeCompare(b.c.name);
