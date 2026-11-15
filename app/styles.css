@@ -490,7 +490,8 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .seg .ic { width: 20px; height: 20px; }
 .seg.on { background: var(--brand-2); border-color: var(--brand); color: var(--brand); }
 .seg-line { margin: -4px 2px 0; font-size: var(--fs-xs); color: var(--muted); }
-.soilline { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); }
+.soilline { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); }
+.soilchips { display: flex; gap: 8px; }
 .soilchip { min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs-xs); font-weight: 600; cursor: pointer; }
 .soilchip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
 .nextcard { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }

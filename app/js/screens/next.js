@@ -72,7 +72,7 @@ export function render(id, fid) {
     </div>
     <p class="seg-line">${esc(PRIORITIES.find((x) => x.id === prio).line)}</p>
     <div class="soilline"><span>Soil${autoSoil.zoneName ? ` · usual in the ${esc(autoSoil.zoneName.toLowerCase())}` : ""}</span>
-      ${SOILS.map((x) => `<button type="button" class="soilchip${x.id === soil ? " on" : ""}" data-soil="${x.id}" aria-pressed="${x.id === soil}">${x.label}</button>`).join("")}
+      <span class="soilchips">${SOILS.map((x) => `<button type="button" class="soilchip${x.id === soil ? " on" : ""}" data-soil="${x.id}" aria-pressed="${x.id === soil}">${x.label}</button>`).join("")}</span>
     </div>
     ${options.map((o) => optionCard(o, soil)).join("")}
     <p class="note-text">${esc(autoSoil.note)} ${esc(SOILS.find((x) => x.id === soil).plain[0].toUpperCase() + SOILS.find((x) => x.id === soil).plain.slice(1))}. Walo cannot test your field, so tap the one that looks and feels like yours.</p>
