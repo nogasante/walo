@@ -8,11 +8,20 @@
       "status": "live",
       "checked_by_local": true,
       "bbox": {
-        "lat": [-5, 16],
-        "lon": [-10, 6],
+        "lat": [
+          -5,
+          16
+        ],
+        "lon": [
+          -10,
+          6
+        ],
         "_note": "Walo deliberately accepts a margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
       },
-      "currency": { "code": "GHS", "name": "cedi" },
+      "currency": {
+        "code": "GHS",
+        "name": "cedi"
+      },
       "language": "en",
       "map": "ghana-map",
       "onset": {
@@ -26,17 +35,33 @@
         "minor_search": {
           "from": "08-15",
           "to": "10-31",
-          "zones": ["F", "T", "C"],
+          "zones": [
+            "F",
+            "T",
+            "C"
+          ],
           "default": true,
           "note": "Second (minor) season searched only in the bimodal zones (FAO zone text: forest, transition, coastal savanna)."
         }
       },
       "zones": {
         "_source": "FAO Ghana agro-ecological zones (crop calendar region text)",
-        "F": { "name": "Rain forest zone", "short": "Forest" },
-        "T": { "name": "Transitional zone", "short": "Transition" },
-        "G": { "name": "Guinea savanna zone", "short": "Savanna (north)" },
-        "C": { "name": "Coastal savanna zone", "short": "Coastal savanna" }
+        "F": {
+          "name": "Rain forest zone",
+          "short": "Forest"
+        },
+        "T": {
+          "name": "Transitional zone",
+          "short": "Transition"
+        },
+        "G": {
+          "name": "Guinea savanna zone",
+          "short": "Savanna (north)"
+        },
+        "C": {
+          "name": "Coastal savanna zone",
+          "short": "Coastal savanna"
+        }
       },
       "sources": {
         "crop_calendar": "FAO Ghana crop calendar",
@@ -51,11 +76,20 @@
       "_status_note": "Preview: the planting windows come from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book, not from someone who farms there. The picker says so. It becomes \"live\" when checked_by_local is true.",
       "checked_by_local": false,
       "bbox": {
-        "lat": [-5.2, 5.6],
-        "lon": [33.5, 42.5],
+        "lat": [
+          -5.2,
+          5.6
+        ],
+        "lon": [
+          33.5,
+          42.5
+        ],
         "_note": "The same margin around the country as Ghana, so 'use my location' near a border still works; the nearest town still has to be in places.json."
       },
-      "currency": { "code": "KES", "name": "shilling" },
+      "currency": {
+        "code": "KES",
+        "name": "shilling"
+      },
       "language": "en",
       "map": "kenya-map",
       "onset": {
@@ -69,19 +103,104 @@
         "minor_search": {
           "from": "09-15",
           "to": "12-31",
-          "zones": ["KM", "KE"],
+          "zones": [
+            "KM",
+            "KE"
+          ],
           "default": true,
           "note": "The short rains (vuli) fall October-December and are the main season on the coast and in eastern Kenya. The highlands (KH) are treated as one long season, so no second search is made there."
         }
       },
       "zones": {
         "_source": "Kenya rainfall regimes from the FEWS NET Kenya seasonal calendar (long rains March-May, short rains October-December) and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book 2025",
-        "KH": { "name": "Highlands, one long season", "short": "Highlands" },
-        "KM": { "name": "Medium altitude, two seasons", "short": "Two seasons" },
-        "KE": { "name": "Eastern and coast, short rains main", "short": "Eastern/coast" }
+        "KH": {
+          "name": "Highlands, one long season",
+          "short": "Highlands"
+        },
+        "KM": {
+          "name": "Medium altitude, two seasons",
+          "short": "Two seasons"
+        },
+        "KE": {
+          "name": "Eastern and coast, short rains main",
+          "short": "Eastern/coast"
+        }
       },
       "sources": {
         "crop_calendar": "FEWS NET Kenya seasonal calendar 2024 and Kenya Food Security Data Book 2025 (Ministry of Agriculture cropping calendar)",
+        "prices": "WFP market prices via HDX HAPI"
+      }
+    },
+    "NG": {
+      "name": "Nigeria",
+      "flag": "ng",
+      "status": "preview",
+      "_status_note": "Preview: planting windows come from IITA, Nigeria's NFHL crop guidance, the NE Nigeria seasonal calendar and an agro-ecological zone calendar, not from a farmer there. Prices come from WFP market prices via HDX HAPI. It becomes live when checked_by_local is true.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          3.8,
+          14.0
+        ],
+        "lon": [
+          2.5,
+          15.0
+        ],
+        "_note": "A margin around the country, as for Ghana and Kenya, so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": {
+        "code": "NGN",
+        "name": "naira"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "Rains reach the south in March and the far north in July, so the search starts at 1 March and ends at 31 July. Source: NE Nigeria rainfed seasonal calendar and IITA maize planting dates."
+        },
+        "minor_search": {
+          "from": "08-01",
+          "to": "10-31",
+          "zones": [
+            "DS",
+            "HF"
+          ],
+          "default": true,
+          "note": "The south has a second (late) season planted August-September after the first maize; the northern zones have a single season."
+        }
+      },
+      "zones": {
+        "_source": "Nigeria agro-ecological zones: Sahel savanna, Sudan savanna, Northern Guinea savanna, Southern Guinea savanna, derived savanna, humid forest",
+        "SS": {
+          "name": "Sahel savanna",
+          "short": "Sahel"
+        },
+        "NS": {
+          "name": "Sudan savanna",
+          "short": "Sudan savanna"
+        },
+        "NG": {
+          "name": "Northern Guinea savanna",
+          "short": "N. Guinea"
+        },
+        "SG": {
+          "name": "Southern Guinea savanna",
+          "short": "S. Guinea"
+        },
+        "DS": {
+          "name": "Derived savanna",
+          "short": "Derived savanna"
+        },
+        "HF": {
+          "name": "Humid forest",
+          "short": "Forest"
+        }
+      },
+      "sources": {
+        "crop_calendar": "IITA Guide to Maize Production in Northern Nigeria; Nigeria NFHL crop guidance; NE Nigeria rainfed seasonal calendar (FS Cluster/FAO); IITA Growing Cassava",
         "prices": "WFP market prices via HDX HAPI"
       }
     }
