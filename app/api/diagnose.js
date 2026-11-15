@@ -72,6 +72,7 @@ const SCHEMA = {
     image_quality_ok: { type: "BOOLEAN", description: "false if the photos are too blurry, dark, far or off-subject to judge the plant; true when there is no photo" },
     retake_instructions: { type: "STRING", description: "if image_quality_ok is false: one short, exact instruction for a better photo; else empty" },
     crop_matches: { type: "BOOLEAN", description: "false if the photo clearly shows a different crop than the one named" },
+    looks_like: { type: "ARRAY", items: { type: "STRING" }, description: "when crop_matches is false: 1-2 plain crop names the photo actually looks like, e.g. ['garden egg','pepper']; empty otherwise" },
     likely_issue: { type: "STRING", description: "short name, e.g. 'Fall armyworm', 'Northern leaf blight', 'Drought stress', 'Looks healthy'" },
     issue_type: { type: "STRING", enum: ["pest", "disease", "nutrient", "water_stress", "heat_stress", "weeds", "healthy", "unclear"] },
     confidence: { type: "STRING", enum: ["low", "med", "high"] },
@@ -88,8 +89,8 @@ const SCHEMA = {
     need_more: { type: "STRING", enum: ["none", "leaf_closeup", "whole_plant", "field", "leaf_underside", "stem_or_root"], description: "one more photo that would clearly raise confidence, or none" },
     next_photo_tip: { type: "STRING", description: "if need_more is not none: one short instruction for that photo; else empty" },
   },
-  required: ["ask_question", "image_quality_ok", "retake_instructions", "crop_matches", "likely_issue", "issue_type", "confidence", "why", "today_action", "growth_stage_observed", "growth_stage_expected", "stage_match", "harvest_readiness", "harvest_note", "signs_seen", "other_possibilities", "watch_next", "need_more", "next_photo_tip"],
-  propertyOrdering: ["ask_question", "image_quality_ok", "retake_instructions", "crop_matches", "likely_issue", "issue_type", "confidence", "why", "today_action", "growth_stage_observed", "growth_stage_expected", "stage_match", "harvest_readiness", "harvest_note", "signs_seen", "other_possibilities", "watch_next", "need_more", "next_photo_tip"],
+  required: ["ask_question", "image_quality_ok", "retake_instructions", "crop_matches", "looks_like", "likely_issue", "issue_type", "confidence", "why", "today_action", "growth_stage_observed", "growth_stage_expected", "stage_match", "harvest_readiness", "harvest_note", "signs_seen", "other_possibilities", "watch_next", "need_more", "next_photo_tip"],
+  propertyOrdering: ["ask_question", "image_quality_ok", "retake_instructions", "crop_matches", "looks_like", "likely_issue", "issue_type", "confidence", "why", "today_action", "growth_stage_observed", "growth_stage_expected", "stage_match", "harvest_readiness", "harvest_note", "signs_seen", "other_possibilities", "watch_next", "need_more", "next_photo_tip"],
 };
 
 const ROLE_TEXT = { leaf: "Photo: close-up of a leaf", plant: "Photo: the whole plant", field: "Photo: wide view of the field", diary: "Photo: from the farmer's diary" };
@@ -113,6 +114,7 @@ ${b.mode === "stage" ? "Main task: compare the growth stage in the photo with th
 Rules:
 ${nImg ? "" : `- No photo: set image_quality_ok=true, crop_matches=true, retake_instructions="". Judge from the words; use confidence "low" or "med" unless the words are very specific. ${b.followup ? "ask_question must be empty." : "If the words are too unclear to name any likely cause, set ask_question to ONE short plain question (e.g. \"Are the holes in the leaves, or is the leaf turning yellow?\") and keep the other fields short; otherwise ask_question is empty."} If a photo would clearly help, set need_more to the view to photograph.`}
 ${nImg ? "- ask_question must be empty (there is a photo)." : ""}
+- Crop check: the farmer says this is ${b.crop_name}. If a photo clearly shows a different crop, set crop_matches=false and put in looks_like the 1-2 plain crop names you can actually see (e.g. ["garden egg","pepper"]), using names farmers here use and only crops that grow in this country. Never guess a crop you cannot see: if you are unsure, keep crop_matches=true. When crop_matches is true, looks_like must be empty.
 - First judge photo quality (only if there is a photo). If blur, darkness, distance, glare or the subject makes a judgement unreliable, set image_quality_ok=false and give ONE exact retake instruction (e.g. "Move closer so one leaf fills the photo, in daylight, and hold still"). Then keep other fields short with "unclear" where needed.
 - Only use what you can see in the photos or what the farmer says. Do not invent symptoms. If unsure, use confidence "low" and say what would confirm it.
 - "why" names the signs that point to the cause. Base the answer on the signs, never on the weather alone. Mention the weather only if it clearly supports what is seen (e.g. "it has been very dry"), in a few plain words with no numbers.
@@ -130,6 +132,7 @@ function clean(o) {
   return {
     ask_question: s(o.ask_question, 160),
     image_quality_ok: o.image_quality_ok !== false, retake_instructions: s(o.retake_instructions, 240), crop_matches: o.crop_matches !== false,
+    looks_like: o.crop_matches === false ? a(o.looks_like, 2, 40) : [],
     likely_issue: s(o.likely_issue, 80) || "Unclear", issue_type: e(o.issue_type, SCHEMA.properties.issue_type.enum, "unclear"),
     confidence: e(o.confidence, ["low", "med", "high"], "low"), why: s(o.why, 420), today_action: s(o.today_action, 240),
     growth_stage_observed: s(o.growth_stage_observed, 80), growth_stage_expected: s(o.growth_stage_expected, 80),
@@ -195,7 +198,7 @@ module.exports = async (req, res) => {
   try {
     const g = await geminiCall(key, parts, { schema: SCHEMA, budgetMs: BUDGET_MS }), result = clean(g.data);
     if (imgs.length || followup) result.ask_question = ""; // at most one question, and only without a photo
-    if (!imgs.length) { result.image_quality_ok = true; result.crop_matches = true; }
+    if (!imgs.length) { result.image_quality_ok = true; result.crop_matches = true; result.looks_like = []; }
     const { url, ...wx } = weather;
     return send(200, { ok: true, ai_generated: true, model: g.model, result, weather: { ...wx, source_url: url || null }, checked_at: new Date().toISOString() });
   } catch (e) {

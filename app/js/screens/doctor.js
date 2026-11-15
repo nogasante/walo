@@ -2,7 +2,7 @@
    answers from what it sees and reads (the server adds recent weather to its notes quietly; the screen makes no weather claim). With words only it may ask one short question first. Every answer says "AI answer". */
 import { place, farm, focusCrop, setCrop } from "../store.js";
 import { takePhotos, preparePhoto, toBase64, lostPhoto, showable, galleryButton, cameraButton, photoLabel } from "../photo.js";
-import { crop, farmProgress, agroOf, CFG, R } from "../data.js";
+import { crop, crops, farmProgress, agroOf, CFG, R } from "../data.js";
 import { answer, whyBody, btn, note, icon, cropImg, hero } from "../ui.js";
 import { esc, fmt, dayMonth, fromIso, MONTHS_LONG } from "../util.js";
 import { openCropPicker } from "./pickers.js";
@@ -17,6 +17,13 @@ const SR = typeof window !== "undefined" && (window.SpeechRecognition || window.
 const canTalk = () => (isTwi() ? asrReady() : !!SR);
 
 let S = { key: "" }, CUR = null; // CUR: the screen that is showing now (crop, field, re-render)
+/* switching to the crop the photo actually looks like keeps the photo, so she is not asked to take it again */
+let PENDING = null;
+const cropByName = (n) => {
+  const q = String(n || "").toLowerCase().trim().replace(/s$/, "");
+  if (!q) return null;
+  return crops().find((c) => c.name.toLowerCase() === q) || crops().find((c) => c.name.toLowerCase().replace(/s$/, "") === q) || crops().find((c) => c.name.toLowerCase().includes(q)) || null;
+};
 const fresh = (key) => ({ key, phase: "start", shots: [], words: "", ask: null, reply: "", res: null, err: "", step: 0, ctl: null, timers: [], listening: false, writing: false });
 
 export const title = () => "Plant Doctor";
@@ -39,7 +46,12 @@ function wordsBox(label, val, ph) {
 export function render(id, farmId) {
   id = crop(id) ? id : focusCrop(); setCrop(id);
   const { f, pr, p, c } = ctx(id, farmId), key = `${id}|${farmId || ""}|${p.id}`;
-  if (S.key !== key) { stop(); S = fresh(key); S.err = lostPhoto("doctor"); }
+  if (S.key !== key) {
+    const carry = PENDING && PENDING.to === id ? PENDING.shots : null;
+    stop(); S = fresh(key); S.err = lostPhoto("doctor");
+    if (carry) { S.shots = carry; S.checkNow = true; }
+    PENDING = null;
+  }
   const chip = f ? "" : `<button type="button" class="cropchip" id="change-crop">${cropImg(c, "chip-img")}<span>Another crop</span>${icon("chevron-down")}</button>`;
   let body;
   if (S.phase === "reading") {
@@ -59,10 +71,19 @@ export function render(id, farmId) {
       ${btn("Back", { kind: "secondary", ic: "chevron-left", attrs: 'id="doc-back"' })}`;
   } else if (S.phase === "result") {
     const r = S.res.result, hasPhoto = S.shots.length > 0;
-    if (hasPhoto && (!r.image_quality_ok || !r.crop_matches)) {
-      const msg = !r.image_quality_ok ? r.retake_instructions || "Move closer so one leaf fills the photo, in daylight, and hold still." : `Take a photo of your ${c.name.toLowerCase()} plant.`;
-      body = `${answer({ kind: "wait", icon: "camera", title: !r.image_quality_ok ? "Need a clearer photo" : `This does not look like ${esc(c.name.toLowerCase())}`, sub: esc(msg), say: msg, credit: "AI answer" })}
+    if (hasPhoto && !r.image_quality_ok) {
+      const msg = r.retake_instructions || "Move closer so one leaf fills the photo, in daylight, and hold still.";
+      body = `${answer({ kind: "wait", icon: "camera", title: "Need a clearer photo", sub: esc(msg), say: msg, credit: "AI answer" })}
         ${cameraButton("doctor", "Take photo again", { attrs: "data-net" })}${btn("New check", { kind: "secondary", ic: "refresh-cw", attrs: 'id="doc-new"' })}`;
+    } else if (hasPhoto && !r.crop_matches) {
+      // say what it looks like, and let her carry this same photo over to that crop instead of starting again
+      const looks = (r.looks_like || []).filter(Boolean), mine = c.name.toLowerCase();
+      const seen = looks.length ? looks.join(" or ") : "a different crop";
+      const msg = `Walo checked the photo against ${mine}, and the plant looks like ${seen}.`;
+      const opts = looks.map((n) => ({ n, c: cropByName(n) })).filter((x) => x.c && x.c.id !== c.id);
+      body = `${answer({ kind: "wait", icon: "camera", title: `This looks like ${seen}, not ${mine}`, sub: esc(`${msg} If it is, pick it below and Walo will check the same photo as that crop.`), say: msg, credit: "AI answer" })}
+        ${opts.length ? `<div class="stack">${opts.map(({ c: oc }) => btn(`Check it as ${oc.name.toLowerCase()}`, { ic: "sprout", attrs: `data-lookcrop="${oc.id}"` })).join("")}</div>` : ""}
+        ${cameraButton("doctor", "Take another photo", { kind: opts.length ? "secondary" : "primary", attrs: "data-net" })}${btn("New check", { kind: "secondary", ic: "refresh-cw", attrs: 'id="doc-new"' })}`;
     } else {
       const more = r.need_more !== "none" && S.shots.length < 3 && r.confidence !== "high";
       const say = `${r.likely_issue}. ${CONF[r.confidence]}. Today: ${r.today_action}. This is an AI answer and can be wrong.`;
@@ -134,7 +155,8 @@ async function run() {
     if (q && !S.ask && !S.shots.length) { S.ask = q; S.reply = ""; S.phase = "ask"; }
     else {
       S.res = j; S.phase = "result";
-      if (S.shots.length && (!j.result.image_quality_ok || !j.result.crop_matches)) S.shots = []; // start again with a better photo
+      // a blurry photo is thrown away; a photo of another crop is kept so she can re-check it as that crop
+      if (S.shots.length && !j.result.image_quality_ok) S.shots = [];
     }
   } catch (e) {
     back();
@@ -150,7 +172,7 @@ async function gotPhoto(file) {
   if (!CUR) return;
   const role = S.phase === "result" && S.res && S.res.result.need_more !== "none" ? ({ leaf_closeup: "leaf", whole_plant: "plant", field: "field" }[S.res.result.need_more] || "leaf") : "leaf";
   if (S.phase === "ask" || S.phase === "words") { const t = document.getElementById("doc-words"); if (t) { if (S.phase === "ask") S.reply = t.value; else S.words = t.value; } }
-  if (S.phase === "result" && S.res && (!S.res.result.image_quality_ok || !S.res.result.crop_matches)) S.shots = [];
+  if (S.phase === "result" && S.res && !S.res.result.image_quality_ok) S.shots = [];
   const shot = { role, url: URL.createObjectURL(file), mime: "image/jpeg", data: "" };
   S.shots.push(shot); S.phase = "reading"; S.err = ""; redraw(); // show the photo at once
   try {
@@ -236,4 +258,11 @@ export function mount(root, id, farmId, rerender) {
   if (ta) ta.addEventListener("input", keep);
   on("#doc-cancel", () => { S.cancelled = true; if (S.ctl) S.ctl.abort(); });
   on("#doc-new", () => { stop(); S = fresh(S.key); rerender(); });
+  root.querySelectorAll("[data-lookcrop]").forEach((b) => b.addEventListener("click", () => {
+    const nid = b.dataset.lookcrop;
+    PENDING = { to: nid, shots: S.shots }; // same photo, the crop it actually looks like
+    setCrop(nid);
+    location.hash = `#/doctor/${nid}`;
+  }));
+  if (S.checkNow) { S.checkNow = false; run(); }
 }
