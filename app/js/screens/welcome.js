@@ -71,7 +71,7 @@ function placeStep() {
     <h1 class="q wl-q">Choose the town nearest your farm</h1>
     <div class="loccard">
       <img class="locflag" src="img/flags/${esc(c.flag || c.id.toLowerCase())}.png" alt="">
-      <span class="loctext"><b>${esc(c.name)}</b><small>Dates and prices for this country.</small></span>
+      <span class="loctext"><b>${esc(c.name)}</b><small>Planting dates and market prices come from here.</small></span>
       ${countryIds().length > 1 ? `<button type="button" class="locchange" data-wchange>Change</button>` : ""}
     </div>
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}

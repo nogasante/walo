@@ -56,7 +56,7 @@ export function render(from) {
     ${showPerson ? personBox() : ""}
     ${VC.on ? voicePanel() : `${canVoice() ? `<button type="button" class="vc-start" id="vc-start" data-net><span class="vc-ic">${icon("mic")}</span><span class="vc-t"><b>Voice chat</b><small>Talk with Walo, no reading. It answers out loud.</small></span></button>` : ""}
     <div class="card stack">
-      <label class="field"><span>Your question</span><textarea id="help-words" data-notw rows="2" maxlength="${CFG().plant_doctor.max_words_chars}" placeholder="For example: when should I sell my maize?">${esc(S.draft)}</textarea></label>
+      <label class="field"><span>Your question</span><textarea id="help-words" data-notw rows="2" maxlength="${CFG().plant_doctor.max_words_chars}" placeholder="For example: when should I sell my ${esc(m ? crop(m).name.toLowerCase() : "maize")}?">${esc(S.draft)}</textarea></label>
       ${S.writing ? `<p class="busy">${icon("loader-circle", "spin")}<span>Writing down your words…</span></p>`
         : canTalk() ? `<button type="button" class="micbtn${S.listening ? " on" : ""}" id="help-mic" data-net>${icon(S.listening ? "square" : "mic")}<span>${S.listening ? "Listening… tap to stop" : isTwi() ? "Tap and talk in Twi" : "Tap and talk"}</span></button>` : ""}
       ${btn("Send", { ic: "send", attrs: `id="help-send" data-net ${S.busy || S.writing ? "disabled" : ""}` })}

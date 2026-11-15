@@ -76,7 +76,7 @@ function farmView(f, many) {
   const ic = pr.frac >= 1 ? "wheat" : pr.si >= 0 ? pr.stages[pr.si].icon : "sprout";
   const heroImg = last && !/^idb:/.test(last.src) ? last.src : last ? "" : c.img;
   const extra = `${last && /^idb:/.test(last.src) ? `<img class="hero-ph" ${imgAttr(last.src)} alt="">` : ""}${f.demo ? '<i class="tag on-pic">Demo</i>' : ""}
-    <button type="button" class="pic-count" data-sheet="${sheet(`Photos of ${f.name}`, photoHtml)}" aria-label="${photos.length} photos">${icon("image")}<span>${photos.length}</span></button>`;
+    ${photos.length ? `<button type="button" class="pic-count" data-sheet="${sheet(`Photos of ${f.name}`, photoHtml)}" aria-label="${photos.length} photos">${icon("image")}<span>${photos.length}</span></button>` : ""}`;
   return `${hero({ img: heroImg, eyeIcon: "sprout", eyebrow: `${esc(c.name)} · ${esc(placeLabel(pr.p))}`, title: esc(f.name), extra })}
   <div class="stack lift">
     ${answer({ kind: pr.frac >= 1 ? "now" : "info", tone: pr.frac >= 1 ? "good" : "info", badge: ring(pr.d < 0 ? 0 : pr.frac, ic), title: t, sub: esc(stage), extra: `<ol class="stages" aria-label="Stage: ${esc(stage)}">${pr.stages.map((s, i) => `<li class="${i < pr.si ? "done" : i === pr.si ? "now" : ""}">${icon(s.icon)}<span>${esc(s.name)}</span></li>`).join("")}</ol>`, why: { title: "How Walo knows", html: why + remove }, say: `${f.name}. ${t}. ${stage}. ${task ? "Today: " + task : ""}` })}
