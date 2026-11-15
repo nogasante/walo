@@ -89,6 +89,7 @@ function render(keepScroll = false) {
    app, or to a screen that redirects straight back, which read as a dead button. */
 function parentHash() {
   const { name, a, b } = parse();
+  if (name === "crop" && b === "where" && a) return `#/crop/${encodeURIComponent(a)}`;
   if (name === "start" && a) return `#/crop/${encodeURIComponent(a)}`;
   if (name === "doctor" && b) return `#/doctor/${encodeURIComponent(a)}`;
   if (name === "help" && a) return "#/help";

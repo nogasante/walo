@@ -217,7 +217,7 @@ body:not(.ready) .topbar, body:not(.ready) .tabbar { visibility: hidden; }
 /* ---------- map (where it grows best) ---------- */
 .gmap { width: 100%; max-height: 260px; display: block; margin: 0 auto; }
 .gmap .land { fill: #e8efe3; stroke: #b5c3b0; stroke-width: 1.2; }
-.pin { stroke: #fff; stroke-width: 2; } .pin.good { fill: var(--good); } .pin.wait { fill: #d39b1c; } .pin.bad { fill: #b9b4aa; } .pin.sel { stroke: var(--ink); stroke-width: 3; }
+.pin { stroke: #fff; stroke-width: 2; } .pin.good { fill: var(--good); } .pin.wait { fill: #d39b1c; } .pin.bad, .pin.poor { fill: #b9b4aa; } .pin.sel { stroke: var(--ink); stroke-width: 3; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; justify-content: center; font-size: var(--fs-xs); color: var(--muted); margin: var(--sp-s) 0 var(--sp); }
 .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: -8px; }
 .dot.good { background: var(--good); } .dot.wait { background: #d39b1c; } .dot.bad { background: #b9b4aa; }

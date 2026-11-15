@@ -2,11 +2,11 @@
 import { twiOn } from "../twi.js";
 import { place, placeLabel, placeChosen, setPlace, setCrop, focusCrop } from "../store.js";
 import { crop, town, scoreCrop, fitWord, growFixes, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor, mapFor } from "../data.js";
-import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts, emptyState } from "../ui.js";
+import { answer, whyBody, btn, row, note, openSheet, closeSheet, hero, facts, emptyState } from "../ui.js";
 import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText, km } from "../util.js";
 import { rainDetails, rainStrip } from "./words.js";
 
-export const title = (id) => crop(crop(id) ? id : focusCrop()).name;
+export const title = (id, sub) => { const c = crop(crop(id) ? id : focusCrop()); return sub === "where" ? `Where ${c.name.toLowerCase()} grows best` : c.name; };
 function headline(c, st) {
   const n = c.name.toLowerCase();
   switch (st.kind) {
@@ -48,8 +48,9 @@ export function render(id, sub) {
   const subLine = months ? `Planting months: ${months}${cm.guess ? " (best guess)" : ""}.` : "";
   const t = headline(c, st), fo = fcOnset(forecastFor(p));
   const why = whyBody(reasons(c, sc).concat(outZone ? [`FAO does not list ${c.name.toLowerCase()} for the ${zoneName(z).toLowerCase()}.`] : []), details(c, p, sc, cm, st));
-  const where = whereSheet(c);
-  if (sub === "where") { history.replaceState(null, "", `#/crop/${id}`); setTimeout(() => openSheet(where), 60); }
+  // "Where does it grow best" is its own page at #/crop/<id>/where, not a sheet popped over this one: the same
+  // link then lands on the same screen every time, and reloading or coming back does not lose it.
+  if (sub === "where") return `<div class="stack lift"><h1 class="q">Where ${esc(c.name.toLowerCase())} grows best</h1>${placesHtml(c)}</div>`;
   const twi = c.twi && twiOn() ? ` · <span lang="ak">${esc(c.twi.split(" / ")[0].split(" (")[0])}</span>` : "";
   const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : "leaf", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "clock", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
@@ -57,7 +58,7 @@ export function render(id, sub) {
     ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}` })}
     ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${placeLabel(p)}`) : ""}
     ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walo cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
-    ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", attrs: `data-sheet="${sheet(where.title, where.html, where.onOpen)}"` })}
+    ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", href: `#/crop/${c.id}/where` })}
   </div>`;
 }
 /* the map and the best towns for a crop. Used on the crop page, and by first run, which has no place yet. */
@@ -78,26 +79,26 @@ export function placesHtml(c, opts = {}) {
     : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns in this country before it can say where a crop grows." });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
-/* where it grows best, as a sheet on the crop page */
-function whereSheet(c) {
-  const cur = place(), html = placesHtml(c);
-  /* tapping a town only looks at it. Her farm changes on "Make this my farm", and nowhere else. */
-  const detail = (id) => {
-    const p = town(id); if (!p) return html;
-    const sc = scoreCrop(c, p), st = plantStatus(c, p), isCur = p.id === cur.id;
-    return `<div class="stack">
-      <p class="list-h">${esc(p.name)}${isCur ? " · your farm" : ""}</p>
-      ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.` })}
-      ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${esc(p.name)}`) : ""}
-      ${isCur ? "" : btn("Make this my farm", { ic: "map-pin", attrs: `data-makefarm="${p.id}"` })}
-      ${btn("Back to the map", { kind: "secondary", attrs: "data-backmap" })}
-    </div>`;
-  };
-  return { title: `How ${c.name.toLowerCase()} grows in each town`, html, onOpen: (b) => b.addEventListener("click", (e) => {
-    const t = e.target.closest("[data-town]");
-    if (t) { b.innerHTML = detail(t.dataset.town); return; }
+/* a town on the where page: its verdict for this crop, and the one control that changes her farm. Tapping a town
+   only looks at it, so browsing never moves her farm by accident. */
+function townSheet(c, id) {
+  const p = town(id); if (!p) return null;
+  const sc = scoreCrop(c, p), st = plantStatus(c, p), isCur = p.id === place().id;
+  const html = `<div class="stack">
+    <p class="list-h">${esc(p.name)}${isCur ? " · your farm" : ""}</p>
+    ${answer({ kind: st.kind, title: headline(c, st), sub: `${esc(fitWord(sc).text)} here.` })}
+    ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${esc(p.name)}`) : ""}
+    ${isCur ? "" : btn("Make this my farm", { ic: "map-pin", attrs: `data-makefarm="${p.id}"` })}
+  </div>`;
+  return { title: p.name, html, onOpen: (b) => b.addEventListener("click", (e) => {
     const mk = e.target.closest("[data-makefarm]");
-    if (mk) { setPlace(mk.dataset.makefarm); closeSheet(true); location.hash = `#/crop/${c.id}`; return; }
-    if (e.target.closest("[data-backmap]")) b.innerHTML = html;
+    if (mk) { setPlace(mk.dataset.makefarm); closeSheet(true); } // setPlace re-renders: the pin moves to her farm
   }) };
+}
+export function mount(root, id) {
+  const c = crop(crop(id) ? id : focusCrop());
+  root.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-town]"); if (!t) return;
+    const s = townSheet(c, t.dataset.town); if (s) openSheet(s, t);
+  });
 }
