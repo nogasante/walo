@@ -3,10 +3,10 @@
    the water the usual NASA rain gives, the heat at flowering and the usual price pattern, weighted by what she
    says matters most. Rules of thumb are labelled as such; the numbers are in the Why? sheet. */
 import { place, placeLabel, priority, setPriority, soilChoice, setSoilChoice, farm, mainCrop } from "../store.js";
-import { crop, farmPlace, farmProgress, scoreCrop, CFG } from "../data.js";
+import { crop, farmPlace, farmProgress, scoreCrop, monthName, CFG } from "../data.js";
 import { rotationOptions, PRIORITIES, SOILS, scoreChip } from "../rotation.js";
 import { answer, whyBody, btn, note, hero, emptyState, icon, sheet } from "../ui.js";
-import { esc, fmt, monthName } from "../util.js";
+import { esc, fmt } from "../util.js";
 
 export const title = (id) => { const c = crop(id); return c ? `After ${c.name.toLowerCase()}` : "After this crop" };
 
