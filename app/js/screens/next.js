@@ -109,7 +109,7 @@ function groundCard(h, soil) {
     <div class="grow2"><span>Organic matter likely</span><b>${om}</b></div>
     <div class="grow2"><span>Slope</span><b>${h.slope_pct}%</b></div>
     <div class="grow2"><span>Usual cover</span><b>${coverWord(h)}</b></div>
-    <p class="nasa-src">${esc(h.note || "")} Slope is a 3×3 DEM sample around the town, cover is ${esc((h.cover_src || "").toLowerCase() || "satellite cover")}. A screening for comparing towns, not a soil test: your own field may differ, and a local extension officer can say how.</p>
+    <p class="nasa-src">${esc(h.note || "")} Slope is a 3×3 elevation sample around the town; cover is ${esc(h.cover_src || "satellite cover")}. A screening for comparing towns, not a soil test: your own field may differ, and a local extension officer can say how.</p>
   </div>`;
 }
 
