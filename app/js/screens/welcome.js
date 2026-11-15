@@ -33,7 +33,7 @@ function doors() {
         <span class="door-go">${icon("chevron-right")}</span>
       </button>
       <button type="button" class="door" data-door="crop">
-        <img class="door-pic" src="img/maize-field.webp" alt="" width="84" height="84">
+        <img class="door-pic" src="img/maize.webp" alt="" width="84" height="84">
         <span class="door-t"><b>I want to plant a crop</b><small>Where should I plant it?</small></span>
         <span class="door-go">${icon("chevron-right")}</span>
       </button>
