@@ -26,12 +26,15 @@ const go = (next) => { if (next && location.hash !== next) location.hash = next;
    checked by someone farming there; "preview" means they have not, and the app says so before you choose it. */
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
-  const rows = countryIds().map((k) => {
-    const c = country(k), sub = c.status === "live" ? `Planting dates checked by a farmer in ${c.name}` : `Planting dates not checked by a farmer in ${c.name} yet`;
-    return row({ attrs: `data-country="${k}"`, ic: "map-pin", title: esc(c.name), sub: sub, status: k === cur ? "good" : "" });
+  const cards = countryIds().map((k) => {
+    const c = country(k), sub = k === cur ? "Selected" : c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+    return `<button type="button" class="ccard${k === cur ? " sel" : ""}" data-country="${k}">
+      <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
+      <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
+    </button>`;
   }).join("");
-  openSheet({ title: "Which country?", html: `<div class="list">${rows}</div>
-    <p class="muted small">You will pick your town again: a town belongs to one country.</p>`, onOpen: (b) => {
+  openSheet({ title: "Which country?", html: `<div class="ccards">${cards}</div>
+    <p class="muted small">You will pick your town again: a town belongs to one country. "Dates not checked yet" means the planting dates come from published calendars, not from a farmer there.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
       if (!t || t.dataset.country === cur) return;

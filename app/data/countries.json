@@ -4,6 +4,7 @@
   "countries": {
     "GH": {
       "name": "Ghana",
+      "flag": "gh",
       "status": "live",
       "checked_by_local": true,
       "bbox": {
@@ -45,6 +46,7 @@
     },
     "KE": {
       "name": "Kenya",
+      "flag": "ke",
       "status": "preview",
       "_status_note": "Preview: the planting windows come from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book, not from someone who farms there. The picker says so. It becomes \"live\" when checked_by_local is true.",
       "checked_by_local": false,

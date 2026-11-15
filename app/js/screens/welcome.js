@@ -49,9 +49,12 @@ function countryStep() {
   return `<div class="stack">
     ${whead()}
     <h1 class="q wl-q">Which country do you farm in?</h1>
-    <div class="list">${countryIds().map((k) => {
-      const c = country(k), sub = c.status === "live" ? `Planting dates checked by a farmer in ${c.name}` : `Planting dates not checked by a farmer in ${c.name} yet`;
-      return row({ attrs: `data-wcountry="${k}"`, ic: "map-pin", title: esc(c.name), sub: esc(sub), status: k === cur ? "good" : "" });
+    <div class="ccards">${countryIds().map((k) => {
+      const c = country(k), sub = k === cur ? "Selected" : c.status === "live" ? "Dates checked by a farmer" : "Dates not checked yet";
+      return `<button type="button" class="ccard${k === cur ? " sel" : ""}" data-wcountry="${k}">
+        <img class="ccard-flag" src="img/flags/${esc(c.flag || k.toLowerCase())}.png" alt="">
+        <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
+      </button>`;
     }).join("")}</div>
     ${note("Your town comes next. Walo only covers these countries for now.", "map-pin")}
   </div>`;
@@ -123,14 +126,15 @@ async function awaitCountry(id) {
     setCountry(id);
     try { await loadCountryData(); } catch { /* towns still work without prices */ }
   }
-  W.step = "place";
+  // a country bounds the answer: "where should I plant it?" must only ever name towns in the country she farms in
+  W.step = W.order === "crop" ? "crop" : "place";
   refresh();
 }
 
 export function mount(root) {
   root.addEventListener("click", (e) => {
     const door = e.target.closest("[data-door]");
-    if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : countryIds().length > 1 ? "country" : "place"; refresh(); return; }
+    if (door) { W.order = door.dataset.door; W.step = countryIds().length > 1 ? "country" : W.order === "crop" ? "crop" : "place"; refresh(); return; }
     const wc = e.target.closest("[data-wcountry]");
     if (wc) { awaitCountry(wc.dataset.wcountry); return; }
     if (e.target.closest("[data-wchange]")) { W.step = "country"; refresh(); return; }
