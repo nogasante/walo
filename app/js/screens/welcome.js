@@ -22,6 +22,7 @@ export function render() {
 
 function doors() {
   return `<div class="stack">
+    <img class="welcome-logo" src="img/logo.png" alt="Walo" width="116" height="116">
     <h1 class="q">What do you want to know?</h1>
     <div class="choices two">
       <button type="button" class="choice" data-door="place"><span class="tile-ic">${icon("map-pin")}</span><b>I have a farm</b><small>What can I grow there?</small></button>

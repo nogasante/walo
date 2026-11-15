@@ -32,6 +32,8 @@ img { display: block; max-width: 100%; }
 .tb-title { flex: 1; min-width: 0; font-size: var(--fs-h); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .back, .brand { width: var(--tap); height: var(--tap); display: grid; place-items: center; border: 0; background: none; border-radius: 50%; color: var(--ink); cursor: pointer; }
 .brand { color: var(--muted); }
+.brand-logo { width: 30px; height: 30px; }
+.welcome-logo { width: 116px; height: 116px; margin: 4px auto 0; }
 .tb-gap { width: var(--sp-s); }
 .placechip { display: inline-flex; align-items: center; gap: 6px; max-width: 46%; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--fs-s); font-weight: 600; cursor: pointer; }
 .placechip .ic { width: 18px; height: 18px; color: var(--brand); }

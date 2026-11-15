@@ -41,7 +41,7 @@ const parse = () => { const parts = location.hash.replace(/^#\/?/, "").split("/"
 function topbar(r, rt) {
   const farmCtx = (r.name === "sell" && !r.a) || ((r.name === "sell" || r.name === "doctor") && r.b); // the fields' own places, not the chip
   const t = rt.s.title(r.a, r.b);
-  return `${rt.root ? `<a class="brand" href="#/about" aria-label="About Walo">${icon("info")}</a>` : `<button type="button" class="back" id="back" aria-label="Back">${icon("chevron-left")}</button>`}
+  return `${rt.root ? `<a class="brand" href="#/about" aria-label="About Walo"><img class="brand-logo" src="img/logo-mark.png" alt="" width="30" height="30"></a>` : `<button type="button" class="back" id="back" aria-label="Back">${icon("chevron-left")}</button>`}
     <h1 class="tb-title">${esc(t)}</h1>
     ${online() ? "" : `<button type="button" class="offchip" id="offchip" aria-label="Offline. What works">${icon("wifi-off")}<span>Offline</span></button>`}
     ${twiOn() ? `<button type="button" class="langchip" id="langchip" data-notw aria-label="${isTwi() ? "Language: Twi. Switch to English" : "Language: English. Switch to Twi"}"><span${isTwi() ? "" : ' class="on"'}>EN</span><span${isTwi() ? ' class="on"' : ""}>Twi</span></button>` : ""}
