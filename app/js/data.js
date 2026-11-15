@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift", "soil", "soilhealth"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "help", "shift", "soil", "soilhealth"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -28,13 +28,13 @@ const activeId = () => (ACTIVE && COUNTRIES().countries[ACTIVE] ? ACTIVE : COUNT
 export const countryIds = () => Object.keys(COUNTRIES().countries).filter((k) => ["live", "preview"].includes(COUNTRIES().countries[k].status));
 export const country = (id) => { const c = COUNTRIES(), k = id || activeId(); return c.countries[k] ? { id: k, ...c.countries[k] } : null; };
 export const currency = () => { const c = country(); return (c && c.currency && c.currency.code) || ""; };
-/* "Use my location" only accepts a point inside the country in use, so a Kenyan phone in Kenya must first say
-   it is in Kenya and never silently gets Ghanaian advice. */
+/* "Use my location" only accepts a point inside Ghana, so a phone across the border is asked to pick a town and
+   never silently gets Ghanaian advice. */
 export const inCountry = (lat, lon) => { const c = country(); return !!c && ["live", "preview"].includes(c.status) && lat >= c.bbox.lat[0] && lat <= c.bbox.lat[1] && lon >= c.bbox.lon[0] && lon <= c.bbox.lon[1]; };
 /* the outline the crop page draws; a country without one simply shows no map */
 export const mapFor = () => { const c = country(), g = c && c.map; return g ? D[g.replace(/-/g, "_")] || null : null; };
-/* a country other than the default keeps its own prices in data/prices-<code>.json, fetched the first time it is
-   chosen so a Ghanaian phone never downloads another country's markets */
+/* Ghana's prices are in data/prices.json. If a second country is ever added it keeps its own prices in
+   data/prices-<code>.json, fetched the first time it is chosen, so a phone only downloads one country's markets. */
 const PRICE_FAIL = new Set();
 /* true when this country's price file could not be fetched, which is not the same as that country having no
    prices for a crop: Sell says "prices could not load", never "no price records". */
@@ -67,7 +67,7 @@ export const isTree = (c) => c.kind === "tree";
 
 /* ---------- places ---------- */
 /* A town belongs to one country (places.json "country"), and only the country being used is offered, so a
-   Kenyan market can never become the nearest town for a Ghanaian field. */
+   market across the border can never become the nearest town for a Ghanaian field. */
 const homeId = () => activeId();
 export const placeCountry = (p) => p.country || COUNTRIES().default;
 export const towns = () => Object.entries(D.places.places).filter(([, p]) => placeCountry(p) === homeId()).map(([id, p]) => ({ id, kind: "town", ...p }));
@@ -127,13 +127,13 @@ export function scoreCrop(c, p) {
     const eco = A().ecocrop(c, ag.months, season);
     const best = seasons(ag).map((s) => ({ s, f: fitAt(c, ag, ag.onset[s].median) })).filter((x) => x.f).sort((a, b) => b.f.wrsi - a.f.wrsi)[0] || null;
     // With a sourced window, the water is judged over the months in that window rather than from the year's first
-    // onset: a short-rains maize crop in Machakos lives on October-February rain, not on the long rains.
+    // onset: a second-season crop lives on its own short rains, not on the long rains that opened the year.
     const midMonth = win[0] && win[0].sow && win[0].sow.length ? win[0].sow[Math.floor(win[0].sow.length / 2)] : 1;
     const wFit = season ? fitAt(c, ag, A().doyOf(`${String(midMonth).padStart(2, "0")}-15`)) : null;
     const f = (season && wFit) || (best && best.f), water = usesWater(c, f);
     const ecoCls = eco ? A().classOf(eco.suit, R()) : cl[cl.length - 1];
     // EcoCrop's rain range is an ANNUAL total, so comparing a season's rain against it is not a like-for-like
-    // comparison, and it is what rated the wet Kenyan highlands below dry Machakos. Where a window exists, the rain
+    // comparison, and it is what once rated a wet highland town below a dry one. Where a window exists, the rain
     // side comes from the FAO-56 water balance of that season (f.water_dots) and EcoCrop contributes temperature.
     const tempCls = eco ? A().classOf(eco.temp, R()) : null;
     const dots = season && tempCls ? Math.min(tempCls.dots, water ? f.water_dots : 5) : Math.min(ecoCls.dots, water ? f.water_dots : 5);
@@ -231,10 +231,10 @@ export function rainPlanFor(p) {
   const s = shiftFor(p);
   if (!s || s.rainPct == null) return { id: "usual", pct: null, note: "Walɔ plans for the usual rain: there is no comparable record for this point yet." };
   const pct = s.rainPct, id = pct <= -8 ? "less" : pct >= 8 ? "more" : "usual";
-  const years = `${s.periods.recent[0]}–${s.periods.recent[1]}`;
+  const years = `${s.periods.recent[0]}-${s.periods.recent[1]}`;
   const note = id === "usual"
-    ? `Walɔ plans for the usual rain: the ${years} seasons here are within ${Math.abs(pct)}% of 1991–2014.`
-    : `Walɔ plans for ${id === "less" ? "less" : "more"} rain: the ${years} seasons here came in ${Math.abs(pct)}% ${pct < 0 ? "drier" : "wetter"} than 1991–2014.`;
+    ? `Walɔ plans for the usual rain: the ${years} seasons here are within ${Math.abs(pct)}% of 1991-2014.`
+    : `Walɔ plans for ${id === "less" ? "less" : "more"} rain: the ${years} seasons here came in ${Math.abs(pct)}% ${pct < 0 ? "drier" : "wetter"} than 1991-2014.`;
   return { id, pct, note };
 }
 
@@ -345,7 +345,7 @@ const STAGE_NAMES = (c) => [["Sprouting", "sprout"], ["Growing", "leaf"], [c.roo
 const climGdd = (ag, doy, g) => { const m = ag.months[A().monthOfDoy(doy)]; return A().gddDay(m.tmax_c, m.tmin_c, g); };
 const gddCache = () => { try { return JSON.parse(localStorage.getItem("walo.gdd") || "{}"); } catch { return {}; } };
 /* Where a field was planted is a fact about the field, not about the country being looked at: a field in Tamale
-   keeps Tamale's weather even while the app is set to Kenya. Only the field's own place is used here. */
+   keeps Tamale's weather whatever place she is looking at. Only the field's own place is used here. */
 export const townAnywhere = (id) => (D.places.places[id] ? { id, kind: "town", ...D.places.places[id] } : null);
 export function farmPlace(f) {
   if (f.place && f.place.kind === "gps") return f.place;

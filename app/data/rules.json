@@ -286,7 +286,7 @@
  "ndvi": {
   "usual_band": 0.05,
   "default": true,
-  "note": "NDVI within ±0.05 of the 2016–2025 mean for that month is shown as 'about usual'. Walɔ default (MODIS NDVI noise is a few hundredths)."
+  "note": "NDVI within ±0.05 of the 2016-2025 mean for that month is shown as 'about usual'. Walɔ default (MODIS NDVI noise is a few hundredths)."
  },
  "field_risk": {
   "_about": "Weather-driven pest and disease pressure at one field, used by the tips on the field screen. These are extension rules of thumb applied to the field, not a model of a named disease and not crop-specific.",

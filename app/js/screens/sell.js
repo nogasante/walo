@@ -26,7 +26,7 @@ export function render(id, farmId) {
 /* one plain summary of the advice for a field (used on the cards) */
 function summary(sa, pr) {
   if (sa.kind === "index") return { line: `Usually best in ${monthName(sa.peak)} at ${mk(sa.market)}`, tone: sa.store ? "wait" : "now", act: sa.store ? `Store if you can: prices rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", data: `Price pattern to ${monthName(+sa.s.last.slice(5, 7))} ${sa.s.last.slice(0, 4)} · per ${esc(sa.unit)}` };
-  if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: ${currency()} ${fmt(sa.spot.lo)}–${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
+  if (sa.kind === "spot") return { line: `${esc(sa.spot.market)}${sa.spot.km != null ? ` (${fmt(sa.spot.km)} km)` : ""}: ${currency()} ${fmt(sa.spot.lo)}-${fmt(sa.spot.hi)}`, tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "No price history", data: "Only 2025 prices, unit not given" };
   return { line: pricesUnreachable() ? "Prices could not load" : "No price records yet", tone: "info", act: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : "Sell when stores run low", data: "" };
 }
 function list(mine) {
@@ -48,7 +48,7 @@ function list(mine) {
 function detail(id, f) {
   const c = crop(id), pr = f ? farmProgress(f) : null, p = pr ? pr.p : place(); setCrop(id);
   const sa = sellAdvice(id, p, pr ? pr.harvest : null), gh = (country() || {}).id === "GH";
-  const yrs = `${sa.years[0]}–${sa.years[1]}`, sp = priceNear(id, p, 3), best = sp[0] || null;
+  const yrs = `${sa.years[0]}-${sa.years[1]}`, sp = priceNear(id, p, 3), best = sp[0] || null;
   let a, dataLine = "";
   if (sa.kind === "index") {
     const m = sa.market, last = sa.s.last, newest = `${monthName(+last.slice(5, 7))} ${last.slice(0, 4)}`; // the newest price in the data, said in the answer itself

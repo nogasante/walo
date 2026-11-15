@@ -19,8 +19,8 @@ export function place() {
 /* ---------- country ---------- */
 /* Changing country clears the place and any phone location, because neither is in the new country. */
 export const countryId = () => get("walo.country", null);
-/* Changing country clears the place, a phone location, the main crop and the crop as well: rice in Ghana is not a
-   choice about Kenya, and keeping it made Walɔ open on a crop nobody there grows. */
+/* Changing country clears the place, a phone location, the main crop and the crop as well: a crop picked for one
+   country means nothing in another. */
 export function setCountry(id) { set("walo.country", id); set("walo.place", null); set("walo.gps", null); set("walo.main", { crop: null, updated: new Date().toISOString() }); set("walo.crop", null); setActiveCountry(id); emit(); }
 export function setPlace(id) { set("walo.place", id); emit(); }
 export function setGps(p) { set("walo.gps", p); set("walo.place", "gps"); emit(); }

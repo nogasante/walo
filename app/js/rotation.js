@@ -3,7 +3,7 @@
 
      1. Can the rain carry it?  NASA POWER rain for its season, through the FAO-56 water balance, scaled by how this
         soil holds water and by the season she is planning for (less / usual / more rain). A crop the rain cannot
-        carry is still shown, at the bottom, labelled "needs water" — never silently deleted.
+        carry is still shown, at the bottom, labelled "needs water", never silently deleted.
      2. What does it do to the soil?  Counted in plain points, not fractions: a legume adds nitrogen (+2), a crop that
         covers the ground adds up to +2, cover counts for more where the ground can wash (+1), and where organic
         matter looks low a legume or a full cover counts once more (+1). The same family as the crop already in the

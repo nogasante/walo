@@ -60,7 +60,7 @@ def get(path):
 
 
 def span(a, b):
-    return a if a == b else f"{a} – {b}"
+    return a if a == b else f"{a} - {b}"
 
 
 def months_from(s, e):

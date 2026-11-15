@@ -9,7 +9,7 @@ import { esc, fmt, roughDate, dayMonth, iso, today0, fromIso, MONTHS_LONG } from
 import { fieldCard } from "./home.js";
 import { hasSession } from "../sync.js";
 /* small, optional: back up fields so they follow the farmer to a new phone */
-export const backupLink = () => `<a class="sellcard" href="#/backup"><span class="tile-ic photo">${icon(hasSession() ? "cloud-check" : "cloud-upload")}</span><span>${hasSession() ? "Fields backed up" : "Sign in or back up"}<small>${hasSession() ? "They come back on a new phone" : "Your email is enough — no password"}</small></span>${icon("chevron-right")}</a>`;
+export const backupLink = () => `<a class="sellcard" href="#/backup"><span class="tile-ic photo">${icon(hasSession() ? "cloud-check" : "cloud-upload")}</span><span>${hasSession() ? "Fields backed up" : "Sign in or back up"}<small>${hasSession() ? "They come back on a new phone" : "Your email is enough, no password"}</small></span>${icon("chevron-right")}</a>`;
 
 export const title = (id) => { const f = id && farmsHere().find((x) => x.id === id); return f ? f.name : farmsHere().length === 1 ? farmsHere()[0].name : "My fields"; };
 export function render(id) {
@@ -61,12 +61,12 @@ function farmView(f, many) {
   ].filter(Boolean), [
     `Planted ${dayMonth(pr.start)}${pr.d >= 0 ? `, day ${pr.d} of about ${pr.days}` : ""}. Harvest about ${dayMonth(pr.harvest)}.`,
     gddLine,
-    g ? `NDVI ${fmt(g.ndvi, 2)} on ${g.date}; usual for ${MONTHS_LONG[g.month - 1]} ${fmt(g.usual, 2)} (MODIS MOD13Q1, 2016–2025, via Microsoft Planetary Computer).` : "",
+    g ? `NDVI ${fmt(g.ndvi, 2)} on ${g.date}; usual for ${MONTHS_LONG[g.month - 1]} ${fmt(g.usual, 2)} (MODIS MOD13Q1, 2016-2025, via Microsoft Planetary Computer).` : "",
     al && al.kind === "wet" ? `Harvest month: usual rain ${fmt(al.hm.rain_mm)} mm vs ${fmt(al.hm.et0_mm)} mm that dries off (FAO-56 ET0).` : "",
     al && al.kind === "heat" ? `About ${al.fit.hot_days} day(s) above ${al.fit.heat.t} °C usually fall while it flowers.` : "",
     al && al.kind === "water" ? `Usual rain leaves a water deficit of about ${fmt(al.fit.deficit_mm)} mm this season (WRSI ${al.fit.wrsi}).` : "",
     rain && rain.last ? `Rain comes from daily rain data at this point; the newest day in it is ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}.` : "",
-    soil ? `Root-zone soil wetness ${fmt(soil.soil, 2)} on a 0–1 scale (0 dry, 1 saturated), average of the last ${soil.soilDays} day(s). It is a model of the soil, not a satellite picture of your field.` : "",
+    soil ? `Root-zone soil wetness ${fmt(soil.soil, 2)} on a 0-1 scale (0 dry, 1 saturated), average of the last ${soil.soilDays} day(s). It is a model of the soil, not a satellite picture of your field.` : "",
     soil && soil.rh != null ? `Air humidity at this field averaged ${soil.rh}% over the last 7 days. Leaves stay wet for hours above ${R().field_risk.rh_wet.value}%, which is when leaf and pod diseases spread; below ${R().field_risk.rh_dry.value}% with a dry week is when thrips and mites build up. These are extension rules of thumb, not a model of a named disease.` : "",
     f.demo ? "This is a demo field so you can see how Walɔ works. Remove it any time." : "",
   ].filter(Boolean));

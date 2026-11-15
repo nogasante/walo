@@ -3,7 +3,7 @@
 
    Every place belongs to a country (places.json "country", defaulting to countries.json "default"), and each
    country brings its own rainy-season search windows, so the same method gives Ghana's single major season and
-   Kenya's long and short rains. Places with no cached POWER file are left as they are: this merges into the
+   the long and short rains. Places with no cached POWER file are left as they are: this merges into the
    existing data/agro.json instead of rebuilding it, so a country you did not fetch keeps its climate. */
 const fs = require("fs"), path = require("path");
 const ROOT = path.join(__dirname, ".."), A = require(path.join(ROOT, "lib/agro.js"));
@@ -16,7 +16,7 @@ const old = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT)) : { places: {}
 const years = app.periods.agro;
 const cache = "/tmp/agro";
 const out = {
-  method: "See data/rules.json and DESIGN.md Methods. NASA POWER daily AG community, complete years " + years.join("–") + ". Each place uses its own country's season search windows from data/countries.json.",
+  method: "See data/rules.json and DESIGN.md Methods. NASA POWER daily AG community, complete years " + years.join("-") + ". Each place uses its own country's season search windows from data/countries.json.",
   fetched: new Date().toISOString().slice(0, 10),
   places: { ...old.places },
 };
@@ -36,12 +36,12 @@ for (const [id, p] of Object.entries(places)) {
   (done[cc] = done[cc] || []).push(id);
 }
 fs.writeFileSync(OUT, JSON.stringify(out));
-const doy = (d) => (d == null ? "–" : new Date(Date.UTC(2025, 0, 1 + d)).toISOString().slice(5, 10));
+const doy = (d) => (d == null ? "-" : new Date(Date.UTC(2025, 0, 1 + d)).toISOString().slice(5, 10));
 for (const cc of Object.keys(done)) {
   const C = countries.countries[cc];
   console.log(`${cc} ${C.name} (${done[cc].length} places)`);
   for (const id of done[cc]) {
-    const x = out.places[id], o = x.onset, f = (q) => (q ? `${doy(q.p20)} / ${doy(q.median)} / ${doy(q.p80)} (${Math.round(q.found_share * 100)}%)` : "–");
+    const x = out.places[id], o = x.onset, f = (q) => (q ? `${doy(q.p20)} / ${doy(q.median)} / ${doy(q.p80)} (${Math.round(q.found_share * 100)}%)` : "-");
     console.log(" ", id.padEnd(12), (x.zone || "-"), "ET0", Math.round(x.months.reduce((a, m) => a + m.et0_mm, 0)), "P", Math.round(x.months.reduce((a, m) => a + m.rain_mm, 0)), "LGP", x.months.filter((m) => m.lgp).map((m) => m.month).join(","), "| major", f(o.major), "| minor", f(o.minor));
   }
 }

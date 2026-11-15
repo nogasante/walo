@@ -1,10 +1,10 @@
-# Walɔ — design process (redesign, 14 November 2026)
+# Walɔ: design process (redesign, 14 November 2026)
 
 *Team Simply Zero · NASA Space Apps Challenge 2026 · Field Shift · Kumasi*
 
 The first version of Walɔ (built the morning of 14 Nov) put every number on screen: month grids, crop timing tables, three long rotation cards, several price tables per crop and a long list of warnings. The team's verdict: "overwhelming" and "hacked". This document records how we redesigned it, step by step. The scope did not change (Ejura-Sekyedumase only; maize, cowpea, groundnut, cassava only; Calendar, Market, Plant Doctor; voice-first).
 
-> Sections 1–13 record how the design got here. **§13b describes the current app (v12).** §14 is the methods. Paths in those sections name the files as they were then; the current tree is in `README.md`.
+> Sections 1-13 record how the design got here. **§13b describes the current app (v12).** §14 is the methods. Paths in those sections name the files as they were then; the current tree is in `README.md`.
 
 ---
 
@@ -29,17 +29,17 @@ The first version of Walɔ (built the morning of 14 Nov) put every number on scr
 
 ---
 
-## 2. Jobs to be done — one key question per screen
+## 2. Jobs to be done: one key question per screen
 
 | Screen | Job | The ONE question it answers | Answer format |
 | --- | --- | --- | --- |
 | Home | Tell Walɔ my crop | "Which crop are you growing?" | 4 big picture tiles |
-| **Plant** (Calendar) | Plan sowing | "When should I plant *maize*?" | "Plant in March–April" + rain chart |
+| **Plant** (Calendar) | Plan sowing | "When should I plant *maize*?" | "Plant in March-April" + rain chart |
 | **Sell** (Market) | Time the sale | "When does *maize* sell best?" | "Sell in June" + price-pattern chart |
 | **Check** (Plant Doctor) | Sanity-check a month | "Is *April* a good time to plant *maize*?" | Green/amber/red status + 3 numbers |
 | About | Trust | "Where does this come from?" | Facts, data limits, sources, AI use |
 
-Secondary job on Plant: *"Should I keep planting maize after maize, or follow it with a legume?"* — the Field Shift rotation comparison, shown as three short plan cards below the answer.
+Secondary job on Plant: *"Should I keep planting maize after maize, or follow it with a legume?"*, the Field Shift rotation comparison, shown as three short plan cards below the answer.
 
 ---
 
@@ -59,7 +59,7 @@ Home (pick crop) ──► Plant ◄──► Sell ◄──► Check ◄──�
 - **Progressive disclosure:** each answer card shows the answer, one chart, a source line and the Read-aloud button. Everything else (exact rainfall, rules, sources, confidence, 2026 values) is behind **"Why?"**. Rotation evidence/risks/gaps are behind **"Evidence"**. Data gaps live in **About → What we don't know yet**.
 - **Deep links** for the pitch: `#/plant/maize`, `#/sell/maize`, `#/check/maize/4`, `#/about`.
 
-Typical flow (3 taps): open Walɔ → tap Maize → see "Plant in March–April" → tap Sell → "Sell in June".
+Typical flow (3 taps): open Walɔ → tap Maize → see "Plant in March-April" → tap Sell → "Sell in June".
 
 ---
 
@@ -95,7 +95,7 @@ Typical flow (3 taps): open Walɔ → tap Maize → see "Plant in March–April"
 | # | Heuristic | Problem in v1 | Fix in v2 |
 | --- | --- | --- | --- |
 | 1 | Visibility of system status | No sign of which crop/month was selected; "this month" unclear | Crop pill in top bar; selected month chip filled green; gold dot + dark pill marks this month; active tab highlighted |
-| 2 | Match with the real world | Variable names (GWETROOT), "seasonal index 1.25" | "Soil: Moist (0.6)", "25% above the year's average", "Plant in March–April" |
+| 2 | Match with the real world | Variable names (GWETROOT), "seasonal index 1.25" | "Soil: Moist (0.6)", "25% above the year's average", "Plant in March-April" |
 | 3 | User control & freedom | Long scroll, no way back to crop choice | Crop pill returns home; tab bar always visible; Read aloud toggles to Stop |
 | 4 | Consistency & standards | Mixed emoji, pills, tables and card styles | One card component, one badge style, one chart style, one icon set |
 | 5 | Error prevention | Crop with no data (cassava timing, groundnut prices) showed empty tables | Explicit "Ask your extension officer" / "No Ejura price history yet" answers with the nearest real data |
@@ -120,7 +120,7 @@ Also checked: no JavaScript console errors on any screen (Playwright, Chrome, 39
 
 - Record Twi voice clips for each answer (team members who speak Twi) and play them instead of English speech; have a native speaker check every Twi label (Akwaaba, Dua, Tɔn, Hwɛ, Aburo, Adua, Nkateɛ, Bankye).
 - Photo check of sick plants (needs an AI vision key on the server).
-- Test with 3–5 Ejura farmers: can they find "when to plant maize" in under 30 seconds without help?
+- Test with 3-5 Ejura farmers: can they find "when to plant maize" in under 30 seconds without help?
 
 ---
 
@@ -129,7 +129,7 @@ Also checked: no JavaScript console errors on any screen (Playwright, Chrome, 39
 **Team concept (their idea):** most farm apps give generic, country-wide advice. Walɔ uses NASA data for the farmer's own location. The UI now leads with that:
 
 - **Location first.** Home opens on a full-bleed farm photo, then a **"Your farm" card**: Ghana map (Natural Earth outline) with a pin on Ejura, coordinates 7.39° N, 1.36° W (the exact NASA POWER query point) and SRTM elevation 224 m, plus one line: "Walɔ reads NASA data for this point, not a national average."
-- **Generic advice vs. Walɔ** card on every Plant screen. One row each for Where, Rain, Change, Heat and Soil, with generic advice on the left and the Ejura value on the right. Values used: 1,242 mm/yr, 579 mm Apr–Jul, 399 mm Sep–Nov, +68 mm/decade in the minor season, 75 days above 35 °C, sandy loam pH 6.5. Every value is read live from `data/climate.json`. The generic column is qualitative only (no invented numbers). The Why? section notes the ~50 km POWER grid.
+- **Generic advice vs. Walɔ** card on every Plant screen. One row each for Where, Rain, Change, Heat and Soil, with generic advice on the left and the Ejura value on the right. Values used: 1,242 mm/yr, 579 mm Apr-Jul, 399 mm Sep-Nov, +68 mm/decade in the minor season, 75 days above 35 °C, sandy loam pH 6.5. Every value is read live from `data/climate.json`. The generic column is qualitative only (no invented numbers). The Why? section notes the ~50 km POWER grid.
 - **Real photography:** 8 openly licensed Wikimedia Commons photos from Ghana (crops, market, farmers). Used for photo headers, 4:5 crop cards with gradient overlays and plan thumbnails. Credited in `data/credits.json` and About → Sources.
 - **Type and icons:** Plus Jakarta Sans variable font (self-hosted woff2, 27 KB) and Lucide icons, both bundled.
 - **Components:** answer card overlaps the photo header (elevated, gradient status band), status chips, pill buttons, floating glass bottom bar with icon + English + Twi, segmented market switch, stat tiles with coloured icon tiles, rounded-gradient bar charts with value labels and a "now" marker.
@@ -143,29 +143,29 @@ The team's pitch: *tell Walɔ where your farm is; it finds the best crops for th
 **Flow.** First visit → **Where is your farm?** (`#/where`): "Use my location" or pick Ejura-Sekyedumase (main pilot), Tamale or Techiman. → **Home**: farm card with map pin, **Best crops here**, My farms summary. → per crop **Plant / Sell / Check**. → **Farms** tab. Bottom nav: Home (Fie) · Plant (Dua) · Sell (Tɔn) · Check (Hwɛ) · Farms (Mfuo).
 
 **Locations.**
-- Ejura: `data/climate.json` (1991–2025), sourced crop calendar, soil, SRTM, rotation evidence, markets Ejura/Kumasi/Techiman.
+- Ejura: `data/climate.json` (1991-2025), sourced crop calendar, soil, SRTM, rotation evidence, markets Ejura/Kumasi/Techiman.
 - Tamale, Techiman: `data/locations.json`, built by `scripts/build_locations.py` with the same NASA POWER parameters and method (method re-checked: it reproduces Ejura's 1,242 mm / 579 / 399 / 75 hot days / +68 mm per decade exactly). Tamale has no price data; Techiman uses Techiman market.
-- My location: the phone calls the NASA POWER daily API (PRECTOTCORR, T2M_MAX, GWETROOT, 2016–2025, CORS allowed) and summarises it like the districts; saved in localStorage. Ten years is too short for trends, so none are shown. If the call fails, Walɔ keeps the saved district.
+- My location: the phone calls the NASA POWER daily API (PRECTOTCORR, T2M_MAX, GWETROOT, 2016-2025, CORS allowed) and summarises it like the districts; saved in localStorage. Ten years is too short for trends, so none are shown. If the call fails, Walɔ keeps the saved district.
 
 **Crops are data, not code.** `data/crops.json` holds each crop's name, Twi word, photo, typical duration, minimum wet-run length, harvest-needs-dry flag, scoring rules, growth stages and sources. Adding a crop = adding an entry (plus a credited photo); the code does not change.
 
 **Ranking rules of thumb (v4; replaced by the published methods in §14).**
 - Wet month: rain ≥ 80 mm and root-zone soil wetness ≥ 0.50. Hot month: average daily high > 35 °C or ≥ 10 days above 35 °C.
 - Metrics per place: longest run of wet months, number of rainy seasons (rain peaks in that run separated by a dip of at least 15 %), rain in that run, hot months in the run, hot days a year, number of wet months.
-- Each crop starts at 1 and adds or loses points per its rules in `crops.json`; capped 1–5. The "How is this ranked?" panel lists every rule that fired with its points.
+- Each crop starts at 1 and adds or loses points per its rules in `crops.json`; capped 1-5. The "How is this ranked?" panel lists every rule that fired with its points.
 - Results (Nov 2026): Ejura cowpea 5, groundnut 4, maize 3, cassava 3 · Tamale cowpea 4, groundnut 4, maize 3, cassava 2 · Techiman cowpea 4, groundnut 4, maize 3, cassava 3.
 
 **Planting months outside Ejura** are derived: the first months of the wet run (and of the second season after the dip) that leave enough wet months for that crop. Shown with "Rule of thumb from NASA rain; confirm locally".
 
 **My farms.** Name, crop, planting date, place; stored only in localStorage. Stage timeline from typical durations in `crops.json`, next job and date, expected harvest, and NASA hints from that place's usual months (dry month now, wet harvest for dry-harvest crops, heat at maize flowering). Full tracking is "coming later".
 
-## 11. v5–v6: 19 sourced crops, planting flow, direct answers, less text (14 Nov 2026)
+## 11. v5-v6: 19 sourced crops, planting flow, direct answers, less text (14 Nov 2026)
 
 **Crops.** `data/crops.json` is now generated by `scripts/build_crops.py` from the team's crop knowledge base (`walo-crops.json`, 20 crops, every value with source ids). Shea is excluded (wild tree); cocoa and cashew are tree crops. Crops are shown only for the location's FAO agro-ecological zone (Ejura, Techiman: Transitional; Tamale: Guinea savanna; my location: zone of the nearest district). Confidence (High/Medium/Low) comes from the knowledge base per district and is shown as a green/amber/grey dot. Unsourced facts read "not confirmed". Twi names appear only where the file has one, flagged "check with a Twi speaker". 15 new crop photos from Wikimedia Commons (credited in `data/credits.json` and About).
 
-**Scoring (rules of thumb, 1–5; replaced in v10 by the published methods in §14).** Base 1; yearly NASA rain inside the crop's EcoCrop ideal range +2 (possible range +1); yearly mean temperature in the EcoCrop ideal range +1; hottest month's average high above the EcoCrop maximum −1; shortest growing time fits inside the run of wet months +1; FAO lists a planting season for the zone +1. EcoCrop ranges are global, not Ghana-specific (e.g. EcoCrop gives sorghum a 700 mm rain maximum, which pulls sorghum down even in Tamale).
+**Scoring (rules of thumb, 1-5; replaced in v10 by the published methods in §14).** Base 1; yearly NASA rain inside the crop's EcoCrop ideal range +2 (possible range +1); yearly mean temperature in the EcoCrop ideal range +1; hottest month's average high above the EcoCrop maximum −1; shortest growing time fits inside the run of wet months +1; FAO lists a planting season for the zone +1. EcoCrop ranges are global, not Ghana-specific (e.g. EcoCrop gives sorghum a 700 mm rain maximum, which pulls sorghum down even in Tamale).
 
-**Planting windows.** FAO Ghana crop calendar per zone (e.g. cassava, Transitional: sow 30 Apr–31 Jul, harvest 10 Nov–10 Jan). Where FAO has no entry, Walɔ gives a **Best guess** from the place's NASA rain (start of each wet run long enough for the crop), marked with a grey dot and a "Best guess" chip. No screen tells the farmer to "ask" someone; the only judgment line is on About: "Walɔ supports, not replaces, your judgment."
+**Planting windows.** FAO Ghana crop calendar per zone (e.g. cassava, Transitional: sow 30 Apr-31 Jul, harvest 10 Nov-10 Jan). Where FAO has no entry, Walɔ gives a **Best guess** from the place's NASA rain (start of each wet run long enough for the crop), marked with a grey dot and a "Best guess" chip. No screen tells the farmer to "ask" someone; the only judgment line is on About: "Walɔ supports, not replaces, your judgment."
 
 **Selling.** Seasonal price patterns for 11 crops (WFP/HDX, same method as before). Places without a market series use the nearest market with data (Best guess). Crops without any price series get a Best guess: sell about three months after the usual harvest month (the dip-after-harvest pattern seen in Walɔ's price data), marked Best guess.
 
@@ -191,13 +191,13 @@ Tabs: Home · My farms · Sell        (i) in the header: About & sources
 
 - The two ways in get **equal weight**: two cards of the same size, side by side, each with a photo, a gold icon and a 3-word title. Nothing else competes on Home except last place, last crop and My farms.
 - **Path A answers "now".** Crops are grouped by what you can do this month (Plant now / Plant if you can water / Wait for steady rain / Plant later in <month>), then by fit, then by confidence, then by a finer score. The month's NASA rain (this month and next) sits on top so the reason is visible.
-- **Path B uses a map.** Pins are placed by latitude/longitude on the Natural Earth outline and coloured by fit (1–5); the top three are labelled. Places outside the crop's FAO zones are white and listed separately, not ranked.
+- **Path B uses a map.** Pins are placed by latitude/longitude on the Natural Earth outline and coloured by fit (1-5); the top three are labelled. Places outside the crop's FAO zones are white and listed separately, not ranked.
 - **Both paths converge** on one crop sheet with one primary button (Start planting). The farm view replaces the old "Check month" screen with a This month card (NASA usual rain, hot days, soil wetness), and shows a **Harvest & sell** card from 85 % of the season.
 - **Three tabs** instead of five: Plant/Check were folded into the paths and the crop sheet; About moved behind the (i).
 - **Honesty kept:** Best guess labels and confidence dots; Dambai (outside FAO's zone text) is ranked on NASA climate only; zone-edge places (Ho, Sunyani) are flagged in the About notes; sources behind "More".
 - **Checks:** headless screenshots of every route (390 × 844), no console errors, every link/button/map pin at least 48 px high, no "ask an extension officer" wording.
 
-## 13. v9–v11: polish, markets everywhere, cleanup, published methods, forecast, greenness, Plant Doctor (14 Nov 2026)
+## 13. v9-v11: polish, markets everywhere, cleanup, published methods, forecast, greenness, Plant Doctor (14 Nov 2026)
 
 - **Polish:** one answer per card, secondary facts in bottom sheets, 48 px tap targets, English Read aloud on every answer.
 - **Sell is data-driven** from the 20 WFP/HDX markets: the nearest market with data to any place (GPS included), for any crop with a series; "Best guess" where there is none.
@@ -211,12 +211,12 @@ Tabs: Home · My farms · Sell        (i) in the header: About & sources
 
 **Rules we now follow**
 1. **One answer per screen**: icon + one plain sentence + Listen + a quiet source line. Numbers only as everyday words (a month, a weekday, "2 km").
-2. **Why? on tap**: 1–3 plain sentences; the numbers, methods and sources sit under Details for judges and extension staff.
+2. **Why? on tap**: 1-3 plain sentences; the numbers, methods and sources sit under Details for judges and extension staff.
 3. **No pitching inside the app**: no intro slides, hero images, slogans or "10 years ago vs now" panels. Pictures are labels only (crop photos, stage icons, status icons). Pitch material belongs in the slides and video.
 4. **Never contradict**: the onset rule is applied to the 10-day forecast; if there is no planting rain in it, every crop in its planting window says "Wait: rain not here yet". Without a forecast, Walɔ falls back to the usual onset and says so in Why?.
-5. **Sell follows the field**: for a field, the advice starts from its own harvest date ("Harvest in late November. Prices usually rise by <month>: store if you can" or "sell soon after harvest"). The data years (2015–2023) and the unit (e.g. 100 kg bag) are always on screen; a far market shows its distance.
+5. **Sell follows the field**: for a field, the advice starts from its own harvest date ("Harvest in late November. Prices usually rise by <month>: store if you can" or "sell soon after harvest"). The data years (2015-2023) and the unit (e.g. 100 kg bag) are always on screen; a far market shows its distance.
 6. **Plant Doctor is fast and honest**: one photo first (resized to 768 px on the phone), staged progress with Cancel, the fastest model first; the warning "AI answer, can be wrong. Check with someone you trust before spending money" is always visible; the AI asks for one named extra photo only when unsure.
-7. **Normal mobile sizes**: body 16 px, titles 22 px, 48 px buttons, 24 px icons, photos 168–184 px tall, 16–24 px spacing; tokens at the top of `styles.css`. Bottom tabs never cover content; on a wide screen the app sits in a phone-width column on the brand colour.
+7. **Normal mobile sizes**: body 16 px, titles 22 px, 48 px buttons, 24 px icons, photos 168-184 px tall, 16-24 px spacing; tokens at the top of `styles.css`. Bottom tabs never cover content; on a wide screen the app sits in a phone-width column on the brand colour.
 
 **Structure:** one router (`js/main.js`), one data layer (`js/data.js`), one state store (`js/store.js`), one component kit (`js/ui.js`), one file per screen (`js/screens/`). Six task screens (Home, Plant now, Crop, My farm, Sell, Plant Doctor) plus Start planting and About. Old code, data files, photos and scripts that the new design does not use were deleted; `sw.js` precaches exactly the shipped files.
 
@@ -231,19 +231,19 @@ Tabs: Home · My farms · Sell        (i) in the header: About & sources
 
 All constants below are read from `data/rules.json` (source ids in brackets) or from the crop record in `data/crops.json` (`eco` = FAO EcoCrop, `fao56` = FAO-56 Tables 11/12). The same code (`lib/agro.js`) runs in `scripts/build_agro.js` (bundled places) and on the phone (Use my location).
 
-**Data.** NASA POWER daily, AG community, 1991–2025 at each place: PRECTOTCORR (P), T2M, T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN (Rs) [POWER]. Monthly climatology = mean over complete years.
+**Data.** NASA POWER daily, AG community, 1991-2025 at each place: PRECTOTCORR (P), T2M, T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN (Rs) [POWER]. Monthly climatology = mean over complete years.
 
 **1. Reference evapotranspiration** [FAO56, Eq. 6]
 
   ET0 = [0.408 Δ (Rn − G) + γ · 900/(T + 273) · u2 · (es − ea)] / [Δ + γ (1 + 0.34 u2)],  G = 0 (daily)
 
-with P = 101.3((293 − 0.0065 z)/293)^5.26, γ = 0.000665 P (Eq. 7–8); es = [e°(Tmax) + e°(Tmin)]/2, e°(T) = 0.6108 exp(17.27T/(T + 237.3)) (Eq. 11–12); ea = RHmean/100 · es (Eq. 19); Rns = (1 − 0.23) Rs (Eq. 38); Rnl from Eq. 39 with Rso = (0.75 + 2·10⁻⁵ z) Ra (Eq. 37) and Ra from Eq. 21–25. If RH, wind or radiation are missing: Hargreaves, ET0 = 0.0023 (T + 17.8) √(Tmax − Tmin) · 0.408 Ra (Eq. 52). *Check:* Ra for FAO-56 Example 8 (20°S, 3 Sep) = 32.2 MJ m⁻² d⁻¹ (FAO: 32.2); FAO Example 18 ET0 = 3.79 mm/d vs FAO's 3.9 (we use RH mean, FAO used RHmax/RHmin).
+with P = 101.3((293 − 0.0065 z)/293)^5.26, γ = 0.000665 P (Eq. 7-8); es = [e°(Tmax) + e°(Tmin)]/2, e°(T) = 0.6108 exp(17.27T/(T + 237.3)) (Eq. 11-12); ea = RHmean/100 · es (Eq. 19); Rns = (1 − 0.23) Rs (Eq. 38); Rnl from Eq. 39 with Rso = (0.75 + 2·10⁻⁵ z) Ra (Eq. 37) and Ra from Eq. 21-25. If RH, wind or radiation are missing: Hargreaves, ET0 = 0.0023 (T + 17.8) √(Tmax − Tmin) · 0.408 Ra (Eq. 52). *Check:* Ra for FAO-56 Example 8 (20°S, 3 Sep) = 32.2 MJ m⁻² d⁻¹ (FAO: 32.2); FAO Example 18 ET0 = 3.79 mm/d vs FAO's 3.9 (we use RH mean, FAO used RHmax/RHmin).
 
 **2. Effective rain** [USDA_SCS]: Peff = P(125 − 0.2P)/125 for P ≤ 250 mm/month, else 125 + 0.1P.
 
 **3. Growing period** [FAO_AEZ]: a month is in the growing period if P ≥ 0.5 · ET0; it is humid if P ≥ ET0 (used for "harvest month is usually wet").
 
-**4. Onset of rains** [SIVAKUMAR88, STERN82]: searching from a start date, the onset is the first day d with P(d) ≥ 1 mm, Σ P(d..d+2) ≥ 20 mm, and no run of more than 7 days with P < 1 mm in the next 30 days. Major season search: 1 Mar–31 Jul; minor season: 15 Aug–31 Oct, only in the bimodal zones (forest, transition, coastal savanna) (`default: true`, see note in rules.json). Across 1991–2025 Walɔ stores the 20th, 50th and 80th percentile dates. "Plant now" (in a calendar planting month): before the p20 date → *Wait for the planting rain*; between p20 and the median → *Plant after a good rain*; after the median → *Plant now*; if the FAO-56 WRSI for sowing today is below 60 (serious stress or worse) → *Only with watering*; outside the window → *Plant in <month>*.
+**4. Onset of rains** [SIVAKUMAR88, STERN82]: searching from a start date, the onset is the first day d with P(d) ≥ 1 mm, Σ P(d..d+2) ≥ 20 mm, and no run of more than 7 days with P < 1 mm in the next 30 days. Major season search: 1 Mar-31 Jul; minor season: 15 Aug-31 Oct, only in the bimodal zones (forest, transition, coastal savanna) (`default: true`, see note in rules.json). Across 1991-2025 Walɔ stores the 20th, 50th and 80th percentile dates. "Plant now" (in a calendar planting month): before the p20 date → *Wait for the planting rain*; between p20 and the median → *Plant after a good rain*; after the median → *Plant now*; if the FAO-56 WRSI for sowing today is below 60 (serious stress or worse) → *Only with watering*; outside the window → *Plant in <month>*.
 
 **5. Forecast check** [METEOMATICS]: when online, `/api/forecast` gives 10 daily values of precip_24h and t_max_2m_24h. The same onset rain rule (≥ 1 mm on day d, ≥ 20 mm over 3 days) is applied to the forecast days; before the median onset this changes "Wait for the planting rain" / "Plant after a good rain" to "Plant after the rain <date>". The 30-day dry-spell part cannot be checked with 10 days, so the answer stays "after the rain", not "safe". Offline or if the service fails, Walɔ uses the NASA climatology only.
 
@@ -252,24 +252,24 @@ with P = 101.3((293 − 0.0065 z)/293)^5.26, γ = 0.000665 P (Eq. 7–8); es = [
   ETc(d) = Kc(d) · ET0(month)/days,   S(d) = min(100 mm, S(d−1) + Peff(d)),   AET(d) = min(ETc(d), S(d)),
   WRSI = 100 · Σ AET / Σ ETc
 
-with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80 Enough rain, 60–80 some stress, 50–60 serious stress, < 50 likely failure. Used for seasonal crops of ≤ 200 days only.
+with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80 Enough rain, 60-80 some stress, 50-60 serious stress, < 50 likely failure. Used for seasonal crops of ≤ 200 days only.
 
-**7. Climate suitability** [ECOCROP, FAO76]: for EcoCrop limits (Tabsmin, Toptmin, Toptmax, Tabsmax), a linear score f(T) = 0 outside the absolute limits, 1 inside the optimum, linear in between. Temperature suitability = max over the 12 start months of min over the n = round(mean cycle/30) months of f(Tmean). Rain suitability = f(annual P) with EcoCrop's annual rain limits (for sorghum, FAO's Ghana rainfall). **Deviation, and its correction in v49:** Ramirez-Villegas et al. (2013) compare season rain; the FAO EcoCrop database gives the limits as annual rainfall, and using season rain against those annual limits rated rice and garden egg "not suitable" everywhere, so Walɔ compared like with like (annual vs annual). That comparison failed the other way once a second country arrived: in Kenya, wet Kitale (≈1,684 mm in the season) scored below dry Machakos (≈408 mm) because both were measured against a 1,200 mm annual optimum. So where a crop has a sourced planting window in the zone, the rain side now comes from the FAO-56 water balance of that season (method 7 above, WRSI at the middle month of the window) and EcoCrop supplies the temperature class; the annual rain comparison is used only for a crop with no calendar there. WRSI dots follow the water class labels - ≥80 = 5, 50-79 = 3, below 50 = 1 - so a season under water stress can no longer read as "grows well". Suitability = temperature × rain → class S1 ≥ 0.8, S2 ≥ 0.6, S3 ≥ 0.4, S3− ≥ 0.2, else N (cut-offs `default: true`; FAO 1976 names the classes but gives no numbers). Shown class = lower of the EcoCrop class and the WRSI class.
+**7. Climate suitability** [ECOCROP, FAO76]: for EcoCrop limits (Tabsmin, Toptmin, Toptmax, Tabsmax), a linear score f(T) = 0 outside the absolute limits, 1 inside the optimum, linear in between. Temperature suitability = max over the 12 start months of min over the n = round(mean cycle/30) months of f(Tmean). Rain suitability = f(annual P) with EcoCrop's annual rain limits (for sorghum, FAO's Ghana rainfall). **Deviation, and its correction in v49:** Ramirez-Villegas et al. (2013) compare season rain; the FAO EcoCrop database gives the limits as annual rainfall, and using season rain against those annual limits rated rice and garden egg "not suitable" everywhere, so Walɔ compared like with like (annual vs annual). That comparison failed the other way at a wet highland town (≈1,684 mm in the season), which scored below a dry one (≈408 mm) because both were measured against a 1,200 mm annual optimum. So where a crop has a sourced planting window in the zone, the rain side now comes from the FAO-56 water balance of that season (method 7 above, WRSI at the middle month of the window) and EcoCrop supplies the temperature class; the annual rain comparison is used only for a crop with no calendar there. WRSI dots follow the water class labels - ≥80 = 5, 50-79 = 3, below 50 = 1 - so a season under water stress can no longer read as "grows well". Suitability = temperature × rain → class S1 ≥ 0.8, S2 ≥ 0.6, S3 ≥ 0.4, S3− ≥ 0.2, else N (cut-offs `default: true`; FAO 1976 names the classes but gives no numbers). Shown class = lower of the EcoCrop class and the WRSI class.
 
 **8. Heat stress** [SANCHEZ14]: maize and rice: days with Tmax > 35 °C during the FAO-56 mid-season (flowering) stage. Other crops: the top of the EcoCrop optimum range (labelled not cited).
 
 **9. Crop stage on My farm** [MCMASTER97]: GDD = (min(max(Tmax, Tb), Tu) + min(max(Tmin, Tb), Tu))/2 − Tb (method 2); maize Tb = 10 °C, Tu = 30 °C; other crops Tb = EcoCrop absolute minimum. Progress = (GDD observed since sowing from NASA POWER daily + climatological GDD for days not yet in POWER) / GDD the FAO-56 stages need in a normal year at that place. "Harvest & sell" appears from the start of the late stage.
 
-**10. Greenness** [MODIS]: NASA MODIS Terra MOD13Q1 v6.1 NDVI (250 m, 16-day) read through Microsoft Planetary Computer's STAC and statistics API (`scripts/build_ndvi.py`): median NDVI in a ~3 × 3 km box around each town point; monthly climatology = mean of 2016–2025 composites starting in that month; "latest" = newest composite. Latest within ±0.05 of the usual value for its month reads "About as green as usual" (`default: true`).
+**10. Greenness** [MODIS]: NASA MODIS Terra MOD13Q1 v6.1 NDVI (250 m, 16-day) read through Microsoft Planetary Computer's STAC and statistics API (`scripts/build_ndvi.py`): median NDVI in a ~3 × 3 km box around each town point; monthly climatology = mean of 2016-2025 composites starting in that month; "latest" = newest composite. Latest within ±0.05 of the usual value for its month reads "About as green as usual" (`default: true`).
 
-**Ejura check (maize, transition zone).** Major onset p20 15 Mar · median 2 Apr · p80 26 Apr → planting window Mar–Apr, the same as FAO's Ghana calendar and MoFA's district page. Sown at the median onset: water need 323 mm, effective rain 325 mm, deficit 26 mm, WRSI 92 (Enough rain), about 4 days > 35 °C at flowering. Minor season (median late Aug): WRSI 100.
+**Ejura check (maize, transition zone).** Major onset p20 15 Mar · median 2 Apr · p80 26 Apr → planting window Mar-Apr, the same as FAO's Ghana calendar and MoFA's district page. Sown at the median onset: water need 323 mm, effective rain 325 mm, deficit 26 mm, WRSI 92 (Enough rain), about 4 days > 35 °C at flowering. Minor season (median late Aug): WRSI 100.
 
 **Surprises (reported, not hidden).**
-- Kitale maize (Kenya) is S2 while Machakos maize is S3: Kitale's season supplies its water need (WRSI 100) but its cool months lower the temperature class to 0.75, while Machakos falls to WRSI 53 in the short rains. Before v49 both were judged on annual rainfall, which put Machakos (677 mm a year) above Kitale (1,844 mm a year).
+- A cool, wet highland season can score S2 while a dry one scores S3: the first supplies its water need (WRSI 100) but its cool months lower the temperature class to 0.75, while the dry season falls to WRSI 53 in its short rains. Before v49 both were judged on annual rainfall, which put the drier place (677 mm a year) above the wetter one (1,844 mm a year).
 - Rice WRSI is low almost everywhere: FAO-56 Kc values are for flooded paddy rice, while Walɔ assumes rain-fed upland.
 - Cassava and plantain seasons are longer than WRSI was built for, so their water numbers are shown but not used for the class.
 - Many forest-zone onsets land in early March, close to the 1 March search start, so they depend on that (labelled) choice. Minor-season onsets cluster in late August.
-- NDVI at town points (Kumasi, Accra, Tamale) is low because the 3 km box is mostly built-up; forest July–August composites are cloud-affected.
+- NDVI at town points (Kumasi, Accra, Tamale) is low because the 3 km box is mostly built-up; forest July-August composites are cloud-affected.
 
 
 ### v12.5 notes
@@ -292,8 +292,8 @@ with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80
 
 The challenge asks for a decision tool that helps a farmer **explore crop rotations** with NASA observations, local soil, crop characteristics and farmer priorities. Walɔ answered *when* and *where* to plant; it had nothing to say about what follows a crop.
 
-- **`#/next/<crop>` (and `#/next/<crop>/<field>`).** Three or four crops that could follow, always including the crop already in the field so "maize again" is compared and never hidden. Each is scored 0–100 from four parts: water (the FAO-56 water balance on NASA rain, deficit as a share of need, adjusted for a sandy, loam or clay soil), soil (legume nitrogen, ground cover left behind, a same-family penalty, a bonus for a cereal after a legume), money (whether a usual price pattern exists and whether it usually rises after harvest) and heat (very hot days while it flowers). The weights are her choice: **Soil**, **Water** or **Money** (`walo.priority`). Everything is in the Why? sheet, with crop traits labelled as extension rules of thumb (IITA/MoFA guides).
-- **`#/shift`.** The same NASA POWER daily record split into **1991–2014** and **2015–2025** at her point: median onset day (method 4), mean rain in the country's major-season window, and mean days above 35 °C in it. `scripts/build_shift.py` builds `data/shift.json` for all 72 towns. The screen says what moved ("Rain starts 13 days earlier than in 1991–2014"), what it means for planting, a least-squares trend over every year 1991–2025 (days per decade, mm per decade, hot days per decade), and what it is not: two periods, not a forecast, on a ~50 km grid.
+- **`#/next/<crop>` (and `#/next/<crop>/<field>`).** Three or four crops that could follow, always including the crop already in the field so "maize again" is compared and never hidden. Each is scored 0-100 from four parts: water (the FAO-56 water balance on NASA rain, deficit as a share of need, adjusted for a sandy, loam or clay soil), soil (legume nitrogen, ground cover left behind, a same-family penalty, a bonus for a cereal after a legume), money (whether a usual price pattern exists and whether it usually rises after harvest) and heat (very hot days while it flowers). The weights are her choice: **Soil**, **Water** or **Money** (`walo.priority`). Everything is in the Why? sheet, with crop traits labelled as extension rules of thumb (IITA/MoFA guides).
+- **`#/shift`.** The same NASA POWER daily record split into **1991-2014** and **2015-2025** at her point: median onset day (method 4), mean rain in the country's major-season window, and mean days above 35 °C in it. `scripts/build_shift.py` builds `data/shift.json` for all 72 towns. The screen says what moved ("Rain starts 13 days earlier than in 1991-2014"), what it means for planting, a least-squares trend over every year 1991-2025 (days per decade, mm per decade, hot days per decade), and what it is not: two periods, not a forecast, on a ~50 km grid.
 - **Soil.** `data/soil.json` gives every FAO zone its usual soil (forest and transition loam, savanna and coastal sandy, highland loam) with a plain note behind it, so the screen starts local instead of from a default. Her tap overrides it for good (`walo.soil`), and the screen says Walɔ cannot test her field.
 - **Evidence.** "Did this help you decide?" on the rotation screen posts only the crop and the verdict to `/api/log` (`rot_help`), so the first farmer opinions become a count the team can read.
 - **Links.** Home (a row and the taller planting card), the crop page ("What to plant after it") and the field page ("After harvest · What to plant next").

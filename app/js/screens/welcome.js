@@ -1,6 +1,6 @@
 /* First run: the two questions Walɔ exists to answer, then the answer to the one she picked.
-   Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
-   Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
+   Door 1: I have a farm, what can I grow there?      → ask the place, then the crops that do well there.
+   Door 2: I want to plant a crop, where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walɔ before. */
 import { towns, cropsHere, crop, scoreCrop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";

@@ -34,7 +34,7 @@ function fixesCard(items, title) {
 }
 function details(c, p, sc, cm, st) {
   const e = sc.eco, f = sc.fit, out = [`Class ${sc.cls.code} (${sc.cls.label}), ${sc.score} of 5: the lower of the climate class (EcoCrop) and the water class (FAO-56). Data confidence: ${confFor(c, p)}.`];
-  if (e) out.push(`EcoCrop: rain ${fmt(e.rain_mm)} mm a year vs ideal ${fmt(e.rain_rng.opt_min)}–${fmt(e.rain_rng.opt_max)} mm${e.gh ? " (Ghana figure)" : ""}; temperature fit ${Math.round(e.temp * 100)}% over its ${e.months}-month season (ideal ${e.temp_rng.opt_min}–${e.temp_rng.opt_max} °C).`);
+  if (e) out.push(`EcoCrop: rain ${fmt(e.rain_mm)} mm a year vs ideal ${fmt(e.rain_rng.opt_min)}-${fmt(e.rain_rng.opt_max)} mm${e.gh ? " (Ghana figure)" : ""}; temperature fit ${Math.round(e.temp * 100)}% over its ${e.months}-month season (ideal ${e.temp_rng.opt_min}-${e.temp_rng.opt_max} °C).`);
   if (f) out.push(`FAO-56 water balance, sown at the usual start of the rains (${doyText(f.sow)}): needs about ${fmt(f.need_mm)} mm, effective rain ${fmt(f.peff_mm)} mm, WRSI ${f.wrsi} (${f.water_class.label.toLowerCase()})${sc.water ? "" : ", not used for long crops"}.`);
   if (f && f.heat && f.hot_days != null) out.push(`About ${f.hot_days} day${f.hot_days === 1 ? "" : "s"} above ${f.heat.t} °C while it flowers.`);
   if (cm.windows.length) out.push(cm.guess ? `Planting months are Walɔ's best guess: from the date the rains have started in 2 of 10 years to 8 of 10 years, keeping seasons with enough rain for it.` : `Planting months: ${cm.windows.map((w) => `${esc(w.src || ((country() || {}).sources || {}).crop_calendar || "FAO crop calendar")} (sow ${esc(w.sow_text)}, harvest ${esc(w.harvest_text)})`).join("; ")}.`);

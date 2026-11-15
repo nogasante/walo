@@ -2,17 +2,17 @@
 
 **Walɔ** (Ga for “helper”) is a mobile web app for low-literacy smallholder farmers in Ghana. A farmer picks a place and sees what to plant now, or picks a crop and sees where it grows best. The same app follows a field from sowing to sale, and can look at a sick plant.
 
-Kenya can be used as a **preview**: `countries.json` holds it as `preview`, with 14 county towns, NASA POWER climate for each, MODIS greenness, its own outline map, per-kilogram prices for six crops from HDX HAPI, and planting windows for maize, sorghum, millet, cowpea, cassava and sweet potato taken from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book 2025. The country picker says plainly that nobody farming there has checked those windows yet; `checked_by_local` stays false until someone has, which is what turns it `live`. Ghana's long-run price index is not extended to Kenya: HAPI carries about a year of Kenyan prices, not enough for a seasonal pattern.
+Walɔ runs in **Ghana only**: 17 towns (Ejura, Techiman and Tamale from the team's own NASA POWER requests, the other regional capitals from Wikipedia / Wikidata), FAO's Ghana crop calendar and agro-ecological zones, NASA POWER and MODIS for each town, WFP and MoFA price records, and the Ghana Commodity Exchange. There is no second country in the app: a place whose planting windows nobody has checked is not offered.
 
 Team **Simply Zero**. [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/), challenge **Field Shift: Adapting Farms with NASA Data**, Kumasi local event.
 
 **Challenge:** Field Shift: Adapting Farms with NASA Data. Walɔ is a decision-support tool for planting and rotation: NASA Earth observations set the rain, heat and soil-water terms, and local soil and crop calendars set the rest.
 
-**NASA data that makes the project eligible:** NASA POWER daily (AG community, 1991–2025) is the primary source, and the one to tick in the challenge's Resources list on the submission form; NASA MODIS/Terra MOD13Q1 NDVI is the second. Nothing else decides a number NASA data can answer: the Meteomatics forecast only times the next ten days, and Copernicus DEM stands in for SRTM, which needs an Earthdata login.
+**NASA data that makes the project eligible:** NASA POWER daily (AG community, 1991-2025) is the primary source, and the one to tick in the challenge's Resources list on the submission form; NASA MODIS/Terra MOD13Q1 NDVI is the second. Nothing else decides a number NASA data can answer: the Meteomatics forecast only times the next ten days, and Copernicus DEM stands in for SRTM, which needs an Earthdata login.
 
 **AI disclosure, in one line:** the idea, the crops, the rules and the review are the team's; the app code, the data-build scripts and the redesign were written with an AI assistant (Grok Bot), and Plant Doctor and Get help call Gemini at runtime. No AI-generated images, audio or video, and no NASA branding. Full log: [app/AI_USE.md](app/AI_USE.md).
 
-Walɔ is a participant project built at the Kumasi local event on 14–15 November 2026. It is not a NASA product, and NASA does not endorse it.
+Walɔ is a participant project built at the Kumasi local event on 14-15 November 2026. It is not a NASA product, and NASA does not endorse it.
 
 **Live app:** [https://walo-simply-zero.vercel.app](https://walo-simply-zero.vercel.app)
 
@@ -31,7 +31,7 @@ A farmer on a shared, low-cost Android phone, often outdoors, who reads a little
 | Start planting | `#/start` | Crop, optional field photo, sowing day (today or a past day, or the next window) |
 | My farm | `#/farm` | Stage, harvest timing, today’s task, one alert, photos kept on the phone |
 | What to plant after this crop | `#/next/<crop>` | Rotation options compared on soil, the NASA rain water balance, heat and price, always including the crop already in the field |
-| How this place is changing | `#/shift` | The same NASA POWER record in two halves (1991–2014, 2015–2025): when the rains start, season rain, hot days |
+| How this place is changing | `#/shift` | The same NASA POWER record in two halves (1991-2014, 2015-2025): when the rains start, season rain, hot days |
 | Sell | `#/sell` | When that field’s harvest usually sells best, and at which nearby market |
 | Plant Doctor | `#/doctor` | Photo, voice, or text. An AI names a likely problem and one careful next step |
 | Get help | `#/help` | AI answers first (Gemini), in English. Call and WhatsApp stay hidden until `support.phone` is set; it is empty, so the screen says a person is coming soon |
@@ -114,18 +114,18 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 
 | Source | Used for | Link |
 | --- | --- | --- |
-| NASA POWER (AG community, daily, 1991–2025) | Rain, temperature, humidity, wind, sunshine, onset of rains, water balance, heat, growing degree days | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
-| NASA MODIS/Terra MOD13Q1 v6.1 NDVI, via Microsoft Planetary Computer | Town greenness, 2016–2025 and the latest composite | [doi:10.5067/MODIS/MOD13Q1.061](https://doi.org/10.5067/MODIS/MOD13Q1.061) · [Planetary Computer](https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061) |
+| NASA POWER (AG community, daily, 1991-2025) | Rain, temperature, humidity, wind, sunshine, onset of rains, water balance, heat, growing degree days | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
+| NASA MODIS/Terra MOD13Q1 v6.1 NDVI, via Microsoft Planetary Computer | Town greenness, 2016-2025 and the latest composite | [doi:10.5067/MODIS/MOD13Q1.061](https://doi.org/10.5067/MODIS/MOD13Q1.061) · [Planetary Computer](https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061) |
 | FAO EcoCrop | Temperature and rainfall suitability | [OpenCLIM EcoCrop table](https://github.com/OpenCLIM/ecocrop/blob/main/EcoCrop_DB.csv) · method: [Ramirez-Villegas et al. 2013](https://doi.org/10.1016/j.agrformet.2011.09.005) |
 | FAO Irrigation and Drainage Paper 56 | Reference evapotranspiration, crop coefficients, stage lengths | [FAO-56](https://www.fao.org/4/x0490e/x0490e00.htm) |
 | FAO Agro-ecological Zones and the Ghana crop calendar | Zone, growing period, planting windows | [Crop calendar](https://cropcalendar.apps.fao.org/) · [Ghana AEZ](https://api-cropcalendar.apps.fao.org/api/v1/countries/GH/aez?language=en) |
 | FAO land evaluation (1976) and Frère & Popov (1979) | Suitability class names; water requirement satisfaction index | [Soils Bulletin 32](https://www.fao.org/4/x5310e/x5310e00.htm) |
 | MoFA production guides | Ghana crop practice per crop | [mofa.gov.gh](https://mofa.gov.gh/) |
-| MoFA SRID commodity prices | Market prices per kilogram, retail and wholesale, every two weeks, April–October 2025 in 16 markets (SRID has published no newer public file) | [SRID prices](https://srid.mofa.gov.gh/node/18) · built by `app/scripts/build_srid_prices.py` |
+| MoFA SRID commodity prices | Market prices per kilogram, retail and wholesale, every two weeks, April-October 2025 in 16 markets (SRID has published no newer public file) | [SRID prices](https://srid.mofa.gov.gh/node/18) · built by `app/scripts/build_srid_prices.py` |
 | Ghana Commodity Exchange | Traded closing prices per kilogram for white maize and soya bean at the Tamale, Kumasi and Sandema warehouses, 2026 | [GCX market data](https://www.gcx.com.gh/market-data) · built by `app/scripts/build_gcx_prices.py` |
 | HDX HAPI market prices (other countries) | WFP market prices in one schema across countries: market coordinates, currency, the unit the market sells in, retail or wholesale, monthly. Converted to price per kilogram; used for the countries Walɔ is expanding into, not yet loaded by the app | [HDX HAPI](https://hapi.humdata.org/docs) · built by `app/scripts/build_hapi_prices.py` |
 | IITA and CSIR-SARI (and related Ghana trials) | Crop guides for maize, sorghum, cassava, yam, plantain, cowpea, millet | Per-crop list in [docs/walo-crops-sources.md](docs/walo-crops-sources.md) |
-| NASA POWER daily, same point, 1991–2014 vs 2015–2025 | How the season has moved at her town: two periods and a 35-year trend (`data/shift.json`, built by `app/scripts/build_shift.py`) | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
+| NASA POWER daily, same point, 1991-2014 vs 2015-2025 | How the season has moved at her town: two periods and a 35-year trend (`data/shift.json`, built by `app/scripts/build_shift.py`) | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
 | FAO agro-ecological zones and the district soil notes in `docs/walo-crops-sources.md` | The usual soil for her zone, which the rotation screen starts from (`data/soil.json`) | [FAO crop calendar](https://cropcalendar.apps.fao.org/) |
 | Copernicus DEM, 3×3 samples around each town, via Open-Meteo's elevation API | Slope, for the erosion screening behind the rotation advice (`data/soilhealth.json`, built by `app/scripts/build_soilhealth.py`). SRTM was the intended source; it needs an Earthdata login, so the app says which DEM it actually used | [Open-Meteo elevation](https://open-meteo.com/en/docs/elevation-api) |
 | NASA MODIS NDVI peak month + NASA POWER rain | Usual ground cover and rain erosivity, combined with slope into a low / medium / high erosion screening per town. A screening to compare towns, not RUSLE and not a soil test | [MODIS MOD13Q1](https://lpdaac.usgs.gov/products/mod13q1v061/) |
@@ -145,7 +145,7 @@ Bundled assets and libraries, cited because Space Apps asks for every source, in
 | supabase-js (optional backup) | MIT, included unmodified | `app/licenses/supabase-js-MIT.txt` |
 | Natural Earth map outline | Public domain | `app/data/ghana-map.json`, About screen |
 | OpenStreetMap Nominatim | ODbL, place name for "Use my location" | About screen and the table above |
-| No AI-generated images, audio or video | — | See `app/AI_USE.md` |
+| No AI-generated images, audio or video | none | See `app/AI_USE.md` |
 
 Every threshold the app applies is in `app/data/rules.json` with its source, or marked `default: true` when no single standard exists. Per-crop citations are in [docs/walo-crops-sources.md](docs/walo-crops-sources.md).
 
@@ -226,9 +226,9 @@ find app -name '*.js' -print0 | xargs -0 -n1 node --check
 
 ## More documentation
 
-- [app/DESIGN.md](app/DESIGN.md) — design record, section 13b current app, section 14 methods
-- [docs/walo-crops-sources.md](docs/walo-crops-sources.md) — per-crop sources and confidence
-- [app/AI_USE.md](app/AI_USE.md) — what AI wrote, and what it did not
+- [app/DESIGN.md](app/DESIGN.md), design record, section 13b current app, section 14 methods
+- [docs/walo-crops-sources.md](docs/walo-crops-sources.md), per-crop sources and confidence
+- [app/AI_USE.md](app/AI_USE.md), what AI wrote, and what it did not
 
 ## License
 

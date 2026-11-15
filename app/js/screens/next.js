@@ -1,9 +1,9 @@
 /* After this crop: the Field Shift answer. One recommendation, the evidence for it, and a comparison she can read
-   at a glance — not the same wall of cards behind a tap.
+   at a glance, not the same wall of cards behind a tap.
 
    On the screen: the answer, the NASA rain picture (ground facts in one line), one card for the recommended crop,
    then a list of the other crops where each is a single sentence, and one row to change what Walɔ goes by.
-   The sheet behind that row asks one question at a time: rain, limit, soil — three taps, never nine options at once.
+   The sheet behind that row asks one question at a time: rain, limit, soil, three taps, never nine options at once.
    Nothing in the reasoning was cut; it is the reading that got smaller. */
 import { place, placeLabel, limit, setLimit, soilChoice, setSoilChoice, farm } from "../store.js";
 import { crop, farmPlace, farmProgress, monthName, soilFor, scoreCrop, agroOf, rainPlanFor, CFG } from "../data.js";
@@ -36,7 +36,7 @@ function sideFact(o) {
   return "";
 }
 
-/* everything Walɔ knows about one crop, in the sheet — this is where the detail is allowed to live */
+/* everything Walɔ knows about one crop, in the sheet, this is where the detail is allowed to live */
 function whyFor(o) {
   const fit = scoreCrop(o.c, placeNow()).fit || {}, sa = o.sa || {};
   return whyBody(
@@ -49,7 +49,7 @@ function whyFor(o) {
       o.need != null
         ? `Water, from NASA POWER rain for this season through the FAO-56 balance: it needs about ${fmt(o.need)} mm, the usual rain gives ${fmt(o.usualRain)} mm, and after this soil holds its share that is ${fmt(o.peff)} mm (${o.waterPct}% of the need). WRSI ${fit.wrsi ?? "not judged"}.`
         : "A long-season crop: Walɔ does not judge its water against one rainy season.",
-      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"}, counted not weighted — a legume, ground cover, whether it is the same family, and whether the ground here can wash.`,
+      `Soil benefit: ${o.soilPts > 0 ? `+${o.soilPts}` : o.soilPts} point${Math.abs(o.soilPts) === 1 ? "" : "s"}, counted not weighted, a legume, ground cover, whether it is the same family, and whether the ground here can wash.`,
       o.hot ? `About ${o.hot} days above ${o.heatT} °C usually fall while it flowers.` : "",
       sa.kind === "index" ? (sa.store ? `Prices usually rise by ${monthName(sa.store.month)}, so it can be stored. Shown here, never counted in the order.` : "Prices do not usually rise much after harvest. Shown here, never counted in the order.")
         : sa.kind === "spot" ? `Sold at ${sa.spot.market} market${sa.spot.km != null ? `, ${fmt(sa.spot.km)} km away` : ""}. Shown here, never counted.` : "No price record here, so money plays no part.",
@@ -99,7 +99,7 @@ function nasaCard(p, h, plan) {
     ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: m.lgp ? "g" : "r" })), { caption: `Wet months in green · about ${fmt(total)} mm a year`, legend: [] })}
     <p class="ground-line">${icon("refresh-cw")}${esc(plan.note)}</p>
     ${h ? `<p class="ground-line">${icon("map-pin")}Ground: ${h.slope_pct}% slope, ${coverWord(h)} cover${word ? `, erosion risk <b>${word}</b>` : ""}</p>` : ""}
-    <p class="nasa-src">NASA POWER, 1991–2025${h ? " · slope from a 3×3 elevation sample · cover from MODIS" : ""}</p>
+    <p class="nasa-src">NASA POWER, 1991-2025${h ? " · slope from a 3×3 elevation sample · cover from MODIS" : ""}</p>
   </div>`;
 }
 
@@ -156,10 +156,10 @@ export function render(id, fid) {
   const why = whyBody(
     [
       "Walɔ does not add up a secret score. It asks three things in order: can the rain carry this crop (NASA rain through the FAO-56 water balance, after your soil has taken its share); what does it leave in the soil (a legume, ground cover, or the same family and its pests again); and does it break a pest cycle or continue one. Money is shown and never counted.",
-      `Rain planned: ${plan.label.toLowerCase()} — ${derived.note} Soil: ${soilLabel(soil)}. ${limitOf(lim).label}.`,
+      `Rain planned: ${plan.label.toLowerCase()}, ${derived.note} Soil: ${soilLabel(soil)}. ${limitOf(lim).label}.`,
     ],
     [
-      `NASA POWER daily rain and temperature 1991–2025 at ${p.lat.toFixed(2)}°, ${p.lon.toFixed(2)}°; FAO-56 stage lengths and crop coefficients; EcoCrop temperature limits.`,
+      `NASA POWER daily rain and temperature 1991-2025 at ${p.lat.toFixed(2)}°, ${p.lon.toFixed(2)}°; FAO-56 stage lengths and crop coefficients; EcoCrop temperature limits.`,
       health ? `Ground: slope from a 3×3 elevation sample, cover from ${health.cover_src || "satellite data"}, erosion band from slope × rain × cover. It compares towns; it is not a soil test on your field.` : "",
       `Soil water holding: ${autoSoil.source || "zone soil"}${soilChoice() ? ", corrected by you" : ""}.`,
       "Crop rotation traits for nitrogen, cover and family come from the IITA and MoFA guides cited per crop; the price pattern from WFP and MoFA records, shown but not scored.",

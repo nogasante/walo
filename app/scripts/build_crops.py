@@ -35,9 +35,9 @@ def level(conf, loc):
     segs = [s.strip() for s in conf.split("/")]
     parsed = []
     for s in segs:
-        m = re.match(r"(high|medium|low(?:–medium)?)\s*(?:\((.*)\))?\s*(.*)", s, re.I)
+        m = re.match(r"(high|medium|low(?:-medium)?)\s*(?:\((.*)\))?\s*(.*)", s, re.I)
         if not m: continue
-        lv = {"high": "High", "medium": "Medium", "low": "Low", "low–medium": "Low"}[m.group(1).lower()]
+        lv = {"high": "High", "medium": "Medium", "low": "Low", "low-medium": "Low"}[m.group(1).lower()]
         q = ((m.group(2) or "") + " " + (m.group(3) or "")).lower()
         locs = set()
         if "tamale" in q or "north" in q: locs.add("tamale")
@@ -60,7 +60,7 @@ def nc(field):
 def days_typical(c):
     v = c["days_to_maturity"].get("value", "")
     if nc(c["days_to_maturity"]): return None
-    m = re.search(r"(\d+)\s*[–-]\s*(\d+)\s*d", v)
+    m = re.search(r"(\d+)\s*[--]\s*(\d+)\s*d", v)
     return round((int(m.group(1)) + int(m.group(2))) / 2) if m else None
 
 def zones_of(c):
@@ -85,7 +85,7 @@ def windows(c):
             out[k] = [{"label": s.get("label") if s.get("label") and not s["label"].lower().startswith("rain") else None,
                        "sow_text": s["sowing"], "harvest_text": s["harvest"],
                        "sow": months(s["sowing"]), "harvest": months(s["harvest"]),
-                       "all_year": s["sowing"].startswith("1 Jan – 31 Dec"),
+                       "all_year": s["sowing"].startswith("1 Jan - 31 Dec"),
                        "days": s.get("growing_period_days")} for s in e]
     return out
 

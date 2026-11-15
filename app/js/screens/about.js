@@ -17,10 +17,10 @@ export function render() {
     <a class="helpbtn" href="#/help/about" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walɔ by talking or typing</small></span>${icon("chevron-right")}</a>
     <h2 class="h2">${icon("satellite")}Where the data comes from</h2>
     <ul class="plain">
-      <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind, sunshine and root-zone soil wetness, ${ag.years.join("–")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
+      <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind, sunshine and root-zone soil wetness, ${ag.years.join("-")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
       <li><b>NASA MODIS</b> greenness (NDVI, MOD13Q1), read through ${link(D.ndvi.url, "Microsoft Planetary Computer")}.</li>
       <li><b>Rotation order</b>: no composite score and no weights. Walɔ checks whether the rain can carry a crop, counts what the crop leaves in the soil, and states whether it breaks a pest cycle. The usual price pattern is shown on each card and never counted in that order.</li>
-      <li><b>NASA POWER, two halves</b>: the same daily record compared over 1991–2014 and 2015–2025, and a least-squares trend over all 35 years, for when the rains start, the season rain and days above 35 °C (<code>data/shift.json</code>).</li>
+      <li><b>NASA POWER, two halves</b>: the same daily record compared over 1991-2014 and 2015-2025, and a least-squares trend over all 35 years, for when the rains start, the season rain and days above 35 °C (<code>data/shift.json</code>).</li>
       <li><b>Soil</b>: the usual soil for your FAO agro-ecological zone, with the district notes behind it. It is a zone-level description, not a test of your field; you can change it on the rotation screen.</li>
       <li><b>Ground and erosion</b>: slope from a 3×3 elevation sample around each town (Copernicus DEM via ${link("https://open-meteo.com/en/docs/elevation-api", "Open-Meteo's elevation API")}, not SRTM: SRTM needs a NASA Earthdata login Walɔ does not hold), cover from MODIS NDVI, rain from NASA POWER. They are combined into a low / medium / high screening to compare towns, never a RUSLE calculation or a soil test (<code>data/soilhealth.json</code>, built by <code>scripts/build_soilhealth.py</code>).</li>
       <li><b>${esc(CFG().forecast.label)}</b>: rain forecast for the next 10 days.</li>
