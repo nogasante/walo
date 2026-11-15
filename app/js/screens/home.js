@@ -18,8 +18,8 @@ export function render() {
       : `<a class="fcard" href="#/now"><span class="fc-pic"><img src="${P.plant_here.img}" alt="" loading="lazy" style="object-position:${P.plant_here.pos}"></span>
           <span class="fc-t"><b>Nothing growing yet</b><small>See what you can plant in ${esc(placeLabel(p))} this month.</small></span></a>`}
     ${plantNow(p)}
-    ${row({ href: "#/doctor", ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", attrs: "data-net" })}
     ${btn(mine.length ? "Plant again" : "Plant something", { ic: "sprout", attrs: 'id="plant-more"' })}
+    ${row({ href: "#/doctor", ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", attrs: "data-net" })}
     <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
   </div>`;
 }
