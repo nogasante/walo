@@ -71,7 +71,7 @@ function farmView(f, many) {
     f.demo ? "This is a demo field so you can see how Walo works. Remove it any time." : "",
   ].filter(Boolean));
   const remove = `<button type="button" class="btn danger wide" data-remove="${esc(f.id)}">${icon("trash-2")}<span>Remove this field</span></button>`;
-  const photoHtml = `<div class="photos">${photos.length ? photos.slice().reverse().map((ph) => `<figure><img ${imgAttr(ph.src)} alt="Field photo" loading="lazy"><figcaption>${esc(ph.stage || "")}${ph.date ? ` · ${dayMonth(fromIso(ph.date))}` : ph.day ? ` · ${esc(ph.day)}` : ""}</figcaption></figure>`).join("") : `<p class="muted">No photos yet.</p>`}</div>
+  const photoHtml = `<div class="photos">${photos.length ? photos.slice().reverse().map((ph) => `<figure><img ${imgAttr(ph.src)} alt="Field photo" loading="lazy"><figcaption>${esc(ph.stage || "")}${ph.date ? ` · ${dayMonth(fromIso(ph.date))}` : ph.day ? ` · ${esc(ph.day)}` : ""}</figcaption></figure>`).join("") : `<p class="muted">No photos yet. Take one on the field page: Add photo.</p>`}</div>
     ${note("Photos stay on this phone.", "info")}`;
   const ic = pr.frac >= 1 ? "wheat" : pr.si >= 0 ? pr.stages[pr.si].icon : "sprout";
   const heroImg = last && !/^idb:/.test(last.src) ? last.src : last ? "" : c.img;

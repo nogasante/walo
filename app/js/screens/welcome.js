@@ -103,7 +103,7 @@ function cropStep() {
     <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : "Choose the crop you grow"}</h1>
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <div data-none hidden></div>
-    ${groups.length ? groupedCrops(groups, tile, "tiles") : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country. Change country and try again." })}
+    ${groups.length ? groupedCrops(groups, tile, "tiles") : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country yet.", action: "Change country", attrs: "data-wchange" })}
   </div>`;
 }
 

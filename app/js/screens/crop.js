@@ -80,7 +80,7 @@ export function placesHtml(c, opts = {}) {
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const body = list.length
     ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", icTone: tone(x), title: esc(x.p.name), sub: near ? `${Math.round(km(near, x.p))} km away` : "" })).join("")}</div>`
-    : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns in this country before it can say where a crop grows." });
+    : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns here before it can say where a crop grows.", action: "Choose another country", href: "#/welcome" });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
 /* a town on the where page: its verdict for this crop, and the one control that changes her farm. Tapping a town

@@ -60,8 +60,8 @@ export function openSheet(idOrSheet, from) {
   document.dispatchEvent(new CustomEvent("sheet-open", { detail: b }));
 }
 /* the one way Walo says "there is nothing here": what is missing, why, and a way out of it */
-export const emptyState = ({ ic = "info", title, sub = "", action = "", attrs = "" }) =>
-  `<div class="nores"><span class="nores-ic">${icon(ic)}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}${action ? `<button type="button" class="btn secondary" ${attrs}>${esc(action)}</button>` : ""}</div>`;
+export const emptyState = ({ ic = "info", title, sub = "", action = "", href = "", attrs = "" }) =>
+  `<div class="nores"><span class="nores-ic">${icon(ic)}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}${action ? (href ? `<a class="btn secondary" href="${href}" ${attrs}>${esc(action)}</a>` : `<button type="button" class="btn secondary" ${attrs}>${esc(action)}</button>`) : ""}</div>`;
 
 /* a search box over any list of towns, countries, crops or main-crop choices. It says what was typed,
    instead of a bare "no results", and offers to clear the box. */

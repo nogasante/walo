@@ -89,6 +89,7 @@ function detail(id, f) {
   return `${hero({ img: P.img, pos: P.pos, eyeIcon: "tag", eyebrow: `${esc(c.name)} · ${esc(placeLabel(p))}`, title: `When to sell ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">
     ${answer({ ...a, extra: strip, why: { title: "Why this answer", html: why }, say: `${a.title}. ${a.sub.replace(/<[^>]+>/g, "")}` })}
+    ${!best && pricesUnreachable() ? btn("Try again", { kind: "secondary", ic: "refresh-cw", attrs: 'id="sell-retry"' }) : ""}
     ${best && sa.kind === "index" ? note(priceLine(best), "tag") : ""}
     ${note(dataLine, "calendar-days")}
     ${sa.better ? note(`${esc(sa.better.market.name)} market (${fmt(sa.better.market.km)} km) usually pays more.`, "store") : ""}
@@ -98,6 +99,7 @@ function detail(id, f) {
   </div>`;
 }
 export function mount(root) {
+  const retry = root.querySelector("#sell-retry"); if (retry) retry.addEventListener("click", () => location.reload()); // the price files load at start
   const b = root.querySelector("#check-crop");
   if (b) b.addEventListener("click", (e) => openCropPicker("sell", e.currentTarget, (cid) => { location.hash = `#/sell/${cid}`; }));
 }

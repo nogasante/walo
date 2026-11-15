@@ -14,7 +14,7 @@ export function openPlacePicker(next, from) {
     <div data-none hidden></div>
     ${(() => { const l = towns().sort((a, b) => a.name.localeCompare(b.name)); return l.length
       ? `<div class="list">${l.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`
-      : emptyState({ ic: "map-pin", title: `No towns in ${esc(country().name)} yet`, sub: "Choose another country, or tell us your town and Walo will add it." }); })()}`;
+      : emptyState({ ic: "map-pin", title: `No towns in ${esc(country().name)} yet`, sub: "Choose another country, or tell us your town and Walo will add it.", action: "Choose another country", href: "#/welcome" }); })()}`;
   openSheet({ title: "Choose the town nearest your farm", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
       const t = e.target.closest("[data-town]");
