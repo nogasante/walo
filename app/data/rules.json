@@ -134,10 +134,6 @@
     "dots": 5
    },
    {
-    "min": 60,
-    "dots": 4
-   },
-   {
     "min": 50,
     "dots": 3
    },
@@ -149,7 +145,8 @@
   "wrsi_dots_note": "WRSI mapped to the same dots: >=80 -> 5 (S1), 60-80 -> 4 (S2), 50-60 -> 3 (S3), <50 -> 1 (N). Walo mapping (labelled default).",
   "wrsi_dots_default": true,
   "wrsi_max_season_days": 200,
-  "wrsi_max_note": "WRSI was built for rain-fed seasonal crops (cereals, legumes). For longer crops (cassava, plantain) Walo shows the water numbers but does not use them for the class. Labelled default."
+  "wrsi_max_note": "WRSI was built for rain-fed seasonal crops (cereals, legumes). For longer crops (cassava, plantain) Walo shows the water numbers but does not use them for the class. Labelled default.",
+  "_wrsi_dots_note": "Dots follow the water classes above: enough rain = 5, any water stress = 3 (\"can grow\", not \"grows well\"), likely to fail without water = 1. A season with 60-79% of its water need is a stressed crop, so it must not read as \"grows well\"."
  },
  "suitability": {
   "source": "ECOCROP",

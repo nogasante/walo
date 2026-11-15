@@ -131,18 +131,25 @@
      rain = the place's annual rain against the EcoCrop ranges, which FAO's database gives as annual rainfall (DESIGN.md notes this choice);
      overall = temperature x rain. */
   function lin(v, a, b, c2, d) { if (v == null || a == null) return null; if (v <= a || (d != null && v >= d)) return 0; if (v < b) return (v - a) / (b - a); if (c2 == null || v <= c2 || d == null) return 1; return (d - v) / (d - c2); }
-  function ecocrop(c, months) {
+  /* EcoCrop climate class. `season` (optional) is a sourced planting window: {start (0-based month), len, rain_mm}.
+     With it, the rain judged is the rain that falls in the months the crop is actually in the ground, and the
+     temperature is the worst of those months - not a whole calendar year, which penalises a long single season
+     and flatters a place whose rain arrives outside the crop's window. */
+  function ecocrop(c, months, season) {
     const e = c.eco; if (!e || !e.temp_c || !e.rain_mm_annual) return null;
     const t = e.temp_c, r = c.rain_gh || e.rain_mm_annual, cy = e.cycle_days || {};
     const n = Math.max(1, Math.min(12, Math.round(((cy.min || 365) + (cy.max || cy.min || 365)) / 2 / 30)));
-    const rain = months.reduce((s, m) => s + m.rain_mm, 0), rs = lin(rain, r.abs_min, r.opt_min, r.opt_max, r.abs_max);
+    const rain = season && season.rain_mm != null ? season.rain_mm : months.reduce((s, m) => s + m.rain_mm, 0);
+    const rs = lin(rain, r.abs_min, r.opt_min, r.opt_max, r.abs_max);
+    const starts = season ? [Math.max(0, Math.min(11, season.start))] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const span = season ? Math.max(1, Math.min(12, season.len)) : n;
     let best = null;
-    for (let s = 0; s < 12; s++) {
+    for (const s of starts) {
       let ts = 1, lo = null;
-      for (let k = 0; k < n; k++) { const m = months[(s + k) % 12], v = lin(m.tmean_c, t.abs_min, t.opt_min, t.opt_max, t.abs_max); if (v < ts) { ts = v; lo = m.month; } }
-      if (!best || ts > best.temp) best = { temp: Math.round(ts * 100) / 100, start: s + 1, months: n, worst_month: lo };
+      for (let k = 0; k < span; k++) { const m = months[(s + k) % 12], v = lin(m.tmean_c, t.abs_min, t.opt_min, t.opt_max, t.abs_max); if (v < ts) { ts = v; lo = m.month; } }
+      if (!best || ts > best.temp) best = { temp: Math.round(ts * 100) / 100, start: s + 1, months: span, worst_month: lo };
     }
-    return { ...best, suit: Math.round(best.temp * rs * 100) / 100, rain_s: Math.round(rs * 100) / 100, rain_mm: Math.round(rain), rain_rng: r, temp_rng: t, gh: !!c.rain_gh };
+    return { ...best, suit: Math.round(best.temp * rs * 100) / 100, rain_s: Math.round(rs * 100) / 100, rain_mm: Math.round(rain), rain_rng: r, temp_rng: t, season: !!season };
   }
   const classOf = (v, R) => R.suitability.classes.find((k) => v >= k.min);
 

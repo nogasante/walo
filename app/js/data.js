@@ -51,6 +51,9 @@ export const onsetRules = () => {
 
 /* ---------- crops ---------- */
 export const crop = (id) => D.cropList.find((c) => c.id === id);
+/* is this crop grown in the country in use at all? A crop chosen in one country means nothing in another where
+   no zone lists it, so nothing may carry it over as "my main crop". */
+export const cropInCountry = (c) => { const z = (country() || {}).zones || {}; return !!c && Object.keys(c.windows || {}).some((k) => k in z); };
 export const crops = () => D.cropList;
 export const isTree = (c) => c.kind === "tree";
 
@@ -83,6 +86,18 @@ const CONF_ORDER = { High: 0, Medium: 1, Low: 2 };
 
 /* ---------- suitability: EcoCrop climate class + FAO-56 water class (the lower one is shown) ---------- */
 const seasons = (ag) => ["major", "minor"].filter((s) => ag.onset[s] && ag.onset[s].median != null);
+/* A sourced planting window is judged on its own months: the rain that falls while the crop is in the ground, and
+   the worst temperature in that window. Only a place with no calendar for the crop falls back to the whole year. */
+function sourcedSeason(c, p, ag) {
+  const w = ((c.windows || {})[zoneOf(p)] || [])[0];
+  if (!w || !w.sow || !w.sow.length) return null;
+  const start = Math.max(0, Math.min(11, w.sow[0] - 1));
+  const last = w.harvest && w.harvest.length ? w.harvest[w.harvest.length - 1] : w.sow[w.sow.length - 1];
+  const len = Math.min(12, ((last - 1 - start + 12) % 12) + 1);
+  let rain = 0;
+  for (let k = 0; k < len; k++) rain += ag.months[(start + k) % 12].rain_mm || 0;
+  return { start, len, rain_mm: Math.round(rain) };
+}
 export const cropDays = (c) => c.days_typical || (c.eco && c.eco.cycle_days && c.eco.cycle_days.min) || R().season_days_default.value;
 const usesWater = (c, f) => !!f && c.kind === "seasonal" && f.days <= R().water.wrsi_max_season_days;
 const fitAt = (c, ag, doy) => (c.fao56 && c.fao56.stage_days ? A().seasonFit(c, ag.months, doy, R()) : null);
@@ -92,16 +107,23 @@ const pkey = (p) => `${p.id}|${p.lat}|${p.lon}`;
 
 export function scoreCrop(c, p) {
   return memo(_sc, `${c.id}|${pkey(p)}`, () => {
-    const ag = agroOf(p), eco = A().ecocrop(c, ag.months), cl = R().suitability.classes;
+    const ag = agroOf(p), cl = R().suitability.classes;
+    const win = (c.windows || {})[zoneOf(p)] || [], season = win.length ? sourcedSeason(c, p, ag) : null;
+    const eco = A().ecocrop(c, ag.months, season);
     const best = seasons(ag).map((s) => ({ s, f: fitAt(c, ag, ag.onset[s].median) })).filter((x) => x.f).sort((a, b) => b.f.wrsi - a.f.wrsi)[0] || null;
-    const f = best && best.f, water = usesWater(c, f);
+    // With a sourced window, the water is judged over the months in that window rather than from the year's first
+    // onset: a short-rains maize crop in Machakos lives on October-February rain, not on the long rains.
+    const midMonth = win[0] && win[0].sow && win[0].sow.length ? win[0].sow[Math.floor(win[0].sow.length / 2)] : 1;
+    const wFit = season ? fitAt(c, ag, A().doyOf(`${String(midMonth).padStart(2, "0")}-15`)) : null;
+    const f = (season && wFit) || (best && best.f), water = usesWater(c, f);
     const ecoCls = eco ? A().classOf(eco.suit, R()) : cl[cl.length - 1];
-    // A sourced planting window for this zone means people do grow the crop here, so a global rainfall envelope
-    // (EcoCrop's maize range stops at 1,800 mm a year, and the Kenyan highlands are wetter than that) can say at
-    // worst "can grow" — never "does not grow" — where the calendar itself says it is planted.
-    const windowHere = ((c.windows || {})[zoneOf(p)] || []).length > 0;
-    const score = Math.max(windowHere ? 3 : 0, Math.min(ecoCls.dots, water ? f.water_dots : 5)), cls = cl.find((k) => k.dots === score) || ecoCls;
-    return { score, cls, ecoCls, eco, fit: f, season: best && best.s, water, fine: (eco ? eco.suit : 0) + (water ? f.wrsi / 100 : 1) };
+    // EcoCrop's rain range is an ANNUAL total, so comparing a season's rain against it is not a like-for-like
+    // comparison, and it is what rated the wet Kenyan highlands below dry Machakos. Where a window exists, the rain
+    // side comes from the FAO-56 water balance of that season (f.water_dots) and EcoCrop contributes temperature.
+    const tempCls = eco ? A().classOf(eco.temp, R()) : null;
+    const dots = season && tempCls ? Math.min(tempCls.dots, water ? f.water_dots : 5) : Math.min(ecoCls.dots, water ? f.water_dots : 5);
+    const score = dots, cls = cl.find((k) => k.dots === score) || ecoCls;
+    return { score, cls, ecoCls, eco, fit: f, season: best && best.s, water, sourced: !!season, fine: (eco ? (season ? eco.temp : eco.suit) : 0) + (water ? f.wrsi / 100 : 1) };
   });
 }
 /* plain words for the class: S1/S2 grows well, S3 can grow, below that grows poorly */
