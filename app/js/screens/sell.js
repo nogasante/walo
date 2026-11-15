@@ -69,7 +69,7 @@ function detail(id, f) {
     if (s.thin) det.push("Only a few years of data for this market: treat the pattern with care.");
     if (s.n_excluded) det.push(`${s.n_excluded} odd price(s) left out (over 3× the months around them). The raw data is unchanged.`);
   }
-  if (sp.length) det.push(`MoFA SRID, newest rows ${dayYear(best.d)}, per kilogram: ` + sp.map((x) => `${esc(x.name)} ${currency()} ${fmt(x.v, 2)} ${x.type === "exchange" ? "traded (GCX)" : esc(x.type)}${x.prev ? ` (${x.v >= x.prev ? "up" : "down"} ${Math.round(Math.abs(x.v / x.prev - 1) * 100)}% on a month earlier)` : ""}`).join(" · ") + ". SRID collects these in markets every two weeks, so they are the closest thing to what a trader will offer you now.");
+  if (sp.length) det.push(`Prices per kilogram, newest ${dayYear(best.d)}: ` + sp.map((x) => `${esc(x.name)} ${currency()} ${fmt(x.v, 2)} ${x.src === "GCX" ? "traded (GCX)" : esc(x.type)}${x.prev ? ` (${x.v >= x.prev ? "up" : "down"} ${Math.round(Math.abs(x.v / x.prev - 1) * 100)}% on a month earlier)` : ""}`).join(" · ") + ". MoFA SRID collects market prices in person every two weeks; the Ghana Commodity Exchange reports closing traded prices at its warehouses. Both are what a trader works from, not a guarantee of what you will be offered.");
   det.push(`Distances are straight-line from ${esc(placeLabel(p))}.`);
   det.push(`Sources: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")} · ${link(D.market.srid_source.url, "MoFA SRID")}`);
   const why = whyBody([
