@@ -354,9 +354,9 @@ body:not(.ready) .topbar, body:not(.ready) .tabbar { visibility: hidden; }
 .doc-q { font-size: var(--fs-h); font-weight: 700; color: var(--ink); line-height: 1.3; }
 .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-s); }
 /* three equal choices need every pixel: the grid uses the card's side padding too, so the words sit on one line */
-.answer > .choices { margin: 2px calc(-1 * var(--sp-s)) 0; }
+.answer > .choices, .card > .choices { margin: 2px calc(-1 * var(--sp-s)) 0; }
 .choices.two { grid-template-columns: repeat(2, 1fr); }
-.choice { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 2px 14px; min-height: 132px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg, #faf8f3); color: var(--ink); font: inherit; text-align: center; cursor: pointer; }
+.choice { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 0 14px; min-height: 132px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg, #faf8f3); color: var(--ink); font: inherit; text-align: center; cursor: pointer; }
 .choice:active { transform: scale(.98); }
 .choice .tile-ic { width: 56px; height: 56px; border-radius: 50%; } .choice .tile-ic .ic { width: 28px; height: 28px; }
 .choice b { font-size: 15px; line-height: 1.2; } .choice small { font-size: var(--fs-xs); color: var(--muted); line-height: 1.3; }
