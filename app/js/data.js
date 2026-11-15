@@ -256,9 +256,12 @@ export function greenness(p) {
 const STAGE_NAMES = (c) => [["Sprouting", "sprout"], ["Growing", "leaf"], [c.root_crop ? "Bulking" : "Flowering", c.root_crop ? "carrot" : "flower-2"], ["Ripening", "sun"], ["Harvest", "wheat"]];
 const climGdd = (ag, doy, g) => { const m = ag.months[A().monthOfDoy(doy)]; return A().gddDay(m.tmax_c, m.tmin_c, g); };
 const gddCache = () => { try { return JSON.parse(localStorage.getItem("walo.gdd") || "{}"); } catch { return {}; } };
+/* Where a field was planted is a fact about the field, not about the country being looked at: a field in Tamale
+   keeps Tamale's weather even while the app is set to Kenya. Only the field's own place is used here. */
+export const townAnywhere = (id) => (D.places.places[id] ? { id, kind: "town", ...D.places.places[id] } : null);
 export function farmPlace(f) {
   if (f.place && f.place.kind === "gps") return f.place;
-  return town(f.loc) || town(CFG().default_place) || towns()[0] || null;
+  return townAnywhere(f.loc) || town(CFG().default_place) || towns()[0] || null;
 }
 export function farmProgress(f) {
   const c = crop(f.crop), p = farmPlace(f), ag = agroOf(p), start = new Date(f.date + "T00:00:00"), d = Math.round((today0() - start) / DAY);
