@@ -28,7 +28,7 @@ A farmer on a shared, low-cost Android phone, often outdoors, who reads a little
 
 Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the top bar changes the town everywhere that advice depends on place. On a wide screen the app sits in a phone-width column.
 
-The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it. See [docs/HANDOFF.md](docs/HANDOFF.md).
+The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it.
 
 The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v26`.
 
@@ -98,7 +98,7 @@ flowchart LR
   home --> doctor
 ```
 
-The browser holds the climate summaries, crop rules, and price indexes. It asks the server only for the 10-day forecast, Plant Doctor, Get help, Twi, a tiny diagnostic log, and optional backup. API keys never go to the phone. Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Methods: [docs/METHODS.md](docs/METHODS.md).
+The browser holds the climate summaries, crop rules, and price indexes. It asks the server only for the 10-day forecast, Plant Doctor, Get help, Twi, a tiny diagnostic log, and optional backup. API keys never go to the phone. `app/DESIGN.md` is the design record and the methods chapter.
 
 ## Data sources
 
@@ -118,7 +118,7 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 | GhanaNLP Khaya | Twi translation, voice, and speech-to-text, on the server | [ghananlp.org](https://ghananlp.org/) |
 | OpenStreetMap Nominatim | Place name for “Use my location” | [Copyright](https://www.openstreetmap.org/copyright) |
 
-Every threshold the app applies is in `app/data/rules.json` with its source, or marked `default: true` when no single standard exists. Per-crop citations are in [docs/walo-crops-sources.md](docs/walo-crops-sources.md). How each JSON file is built: [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md).
+Every threshold the app applies is in `app/data/rules.json` with its source, or marked `default: true` when no single standard exists. Per-crop citations are in [docs/walo-crops-sources.md](docs/walo-crops-sources.md).
 
 ## Repository layout
 
@@ -136,10 +136,10 @@ app/                  Vercel root. The running app.
 proof/                Stdlib NASA POWER proof script
 presentation/         Check-in deck (walo-checkin-v2.pptx)
 supabase/schema.sql   Table, row-level security, photo bucket, and the daily AI budget
-docs/                 Architecture, pipeline, methods, handoff, crop sources
+docs/                 Per-crop source notes
 ```
 
-`app/README.md` is the in-app map of screens and files. `app/DESIGN.md` is the design history; section 13b is the current app and section 14 is the methods. `app/AI_USE.md` is the challenge disclosure. This README is the front door for a new teammate.
+`app/DESIGN.md` is the design history; section 13b is the current app and section 14 is the methods. `app/AI_USE.md` is the challenge disclosure. This README is the front door for a new teammate.
 
 ## Run locally
 
@@ -166,7 +166,7 @@ python3 proof/walo_proof.py --help
 python3 proof/walo_proof.py --place Ejura --crop maize
 ```
 
-Walkthrough: [proof/HOW_TO_USE.md](proof/HOW_TO_USE.md). A saved Ejura run: [proof/sample_output_ejura.txt](proof/sample_output_ejura.txt).
+A saved Ejura run: [proof/sample_output_ejura.txt](proof/sample_output_ejura.txt).
 
 ## Deploy
 
@@ -196,7 +196,7 @@ The Supabase project URL and the **publishable** key are in `app/data/app.json` 
 
 The hard daily cap on Gemini calls is **not** an environment variable. It is a constant inside `public.walo_ai_hit()` in [supabase/schema.sql](supabase/schema.sql) (400 calls a day by default), because a cap the app sends is a cap an attacker chooses. Apply that file once in the Supabase SQL editor; the file also creates the `fields` table, its four row-level-security policies, and the private `field-photos` bucket with per-owner policies. Until it is applied, the per-IP limits in `api/diagnose.js` and `api/help.js` still run and the app keeps answering.
 
-Project ref: `yceufknddlcrezefaivi`. Dashboard steps that are still open are in [docs/HANDOFF.md](docs/HANDOFF.md).
+Project ref: `yceufknddlcrezefaivi`.
 
 ## Checks before you push
 
@@ -208,14 +208,9 @@ find app -name '*.js' -print0 | xargs -0 -n1 node --check
 
 ## More documentation
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — modules, functions, storage, offline
-- [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md) — which script writes which file, and how to rebuild
-- [docs/METHODS.md](docs/METHODS.md) — onset, FAO-56, heat, growing degree days, suitability
-- [docs/EXPANSION.md](docs/EXPANSION.md) — what a country owns, what is still Ghana-only, and how to add one
-- [docs/HANDOFF.md](docs/HANDOFF.md) — current status, known gaps, how to continue
+- [app/DESIGN.md](app/DESIGN.md) — design record, section 13b current app, section 14 methods
 - [docs/walo-crops-sources.md](docs/walo-crops-sources.md) — per-crop sources and confidence
 - [app/AI_USE.md](app/AI_USE.md) — what AI wrote, and what it did not
-- [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 

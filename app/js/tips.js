@@ -26,9 +26,9 @@ export function fieldTips(pr) {
   }
   if (nearDone) {
     if (dry3)
-      out.push({ ic: "sun", k: "Harvest window", text: "Dry days ahead: good for harvesting and drying the crop." });
+      out.push({ ic: "sun", k: "Harvest window", text: "Dry days ahead: cut it and dry it in the sun, spread thin. Grain left damp grows mould, and that mould can poison people." });
     else if (next3 >= 15)
-      out.push({ ic: "triangle-alert", k: "Rain before harvest", text: "Rain is coming. Harvest early or cover the crop: wet grain spoils fast." });
+      out.push({ ic: "triangle-alert", k: "Rain before harvest", text: "Rain is coming. If it is ripe, cut it now and dry it under cover: damp grain grows mould that can poison people." });
   }
   return out.slice(0, 2);
 }

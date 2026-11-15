@@ -14,7 +14,7 @@ export function render() {
     <a class="helpbtn" href="#/help/about" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
     <h2 class="h2">${icon("satellite")}Where the data comes from</h2>
     <ul class="plain">
-      <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind and sunshine, ${ag.years.join("–")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
+      <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind, sunshine and root-zone soil wetness, ${ag.years.join("–")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
       <li><b>NASA MODIS</b> greenness (NDVI, MOD13Q1), read through ${link(D.ndvi.url, "Microsoft Planetary Computer")}.</li>
       <li><b>${esc(CFG().forecast.label)}</b>: rain forecast for the next 10 days.</li>
       <li><b>Prices</b>: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023; ${link(D.market.srid_source.url, "MoFA SRID")} 2025.</li>

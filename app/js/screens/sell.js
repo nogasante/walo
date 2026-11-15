@@ -37,7 +37,7 @@ function list(mine) {
       <span class="sc-t"><small class="sc-eye">${esc(f.name)}</small><b>Your ${esc(c.name.toLowerCase())} · ${esc(when)}</b>${chip(s.tone, esc(s.act))}<span class="sc-line">${s.line}</span>${s.data ? `<small class="sc-data">${s.data}</small>` : ""}</span>${icon("chevron-right")}</a>`;
   };
   return `${top}<div class="stack lift"><div class="scards">${mine.map(card).join("")}</div>
-    ${note("Price patterns end in July 2023. They show the usual season, not this year's price.", "calendar-days")}${other(true)}</div>`;
+    ${note("WFP's price records for these markets stop in July 2023. They show the usual season, not this year's price.", "calendar-days")}${other(true)}</div>`;
 }
 function detail(id, f) {
   const c = crop(id), pr = f ? farmProgress(f) : null, p = pr ? pr.p : place(); setCrop(id);
