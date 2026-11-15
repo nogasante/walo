@@ -1,5 +1,5 @@
 {
-  "_note": "What the Get help assistant (/api/help) knows about Walo. Plain facts only; the server adds the farmer's place, main crop, fields and screen.",
+  "_note": "What the Get help assistant (/api/help) knows about Walɔ. Plain facts only; the server adds the farmer's place, main crop, fields and screen.",
   "knowledge": [
     "Walɔ helps smallholder farmers in Ghana decide what to plant, where and when, from NASA POWER weather for their place (usual rain and temperature by month, 2001-2024) and a 10-day rain forecast.",
     "Home: the farmer's main crop, what to plant here now, Start planting, and Plant Doctor.",

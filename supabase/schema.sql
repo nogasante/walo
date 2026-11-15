@@ -1,4 +1,4 @@
--- Walo: Supabase schema for the optional backup and the daily AI budget.
+-- Walɔ: Supabase schema for the optional backup and the daily AI budget.
 --
 -- This file is the source of truth for project yceufknddlcrezefaivi. Before it existed, the
 -- table, its row-level security policies and the storage policies were dashboard-only state:

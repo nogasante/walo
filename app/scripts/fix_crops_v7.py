@@ -80,7 +80,7 @@ addsrc(g, "MADE_VEG_2015")
 # (4) Onion: keep FAO sowing; harvest worked out from MoFA durations (FAO harvest date dropped as inconsistent)
 on = C["onion"]
 on["windows"] = {"T": [win([8, 9, 10, 11], [12, 1, 2, 3], "10 Aug – 10 Nov", "Dec – Mar", "FAO sowing dates; harvest worked out from MoFA durations", days="110 - 135")]}
-on["window_notes"]["T"] = ["FAO calendar: sow 10 Aug – 10 Nov; best grown in the dry season. [FAO_CROPCAL]", "Harvest worked out by Walo: about 4 weeks in the nursery plus 80–105 days after transplanting [MOFA_ONION] gives December–March. FAO's own harvest date (30 Sep – 10 Oct) comes before its sowing ends, so Walɔ does not use it."]
+on["window_notes"]["T"] = ["FAO calendar: sow 10 Aug – 10 Nov; best grown in the dry season. [FAO_CROPCAL]", "Harvest worked out by Walɔ: about 4 weeks in the nursery plus 80–105 days after transplanting [MOFA_ONION] gives December–March. FAO's own harvest date (30 Sep – 10 Oct) comes before its sowing ends, so Walɔ does not use it."]
 on["days_typical"] = 120
 on["days_text"] = "About 4 weeks nursery + 80–105 days after transplanting (MoFA)."
 

@@ -25,7 +25,7 @@ export function seasonIcs(f, pr) {
     "BEGIN:VALARM", "TRIGGER:-PT12H", "ACTION:DISPLAY", `DESCRIPTION:${ics(e.title)}`, "END:VALARM",
     "END:VEVENT",
   ].join("\r\n")).join("\r\n");
-  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Walo//Season//EN", "CALSCALE:GREGORIAN", body, "END:VCALENDAR", ""].join("\r\n");
+  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Walɔ//Season//EN", "CALSCALE:GREGORIAN", body, "END:VCALENDAR", ""].join("\r\n");
 }
 
 export function downloadSeason(f, pr) {
