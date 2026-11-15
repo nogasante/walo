@@ -52,7 +52,9 @@ export function render(id, sub) {
   // link then lands on the same screen every time, and reloading or coming back does not lose it.
   if (sub === "where") return `<div class="stack">${placesHtml(c)}</div>`;
   const twi = c.twi && twiOn() ? ` · <span lang="ak">${esc(c.twi.split(" / ")[0].split(" (")[0])}</span>` : "";
-  const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : "leaf", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "clock", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
+  // the verdict wears the legend's own icon (check / clock / cross); the calendar marks the days to harvest so
+  // two clocks never sit side by side
+  const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : fw.cls === "wait" ? "clock" : "circle-check", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "calendar-days", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
   <div class="stack lift">
     ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}` })}

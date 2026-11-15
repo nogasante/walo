@@ -52,8 +52,8 @@ function detail(id, f) {
   let a, dataLine = "";
   if (sa.kind === "index") {
     const m = sa.market, last = sa.s.last, newest = `${monthName(+last.slice(5, 7))} ${last.slice(0, 4)}`; // the newest price in the data, said in the answer itself
-    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. At ${mk(m)}.` };
-    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `At ${mk(m)}. More money than in ${monthName(sa.dip)}.` };
+    if (pr) a = { kind: sa.store ? "later" : "now", icon: sa.store ? "clock" : "tag", title: sa.store ? `Store if you can: prices usually rise by ${monthName(sa.store.month)}` : "Sell soon after harvest", sub: `${esc(sellLine(sa, pr).split(". ")[0])}. You would sell at ${esc(m.name)} market, ${fmt(m.km)} km away.` };
+    else a = { kind: "now", icon: "tag", title: `Usually best in ${monthName(sa.peak)}`, sub: `${esc(m.name)} market, ${fmt(m.km)} km away, pays more than in ${monthName(sa.dip)}.` };
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else {
     a = !best && pricesUnreachable()

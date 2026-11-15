@@ -10,7 +10,7 @@ const greeting = () => { const h = new Date().getHours(); return CFG().greetings
 export function render() {
   const p = place(), P = CFG().photos;
   const mine = farmsHere().filter((f) => !f.demo); // the demo field is never "your crops"
-  return `${hero({ img: P.home.img, pos: P.home.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: `${greeting()}.<br>What do you want to know?` })}
+  return `${hero({ img: P.home.img, pos: P.home.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: `${greeting()}.<br>Here is what is growing.` })}
   <div class="stack">
     <div class="h2row"><h2 class="h2">Your crops</h2>${mine.length > 2 ? `<a class="h2link" href="#/farm">All ${mine.length}</a>` : ""}</div>
     ${mine.length

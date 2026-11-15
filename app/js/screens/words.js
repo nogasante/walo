@@ -38,6 +38,6 @@ export function rainStrip(p, sow = null) {
   const ms = agroOf(p).months, max = Math.max(...ms.map((m) => m.rain_mm)) || 1;
   const bars = ms.map((m, i) => ({ v: m.rain_mm / max, cls: sow ? (sow.includes(i + 1) ? "g" : "n") : m.lgp ? "g" : "r" }));
   return monthBars(bars, sow
-    ? { caption: "Usual rain", legend: [["g", "Planting months"]] }
-    : { caption: "Usual rain", legend: [["g", "Wet months"], ["r", "Dry months"]] });
+    ? { caption: "Usual rain", legend: [["g", "Planting months"], ["cur", "This month"]] }
+    : { caption: "Usual rain", legend: [["g", "Wet months"], ["r", "Dry months"], ["cur", "This month"]] });
 }

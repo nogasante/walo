@@ -32,7 +32,6 @@ export function render() {
   return `${hero({ img: P.img, pos: P.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: "What to plant here now" })}
   <div class="stack lift">
     ${answer({ ...a, extra: rainStrip(p), why: { title: "Why this answer", html: why }, say })}
-    ${btn(`Not ${esc(placeLabel(p))}? Change location`, { kind: "secondary", ic: "map-pin", attrs: "data-place-open" })}
     ${online() ? "" : note(fo ? "You are offline: Walo uses the last forecast it saved." : "Using usual weather (no forecast offline).", "wifi-off")}
     ${groupedCrops(groups, tile)}
     ${note(`Usual weather is not a promise: watch your own rain too.`)}
