@@ -154,7 +154,7 @@ export function render(id, fid) {
   const pr = f ? farmProgress(f) : null;
   const autoSoil = soilFor(p), soil = soilChoice() || autoSoil.id; // her tap wins, otherwise the zone's usual soil
   const lim = limit(), rain = rainPlan(), pass = PASS_AT[lim] ?? PASS_AT.none;
-  const { options, health } = rotationOptions(after.id, p, { soil, limit: lim, rain });
+  const { options, health, anyPass } = rotationOptions(after.id, p, { soil, limit: lim, rain });
   if (!options.length) return emptyState({ ic: "sprout", title: `No crops to follow ${after.name.toLowerCase()} here`, sub: "Walo has no other crop for this place yet.", action: "Try another place", href: "#/welcome" });
   const top = options[0], tune = tuneSheet(p, soil, lim), plan = rainOf(rain);
   const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1)}. ` : "";
@@ -174,11 +174,11 @@ export function render(id, fid) {
   );
   return `${hero({ img: CFG().photos.home.img, pos: CFG().photos.home.pos, eyeIcon: "refresh-cw", eyebrow: `${esc(after.name)} · ${esc(placeLabel(p))}`, title: after.name === "Maize" ? "After the maize" : `After the ${after.name.toLowerCase()}` })}
   <div class="stack lift">
-    ${answer({ kind: top.same ? "info" : "now", tone: top.same ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
+    ${answer({ kind: top.same || !anyPass ? "info" : "now", tone: top.same || !anyPass ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
     ${nasaCard(p)}
     ${scenarioRow(rain)}
     ${groundCard(health, soil)}
-    ${top.waterPct != null && top.waterPct < 60 ? note(`With ${plan.label.toLowerCase()}, even the best crop here covers only ${top.waterPct}% of its water from rain. That is a season for a short crop, mulch, or watering — not for the thirstiest one.`, "alert") : ""}
+    ${!anyPass ? note(`With ${plan.label.toLowerCase()}, no crop here is both carried by the rain and kinder to the soil. What is left is ordered below, and each card says what it costs. Watering, mulch or a wetter season changes this, and so does a local opinion on what your ground can carry.`, "triangle-alert") : ""}
     ${options.map((o) => optionCard(o, pass)).join("")}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
       ${icon("leaf")}<span><b>Change what Walo goes by</b><small>${esc(limitOf(lim).label)} · ${esc(soilLabel(soil))} ground here</small></span>${icon("chevron-right")}

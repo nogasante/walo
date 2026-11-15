@@ -134,8 +134,10 @@ export function rotationOptions(afterId, p, { soil = "loam", limit = "none", rai
   const all = list.sort(order);
   const chosen = all.filter((o) => o.c.id !== afterId).slice(0, max);
   chosen.push(again);
-  chosen.sort(order);
-  return { after, options: chosen, health, rainFactor, limit, soil };
+  // "the crop you already know" is the baseline, never the recommendation: it is always last, so a field is never
+  // told to repeat itself just because the rain happens to suit the crop that is already there.
+  chosen.sort((a, b) => Number(a.same) - Number(b.same) || order(a, b));
+  return { after, options: chosen, health, rainFactor, limit, soil, anyPass: chosen.some((o) => !o.same && o.waterPct != null && o.waterPct >= pass) };
 }
 
 /* the chip: a sentence about the soil and the rain, not a percentage of a model */
