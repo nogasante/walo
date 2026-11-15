@@ -227,20 +227,9 @@ body:not(.ready) .topbar, body:not(.ready) .tabbar { visibility: hidden; }
 .sheet[open] { display: flex; animation: up .2s ease; }
 .sheet.closing { transform: translateY(100%); }
 .sheet::backdrop { background: rgba(10, 25, 15, .45); }
-/* a short choice (two ways in) belongs in the middle of the screen, not dragged up from the bottom edge */
-.sheet.mid { width: calc(100% - 32px); max-width: 420px; margin: auto; border-radius: 18px; max-height: 84vh; animation: pop .18s ease; }
-.sheet.mid.closing { transform: scale(.97); opacity: 0; transition: transform .16s, opacity .16s; }
-.sheet.mid .sheet-body { padding-bottom: var(--sp); }
-.sheet.mid .grab { display: none; } /* nothing to drag down: this one is not a sheet */
-/* inside the dialog the two choices are upright cards, so each picture gets the full width */
-.sheet.mid .pcard.wide { flex-direction: column; }
-.sheet.mid .pcard.wide .pc-pic { width: 100%; height: 120px; }
-.sheet.mid .pcard.wide .badge { left: 10px; right: auto; top: auto; bottom: 10px; transform: none; }
-.sheet.mid .pcard.wide .pc-t { padding: 10px 14px 14px; }
 /* change the place from inside the plant choice, without leaving it */
 .changeloc { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: var(--tap); border: 0; background: none; color: var(--brand); font: inherit; font-size: var(--fs-s); font-weight: 700; cursor: pointer; }
 .changeloc .ic { width: 16px; height: 16px; }
-@keyframes pop { from { opacity: 0; transform: scale(.96); } }
 @keyframes up { from { transform: translateY(40%); opacity: .4; } }
 .sheet-top { padding: 8px var(--sp) 0; }
 .grab { display: block; width: 40px; height: 5px; border-radius: 3px; background: #cfcabd; margin: 0 auto 4px; }

@@ -54,7 +54,6 @@ export function openSheet(idOrSheet, from) {
   const old = d.querySelector(".sheet-body"), b = old.cloneNode(false); old.replaceWith(b); // fresh node: no listeners left from the last sheet
   b.innerHTML = s.html;
   d.classList.remove("closing"); d.style.transform = "";
-  d.classList.toggle("mid", !!s.center); // a short choice sits in the middle, not as a sheet from the bottom
   if (!d.open) d.showModal();
   if (s.onOpen) s.onOpen(b);
   wireSearch(b);
@@ -99,7 +98,7 @@ export function wireSearch(root) {
 export function closeSheet(now = false) {
   const d = document.getElementById("sheet"); if (!d || !d.open) return;
   stopSpeaking();
-  const done = () => { d.classList.remove("closing", "mid"); d.style.transform = ""; if (d.open) d.close(); if (opener && document.contains(opener)) opener.focus({ preventScroll: true }); opener = null; };
+  const done = () => { d.classList.remove("closing"); d.style.transform = ""; if (d.open) d.close(); if (opener && document.contains(opener)) opener.focus({ preventScroll: true }); opener = null; };
   if (now || matchMedia("(prefers-reduced-motion: reduce)").matches) return done();
   d.classList.add("closing"); setTimeout(done, 180);
 }

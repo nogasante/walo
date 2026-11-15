@@ -1,7 +1,7 @@
 /* Home: what she is growing now, Plant Doctor, and one way to plant something else (place first or crop first). */
 import { place, placeLabel, farmsHere, setCrop } from "../store.js";
 import { crop, cropGroups, farmProgress, CFG } from "../data.js";
-import { icon, cropImg, cropTile, hero, ring, row, btn, note, openSheet, closeSheet } from "../ui.js";
+import { icon, cropImg, cropTile, hero, ring, row, btn, openSheet, closeSheet } from "../ui.js";
 import { esc, roughDate, MONTHS_LONG } from "../util.js";
 import { openCropPicker, openPlacePicker } from "./pickers.js";
 
