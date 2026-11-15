@@ -15,7 +15,7 @@ const dayYear = (d) => `${isoDM(d)} ${d.slice(0, 4)}`; /* prices span sources an
 /* a price collected more than four months ago is not "latest": say so rather than let it read as today */
 const stalePrice = (d) => (Date.now() - new Date(d + "T00:00:00").getTime()) / 864e5 > 120;
 /* one line for the price card: which source, how fresh, how far */
-const priceLine = (p) => `${stalePrice(p.d) ? "Last recorded price" : "Price"} (${isoDM(p.d)}): ${currency()} ${fmt(p.v, 2)} per kg at ${esc(p.name)} (${fmt(p.km)} km)${p.type === "exchange" ? ", traded on the Ghana Commodity Exchange" : ", market price"}.`;
+const priceLine = (p) => `${stalePrice(p.d) ? "Last recorded price" : "Price"} (${dayYear(p.d)}): ${currency()} ${fmt(p.v, 2)} per kg at ${esc(p.name)} (${fmt(p.km)} km)${p.type === "exchange" ? ", traded on the Ghana Commodity Exchange" : ", market price"}.`;
 const other = (mine) => `<button type="button" class="linkbtn center" id="check-crop">${icon("search")}<span>${mine ? "Check another crop" : "Check a crop"}</span></button>`;
 /* the farmer's fields, main crop first, then the soonest harvest */
 const myFields = () => { const m = mainCrop(); return farms().map((f) => ({ f, pr: farmProgress(f) })).sort((a, b) => (b.f.crop === m) - (a.f.crop === m) || a.pr.harvest - b.pr.harvest); };
