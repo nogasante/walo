@@ -5,15 +5,15 @@
 import { crop, cropsHere, scoreCrop, sellAdvice, isTree } from "./data.js";
 
 export const PRIORITIES = [
-  { id: "soil", label: "Soil", ic: "sprout", line: "Leave the soil better" },
-  { id: "water", label: "Water", ic: "droplets", line: "Use less water" },
-  { id: "money", label: "Money", ic: "tag", line: "Earn more from it" },
+  { id: "soil", label: "Look after the soil", ic: "sprout", line: "Leave the soil better than you found it" },
+  { id: "water", label: "Use less water", ic: "droplets", line: "Choose crops the rain can carry" },
+  { id: "money", label: "Earn more", ic: "tag", line: "Choose what sells best" },
 ];
 /* what her soil does with water: sandy lets it through, clay holds it and washes less */
 export const SOILS = [
-  { id: "sandy", label: "Sandy", holds: 0.9, washes: 1.15, plain: "water runs through it fast" },
-  { id: "loam", label: "Loam", holds: 1, washes: 1, plain: "holds water well" },
-  { id: "clay", label: "Clay", holds: 1.08, washes: 0.85, plain: "holds water and resists washing away" },
+  { id: "sandy", label: "Sandy", holds: 0.9, washes: 1.15, plain: "water runs through it fast", feel: "Gritty. Squeezed in your hand it falls apart." },
+  { id: "loam", label: "Loamy", holds: 1, washes: 1, plain: "holds water well", feel: "Dark and crumbly. It holds together when squeezed, then breaks." },
+  { id: "clay", label: "Clay", holds: 1.08, washes: 0.85, plain: "holds water and stays put", feel: "Sticky and heavy. It stays in a ball when squeezed." },
 ];
 const W = {
   soil: { water: 0.2, soil: 0.45, money: 0.15, risk: 0.2 },
@@ -59,6 +59,8 @@ export function rotationOptions(afterId, p, { soil = "loam", priority = "soil", 
     if (sa.kind === "guess") risks.push("Walo has no price pattern for it here yet.");
     return {
       c, r, pct: Math.round(total * 100), water, soilScore, money, risk, deficit, hot,
+      need: need ? Math.round(need) : null, peff: fit && fit.peff_mm != null ? Math.round(fit.peff_mm) : null,
+      waterPct: Math.round(water * 100), heatT: (fit && fit.heat && fit.heat.t) || 35,
       reasons: reasons.slice(0, 3), risks: risks.slice(0, 2), same: false, sa,
     };
   };
@@ -76,7 +78,10 @@ export function rotationOptions(afterId, p, { soil = "loam", priority = "soil", 
     const total = w.water * water + w.soil * soilScore + w.money * money + w.risk * risk;
     const risks = [`Same crop every season: the same pests, weeds and nutrients come back, and the soil is worked the same way.`];
     if (deficit > 0.2) risks.push(`The usual rain leaves it about ${Math.round(def)} mm short.`);
-    return { c: after, r: ar, pct: Math.round(total * 100), water, soilScore, money, risk, deficit, hot, reasons: [ar.role || "The crop you know."], risks, same: true, sa };
+    return { c: after, r: ar, pct: Math.round(total * 100), water, soilScore, money, risk, deficit, hot,
+      need: need ? Math.round(need) : null, peff: fit && fit.peff_mm != null ? Math.round(fit.peff_mm) : null,
+      waterPct: Math.round(water * 100), heatT: (fit && fit.heat && fit.heat.t) || 35,
+      reasons: [ar.role || "The crop you know."], risks, same: true, sa };
   })();
   const options = all.sort((a, b) => b.pct - a.pct).slice(0, limit);
   if (!options.some((o) => o.c.id === afterId)) options.push(again);

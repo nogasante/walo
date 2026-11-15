@@ -485,15 +485,6 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .pb-row > .ic:last-child { width: 20px; color: var(--muted); }
 
 /* ---------- rotation: what matters most, the soil, and one card per crop ---------- */
-.seg3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.seg { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; font-weight: 600; font-size: var(--fs-s); cursor: pointer; }
-.seg .ic { width: 20px; height: 20px; }
-.seg.on { background: var(--brand-2); border-color: var(--brand); color: var(--brand); }
-.seg-line { margin: -4px 2px 0; font-size: var(--fs-xs); color: var(--muted); }
-.soilline { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); }
-.soilchips { display: flex; gap: 8px; }
-.soilchip { min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs-xs); font-weight: 600; cursor: pointer; }
-.soilchip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
 .nextcard { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }
 .nc-top { display: flex; align-items: center; gap: 10px; }
 .nc-img { flex: none; width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
@@ -512,3 +503,30 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .fb-btns .btn { min-height: 44px; padding: 0 18px; }
 .fb-done { display: flex; align-items: center; gap: 8px; font-size: var(--fs-s); color: var(--good); }
 .fb-done .ic { width: 20px; height: 20px; flex: none; }
+
+/* ---------- rotation: the NASA rain evidence, and one row for the two choices ---------- */
+.nasa { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 10px; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }
+.nasa-h { display: flex; align-items: center; gap: 8px; font-size: var(--fs-s); color: var(--brand); }
+.nasa-h .ic { width: 20px; height: 20px; }
+.nasa-src { font-size: var(--fs-xs); color: var(--muted); margin: 2px 0 0; }
+.wline { display: flex; flex-direction: column; gap: 5px; }
+.wline-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.wline-h span { display: flex; align-items: center; gap: 6px; font-size: var(--fs-xs); font-weight: 700; color: var(--ink); }
+.wline-h .ic, .wline.small .ic { width: 16px; height: 16px; color: var(--brand); flex: none; }
+.wline-h small { font-size: var(--fs-xs); color: var(--muted); flex: none; }
+.wline.small span { display: flex; align-items: flex-start; gap: 6px; font-size: var(--fs-xs); color: var(--muted); }
+.nbar { height: 8px; border-radius: 999px; background: #e9efe7; overflow: hidden; }
+.nbar i { display: block; height: 100%; border-radius: 999px; background: var(--good); }
+.nbar.wait i { background: var(--wait); } .nbar.bad i { background: var(--bad); }
+.tune { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 56px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.tune > .ic:first-child { width: 22px; height: 22px; color: var(--brand); flex: none; }
+.tune > span { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.tune b { font-size: var(--fs-s); } .tune small { font-size: var(--fs-xs); color: var(--muted); }
+.tune > .ic:last-child { width: 20px; color: var(--muted); flex: none; }
+.pick-h { font-size: var(--fs-s); font-weight: 700; margin: 4px 0 0; }
+.pick { display: flex; flex-direction: column; gap: 8px; }
+.pickrow { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.pickrow > .ic { width: 22px; height: 22px; color: var(--brand); flex: none; }
+.pickrow > span { display: flex; flex-direction: column; gap: 2px; }
+.pickrow b { font-size: var(--fs-s); } .pickrow small { font-size: var(--fs-xs); color: var(--muted); }
+.pickrow.on { border-color: var(--brand); background: var(--brand-2); }
