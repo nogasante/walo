@@ -2,7 +2,7 @@
    Every number comes from what Walo already holds: NASA POWER rain and the FAO-56 water balance (scoreCrop),
    the crop traits in data/crops.json (rotation: family, n_fix, cover, water), the usual price pattern (sellAdvice),
    and her own priority. The traits are extension rules of thumb, never measured here, and the Why? says so. */
-import { crop, cropsHere, scoreCrop, sellAdvice, isTree } from "./data.js";
+import { crop, cropsHere, scoreCrop, sellAdvice, isTree, monthName } from "./data.js";
 
 export const PRIORITIES = [
   { id: "soil", label: "Look after the soil", ic: "sprout", line: "Leave the soil better than you found it" },
@@ -53,7 +53,7 @@ export function rotationOptions(afterId, p, { soil = "loam", priority = "soil", 
     else if (r.cover === 2) reasons.push("Leaves some stems and leaves on the field to hold the soil.");
     if (ar.n_fix && r.family === "cereal") reasons.push(`Follows a legume, which leaves nitrogen for it.`);
     if (sc.water && water >= 0.7) reasons.push("The usual rain here covers most of the water it needs.");
-    if (sa.kind === "index") reasons.push(sa.store ? `Prices usually rise by ${sa.store.month ? "a later month" : "after harvest"}: it can be stored and sold later.` : "There is a usual price pattern for it near you.");
+    if (sa.kind === "index" && sa.store) reasons.push(`Prices usually rise by ${monthName(sa.store.month)}: it can be stored and sold later.`);
     if (deficit > 0.2) risks.push(`The usual rain here leaves it about ${Math.round(def)} mm short in the season.`);
     if (hot >= 6) risks.push(`About ${Math.round(hot)} days above ${fit.heat.t} °C usually come while it flowers.`);
     if (sa.kind === "guess") risks.push("Walo has no price pattern for it here yet.");
@@ -81,7 +81,7 @@ export function rotationOptions(afterId, p, { soil = "loam", priority = "soil", 
     return { c: after, r: ar, pct: Math.round(total * 100), water, soilScore, money, risk, deficit, hot,
       need: need ? Math.round(need) : null, peff: fit && fit.peff_mm != null ? Math.round(fit.peff_mm) : null,
       waterPct: Math.round(water * 100), heatT: (fit && fit.heat && fit.heat.t) || 35,
-      reasons: [ar.role || "The crop you know."], risks, same: true, sa };
+      reasons: ["The crop you already know, in a field set up for it."], risks, same: true, sa };
   })();
   const options = all.sort((a, b) => b.pct - a.pct).slice(0, limit);
   if (!options.some((o) => o.c.id === afterId)) options.push(again);

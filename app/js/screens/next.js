@@ -17,7 +17,7 @@ const soilLabel = (id) => (SOILS.find((s) => s.id === id) || SOILS[1]).label.toL
 /* the water line: NASA rain against what this crop needs, as a bar she can read without a number */
 function waterLine(o) {
   const tone = o.waterPct >= 80 ? "good" : o.waterPct >= 55 ? "wait" : "bad";
-  if (o.need == null) return `<p class="wline"><span>Water</span><small>Long season: Walo does not judge its water.</small></p>`;
+  if (o.need == null) return `<p class="wline small"><span>${icon("droplets")}Long season: Walo does not judge its water.</span></p>`;
   const enough = o.waterPct >= 100;
   return `<div class="wline"><div class="wline-h"><span>${icon("cloud-rain")}${enough ? "Rain here covers all the water it needs" : `Rain covers ${o.waterPct}% of the water it needs`}</span><small>${fmt(o.peff)} mm of ${fmt(o.need)}</small></div>
     <div class="nbar ${tone}"><i style="width:${Math.max(4, Math.min(100, o.waterPct))}%"></i></div></div>`;
