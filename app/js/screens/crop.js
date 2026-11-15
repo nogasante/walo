@@ -50,7 +50,7 @@ export function render(id, sub) {
   const why = whyBody(reasons(c, sc).concat(outZone ? [`FAO does not list ${c.name.toLowerCase()} for the ${zoneName(z).toLowerCase()}.`] : []), details(c, p, sc, cm, st));
   // "Where does it grow best" is its own page at #/crop/<id>/where, not a sheet popped over this one: the same
   // link then lands on the same screen every time, and reloading or coming back does not lose it.
-  if (sub === "where") return `<div class="stack lift"><h1 class="q">Where ${esc(c.name.toLowerCase())} grows best</h1>${placesHtml(c)}</div>`;
+  if (sub === "where") return `<div class="stack"><h1 class="q">Where ${esc(c.name.toLowerCase())} grows best</h1>${placesHtml(c)}</div>`;
   const twi = c.twi && twiOn() ? ` · <span lang="ak">${esc(c.twi.split(" / ")[0].split(" (")[0])}</span>` : "";
   const fx = facts([{ ic: fw.cls === "bad" ? "circle-x" : "leaf", tone: fw.cls, text: fw.text }, isTree(c) ? null : { ic: "clock", tone: "info", text: `Ready in about ${cropDays(c)} days` }]);
   return `${hero({ img: c.img, pos: c.pos || "50% 50%", eyeIcon: "sprout", eyebrow: `${esc(c.name)}${twi}`, title: `When to plant ${esc(c.name.toLowerCase())}` })}
