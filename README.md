@@ -22,6 +22,8 @@ A farmer on a shared, low-cost Android phone, often outdoors, who reads a little
 | Where a crop grows best | `#/crop/<crop>` | Plant now, plant in a named month, or wait; a Ghana map of towns where it fits |
 | Start planting | `#/start` | Crop, optional field photo, sowing day (today or a past day, or the next window) |
 | My farm | `#/farm` | Stage, harvest timing, today’s task, one alert, photos kept on the phone |
+| What to plant after this crop | `#/next/<crop>` | Rotation options compared on soil, the NASA rain water balance, heat and price, always including the crop already in the field |
+| How this place is changing | `#/shift` | The same NASA POWER record in two halves (1991–2014, 2015–2025): when the rains start, season rain, hot days |
 | Sell | `#/sell` | When that field’s harvest usually sells best, and at which nearby market |
 | Plant Doctor | `#/doctor` | Photo, voice, or text. An AI names a likely problem and one careful next step |
 | Get help | `#/help` | AI answers first (Gemini), in English. Call and WhatsApp stay hidden until `support.phone` is set; it is empty, so the screen says a person is coming soon |
@@ -117,6 +119,7 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 | Ghana Commodity Exchange | Traded closing prices per kilogram for white maize and soya bean at the Tamale, Kumasi and Sandema warehouses, 2026 | [GCX market data](https://www.gcx.com.gh/market-data) · built by `app/scripts/build_gcx_prices.py` |
 | HDX HAPI market prices (other countries) | WFP market prices in one schema across countries: market coordinates, currency, the unit the market sells in, retail or wholesale, monthly. Converted to price per kilogram; used for the countries Walo is expanding into, not yet loaded by the app | [HDX HAPI](https://hapi.humdata.org/docs) · built by `app/scripts/build_hapi_prices.py` |
 | IITA and CSIR-SARI (and related Ghana trials) | Crop guides for maize, sorghum, cassava, yam, plantain, cowpea, millet | Per-crop list in [docs/walo-crops-sources.md](docs/walo-crops-sources.md) |
+| NASA POWER daily, same point, 1991–2014 vs 2015–2025 | How the season has moved at her town (`data/shift.json`, built by `app/scripts/build_shift.py`) | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
 | WFP food prices for Ghana, via HDX | Seasonal price index, 20 markets, observations through July 2023 | [HDX dataset](https://data.humdata.org/dataset/wfp-food-prices-for-ghana) |
 | Meteomatics Weather API | 10-day rain and maximum temperature. Climatology stays NASA POWER | [Getting started](https://www.meteomatics.com/en/api/getting-started/) |
 | Google Gemini | Plant Doctor and Get help, on the server, labelled as AI | [Gemini API](https://ai.google.dev/gemini-api/docs) |
