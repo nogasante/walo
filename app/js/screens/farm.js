@@ -32,7 +32,7 @@ export function render(id) {
 const ALERT = {
   wet: () => "Harvest time is usually wet here: dry the crop fast.",
   heat: () => "Very hot days often come while it flowers.",
-  water: () => "Rain may not be enough this season.",
+  water: () => "Rain so far may not last until harvest. Water if you can.",
 };
 export function sellLine(sa, pr) {
   if (sa.kind === "index") return sa.store ? `Harvest in ${roughDate(pr.harvest)}. Prices usually rise by ${monthName(sa.store.month)}: store if you can.` : `Harvest in ${roughDate(pr.harvest)}. Prices do not usually rise much after: sell soon after harvest.`;
