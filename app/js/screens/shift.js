@@ -23,8 +23,10 @@ export function render() {
       ? `Rain starts ${Math.abs(d)} days ${d > 0 ? "later" : "earlier"} than in ${e0}–${e1}`
       : rp <= -5 ? `The season has about ${Math.abs(rp)}% less rain than in ${e0}–${e1}`
         : `About ${Math.abs(dh)} ${dh > 0 ? "more" : "fewer"} very hot days in the season than in ${e0}–${e1}`;
+  // only the figures that actually moved: "0 hot days against 0" is noise, not information
+  const hotLine = Math.abs(dh || 0) >= 1 ? `, and ${fmt(s.recent.hot_days)} very hot days against ${fmt(s.early.hot_days)}` : "";
   const sub = moved
-    ? `Usual rain in the season is ${fmt(s.recent.season_rain)} mm now against ${fmt(s.early.season_rain)} mm, and ${fmt(s.recent.hot_days)} days above 35 °C against ${fmt(s.early.hot_days)}.`
+    ? `Usual rain in the season is ${fmt(s.recent.season_rain)} mm against ${fmt(s.early.season_rain)} mm${hotLine}.`
     : "Walo compared the same 35 years of NASA rain and heat for this point in two halves.";
   const why = whyBody(
     [
@@ -52,9 +54,9 @@ export function render() {
   <div class="stack lift">
     ${answer({ kind: moved ? "info" : "good", tone: moved ? "info" : "good", ic: "satellite", title: esc(headline), sub: esc(sub), why: { title: "How this was worked out", html: why }, say: `${headline}. ${sub}` })}
     ${facts([
-      { ic: "cloud-rain", tone: "info", text: `${d > 0 ? "+" : ""}${d} days to the first rain` },
-      { ic: "droplets", tone: rp != null && rp < 0 ? "wait" : "good", text: `${rp > 0 ? "+" : ""}${rp}% season rain` },
-      { ic: "thermometer-sun", tone: dh > 0 ? "wait" : "good", text: `${dh > 0 ? "+" : ""}${dh} hot days` },
+      { ic: "cloud-rain", tone: "info", text: d === 0 ? "First rain: no change" : `First rain ${d > 0 ? "later" : "earlier"} by ${Math.abs(d)} days` },
+      { ic: "droplets", tone: rp != null && rp < 0 ? "wait" : "good", text: rp === 0 ? "Season rain: no change" : `Season rain ${rp > 0 ? "+" : ""}${rp}%` },
+      { ic: "thermometer-sun", tone: dh > 0 ? "wait" : "good", text: !dh ? "Hot days: no change" : `Hot days ${dh > 0 ? "+" : ""}${dh}` },
     ])}
     <div class="card stack"><b class="fix-h">What this means for planting</b><p class="a-sub">${esc(plan)}</p></div>
     ${mine ? btn(`When to plant ${crop(mine).name.toLowerCase()}`, { href: `#/crop/${esc(mine)}`, ic: "calendar-days" }) : btn("What to plant here", { href: "#/now", ic: "sprout" })}

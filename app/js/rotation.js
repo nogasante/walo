@@ -48,7 +48,7 @@ export function rotationOptions(afterId, p, { soil = "loam", priority = "soil", 
     const money = sa.kind === "index" ? (sa.store ? 0.9 : 0.72) : sa.kind === "spot" ? 0.55 : 0.35;
     const total = w.water * water + w.soil * soilScore + w.money * money + w.risk * risk;
     const reasons = [], risks = [];
-    if (r.n_fix) reasons.push(`Puts nitrogen back in the soil after the ${after.name.toLowerCase()}.`);
+    if (r.n_fix) reasons.push("Puts nitrogen back in the soil.");
     if (r.cover >= 3) reasons.push("Covers the ground, so rain does not wash the soil away.");
     else if (r.cover === 2) reasons.push("Leaves some stems and leaves on the field to hold the soil.");
     if (ar.n_fix && r.family === "cereal") reasons.push(`Follows a legume, which leaves nitrogen for it.`);
