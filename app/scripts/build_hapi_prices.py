@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/prices-world.json from OCHA's Humanitarian API (HDX HAPI) market prices.
+"""Build scripts/data/prices-world.json from OCHA's Humanitarian API (HDX HAPI) market prices.
 
 Why this file exists: Walo's Ghana prices come from MoFA SRID plus the Ghana Commodity Exchange,
 because WFP's Ghana series stops in July 2023. Every other country has no such source, but HAPI
@@ -15,7 +15,7 @@ HAPI wants an app_identifier on every call. It is NOT a secret: HAPI's own
 email you want HAPI's usage logs to show, or set HAPI_APP_IDENTIFIER to a ready-made identifier.
 Never commit a token.
 
-What it writes (data/prices-world.json), per country, in the country's own currency:
+What it writes (scripts/data/prices-world.json), per country, in the country's own currency:
     markets: "Market (Admin1)" -> {lat, lon}
     crops:   crop id -> {label, mk: {"Market (Admin1)": {r|w: {v, d, unit, price, flag}}}}
 `v` is the price per kilogram, converted from the unit the market publishes ("2.5 KG", "400 G",
@@ -29,7 +29,7 @@ live, and that needs its planting windows sourced. This file is the price half o
 import argparse, base64, collections, datetime, json, os, sys, time, urllib.error, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "data", "prices-world.json")
+OUT = os.path.join(HERE, "data", "prices-world.json")
 BASE = "https://hapi.humdata.org/api/v2/food-security-nutrition-poverty/food-prices-market-monitor"
 
 AFRICA = ("DZA AGO BEN BWA BFA BDI CPV CMR CAF TCD COM COG COD CIV DJI EGY GNQ ERI SWZ ETH GAB GMB "

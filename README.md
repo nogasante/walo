@@ -34,8 +34,6 @@ Tabs are **Home**, **My farm**, **Sell**, and **Doctor**. The place chip in the 
 
 The hackathon build is **English only**. Listen uses the phone’s own English voice. `data/app.json` → `languages.enabled` is `["en"]`, which gates every Twi path: no EN/Twi chip, no Twi messages, a saved Twi choice is cleared on load, and `/api/twi` returns 404. The Khaya code and `data/i18n-tw.json` stay in the repo. After the hackathon the plan is a language picker for Twi, Ga, Ewe, Fante, and Dagbani, each shown only when the text is complete and a speaker has reviewed it.
 
-The live deployment of this app is `dpl_CHUzrfUQkVGaUMReutssEamCsPrJ`. The service worker cache is `walo-v26`.
-
 ## How it works
 
 ```mermaid
@@ -142,6 +140,7 @@ app/                  Vercel root. The running app.
   data/               JSON the phone reads
   lib/agro.js         FAO-56, onset, EcoCrop, growing degree days
   scripts/            Data builders. Not deployed (app/.vercelignore)
+    data/             Their raw inputs and full outputs (prices-world.json and friends), not read by the app
   AI_USE.md           Space Apps AI disclosure
   DESIGN.md           Design record and the methods chapter
 proof/                Stdlib NASA POWER proof script
