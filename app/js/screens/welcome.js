@@ -2,8 +2,8 @@
    Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
    Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
-import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds } from "../data.js";
-import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto } from "../store.js";
+import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
+import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
 import { btn, icon, note, row, cropImg } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
@@ -15,6 +15,7 @@ export const title = () => "Welcome";
 
 export function render() {
   if (W.step === "doors") return doors();
+  if (W.step === "country") return countryStep();
   if (W.step === "place") return placeStep();
   if (W.step === "places") return placesStep();
   return cropStep();
@@ -41,6 +42,21 @@ function doors() {
   </div>`;
 }
 
+/* Step one is the country on its own, and nothing else: her country decides which towns can be offered,
+   so showing the towns of the old one underneath was asking her a question out of order. */
+function countryStep() {
+  const cur = (country() || {}).id;
+  return `<div class="stack">
+    ${whead()}
+    <h1 class="q wl-q">Which country do you farm in?</h1>
+    <div class="list">${countryIds().map((k) => {
+      const c = country(k), sub = c.status === "live" ? `Planting dates checked by a farmer in ${c.name}` : `Planting dates not checked by a farmer in ${c.name} yet`;
+      return row({ attrs: `data-wcountry="${k}"`, ic: "map-pin", title: esc(c.name), sub: esc(sub), status: k === cur ? "good" : "" });
+    }).join("")}</div>
+    ${note("Your town comes next. Walo only covers these countries for now.", "map-pin")}
+  </div>`;
+}
+
 function placeStep() {
   const list = towns().slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="stack">
@@ -48,7 +64,7 @@ function placeStep() {
     <h1 class="q wl-q">Where is your farm?</h1>
     ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
-    ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'id="w-country"' }) : ""}
+    ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'data-wchange' }) : ""}
     <p class="gps-msg" id="w-msg" aria-live="polite"></p>
     <p class="list-h">Or pick the town nearest your farm</p>
     <div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>
@@ -94,16 +110,30 @@ export function askPlace() { W.step = "place"; W.order = "place"; }
 
 /* where "back" goes from the step she is on */
 function stepBack() {
-  if (W.step === "place") W.step = "doors";
-  else if (W.step === "crop") W.step = W.order === "place" ? "place" : "doors";
+  if (W.step === "place") W.step = countryIds().length > 1 ? "country" : "doors";
+  else if (W.step === "country") W.step = "doors";
+  else if (W.step === "crop") W.step = W.order === "place" ? "country" : "doors";
   else { W.step = "crop"; W.crop = null; }
+  refresh();
+}
+
+/* chose a country: fetch its towns and prices, then ask for the town */
+async function awaitCountry(id) {
+  if (id !== (country() || {}).id) {
+    setCountry(id);
+    try { await loadCountryData(); } catch { /* towns still work without prices */ }
+  }
+  W.step = "place";
   refresh();
 }
 
 export function mount(root) {
   root.addEventListener("click", (e) => {
     const door = e.target.closest("[data-door]");
-    if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : "place"; refresh(); return; }
+    if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : countryIds().length > 1 ? "country" : "place"; refresh(); return; }
+    const wc = e.target.closest("[data-wcountry]");
+    if (wc) { awaitCountry(wc.dataset.wcountry); return; }
+    if (e.target.closest("[data-wchange]")) { W.step = "country"; refresh(); return; }
     if (e.target.closest("[data-wback]")) { stepBack(); return; }
     const t = e.target.closest("[data-town]");
     if (t) { choosePlace(t.dataset.town); return; }
