@@ -123,7 +123,7 @@ export function render(id, fid) {
   );
   return `${hero({ img: CFG().photos.home.img, pos: CFG().photos.home.pos, eyeIcon: "refresh-cw", eyebrow: `${esc(after.name)} · ${esc(placeLabel(p))}`, title: after.name === "Maize" ? "After the maize" : `After the ${after.name.toLowerCase()}` })}
   <div class="stack lift">
-    ${answer({ kind: top.same ? "info" : "now", tone: top.same ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), extra: waterLine(top), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
+    ${answer({ kind: top.same ? "info" : "now", tone: top.same ? "info" : "good", ic: "refresh-cw", title: esc(headline), sub: esc(sub), why: { title: "How Walo chose", html: why }, say: `${headline}. ${sub}` })}
     ${nasaCard(p)}
     ${options.map((o) => optionCard(o, soil)).join("")}
     <button type="button" class="tune" data-sheet="${sheet(tune.title, tune.html, tune.onOpen)}">
