@@ -10,6 +10,8 @@ export function openPlacePicker(next, from) {
     <p class="gps-msg" id="gps-msg" aria-live="polite"></p>
     ${countryIds().length > 1 ? `<button type="button" class="btn secondary wide" id="pick-country">${icon("map-pin")}<span>Country: ${esc(country().name)}</span></button>` : ""}
     <p class="list-h">Or pick the town nearest your farm</p>
+    <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
+    <p class="muted small" data-none hidden>No town matches that.</p>
     <div class="list">${towns().sort((a, b) => a.name.localeCompare(b.name)).map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`;
   openSheet({ title: "Where is your farm?", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
@@ -33,7 +35,9 @@ export function openCountryPicker(from, host) {
       <span class="ccard-t"><b>${esc(c.name)}</b><small>${esc(sub)}</small></span>
     </button>`;
   }).join("");
-  openSheet({ title: "Which country?", html: `<div class="ccards">${cards}</div>
+  openSheet({ title: "Which country?", html: `<input class="search-in" type="search" data-filter placeholder="Search a country" aria-label="Search a country">
+    <p class="muted small" data-none hidden>No country matches that.</p>
+    <div class="ccards">${cards}</div>
     <p class="muted small">You will pick your town again: a town belongs to one country. "Dates not checked yet" means the planting dates come from published calendars, not from a farmer there.</p>`, onOpen: (b) => {
     b.addEventListener("click", async (e) => {
       const t = e.target.closest("[data-country]");
@@ -74,7 +78,9 @@ export function openCropPicker(mode, from, onPick) {
   const p = place(), here = new Set(cropsHere(p).map((c) => c.id));
   const list = crops().slice().sort((a, b) => (mode === "where" ? 0 : here.has(b.id) - here.has(a.id)) || a.name.localeCompare(b.name));
   const tile = (c) => `<button type="button" class="tile" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`;
-  const html = `<div class="tiles">${list.map(tile).join("")}</div>
+  const html = `<input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
+    <p class="muted small" data-none hidden>No crop matches that.</p>
+    <div class="tiles">${list.map(tile).join("")}</div>
     ${mode !== "where" ? `<p class="muted small">${esc(placeLabel(p))}: crops that grow in this zone come first.</p>` : ""}`;
   openSheet({ title: mode === "where" ? "Which crop?" : "Pick your crop", html, onOpen: (b) => {
     b.addEventListener("click", (e) => { const t = e.target.closest("[data-crop]"); if (t && !t.disabled) { closeSheet(true); onPick(t.dataset.crop); } });
@@ -86,6 +92,7 @@ export function openMainCropPicker(from) {
   const cur = mainCrop(), auto = autoMainCrop(), p = place(), here = new Set(cropsHere(p).map((c) => c.id));
   const list = crops().slice().sort((a, b) => here.has(b.id) - here.has(a.id) || a.name.localeCompare(b.name));
   const html = `${auto ? `<button type="button" class="btn secondary wide" data-main="">${icon("leaf")}<span>From my fields${mainIsAuto() ? " (now)" : ""}</span></button>` : ""}
+    <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-main="${c.id}" ${c.id === cur ? 'aria-current="true"' : ""}>${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
     <p class="muted small">Sell, Plant Doctor and crop pages open on this crop.</p>`;
   openSheet({ title: "My main crop", html, onOpen: (b) => {

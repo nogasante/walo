@@ -55,7 +55,26 @@ export function openSheet(idOrSheet, from) {
   d.classList.remove("closing"); d.style.transform = "";
   if (!d.open) d.showModal();
   if (s.onOpen) s.onOpen(b);
+  wireSearch(b);
   document.dispatchEvent(new CustomEvent("sheet-open", { detail: b }));
+}
+/* a search box over any list of towns, countries, crops or main-crop choices */
+export function wireSearch(root) {
+  const inp = root.querySelector("[data-filter]");
+  if (!inp) return;
+  const items = () => root.querySelectorAll("[data-town],[data-country],[data-crop],[data-main],.ccard");
+  const run = () => {
+    const q = inp.value.trim().toLowerCase();
+    let shown = 0;
+    items().forEach((el) => {
+      const hit = !q || el.textContent.toLowerCase().includes(q);
+      el.hidden = !hit;
+      if (hit) shown++;
+    });
+    const none = root.querySelector("[data-none]");
+    if (none) none.hidden = shown > 0;
+  };
+  inp.addEventListener("input", run);
 }
 export function closeSheet(now = false) {
   const d = document.getElementById("sheet"); if (!d || !d.open) return;

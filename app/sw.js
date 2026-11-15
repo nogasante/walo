@@ -5,12 +5,12 @@
    missing file can no longer fail the whole install and leave a farmer with no offline copy at all.
    Any file that fails is reported to /api/log (app/api/log.js) as "sw_missing" so it shows up in the
    server log instead of failing silently. Bump CACHE whenever FILES or a shipped asset changes. */
-const CACHE = "walo-v59";
+const CACHE = "walo-v60";
 const FILES = ["./", "index.html", "styles.css", "icon.svg", "manifest.json", "fonts/jakarta-var.woff2", "lib/agro.js",
-  "img/flags/gh.png", "img/flags/ke.png", "img/flags/ng.png", "img/logo-mark.png", "img/logo-mark-192.png", "img/logo-mark-512-maskable.png", "img/favicon-32.png", "img/apple-touch-icon.png",
+  "img/flags/gh.png", "img/flags/ke.png", "img/flags/ng.png", "img/flags/tg.png", "img/flags/ci.png", "img/flags/sn.png", "img/flags/ml.png", "img/flags/ne.png", "img/logo-mark.png", "img/logo-mark-192.png", "img/logo-mark-512-maskable.png", "img/favicon-32.png", "img/apple-touch-icon.png",
   "js/main.js", "js/data.js", "js/store.js", "js/ui.js", "js/util.js", "js/icons.js",
   "js/screens/home.js", "js/screens/now.js", "js/screens/crop.js", "js/tips.js", "js/calendar.js", "js/screens/farm.js", "js/screens/start.js", "js/screens/sell.js", "js/screens/doctor.js", "js/screens/about.js", "js/screens/pickers.js", "js/screens/words.js", "js/screens/welcome.js", "js/screens/backup.js", "js/sync.js", "js/photo.js", "js/log.js", "js/twi.js", "js/net.js", "js/screens/help.js",
-  "data/app.json", "data/rules.json", "data/countries.json", "data/crops.json", "data/places.json", "data/agro.json", "data/ndvi.json", "data/market.json", "data/prices.json", "data/prices-ke.json", "data/prices-ng.json", "data/exchange.json", "data/credits.json", "data/ghana-map.json", "data/kenya-map.json", "data/help.json",
+  "data/app.json", "data/rules.json", "data/countries.json", "data/crops.json", "data/places.json", "data/agro.json", "data/ndvi.json", "data/market.json", "data/prices.json", "data/prices-ke.json", "data/prices-ng.json", "data/prices-tg.json", "data/prices-ci.json", "data/prices-sn.json", "data/prices-ml.json", "data/prices-ne.json", "data/exchange.json", "data/credits.json", "data/ghana-map.json", "data/kenya-map.json", "data/help.json",
   "img/maize.webp", "img/maize-field.webp", "img/hero.webp", "img/field.webp", "img/grain.webp", "img/market.webp"];
 
 function reportMissing(failed) {

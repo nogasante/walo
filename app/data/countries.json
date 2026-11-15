@@ -203,6 +203,422 @@
         "crop_calendar": "IITA Guide to Maize Production in Northern Nigeria; Nigeria NFHL crop guidance; NE Nigeria rainfed seasonal calendar (FS Cluster/FAO); IITA Growing Cassava",
         "prices": "WFP market prices via HDX HAPI"
       }
+    },
+    "TG": {
+      "name": "Togo",
+      "flag": "tg",
+      "status": "preview",
+      "_status_note": "Preview: zones and planting windows come from FAO's Crop Calendar, not from a farmer there. It becomes live when checked_by_local is true.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          6.0,
+          11.2
+        ],
+        "lon": [
+          -0.2,
+          1.9
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "West African rains start in the south in March and reach the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [
+            "003",
+            "004"
+          ],
+          "default": true,
+          "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar (TG)",
+        "prices": "WFP market prices via HDX HAPI"
+      },
+      "zones": {
+        "001": {
+          "name": "Dry savannah",
+          "short": "dry savannah"
+        },
+        "002": {
+          "name": "Wet savannah",
+          "short": "wet savannah"
+        },
+        "003": {
+          "name": "Forest area",
+          "short": "Forest area"
+        },
+        "004": {
+          "name": "Littoral",
+          "short": "littoral"
+        },
+        "_source": "FAO Crop Calendar agro-ecological zones for TG"
+      }
+    },
+    "BJ": {
+      "name": "Benin",
+      "flag": "bj",
+      "status": "draft",
+      "_status_note": "Draft: no sourced planting windows yet (FAO has no crop calendar for this country), so it is not offered.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          6.1,
+          12.5
+        ],
+        "lon": [
+          0.7,
+          3.9
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "West African rains start in the south in March and reach the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [],
+          "default": true,
+          "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar",
+        "prices": "WFP market prices via HDX HAPI"
+      }
+    },
+    "CI": {
+      "name": "Côte d'Ivoire",
+      "flag": "ci",
+      "status": "preview",
+      "_status_note": "Preview: zones and planting windows come from FAO's Crop Calendar, not from a farmer there. It becomes live when checked_by_local is true.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          4.3,
+          10.8
+        ],
+        "lon": [
+          -8.7,
+          -2.4
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "West African rains start in the south in March and reach the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [
+            "001",
+            "002"
+          ],
+          "default": true,
+          "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar (CI)",
+        "prices": "WFP market prices via HDX HAPI"
+      },
+      "zones": {
+        "001": {
+          "name": "Guinea Zone",
+          "short": "Guinea Zone"
+        },
+        "002": {
+          "name": "Sudano-Guinean Zone 1",
+          "short": "Sudano-Guinean Zon"
+        },
+        "003": {
+          "name": "Sudano-Guinean Zone 2",
+          "short": "Sudano-Guinean Zon"
+        },
+        "004": {
+          "name": "Sudanese Zone",
+          "short": "Sudanese Zone"
+        },
+        "_source": "FAO Crop Calendar agro-ecological zones for CI"
+      }
+    },
+    "BF": {
+      "name": "Burkina Faso",
+      "flag": "bf",
+      "status": "draft",
+      "_status_note": "Draft: no sourced planting windows yet (FAO has no crop calendar for this country), so it is not offered.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          9.3,
+          15.2
+        ],
+        "lon": [
+          -5.6,
+          2.5
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "West African rains start in the south in March and reach the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [],
+          "default": true,
+          "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar",
+        "prices": "WFP market prices via HDX HAPI"
+      }
+    },
+    "SN": {
+      "name": "Senegal",
+      "flag": "sn",
+      "status": "preview",
+      "_status_note": "Preview: zones and planting windows come from FAO's Crop Calendar, not from a farmer there.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          12.2,
+          16.7
+        ],
+        "lon": [
+          -17.6,
+          -11.3
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "Rains reach the south in March and the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [
+            "006"
+          ],
+          "default": true,
+          "note": "Only bimodal southern zones have a second season."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar (SN)",
+        "prices": "WFP market prices via HDX HAPI"
+      },
+      "zones": {
+        "001": {
+          "name": "Niayes",
+          "short": "niayes"
+        },
+        "002": {
+          "name": "VALLEY RIVER",
+          "short": "VALLEY RIVER"
+        },
+        "003": {
+          "name": "Pastoral zone",
+          "short": "pastoral zone"
+        },
+        "004": {
+          "name": "Groundnut Basin",
+          "short": "groundnut Basin"
+        },
+        "005": {
+          "name": "CENTRAL AND SOUTHEAST",
+          "short": "CENTRAL AND SOUTHE"
+        },
+        "006": {
+          "name": "CASAMANCE",
+          "short": "CASAMANCE"
+        },
+        "_source": "FAO Crop Calendar agro-ecological zones for SN"
+      }
+    },
+    "ML": {
+      "name": "Mali",
+      "flag": "ml",
+      "status": "preview",
+      "_status_note": "Preview: zones and planting windows come from FAO's Crop Calendar, not from a farmer there.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          10.1,
+          17.3
+        ],
+        "lon": [
+          -12.3,
+          4.3
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "Rains reach the south in March and the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [],
+          "default": true,
+          "note": "Only bimodal southern zones have a second season."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar (ML)",
+        "prices": "WFP market prices via HDX HAPI"
+      },
+      "zones": {
+        "001": {
+          "name": "Saharan zone",
+          "short": "Saharan zone"
+        },
+        "002": {
+          "name": "Sahel",
+          "short": "Sahel"
+        },
+        "003": {
+          "name": "Area Sudan",
+          "short": "area Sudan"
+        },
+        "004": {
+          "name": "Sudano Guinean Zone",
+          "short": "Sudano Guinean Zon"
+        },
+        "005": {
+          "name": "Delta interior and lake area",
+          "short": "Delta interior and"
+        },
+        "_source": "FAO Crop Calendar agro-ecological zones for ML"
+      }
+    },
+    "NE": {
+      "name": "Niger",
+      "flag": "ne",
+      "status": "preview",
+      "_status_note": "Preview: zones and planting windows come from FAO's Crop Calendar, not from a farmer there.",
+      "checked_by_local": false,
+      "bbox": {
+        "lat": [
+          11.6,
+          17.0
+        ],
+        "lon": [
+          4.2,
+          10.0
+        ],
+        "_note": "A margin around the country so 'use my location' near a border still works."
+      },
+      "currency": {
+        "code": "XOF",
+        "name": "CFA franc"
+      },
+      "language": "en",
+      "onset": {
+        "hemisphere": "north",
+        "major_search": {
+          "from": "03-01",
+          "to": "07-31",
+          "default": true,
+          "note": "Rains reach the south in March and the Sahel in July, so the search runs from 1 March to 31 July."
+        },
+        "minor_search": {
+          "from": "08-15",
+          "to": "10-31",
+          "zones": [],
+          "default": true,
+          "note": "Only bimodal southern zones have a second season."
+        }
+      },
+      "sources": {
+        "crop_calendar": "FAO Crop Calendar (NE)",
+        "prices": "WFP market prices via HDX HAPI"
+      },
+      "zones": {
+        "001": {
+          "name": "Saharan region, desert",
+          "short": "Saharan region, de"
+        },
+        "002": {
+          "name": "Sahelo-Saharan zone",
+          "short": "Sahelo-Saharan zon"
+        },
+        "003": {
+          "name": "Sahel",
+          "short": "Sahel"
+        },
+        "004": {
+          "name": "Sudano-Sahelian Zone",
+          "short": "Sudano-Sahelian Zo"
+        },
+        "_source": "FAO Crop Calendar agro-ecological zones for NE"
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
 import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
-import { btn, icon, note, row, cropImg } from "../ui.js";
+import { btn, icon, note, row, cropImg, wireSearch } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
 import { openCountryPicker } from "./pickers.js";
@@ -70,6 +70,8 @@ function placeStep() {
     ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'data-wchange' }) : ""}
     <p class="gps-msg" id="w-msg" aria-live="polite"></p>
     <p class="list-h">Or pick the town nearest your farm</p>
+    <input class="search-in" type="search" data-filter placeholder="Search a town" aria-label="Search a town">
+    <p class="muted small" data-none hidden>No town matches that.</p>
     <div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>
   </div>`;
 }
@@ -84,6 +86,8 @@ function cropStep() {
     ${whead()}
     <h1 class="q wl-q">${asking ? "Which crop do you want to plant?" : `What can you grow in ${esc(placeLabel(place()))}?`}</h1>
     ${note(asking ? "Walo will show you where it does best." : "The crops that do well here come first. Pick the one you grow.", "sprout")}
+    <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
+    <p class="muted small" data-none hidden>No crop matches that.</p>
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
     ${asking ? "" : btn("I grow more than one", { kind: "secondary", attrs: "data-later" })}
     ${note("Sell, Plant Doctor and crop pages open on this crop. You can change it later.")}
@@ -132,6 +136,7 @@ async function awaitCountry(id) {
 }
 
 export function mount(root) {
+  wireSearch(root);
   root.addEventListener("click", (e) => {
     const door = e.target.closest("[data-door]");
     if (door) { W.order = door.dataset.door; W.step = countryIds().length > 1 ? "country" : W.order === "crop" ? "crop" : "place"; refresh(); return; }
