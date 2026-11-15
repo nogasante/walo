@@ -61,7 +61,7 @@ export const putMainCropRaw = (m) => { set("walo.main", m); emit(); };
    and a sandy soil holds water differently from clay. */
 export const priority = () => get("walo.priority", "soil");
 export const setPriority = (v) => { set("walo.priority", v); emit(); };
-export const soilChoice = () => get("walo.soil", "loam");
+export const soilChoice = () => get("walo.soil", null); // null = use the zone's usual soil
 export const setSoilChoice = (v) => { set("walo.soil", v); emit(); };
 
 /* ---------- farms ---------- */

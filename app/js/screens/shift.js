@@ -37,9 +37,15 @@ export function render() {
       `Years in each period: about ${e1 - e0 + 1} and ${r1 - r0 + 1} (2015 onward is shorter, so it is noisier).`,
       `Onset: median day of year ${fmt(s.early.onset_doy)} → ${fmt(s.recent.onset_doy)}; rain in the season window ${fmt(s.early.season_rain)} mm → ${fmt(s.recent.season_rain)} mm; days above 35 °C ${fmt(s.early.hot_days)} → ${fmt(s.recent.hot_days)}.`,
       `Season window used at this point: ${esc((s.window || []).join(" to "))} (data/countries.json).`,
+      tr.onset_days_per_decade != null ? `Trend over every year 1991–2025 (least squares): onset ${tr.onset_days_per_decade} days/decade, rain ${tr.rain_mm_per_decade} mm/decade, hot days ${tr.hot_days_per_decade}/decade.` : "",
       esc(s.note || ""),
     ].filter(Boolean),
   );
+  // the whole 35-year trend, so the screen is not just two halves compared
+  const tr = s.trend || {}, trBits = [];
+  if (tr.onset_days_per_decade != null && Math.abs(tr.onset_days_per_decade) >= 0.5) trBits.push(`The first rain comes about ${Math.abs(tr.onset_days_per_decade)} days ${tr.onset_days_per_decade > 0 ? "later" : "earlier"} every ten years.`);
+  if (tr.rain_mm_per_decade != null && Math.abs(tr.rain_mm_per_decade) >= 5) trBits.push(`Season rain has been ${tr.rain_mm_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.rain_mm_per_decade)} mm every ten years.`);
+  if (tr.hot_days_per_decade != null && Math.abs(tr.hot_days_per_decade) >= 1) trBits.push(`Very hot days have been ${tr.hot_days_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.hot_days_per_decade)} every ten years.`);
   const mine = mainCrop();
   const plan = moved
     ? d >= 3
@@ -58,6 +64,7 @@ export function render() {
       { ic: "droplets", tone: rp != null && rp < 0 ? "wait" : "good", text: rp === 0 ? "Season rain: no change" : `Season rain ${rp > 0 ? "+" : ""}${rp}%` },
       { ic: "thermometer-sun", tone: dh > 0 ? "wait" : "good", text: !dh ? "Hot days: no change" : `Hot days ${dh > 0 ? "+" : ""}${dh}` },
     ])}
+    ${trBits.length ? `<div class="card stack"><b class="fix-h">The long trend, all 35 years</b><p class="a-sub">${esc(trBits.join(" "))}</p></div>` : ""}
     <div class="card stack"><b class="fix-h">What this means for planting</b><p class="a-sub">${esc(plan)}</p></div>
     ${mine ? btn(`When to plant ${crop(mine).name.toLowerCase()}`, { href: `#/crop/${esc(mine)}`, ic: "calendar-days" }) : btn("What to plant here", { href: "#/now", ic: "sprout" })}
     ${mine ? btn("What to plant after harvest", { href: `#/next/${esc(mine)}`, kind: "secondary", ic: "refresh-cw" }) : ""}

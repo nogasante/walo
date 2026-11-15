@@ -503,3 +503,11 @@ html[lang=tw] body.offline [data-net]::before { content: "Ɛhia intanɛt"; }
 .nc-risk .ic { width: 16px; height: 16px; margin-top: 1px; flex: none; }
 .nc-acts { display: flex; gap: 8px; } .nc-acts .btn { flex: 1; }
 .note-text { font-size: var(--fs-xs); color: var(--muted); margin: 0 2px; }
+
+/* the one question that turns an opinion into evidence: did this help? */
+.fb { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+.fb p { font-size: var(--fs-s); font-weight: 600; }
+.fb-btns { display: flex; gap: 8px; flex: none; }
+.fb-btns .btn { min-height: 44px; padding: 0 18px; }
+.fb-done { display: flex; align-items: center; gap: 8px; font-size: var(--fs-s); color: var(--good); }
+.fb-done .ic { width: 20px; height: 20px; flex: none; }

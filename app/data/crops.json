@@ -918,7 +918,8 @@
     "n_fix": false,
     "cover": 2,
     "water": 3,
-    "role": "Heavy feeder: takes a lot from the soil"
+    "role": "Heavy feeder: takes a lot from the soil",
+    "src": "MOFA_MAIZE, IITA_MAIZE_2025"
    }
   },
   {
@@ -1566,7 +1567,8 @@
     "n_fix": true,
     "cover": 2,
     "water": 1,
-    "role": "Adds nitrogen and covers the ground"
+    "role": "Adds nitrogen and covers the ground",
+    "src": "SARI_COWPEA"
    }
   },
   {
@@ -1787,7 +1789,8 @@
     "n_fix": true,
     "cover": 2,
     "water": 1,
-    "role": "Adds nitrogen and covers the ground"
+    "role": "Adds nitrogen and covers the ground",
+    "src": "APNI_GNUT_NG"
    }
   },
   {
@@ -2584,7 +2587,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Leaves little behind but reaches deep water"
+    "role": "Leaves little behind but reaches deep water",
+    "src": "IITA_CASSAVA"
    }
   },
   {
@@ -2871,7 +2875,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Takes a lot from the soil and leaves it bare"
+    "role": "Takes a lot from the soil and leaves it bare",
+    "src": "IITA_YAM"
    }
   },
   {
@@ -3431,7 +3436,8 @@
     "n_fix": false,
     "cover": 2,
     "water": 1,
-    "role": "Hardy cereal: leaves stalks and some cover"
+    "role": "Hardy cereal: leaves stalks and some cover",
+    "src": "IITA_SORGHUM_2025"
    }
   },
   {
@@ -3765,7 +3771,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 1,
-    "role": "Hardy cereal: thin cover, little residue"
+    "role": "Hardy cereal: thin cover, little residue",
+    "src": "MILLET_AJPS_2021"
    }
   },
   {
@@ -4521,7 +4528,8 @@
     "n_fix": false,
     "cover": 2,
     "water": 3,
-    "role": "Wants the most water of any cereal here"
+    "role": "Wants the most water of any cereal here",
+    "src": "MOFA_RICE"
    }
   },
   {
@@ -4811,7 +4819,8 @@
     "n_fix": true,
     "cover": 2,
     "water": 2,
-    "role": "Adds nitrogen and holds the soil"
+    "role": "Adds nitrogen and holds the soil",
+    "src": "APNI_SOY_NG"
    }
   },
   {
@@ -4924,7 +4933,8 @@
     "n_fix": false,
     "cover": 3,
     "water": 3,
-    "role": "Keeps the ground covered all year"
+    "role": "Keeps the ground covered all year",
+    "src": "PLANTAIN_GH_2007"
    }
   },
   {
@@ -5110,7 +5120,8 @@
     "n_fix": false,
     "cover": 3,
     "water": 3,
-    "role": "Keeps the ground covered all year"
+    "role": "Keeps the ground covered all year",
+    "src": "ONYEKA_2014"
    }
   },
   {
@@ -5171,7 +5182,8 @@
     "n_fix": false,
     "cover": 3,
     "water": 3,
-    "role": "Permanent shade and cover"
+    "role": "Permanent shade and cover",
+    "src": "COCOBOD_MANUAL"
    }
   },
   {
@@ -5530,7 +5542,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 3,
-    "role": "Leaves the soil bare and thirsty"
+    "role": "Leaves the soil bare and thirsty",
+    "src": "MOFA_TOMATO"
    }
   },
   {
@@ -5645,7 +5658,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Leaves the soil fairly bare"
+    "role": "Leaves the soil fairly bare",
+    "src": "MOFA_PEPPER"
    }
   },
   {
@@ -5756,7 +5770,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Leaves the soil bare"
+    "role": "Leaves the soil bare",
+    "src": "MOFA_ONION"
    }
   },
   {
@@ -6131,7 +6146,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Leaves the soil fairly bare"
+    "role": "Leaves the soil fairly bare",
+    "src": "OKRA_UG"
    }
   },
   {
@@ -6496,7 +6512,8 @@
     "n_fix": false,
     "cover": 1,
     "water": 2,
-    "role": "Leaves the soil fairly bare"
+    "role": "Leaves the soil fairly bare",
+    "src": "GARDENEGG_IJ"
    }
   },
   {
@@ -6982,7 +6999,8 @@
     "n_fix": false,
     "cover": 3,
     "water": 1,
-    "role": "Creeps over the ground and holds it"
+    "role": "Creeps over the ground and holds it",
+    "src": "FAO_CROPCAL"
    }
   },
   {
@@ -7035,7 +7053,8 @@
     "n_fix": false,
     "cover": 2,
     "water": 1,
-    "role": "Permanent cover once it is grown"
+    "role": "Permanent cover once it is grown",
+    "src": "FAO_CROPCAL"
    }
   }
  ],

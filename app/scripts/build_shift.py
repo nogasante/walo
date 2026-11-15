@@ -75,13 +75,29 @@ def window(year, mm_from, mm_to):
     return f, t
 
 
+def slope(by_year):
+    """least squares: change per decade, over every year with a value"""
+    pts = [(y, v) for y, v in by_year if v is not None]
+    n = len(pts)
+    if n < 10:
+        return None
+    mx = sum(y for y, _ in pts) / n
+    my = sum(v for _, v in pts) / n
+    den = sum((y - mx) ** 2 for y, _ in pts)
+    if not den:
+        return None
+    return round(sum((y - mx) * (v - my) for y, v in pts) / den * 10, 1)
+
+
 def summarise(rain, tmax, y0, y1, w_from, w_to):
     onsets, rains, hots = [], {k: [] for k in (EARLY, RECENT)}, {k: [] for k in (EARLY, RECENT)}
+    yearly_onset, yearly_rain, yearly_hot = [], [], []
     for y in range(y0, y1 + 1):
         f, t = window(y, w_from, w_to)
         o = onset(rain, y, f, t)
         if o:
             onsets.append((y, o))
+        yearly_onset.append((y, o))
         total, hot = 0.0, 0
         d = f
         while d <= t:
@@ -94,6 +110,8 @@ def summarise(rain, tmax, y0, y1, w_from, w_to):
             d += timedelta(days=1)
         rains[EARLY if y <= EARLY[1] else RECENT].append(total)
         hots[EARLY if y <= EARLY[1] else RECENT].append(hot)
+        yearly_rain.append((y, total))
+        yearly_hot.append((y, hot))
     def med(v):
         return round(statistics.median(v), 0) if v else None
     def mean(v):
@@ -101,7 +119,9 @@ def summarise(rain, tmax, y0, y1, w_from, w_to):
     return {
         "early": {"onset_doy": med([o for y, o in onsets if y <= EARLY[1]]), "season_rain": mean(rains[EARLY]), "hot_days": mean(hots[EARLY])},
         "recent": {"onset_doy": med([o for y, o in onsets if y > EARLY[1]]), "season_rain": mean(rains[RECENT]), "hot_days": mean(hots[RECENT])},
-        "years": {"early": sum(rains[EARLY]) and len(rains[EARLY]), "recent": len(rains[RECENT])},
+        "years": {"early": len(rains[EARLY]), "recent": len(rains[RECENT])},
+        # a real trend over all 35 years, so the screen is not limited to two halves
+        "trend": {"onset_days_per_decade": slope(yearly_onset), "rain_mm_per_decade": slope(yearly_rain), "hot_days_per_decade": slope(yearly_hot)},
     }
 
 
@@ -133,7 +153,15 @@ def main():
         except Exception as e:  # noqa: BLE001 - one town failing must not lose the rest
             print(f"[{n}/{len(items)}] {pid}: FAILED {e}", flush=True)
         time.sleep(0.35)
-    (ROOT / "data/shift.json").write_text(json.dumps(out, indent=1) + "\n")
+    existing = ROOT / "data/shift.json"
+    if existing.exists():  # a --only run adds to the file instead of throwing the other towns away
+        try:
+            old = json.loads(existing.read_text())
+            if isinstance(old.get("places"), dict):
+                out["places"] = {**old["places"], **out["places"]}
+        except Exception:  # noqa: BLE001 - a broken old file is replaced, not a reason to lose this run
+            pass
+    existing.write_text(json.dumps(out, indent=1) + "\n")
     print("wrote data/shift.json for", len(out["places"]), "places")
 
 

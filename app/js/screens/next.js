@@ -3,14 +3,14 @@
    the water the usual NASA rain gives, the heat at flowering and the usual price pattern, weighted by what she
    says matters most. Rules of thumb are labelled as such; the numbers are in the Why? sheet. */
 import { place, placeLabel, priority, setPriority, soilChoice, setSoilChoice, farm, mainCrop } from "../store.js";
-import { crop, farmPlace, farmProgress, scoreCrop, monthName, CFG } from "../data.js";
+import { crop, farmPlace, farmProgress, scoreCrop, monthName, soilFor, CFG } from "../data.js";
 import { rotationOptions, PRIORITIES, SOILS, scoreChip } from "../rotation.js";
-import { answer, whyBody, btn, note, hero, emptyState, icon, sheet } from "../ui.js";
+import { answer, whyBody, btn, note, hero, emptyState, icon, sheet, toast } from "../ui.js";
 import { esc, fmt } from "../util.js";
 
 export const title = (id) => { const c = crop(id); return c ? `After ${c.name.toLowerCase()}` : "After this crop" };
 
-function optionCard(o, top) {
+function optionCard(o, soil) {
   const role = (o.r && o.r.role) || "";
   const sc = scoreChip(o.pct);
   const why = whyBody(
@@ -19,8 +19,8 @@ function optionCard(o, top) {
       o.r ? `After harvest it leaves ${o.r.cover} of 3 for ground cover, uses ${o.r.water} of 3 for water, and is a ${o.r.family}${o.r.n_fix ? " that fixes nitrogen" : ""}.` : "",
       `FAO-56 water balance for the usual season here: needs about ${fmt((scoreCrop(o.c, farmPlaceNow()).fit || {}).need_mm)} mm, effective rain ${fmt((scoreCrop(o.c, farmPlaceNow()).fit || {}).peff_mm)} mm, WRSI ${(scoreCrop(o.c, farmPlaceNow()).fit || {}).wrsi ?? "not judged"}.`,
       o.hot ? `About ${Math.round(o.hot)} days above ${((scoreCrop(o.c, farmPlaceNow()).fit || {}).heat || {}).t || 35} °C usually fall while it flowers.` : "",
-      `Score ${o.pct} of 100 (water ${Math.round(o.water * 100)}, soil ${Math.round(o.soilScore * 100)}, money ${Math.round(o.money * 100)}, heat ${Math.round(o.risk * 100)}), weighted for "${PRIORITIES.find((x) => x.id === priority()).label.toLowerCase()}" on a ${soilChoice()} soil.`,
-      "Crop traits are extension rules of thumb (IITA, MoFA crop guides); rain and heat come from NASA POWER.",
+      `Score ${o.pct} of 100 (water ${Math.round(o.water * 100)}, soil ${Math.round(o.soilScore * 100)}, money ${Math.round(o.money * 100)}, heat ${Math.round(o.risk * 100)}), weighted for "${PRIORITIES.find((x) => x.id === priority()).label.toLowerCase()}" on a ${soil} soil.`,
+      o.r && o.r.src ? `Crop traits: ${o.r.src} (the guides listed per crop in About). They are rules of thumb, not measurements of your field.` : "Crop traits are extension rules of thumb; rain and heat come from NASA POWER.",
     ].filter(Boolean),
   );
   return `<article class="nextcard">
@@ -48,9 +48,10 @@ export function render(id, fid) {
   const p = f ? farmPlace(f) : place();
   PLACE_NOW = p;
   const pr = f ? farmProgress(f) : null;
-  const { options } = rotationOptions(after.id, p, { soil: soilChoice(), priority: priority() });
+  const autoSoil = soilFor(p), soil = soilChoice() || autoSoil.id; // her tap wins, otherwise the zone's usual soil
+  const { options } = rotationOptions(after.id, p, { soil, priority: priority() });
   if (!options.length) return emptyState({ ic: "sprout", title: `No crops to follow ${after.name.toLowerCase()} here`, sub: "Walo has no other crop for this place yet.", action: "Try another place", href: "#/welcome" });
-  const top = options[0], prio = priority(), soil = soilChoice();
+  const top = options[0], prio = priority();
   const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1)}. ` : "";
   const headline = top.same
     ? `Keep ${after.name.toLowerCase()} in this field`
@@ -70,11 +71,15 @@ export function render(id, fid) {
       ${PRIORITIES.map((x) => `<button type="button" class="seg${x.id === prio ? " on" : ""}" data-prio="${x.id}" aria-pressed="${x.id === prio}">${icon(x.ic)}<span>${x.label}</span></button>`).join("")}
     </div>
     <p class="seg-line">${esc(PRIORITIES.find((x) => x.id === prio).line)}</p>
-    <div class="soilline"><span>Your soil</span>
+    <div class="soilline"><span>Soil${autoSoil.zoneName ? ` · usual in the ${esc(autoSoil.zoneName.toLowerCase())}` : ""}</span>
       ${SOILS.map((x) => `<button type="button" class="soilchip${x.id === soil ? " on" : ""}" data-soil="${x.id}" aria-pressed="${x.id === soil}">${x.label}</button>`).join("")}
     </div>
-    ${options.map((o) => optionCard(o, top)).join("")}
-    <p class="note-text">${esc(SOILS.find((x) => x.id === soil).plain)}. Walo cannot test your soil; pick what it looks and feels like.</p>
+    ${options.map((o) => optionCard(o, soil)).join("")}
+    <p class="note-text">${esc(autoSoil.note)} ${esc(SOILS.find((x) => x.id === soil).plain[0].toUpperCase() + SOILS.find((x) => x.id === soil).plain.slice(1))}. Walo cannot test your field, so tap the one that looks and feels like yours.</p>
+    <div class="fb" data-fb-crop="${esc(after.id)}">
+      <p>Did this help you decide?</p>
+      <div class="fb-btns"><button type="button" class="btn secondary" data-fb="yes">Yes</button><button type="button" class="btn secondary" data-fb="no">No</button></div>
+    </div>
     ${note("Walo compares what each crop does to the soil and the rain. You decide what fits your farm.", "info")}
     ${f ? btn("Back to the field", { href: `#/farm/${esc(f.id)}`, kind: "secondary", ic: "sprout" }) : ""}
   </div>`;
@@ -85,6 +90,12 @@ export function mount(root, id) {
     const pr = e.target.closest("[data-prio]");
     if (pr) { setPriority(pr.dataset.prio); return; }
     const so = e.target.closest("[data-soil]");
-    if (so) setSoilChoice(so.dataset.soil);
+    if (so) { setSoilChoice(so.dataset.soil); return; }
+    const fb = e.target.closest("[data-fb]");
+    if (!fb) return;
+    // an honest count of whether the answer helped: no name, no place, no field, just crop and verdict
+    const box = fb.closest("[data-fb-crop]"), vote = fb.dataset.fb;
+    try { fetch("/api/log", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ev: "rot_help", owner: "next", kind: vote, type: box ? box.dataset.fbCrop : "" }) }).catch(() => {}); } catch { /* offline is fine */ }
+    if (box) box.innerHTML = `<p class="fb-done">${icon("circle-check")}<span>Thank you. Walo counts these to know if the advice is useful.</span></p>`;
   });
 }

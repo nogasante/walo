@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help", "shift", "soil"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -193,6 +193,13 @@ export function cropMonths(c, p) {
   });
 }
 
+
+/* ---------- soil: the zone's usual soil, so the rotation starts from something local, not a guess ---------- */
+export function soilFor(p) {
+  const zones = (D.soil && D.soil.zones) || {}, z = zoneOf(p);
+  const hit = zones[z] || (D.soil && D.soil.default) || { id: "loam", note: "" };
+  return { ...hit, zone: z, zoneName: z == null ? "" : zoneName(z), source: D.soil && D.soil.source };
+}
 
 /* ---------- how this place is changing: two periods of the same NASA POWER record (data/shift.json) ---------- */
 /* The Field Shift brief is about changing conditions, so the app compares 1991-2014 with 2015-2025 at the same

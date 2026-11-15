@@ -1,0 +1,153 @@
+{
+ "source": "FAO agro-ecological zone descriptions (data/countries.json) with the district soil notes in docs/walo-crops-sources.md. This is a typical soil for the zone, not a measurement of her field, and she can change it in one tap.",
+ "zones": {
+  "F": {
+   "id": "loam",
+   "note": "Forest-zone soils are usually deep, but clay collects in the low spots."
+  },
+  "T": {
+   "id": "loam",
+   "note": "Transition-zone soils are usually loamy and hold water reasonably well."
+  },
+  "G": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "C": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "KH": {
+   "id": "loam",
+   "note": "Highland soils are usually deep and hold water."
+  },
+  "KM": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "KE": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SS": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "NS": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "NG": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SG": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "DS": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "HF": {
+   "id": "loam",
+   "note": "Forest-zone soils are usually deep, but clay collects in the low spots."
+  },
+  "TG001": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "TG002": {
+   "id": "sandy",
+   "note": "Savanna soils are often sandy and dry out quickly."
+  },
+  "TG003": {
+   "id": "loam",
+   "note": "Forest-zone soils are usually deep, but clay collects in the low spots."
+  },
+  "TG004": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "CI001": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "CI002": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "CI003": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "CI004": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN001": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN002": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN003": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN004": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN005": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "SN006": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "ML001": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "ML002": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "ML003": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "ML004": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "ML005": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "NE001": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "NE002": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "NE003": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  },
+  "NE004": {
+   "id": "loam",
+   "note": "Walo has no soil note for this zone, so it starts from loam."
+  }
+ },
+ "default": {
+  "id": "loam",
+  "note": "Walo has no soil note for this place, so it starts from loam."
+ }
+}
