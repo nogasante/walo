@@ -72,7 +72,7 @@ function nasaCard(p) {
   const total = months.reduce((s, m) => s + (m.rain_mm || 0), 0), hi = Math.max(...months.map((m) => m.rain_mm || 0)) || 1;
   return `<div class="nasa">
     <div class="nasa-h">${icon("satellite")}<b>Rain here, from NASA</b></div>
-    ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: "" })), { caption: `Usual rain each month · about ${fmt(total)} mm a year` })}
+    ${monthBars(months.map((m) => ({ v: (m.rain_mm || 0) / hi, cls: m.lgp ? "g" : "r" })), { caption: `Usual rain each month · about ${fmt(total)} mm a year`, legend: [["g", "Wet months"], ["r", "Dry months"]] })}
     <p class="nasa-src">NASA POWER daily rain 1991–2025 at this point. Every bar on the crops below is measured against it.</p>
   </div>`;
 }
