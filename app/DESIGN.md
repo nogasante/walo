@@ -1,8 +1,8 @@
-# Walo — design process (redesign, 14 November 2026)
+# Walɔ — design process (redesign, 14 November 2026)
 
 *Team Simply Zero · NASA Space Apps Challenge 2026 · Field Shift · Kumasi*
 
-The first version of Walo (built the morning of 14 Nov) put every number on screen: month grids, crop timing tables, three long rotation cards, several price tables per crop and a long list of warnings. The team's verdict: "overwhelming" and "hacked". This document records how we redesigned it, step by step. The scope did not change (Ejura-Sekyedumase only; maize, cowpea, groundnut, cassava only; Calendar, Market, Plant Doctor; voice-first).
+The first version of Walɔ (built the morning of 14 Nov) put every number on screen: month grids, crop timing tables, three long rotation cards, several price tables per crop and a long list of warnings. The team's verdict: "overwhelming" and "hacked". This document records how we redesigned it, step by step. The scope did not change (Ejura-Sekyedumase only; maize, cowpea, groundnut, cassava only; Calendar, Market, Plant Doctor; voice-first).
 
 > Sections 1–13 record how the design got here. **§13b describes the current app (v12).** §14 is the methods. Paths in those sections name the files as they were then; the current tree is in `README.md`.
 
@@ -16,7 +16,7 @@ The first version of Walo (built the morning of 14 Nov) put every number on scre
 - Looks at the phone outside, in bright sun, often with one hand while holding a hoe or a child.
 - Pays for data in small bundles; network drops in the field.
 - Her real questions: *"When do I plant so the rain doesn't fail me?"*, *"When do I sell so the traders don't cheat me?"*, *"Is now a good time?"*
-- Trusts the extension officer and neighbours more than an app. Walo must **support** her judgement, never order her around.
+- Trusts the extension officer and neighbours more than an app. Walɔ must **support** her judgement, never order her around.
 
 **Design consequences:** big tap targets, high contrast, one answer per screen in very few words, a Read-aloud button on every answer, icons and crop pictures to recognise things without reading, small page weight, works offline after the first visit.
 
@@ -33,7 +33,7 @@ The first version of Walo (built the morning of 14 Nov) put every number on scre
 
 | Screen | Job | The ONE question it answers | Answer format |
 | --- | --- | --- | --- |
-| Home | Tell Walo my crop | "Which crop are you growing?" | 4 big picture tiles |
+| Home | Tell Walɔ my crop | "Which crop are you growing?" | 4 big picture tiles |
 | **Plant** (Calendar) | Plan sowing | "When should I plant *maize*?" | "Plant in March–April" + rain chart |
 | **Sell** (Market) | Time the sale | "When does *maize* sell best?" | "Sell in June" + price-pattern chart |
 | **Check** (Plant Doctor) | Sanity-check a month | "Is *April* a good time to plant *maize*?" | Green/amber/red status + 3 numbers |
@@ -59,7 +59,7 @@ Home (pick crop) ──► Plant ◄──► Sell ◄──► Check ◄──�
 - **Progressive disclosure:** each answer card shows the answer, one chart, a source line and the Read-aloud button. Everything else (exact rainfall, rules, sources, confidence, 2026 values) is behind **"Why?"**. Rotation evidence/risks/gaps are behind **"Evidence"**. Data gaps live in **About → What we don't know yet**.
 - **Deep links** for the pitch: `#/plant/maize`, `#/sell/maize`, `#/check/maize/4`, `#/about`.
 
-Typical flow (3 taps): open Walo → tap Maize → see "Plant in March–April" → tap Sell → "Sell in June".
+Typical flow (3 taps): open Walɔ → tap Maize → see "Plant in March–April" → tap Sell → "Sell in June".
 
 ---
 
@@ -73,7 +73,7 @@ Typical flow (3 taps): open Walo → tap Maize → see "Plant in March–April" 
 6. **Colour never alone:** status uses colour band + icon + word (Yes / Wait / Not now / Ask first).
 7. **Plain language:** "usual rain", "days over 35 °C", "soil: Moist" instead of PRECTOTCORR, GWETROOT. Variable names only in Sources.
 8. **Honest but quiet:** gaps are disclosed once, in the right place (Why? / About), not as banners on every card.
-9. **Support, not replace:** every check ends with "look at your own farm and ask your extension officer"; plans say "Walo shows the evidence; you decide".
+9. **Support, not replace:** every check ends with "look at your own farm and ask your extension officer"; plans say "Walɔ shows the evidence; you decide".
 10. **Fast and offline:** no frameworks and no build step; one self-hosted variable font, and real photos instead of decorative diagrams; the service worker caches exactly the shipped files. The shipped payload is about 2.1 MB, of which 1.7 MB is photography, 244 KB is data and 32 KB is the font. (This replaces the "~130 KB, no web fonts, no images except inline SVG" figure from v1, and restates §9's ~1.1 MB: both were true of the version they described, not of the current app.)
 
 ---
@@ -102,7 +102,7 @@ Typical flow (3 taps): open Walo → tap Maize → see "Plant in March–April" 
 | 6 | Recognition over recall | Text-only crop buttons | Picture tiles with English + Twi names; icons on tabs |
 | 7 | Flexibility & efficiency | Everything always expanded | Deep links for pitching; details on demand; crop remembered between visits |
 | 8 | Aesthetic & minimalist design | 4 tables + 3 long cards per tab, warnings everywhere | One answer + one chart per screen; gaps moved to About |
-| 9 | Help users recover from errors | Blank page if data failed to load | Clear "Could not load Walo's data" card with what to do |
+| 9 | Help users recover from errors | Blank page if data failed to load | Clear "Could not load Walɔ's data" card with what to do |
 | 10 | Help & documentation | Methods hidden in README | "Why?" on every answer explains the rule and the source in plain words; About lists sources |
 
 Also checked: no JavaScript console errors on any screen (Playwright, Chrome, 390×844); all interactive targets ≥ 44 px (script check); keyboard focus ring visible (gold); `prefers-reduced-motion` respected; images are `aria-hidden` with text labels next to them.
@@ -126,10 +126,10 @@ Also checked: no JavaScript console errors on any screen (Playwright, Chrome, 39
 
 ## 9. Visual redesign v3 (14 Nov 2026, after team feedback: "looks basic", "feels generic")
 
-**Team concept (their idea):** most farm apps give generic, country-wide advice. Walo uses NASA data for the farmer's own location. The UI now leads with that:
+**Team concept (their idea):** most farm apps give generic, country-wide advice. Walɔ uses NASA data for the farmer's own location. The UI now leads with that:
 
-- **Location first.** Home opens on a full-bleed farm photo, then a **"Your farm" card**: Ghana map (Natural Earth outline) with a pin on Ejura, coordinates 7.39° N, 1.36° W (the exact NASA POWER query point) and SRTM elevation 224 m, plus one line: "Walo reads NASA data for this point, not a national average."
-- **Generic advice vs. Walo** card on every Plant screen. One row each for Where, Rain, Change, Heat and Soil, with generic advice on the left and the Ejura value on the right. Values used: 1,242 mm/yr, 579 mm Apr–Jul, 399 mm Sep–Nov, +68 mm/decade in the minor season, 75 days above 35 °C, sandy loam pH 6.5. Every value is read live from `data/climate.json`. The generic column is qualitative only (no invented numbers). The Why? section notes the ~50 km POWER grid.
+- **Location first.** Home opens on a full-bleed farm photo, then a **"Your farm" card**: Ghana map (Natural Earth outline) with a pin on Ejura, coordinates 7.39° N, 1.36° W (the exact NASA POWER query point) and SRTM elevation 224 m, plus one line: "Walɔ reads NASA data for this point, not a national average."
+- **Generic advice vs. Walɔ** card on every Plant screen. One row each for Where, Rain, Change, Heat and Soil, with generic advice on the left and the Ejura value on the right. Values used: 1,242 mm/yr, 579 mm Apr–Jul, 399 mm Sep–Nov, +68 mm/decade in the minor season, 75 days above 35 °C, sandy loam pH 6.5. Every value is read live from `data/climate.json`. The generic column is qualitative only (no invented numbers). The Why? section notes the ~50 km POWER grid.
 - **Real photography:** 8 openly licensed Wikimedia Commons photos from Ghana (crops, market, farmers). Used for photo headers, 4:5 crop cards with gradient overlays and plan thumbnails. Credited in `data/credits.json` and About → Sources.
 - **Type and icons:** Plus Jakarta Sans variable font (self-hosted woff2, 27 KB) and Lucide icons, both bundled.
 - **Components:** answer card overlaps the photo header (elevated, gradient status band), status chips, pill buttons, floating glass bottom bar with icon + English + Twi, segmented market switch, stat tiles with coloured icon tiles, rounded-gradient bar charts with value labels and a "now" marker.
@@ -138,14 +138,14 @@ Also checked: no JavaScript console errors on any screen (Playwright, Chrome, 39
 
 ## 10. v4 restructure: location first, crops from a data file (14 Nov 2026)
 
-The team's pitch: *tell Walo where your farm is; it finds the best crops for that place, gives the planting, selling and checking advice, and keeps track of your farms from seed to harvest.*
+The team's pitch: *tell Walɔ where your farm is; it finds the best crops for that place, gives the planting, selling and checking advice, and keeps track of your farms from seed to harvest.*
 
 **Flow.** First visit → **Where is your farm?** (`#/where`): "Use my location" or pick Ejura-Sekyedumase (main pilot), Tamale or Techiman. → **Home**: farm card with map pin, **Best crops here**, My farms summary. → per crop **Plant / Sell / Check**. → **Farms** tab. Bottom nav: Home (Fie) · Plant (Dua) · Sell (Tɔn) · Check (Hwɛ) · Farms (Mfuo).
 
 **Locations.**
 - Ejura: `data/climate.json` (1991–2025), sourced crop calendar, soil, SRTM, rotation evidence, markets Ejura/Kumasi/Techiman.
 - Tamale, Techiman: `data/locations.json`, built by `scripts/build_locations.py` with the same NASA POWER parameters and method (method re-checked: it reproduces Ejura's 1,242 mm / 579 / 399 / 75 hot days / +68 mm per decade exactly). Tamale has no price data; Techiman uses Techiman market.
-- My location: the phone calls the NASA POWER daily API (PRECTOTCORR, T2M_MAX, GWETROOT, 2016–2025, CORS allowed) and summarises it like the districts; saved in localStorage. Ten years is too short for trends, so none are shown. If the call fails, Walo keeps the saved district.
+- My location: the phone calls the NASA POWER daily API (PRECTOTCORR, T2M_MAX, GWETROOT, 2016–2025, CORS allowed) and summarises it like the districts; saved in localStorage. Ten years is too short for trends, so none are shown. If the call fails, Walɔ keeps the saved district.
 
 **Crops are data, not code.** `data/crops.json` holds each crop's name, Twi word, photo, typical duration, minimum wet-run length, harvest-needs-dry flag, scoring rules, growth stages and sources. Adding a crop = adding an entry (plus a credited photo); the code does not change.
 
@@ -165,9 +165,9 @@ The team's pitch: *tell Walo where your farm is; it finds the best crops for tha
 
 **Scoring (rules of thumb, 1–5; replaced in v10 by the published methods in §14).** Base 1; yearly NASA rain inside the crop's EcoCrop ideal range +2 (possible range +1); yearly mean temperature in the EcoCrop ideal range +1; hottest month's average high above the EcoCrop maximum −1; shortest growing time fits inside the run of wet months +1; FAO lists a planting season for the zone +1. EcoCrop ranges are global, not Ghana-specific (e.g. EcoCrop gives sorghum a 700 mm rain maximum, which pulls sorghum down even in Tamale).
 
-**Planting windows.** FAO Ghana crop calendar per zone (e.g. cassava, Transitional: sow 30 Apr–31 Jul, harvest 10 Nov–10 Jan). Where FAO has no entry, Walo gives a **Best guess** from the place's NASA rain (start of each wet run long enough for the crop), marked with a grey dot and a "Best guess" chip. No screen tells the farmer to "ask" someone; the only judgment line is on About: "Walo supports, not replaces, your judgment."
+**Planting windows.** FAO Ghana crop calendar per zone (e.g. cassava, Transitional: sow 30 Apr–31 Jul, harvest 10 Nov–10 Jan). Where FAO has no entry, Walɔ gives a **Best guess** from the place's NASA rain (start of each wet run long enough for the crop), marked with a grey dot and a "Best guess" chip. No screen tells the farmer to "ask" someone; the only judgment line is on About: "Walɔ supports, not replaces, your judgment."
 
-**Selling.** Seasonal price patterns for 11 crops (WFP/HDX, same method as before). Places without a market series use the nearest market with data (Best guess). Crops without any price series get a Best guess: sell about three months after the usual harvest month (the dip-after-harvest pattern seen in Walo's price data), marked Best guess.
+**Selling.** Seasonal price patterns for 11 crops (WFP/HDX, same method as before). Places without a market series use the nearest market with data (Best guess). Crops without any price series get a Best guess: sell about three months after the usual harvest month (the dip-after-harvest pattern seen in Walɔ's price data), marked Best guess.
 
 **Planting flow (hero feature).** Home → **Start planting** → 1 pick crop (ranked for the place) → 2 name the field and pick the place → 3 take a photo (`<input type=file accept=image/* capture=environment>`, downscaled to a 480 px JPEG in localStorage) → 4 plan: sow date (next FAO/best-guess window, editable "Planted already?"), harvest date (typical days), five-stage timeline Seed › Sprout › Growing › Flowering/Bulking › Harvest with dates, and NASA usual rain for the season. **Farm view**: progress ring, stage track, one "Today's task" card, alerts (wet harvest for dry-harvest crops, heat at maize flowering), NASA rain mini-bars, photo diary with "Add photo". A demo farm (maize, Ejura, sown 75 days ago, two Commons photos) is seeded on first visit.
 
@@ -213,7 +213,7 @@ Tabs: Home · My farms · Sell        (i) in the header: About & sources
 1. **One answer per screen**: icon + one plain sentence + Listen + a quiet source line. Numbers only as everyday words (a month, a weekday, "2 km").
 2. **Why? on tap**: 1–3 plain sentences; the numbers, methods and sources sit under Details for judges and extension staff.
 3. **No pitching inside the app**: no intro slides, hero images, slogans or "10 years ago vs now" panels. Pictures are labels only (crop photos, stage icons, status icons). Pitch material belongs in the slides and video.
-4. **Never contradict**: the onset rule is applied to the 10-day forecast; if there is no planting rain in it, every crop in its planting window says "Wait: rain not here yet". Without a forecast, Walo falls back to the usual onset and says so in Why?.
+4. **Never contradict**: the onset rule is applied to the 10-day forecast; if there is no planting rain in it, every crop in its planting window says "Wait: rain not here yet". Without a forecast, Walɔ falls back to the usual onset and says so in Why?.
 5. **Sell follows the field**: for a field, the advice starts from its own harvest date ("Harvest in late November. Prices usually rise by <month>: store if you can" or "sell soon after harvest"). The data years (2015–2023) and the unit (e.g. 100 kg bag) are always on screen; a far market shows its distance.
 6. **Plant Doctor is fast and honest**: one photo first (resized to 768 px on the phone), staged progress with Cancel, the fastest model first; the warning "AI answer, can be wrong. Check with someone you trust before spending money" is always visible; the AI asks for one named extra photo only when unsure.
 7. **Normal mobile sizes**: body 16 px, titles 22 px, 48 px buttons, 24 px icons, photos 168–184 px tall, 16–24 px spacing; tokens at the top of `styles.css`. Bottom tabs never cover content; on a wide screen the app sits in a phone-width column on the brand colour.
@@ -223,9 +223,9 @@ Tabs: Home · My farms · Sell        (i) in the header: About & sources
 
 **v12.1 (same day, team feedback "not lively enough", "liked the column cards", "no thick left border"):** photo column cards on Home (photo on top, round yellow icon badge, title + one line) with Plant Doctor as a wide photo card; a photo band behind each answer screen (field, crop or market photo) with the answer card overlapping it; small month bars (usual rain, or usual price) with the current month highlighted; crops as 2-column photo tiles with coloured status chips; fields as photo cards with a clean progress ring. Cards have no side stripes: status shows in the round icon badge or a chip. All photos are real Wikimedia Commons photos, credited in `data/credits.json`; the photo choices live in `data/app.json` (`photos`).
 
-**v12.2 (14 Nov 2026, "logins?"): optional backup, never in the way.** Farmers lose or change phones, so fields should be able to follow them, but an account must never stand between Ama and an answer. Walo still opens straight to answers with no sign-in. A small "Back up my fields" row (cloud icon, one line) sits under the fields in My farm and in About. It is one screen with three states in plain words: *Back up my fields* (email box, "Send me a code", "No password") → *Type the code we sent* (big number box that the phone can fill from the email, "Send a new code", "Use another email") → *Your fields are backed up* (how many fields, last backup time, "Back up now", "Sign out", "Signing out keeps your fields on this phone"). We chose an email code because it needs no password to remember and costs nothing; SMS codes would suit farmers better but need a paid SMS provider. Errors are plain ("No internet. Try again when you are online.", "That code did not work"). Same cards, icon badges and buttons as the rest of the app; no side stripes.
+**v12.2 (14 Nov 2026, "logins?"): optional backup, never in the way.** Farmers lose or change phones, so fields should be able to follow them, but an account must never stand between Ama and an answer. Walɔ still opens straight to answers with no sign-in. A small "Back up my fields" row (cloud icon, one line) sits under the fields in My farm and in About. It is one screen with three states in plain words: *Back up my fields* (email box, "Send me a code", "No password") → *Type the code we sent* (big number box that the phone can fill from the email, "Send a new code", "Use another email") → *Your fields are backed up* (how many fields, last backup time, "Back up now", "Sign out", "Signing out keeps your fields on this phone"). We chose an email code because it needs no password to remember and costs nothing; SMS codes would suit farmers better but need a paid SMS provider. Errors are plain ("No internet. Try again when you are online.", "That code did not work"). Same cards, icon badges and buttons as the rest of the app; no side stripes.
 
-**v12.3 (14 Nov 2026, real-phone test: "I took a picture but nothing happened"; "what if the farmer wants to talk or type"):** Plant Doctor now starts with three equal choices, **Take photo**, **Talk**, **Type**, as big picture buttons, plus "Choose a photo from the phone". Talk fills an editable text box, so a wrong word can be fixed before sending; where the browser cannot listen, the Talk button is not shown and the screen says "Type instead". With words only, the AI may ask **one** short question (shown as the answer card, with Listen) before answering; it never sends the farmer elsewhere. A picked photo shows at once with "Looking at your photo…", then the progress steps. Every failure has a plain message on the same screen (photo could not be opened, phone closed Walo while the camera was open, no microphone, offline, too slow). The same photo behaviour now applies to Add photo (My farm) and the Start planting photo: one shared photo path, the photo shows at once while it is saved, and "Choose a photo from the phone" is offered when the camera fails.
+**v12.3 (14 Nov 2026, real-phone test: "I took a picture but nothing happened"; "what if the farmer wants to talk or type"):** Plant Doctor now starts with three equal choices, **Take photo**, **Talk**, **Type**, as big picture buttons, plus "Choose a photo from the phone". Talk fills an editable text box, so a wrong word can be fixed before sending; where the browser cannot listen, the Talk button is not shown and the screen says "Type instead". With words only, the AI may ask **one** short question (shown as the answer card, with Listen) before answering; it never sends the farmer elsewhere. A picked photo shows at once with "Looking at your photo…", then the progress steps. Every failure has a plain message on the same screen (photo could not be opened, phone closed Walɔ while the camera was open, no microphone, offline, too slow). The same photo behaviour now applies to Add photo (My farm) and the Start planting photo: one shared photo path, the photo shows at once while it is saved, and "Choose a photo from the phone" is offered when the camera fails.
 
 ## 14. Methods
 
@@ -243,9 +243,9 @@ with P = 101.3((293 − 0.0065 z)/293)^5.26, γ = 0.000665 P (Eq. 7–8); es = [
 
 **3. Growing period** [FAO_AEZ]: a month is in the growing period if P ≥ 0.5 · ET0; it is humid if P ≥ ET0 (used for "harvest month is usually wet").
 
-**4. Onset of rains** [SIVAKUMAR88, STERN82]: searching from a start date, the onset is the first day d with P(d) ≥ 1 mm, Σ P(d..d+2) ≥ 20 mm, and no run of more than 7 days with P < 1 mm in the next 30 days. Major season search: 1 Mar–31 Jul; minor season: 15 Aug–31 Oct, only in the bimodal zones (forest, transition, coastal savanna) (`default: true`, see note in rules.json). Across 1991–2025 Walo stores the 20th, 50th and 80th percentile dates. "Plant now" (in a calendar planting month): before the p20 date → *Wait for the planting rain*; between p20 and the median → *Plant after a good rain*; after the median → *Plant now*; if the FAO-56 WRSI for sowing today is below 60 (serious stress or worse) → *Only with watering*; outside the window → *Plant in <month>*.
+**4. Onset of rains** [SIVAKUMAR88, STERN82]: searching from a start date, the onset is the first day d with P(d) ≥ 1 mm, Σ P(d..d+2) ≥ 20 mm, and no run of more than 7 days with P < 1 mm in the next 30 days. Major season search: 1 Mar–31 Jul; minor season: 15 Aug–31 Oct, only in the bimodal zones (forest, transition, coastal savanna) (`default: true`, see note in rules.json). Across 1991–2025 Walɔ stores the 20th, 50th and 80th percentile dates. "Plant now" (in a calendar planting month): before the p20 date → *Wait for the planting rain*; between p20 and the median → *Plant after a good rain*; after the median → *Plant now*; if the FAO-56 WRSI for sowing today is below 60 (serious stress or worse) → *Only with watering*; outside the window → *Plant in <month>*.
 
-**5. Forecast check** [METEOMATICS]: when online, `/api/forecast` gives 10 daily values of precip_24h and t_max_2m_24h. The same onset rain rule (≥ 1 mm on day d, ≥ 20 mm over 3 days) is applied to the forecast days; before the median onset this changes "Wait for the planting rain" / "Plant after a good rain" to "Plant after the rain <date>". The 30-day dry-spell part cannot be checked with 10 days, so the answer stays "after the rain", not "safe". Offline or if the service fails, Walo uses the NASA climatology only.
+**5. Forecast check** [METEOMATICS]: when online, `/api/forecast` gives 10 daily values of precip_24h and t_max_2m_24h. The same onset rain rule (≥ 1 mm on day d, ≥ 20 mm over 3 days) is applied to the forecast days; before the median onset this changes "Wait for the planting rain" / "Plant after a good rain" to "Plant after the rain <date>". The 30-day dry-spell part cannot be checked with 10 days, so the answer stays "after the rain", not "safe". Offline or if the service fails, Walɔ uses the NASA climatology only.
 
 **6. Crop water use and WRSI** [FAO56, FREREPOPOV]: stage lengths L_ini, L_dev, L_mid, L_late from FAO-56 Table 11, scaled to the local season length; Kc from Table 12, linear in the development and late stages (Eq. 66):
 
@@ -254,7 +254,7 @@ with P = 101.3((293 − 0.0065 z)/293)^5.26, γ = 0.000665 P (Eq. 7–8); es = [
 
 with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80 Enough rain, 60–80 some stress, 50–60 serious stress, < 50 likely failure. Used for seasonal crops of ≤ 200 days only.
 
-**7. Climate suitability** [ECOCROP, FAO76]: for EcoCrop limits (Tabsmin, Toptmin, Toptmax, Tabsmax), a linear score f(T) = 0 outside the absolute limits, 1 inside the optimum, linear in between. Temperature suitability = max over the 12 start months of min over the n = round(mean cycle/30) months of f(Tmean). Rain suitability = f(annual P) with EcoCrop's annual rain limits (for sorghum, FAO's Ghana rainfall). **Deviation, and its correction in v49:** Ramirez-Villegas et al. (2013) compare season rain; the FAO EcoCrop database gives the limits as annual rainfall, and using season rain against those annual limits rated rice and garden egg "not suitable" everywhere, so Walo compared like with like (annual vs annual). That comparison failed the other way once a second country arrived: in Kenya, wet Kitale (≈1,684 mm in the season) scored below dry Machakos (≈408 mm) because both were measured against a 1,200 mm annual optimum. So where a crop has a sourced planting window in the zone, the rain side now comes from the FAO-56 water balance of that season (method 7 above, WRSI at the middle month of the window) and EcoCrop supplies the temperature class; the annual rain comparison is used only for a crop with no calendar there. WRSI dots follow the water class labels - ≥80 = 5, 50-79 = 3, below 50 = 1 - so a season under water stress can no longer read as "grows well". Suitability = temperature × rain → class S1 ≥ 0.8, S2 ≥ 0.6, S3 ≥ 0.4, S3− ≥ 0.2, else N (cut-offs `default: true`; FAO 1976 names the classes but gives no numbers). Shown class = lower of the EcoCrop class and the WRSI class.
+**7. Climate suitability** [ECOCROP, FAO76]: for EcoCrop limits (Tabsmin, Toptmin, Toptmax, Tabsmax), a linear score f(T) = 0 outside the absolute limits, 1 inside the optimum, linear in between. Temperature suitability = max over the 12 start months of min over the n = round(mean cycle/30) months of f(Tmean). Rain suitability = f(annual P) with EcoCrop's annual rain limits (for sorghum, FAO's Ghana rainfall). **Deviation, and its correction in v49:** Ramirez-Villegas et al. (2013) compare season rain; the FAO EcoCrop database gives the limits as annual rainfall, and using season rain against those annual limits rated rice and garden egg "not suitable" everywhere, so Walɔ compared like with like (annual vs annual). That comparison failed the other way once a second country arrived: in Kenya, wet Kitale (≈1,684 mm in the season) scored below dry Machakos (≈408 mm) because both were measured against a 1,200 mm annual optimum. So where a crop has a sourced planting window in the zone, the rain side now comes from the FAO-56 water balance of that season (method 7 above, WRSI at the middle month of the window) and EcoCrop supplies the temperature class; the annual rain comparison is used only for a crop with no calendar there. WRSI dots follow the water class labels - ≥80 = 5, 50-79 = 3, below 50 = 1 - so a season under water stress can no longer read as "grows well". Suitability = temperature × rain → class S1 ≥ 0.8, S2 ≥ 0.6, S3 ≥ 0.4, S3− ≥ 0.2, else N (cut-offs `default: true`; FAO 1976 names the classes but gives no numbers). Shown class = lower of the EcoCrop class and the WRSI class.
 
 **8. Heat stress** [SANCHEZ14]: maize and rice: days with Tmax > 35 °C during the FAO-56 mid-season (flowering) stage. Other crops: the top of the EcoCrop optimum range (labelled not cited).
 
@@ -266,7 +266,7 @@ with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80
 
 **Surprises (reported, not hidden).**
 - Kitale maize (Kenya) is S2 while Machakos maize is S3: Kitale's season supplies its water need (WRSI 100) but its cool months lower the temperature class to 0.75, while Machakos falls to WRSI 53 in the short rains. Before v49 both were judged on annual rainfall, which put Machakos (677 mm a year) above Kitale (1,844 mm a year).
-- Rice WRSI is low almost everywhere: FAO-56 Kc values are for flooded paddy rice, while Walo assumes rain-fed upland.
+- Rice WRSI is low almost everywhere: FAO-56 Kc values are for flooded paddy rice, while Walɔ assumes rain-fed upland.
 - Cassava and plantain seasons are longer than WRSI was built for, so their water numbers are shown but not used for the class.
 - Many forest-zone onsets land in early March, close to the 1 March search start, so they depend on that (labelled) choice. Minor-season onsets cluster in late August.
 - NDVI at town points (Kumasi, Accra, Tamale) is low because the 3 km box is mostly built-up; forest July–August composites are cloud-affected.
@@ -282,7 +282,7 @@ with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80
 - My main crop: a small card on Home (crop photo, one line for today, a Change pill); Sell, Plant Doctor and crop pages open on it. Change also in About.
 
 ### v12.7 notes
-- **Twi:** one EN/Twi chip in the top bar. Screens stay written in English; `js/twi.js` swaps the words on the page (dictionary first, then Khaya, kept on the phone), so there is one source of truth and nothing to keep in sync. Farmer's own words, place names and source titles are marked `data-notw`. Listen in Twi uses Khaya's voice; if it fails Walo says so and reads in English.
+- **Twi:** one EN/Twi chip in the top bar. Screens stay written in English; `js/twi.js` swaps the words on the page (dictionary first, then Khaya, kept on the phone), so there is one source of truth and nothing to keep in sync. Farmer's own words, place names and source titles are marked `data-notw`. Listen in Twi uses Khaya's voice; if it fails Walɔ says so and reads in English.
 - **Offline:** a dark "Offline" chip; anything that needs internet turns grey with a "Needs internet" tag and opens one plain sheet listing what still works. Plant now says "Using usual weather (no forecast offline)".
 - **Get help:** one button on Home and About. AI first (short spoken-style answers, a link to the right screen), a person second (Call + WhatsApp with a prefilled summary) only when a help line number is set; otherwise "A help line with a real person is coming soon".
 
@@ -290,10 +290,10 @@ with the soil store starting empty (100 mm bucket, `default: true`). WRSI ≥ 80
 
 ## 15. Field Shift: rotation, the shift itself, soil and her priority (15 Nov 2026)
 
-The challenge asks for a decision tool that helps a farmer **explore crop rotations** with NASA observations, local soil, crop characteristics and farmer priorities. Walo answered *when* and *where* to plant; it had nothing to say about what follows a crop.
+The challenge asks for a decision tool that helps a farmer **explore crop rotations** with NASA observations, local soil, crop characteristics and farmer priorities. Walɔ answered *when* and *where* to plant; it had nothing to say about what follows a crop.
 
 - **`#/next/<crop>` (and `#/next/<crop>/<field>`).** Three or four crops that could follow, always including the crop already in the field so "maize again" is compared and never hidden. Each is scored 0–100 from four parts: water (the FAO-56 water balance on NASA rain, deficit as a share of need, adjusted for a sandy, loam or clay soil), soil (legume nitrogen, ground cover left behind, a same-family penalty, a bonus for a cereal after a legume), money (whether a usual price pattern exists and whether it usually rises after harvest) and heat (very hot days while it flowers). The weights are her choice: **Soil**, **Water** or **Money** (`walo.priority`). Everything is in the Why? sheet, with crop traits labelled as extension rules of thumb (IITA/MoFA guides).
 - **`#/shift`.** The same NASA POWER daily record split into **1991–2014** and **2015–2025** at her point: median onset day (method 4), mean rain in the country's major-season window, and mean days above 35 °C in it. `scripts/build_shift.py` builds `data/shift.json` for all 72 towns. The screen says what moved ("Rain starts 13 days earlier than in 1991–2014"), what it means for planting, a least-squares trend over every year 1991–2025 (days per decade, mm per decade, hot days per decade), and what it is not: two periods, not a forecast, on a ~50 km grid.
-- **Soil.** `data/soil.json` gives every FAO zone its usual soil (forest and transition loam, savanna and coastal sandy, highland loam) with a plain note behind it, so the screen starts local instead of from a default. Her tap overrides it for good (`walo.soil`), and the screen says Walo cannot test her field.
+- **Soil.** `data/soil.json` gives every FAO zone its usual soil (forest and transition loam, savanna and coastal sandy, highland loam) with a plain note behind it, so the screen starts local instead of from a default. Her tap overrides it for good (`walo.soil`), and the screen says Walɔ cannot test her field.
 - **Evidence.** "Did this help you decide?" on the rotation screen posts only the crop and the verdict to `/api/log` (`rot_help`), so the first farmer opinions become a count the team can read.
 - **Links.** Home (a row and the taller planting card), the crop page ("What to plant after it") and the field page ("After harvest · What to plant next").

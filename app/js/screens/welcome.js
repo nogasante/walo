@@ -1,7 +1,7 @@
-/* First run: the two questions Walo exists to answer, then the answer to the one she picked.
+/* First run: the two questions Walɔ exists to answer, then the answer to the one she picked.
    Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
    Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
-   Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
+   Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walɔ before. */
 import { towns, cropsHere, crop, scoreCrop, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto, setCountry } from "../store.js";
 import { btn, icon, row, cropImg, wireSearch, emptyState, groupedCrops } from "../ui.js";
@@ -26,7 +26,7 @@ function doors() {
     <div class="wl-hero">
       <p class="wl-to">Welcome to</p>
       <img class="wl-mark" src="img/logo-mark.png" alt="" width="96" height="96">
-      <p class="wl-name">walo</p>
+      <p class="wl-name">Walɔ</p>
     </div>
     <div class="wl-doors">
       <button type="button" class="door" data-door="place">
@@ -38,7 +38,7 @@ function doors() {
         <span class="door-t"><b>I want to plant a crop</b><small>Where should I plant it?</small></span>
       </button>
     </div>
-    <p class="muted small wl-signin">Used Walo before? <a href="#/backup">Sign in with your email</a> and your fields come back.</p>
+    <p class="muted small wl-signin">Used Walɔ before? <a href="#/backup">Sign in with your email</a> and your fields come back.</p>
   </div>`;
 }
 
@@ -82,14 +82,14 @@ function placeStep() {
     <div data-none hidden></div>
     ${list.length
       ? `<div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>`
-      : emptyState({ ic: "map-pin", title: `No towns in ${c.name} yet`, sub: "Change country, or tell us your town and Walo will add it.", action: "Change country", attrs: "data-wchange" })}
+      : emptyState({ ic: "map-pin", title: `No towns in ${c.name} yet`, sub: "Change country, or tell us your town and Walɔ will add it.", action: "Change country", attrs: "data-wchange" })}
   </div>`;
 }
 
 function cropStep() {
   const asking = W.order === "crop", p = place(), cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
-  // A crop list sorted "best first" still put crops Walo rates poorly under a heading promising otherwise, so the
-  // tiles are grouped by what Walo actually found: grows well, can grow, grows poorly. Nothing is hidden.
+  // A crop list sorted "best first" still put crops Walɔ rates poorly under a heading promising otherwise, so the
+  // tiles are grouped by what Walɔ actually found: grows well, can grow, grows poorly. Nothing is hidden.
   const list = cropsHere(p).slice().sort((a, b) => scoreCrop(b, p).score - scoreCrop(a, p).score || a.name.localeCompare(b.name));
   const band = (c) => scoreCrop(c, p).score;
   const groups = [
@@ -103,7 +103,7 @@ function cropStep() {
     <h1 class="q wl-q">${asking ? "Choose the crop you want to plant" : "Choose the crop you grow"}</h1>
     <input class="search-in" type="search" data-filter placeholder="Search a crop" aria-label="Search a crop">
     <div data-none hidden></div>
-    ${groups.length ? groupedCrops(groups, tile, "tiles") : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walo has no crops for this country yet.", action: "Change country", attrs: "data-wchange" })}
+    ${groups.length ? groupedCrops(groups, tile, "tiles") : emptyState({ ic: "sprout", title: "No crops listed yet", sub: "Walɔ has no crops for this country yet.", action: "Change country", attrs: "data-wchange" })}
   </div>`;
 }
 
@@ -135,7 +135,7 @@ function nearMe(root) {
 /* every step after the two doors: back on the far left, the brand centred, nothing else in the bar */
 const whead = () => `<div class="whead">
   <button type="button" class="wback" data-wback aria-label="Back">${icon("chevron-left")}</button>
-  <a class="wbrand" href="#/about"><img src="img/logo-mark.png" alt="" width="26" height="26"><span>walo</span></a>
+  <a class="wbrand" href="#/about"><img src="img/logo-mark.png" alt="" width="26" height="26"><span>Walɔ</span></a>
   <span></span>
 </div>`;
 
@@ -199,7 +199,7 @@ function choosePlace(id) {
   else { W.step = "crop"; refresh(); }
 }
 
-/* same rules as the place picker: only inside a country Walo covers, and NASA must answer */
+/* same rules as the place picker: only inside a country Walɔ covers, and NASA must answer */
 function useGps(root) {
   const msg = root.querySelector("#w-msg"), b = root.querySelector("#w-gps");
   const say = (t, busy) => { msg.innerHTML = `${busy ? icon("loader-circle", "spin") : ""}<span>${t}</span>`; };
@@ -207,7 +207,7 @@ function useGps(root) {
   b.disabled = true; say("Finding you…", true);
   navigator.geolocation.getCurrentPosition(async (pos) => {
     const lat = pos.coords.latitude, lon = pos.coords.longitude;
-    if (!inCountry(lat, lon)) { b.disabled = false; say("Walo does not cover this place yet. Pick a town below."); return; }
+    if (!inCountry(lat, lon)) { b.disabled = false; say("Walɔ does not cover this place yet. Pick a town below."); return; }
     const name = await placeName(lat, lon);
     say(`Found you${name ? ` near ${esc(name)}` : ""}. Getting NASA weather for this spot…`, true);
     try {

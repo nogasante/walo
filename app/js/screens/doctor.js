@@ -79,9 +79,9 @@ export function render(id, farmId) {
       // say what it looks like, and let her carry this same photo over to that crop instead of starting again
       const looks = (r.looks_like || []).filter(Boolean), mine = c.name.toLowerCase();
       const seen = looks.length ? looks.join(" or ") : "a different crop";
-      const msg = `Walo checked the photo against ${mine}, and the plant looks like ${seen}.`;
+      const msg = `Walɔ checked the photo against ${mine}, and the plant looks like ${seen}.`;
       const opts = looks.map((n) => ({ n, c: cropByName(n) })).filter((x) => x.c && x.c.id !== c.id);
-      body = `${answer({ kind: "wait", icon: "camera", title: `This looks like ${seen}, not ${mine}`, sub: esc(`${msg} If it is, pick it below and Walo will check the same photo as that crop.`), say: msg, credit: "AI answer" })}
+      body = `${answer({ kind: "wait", icon: "camera", title: `This looks like ${seen}, not ${mine}`, sub: esc(`${msg} If it is, pick it below and Walɔ will check the same photo as that crop.`), say: msg, credit: "AI answer" })}
         ${opts.length ? `<div class="stack">${opts.map(({ c: oc }) => btn(`Check it as ${oc.name.toLowerCase()}`, { ic: "sprout", attrs: `data-lookcrop="${oc.id}"` })).join("")}</div>` : ""}
         ${cameraButton("doctor", "Take another photo", { kind: opts.length ? "secondary" : "primary", attrs: "data-net" })}${btn("New check", { kind: "secondary", ic: "refresh-cw", attrs: 'id="doc-new"' })}`;
     } else {
@@ -203,12 +203,12 @@ function listen(langIdx = 0) {
   me.onerror = (e) => {
     failed = true;
     if (e.error === "language-not-supported" && langIdx + 1 < langs.length) { rec = null; listen(langIdx + 1); return; }
-    S.err = { "not-allowed": "Walo cannot use the microphone. Allow it in the browser settings, or type instead.", "service-not-allowed": "Talking does not work in this browser. Type instead.", "no-speech": "Walo did not hear anything. Tap the microphone and talk.", network: "Talking needs internet. Type instead.", "audio-capture": "No microphone found. Type instead." }[e.error] || (e.error === "aborted" ? "" : "Talking did not work. Type instead.");
+    S.err = { "not-allowed": "Walɔ cannot use the microphone. Allow it in the browser settings, or type instead.", "service-not-allowed": "Talking does not work in this browser. Type instead.", "no-speech": "Walɔ did not hear anything. Tap the microphone and talk.", network: "Talking needs internet. Type instead.", "audio-capture": "No microphone found. Type instead." }[e.error] || (e.error === "aborted" ? "" : "Talking did not work. Type instead.");
   };
   me.onend = () => {
     if (rec !== me) return; // switched to the next language
     rec = null; S.listening = false;
-    if (!got && !failed) S.err = "Walo did not hear anything. Tap the microphone and talk, or type.";
+    if (!got && !failed) S.err = "Walɔ did not hear anything. Tap the microphone and talk, or type.";
     const t = ta(); if (t) { if (S.phase === "ask") S.reply = t.value; else S.words = t.value; }
     redraw();
   };
@@ -219,7 +219,7 @@ function listen(langIdx = 0) {
 const keepText = (t) => { if (S.phase === "ask") S.reply = t; else S.words = t; };
 async function listenTwi() {
   try { await startRecording(() => finishTwi()); S.listening = true; S.err = ""; }
-  catch (e) { S.listening = false; S.err = e && e.name === "NotAllowedError" ? "Walo cannot use the microphone. Allow it in the browser settings, or type instead." : "No microphone found. Type instead."; }
+  catch (e) { S.listening = false; S.err = e && e.name === "NotAllowedError" ? "Walɔ cannot use the microphone. Allow it in the browser settings, or type instead." : "No microphone found. Type instead."; }
   redraw();
 }
 async function finishTwi() {

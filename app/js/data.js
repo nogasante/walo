@@ -1,4 +1,4 @@
-/* Walo data layer: loads data/*.json once and answers every question the screens ask.
+/* Walɔ data layer: loads data/*.json once and answers every question the screens ask.
    Methods live in lib/agro.js (window.AGRO) and every threshold in data/rules.json; see DESIGN.md "Methods".
    No place, market or crop names are written in this file. */
 import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
@@ -145,7 +145,7 @@ export function scoreCrop(c, p) {
    balance and temperature fit that gave the verdict: no brand names, no doses, steps a farmer can take this season. */
 export function growFixes(c, p) {
   const sc = scoreCrop(c, p), eco = sc.eco, f = sc.fit, out = [], n = (x) => Math.round(x);
-  // a crop Walo rates well needs no fixing advice: an annual-rain shortfall would contradict its own verdict
+  // a crop Walɔ rates well needs no fixing advice: an annual-rain shortfall would contradict its own verdict
   if (!eco || sc.score >= 4) return out;
   const need = f && f.need_mm, def = f && f.deficit_mm;
   if (sc.water && f && def > 0 && f.water_class.cls !== "good") {
@@ -225,16 +225,16 @@ export function shiftFor(p) {
 }
 
 /* Which rain year to plan for, read from the same 35-year record the shift screen uses: when her town's last eleven
-   years came in meaningfully drier or wetter than 1991-2014, Walo plans that way without asking her to guess a
+   years came in meaningfully drier or wetter than 1991-2014, Walɔ plans that way without asking her to guess a
    season. She can still override it; nothing here is a forecast. */
 export function rainPlanFor(p) {
   const s = shiftFor(p);
-  if (!s || s.rainPct == null) return { id: "usual", pct: null, note: "Walo plans for the usual rain: there is no comparable record for this point yet." };
+  if (!s || s.rainPct == null) return { id: "usual", pct: null, note: "Walɔ plans for the usual rain: there is no comparable record for this point yet." };
   const pct = s.rainPct, id = pct <= -8 ? "less" : pct >= 8 ? "more" : "usual";
   const years = `${s.periods.recent[0]}–${s.periods.recent[1]}`;
   const note = id === "usual"
-    ? `Walo plans for the usual rain: the ${years} seasons here are within ${Math.abs(pct)}% of 1991–2014.`
-    : `Walo plans for ${id === "less" ? "less" : "more"} rain: the ${years} seasons here came in ${Math.abs(pct)}% ${pct < 0 ? "drier" : "wetter"} than 1991–2014.`;
+    ? `Walɔ plans for the usual rain: the ${years} seasons here are within ${Math.abs(pct)}% of 1991–2014.`
+    : `Walɔ plans for ${id === "less" ? "less" : "more"} rain: the ${years} seasons here came in ${Math.abs(pct)}% ${pct < 0 ? "drier" : "wetter"} than 1991–2014.`;
   return { id, pct, note };
 }
 
@@ -261,7 +261,7 @@ async function loadForecast(p, k, age) {
     if (!r.ok || !j.ok || !j.days || !j.days.length) throw new Error("no forecast");
     FC[k] = { t: Date.now(), data: j };
     try { localStorage.setItem("walo.fc." + k, JSON.stringify(FC[k])); } catch { /* storage full */ }
-  } catch { FC[k] = { t: Date.now(), data: null }; } // Walo still answers from NASA climatology alone
+  } catch { FC[k] = { t: Date.now(), data: null }; } // Walɔ still answers from NASA climatology alone
   onForecast();
 }
 /* the onset rule applied to the forecast days (the dry-spell part can only see the days the forecast covers) */

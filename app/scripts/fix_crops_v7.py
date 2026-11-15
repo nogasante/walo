@@ -42,7 +42,7 @@ addsrc(s, "FAO_CWR", "FAO_LW_SORGHUM")
 c = C["cocoyam"]
 c["zones"] = {"T": "Grown largely in the Transition and Forest zones (Ansah et al. 2023)"}
 c["windows"] = {"T": [win([4, 5, 6], [11, 12], "1 Apr – 30 Jun", "10 Nov – 20 Dec", "FAO calendar for the Rain forest zone next door (no Transitional entry)", best=True, borrowed="Rain forest zone", days="210 - 280")]}
-c["window_notes"]["T"] = ["Cocoyam is grown largely in Ghana's Transition and Forest zones. [ANSAH_2023]", "FAO has no Transitional-zone entry; Walo uses FAO's Rain forest window (sow 1 Apr – 30 Jun, harvest 10 Nov – 20 Dec) as a best guess. [FAO_CROPCAL]"]
+c["window_notes"]["T"] = ["Cocoyam is grown largely in Ghana's Transition and Forest zones. [ANSAH_2023]", "FAO has no Transitional-zone entry; Walɔ uses FAO's Rain forest window (sow 1 Apr – 30 Jun, harvest 10 Nov – 20 Dec) as a best guess. [FAO_CROPCAL]"]
 c["confidence"].update({"ejura": "Medium", "techiman": "Medium"})
 addsrc(c, "ANSAH_2023")
 
@@ -80,7 +80,7 @@ addsrc(g, "MADE_VEG_2015")
 # (4) Onion: keep FAO sowing; harvest worked out from MoFA durations (FAO harvest date dropped as inconsistent)
 on = C["onion"]
 on["windows"] = {"T": [win([8, 9, 10, 11], [12, 1, 2, 3], "10 Aug – 10 Nov", "Dec – Mar", "FAO sowing dates; harvest worked out from MoFA durations", days="110 - 135")]}
-on["window_notes"]["T"] = ["FAO calendar: sow 10 Aug – 10 Nov; best grown in the dry season. [FAO_CROPCAL]", "Harvest worked out by Walo: about 4 weeks in the nursery plus 80–105 days after transplanting [MOFA_ONION] gives December–March. FAO's own harvest date (30 Sep – 10 Oct) comes before its sowing ends, so Walo does not use it."]
+on["window_notes"]["T"] = ["FAO calendar: sow 10 Aug – 10 Nov; best grown in the dry season. [FAO_CROPCAL]", "Harvest worked out by Walo: about 4 weeks in the nursery plus 80–105 days after transplanting [MOFA_ONION] gives December–March. FAO's own harvest date (30 Sep – 10 Oct) comes before its sowing ends, so Walɔ does not use it."]
 on["days_typical"] = 120
 on["days_text"] = "About 4 weeks nursery + 80–105 days after transplanting (MoFA)."
 

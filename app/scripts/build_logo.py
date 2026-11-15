@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw Walo's mark (a leaf cradling a hand) and export transparent PNGs.
+"""Draw Walɔ's mark (a leaf cradling a hand) and export transparent PNGs.
 
 The brand art arrives as a flat raster on an off-white page, which cannot be used for a launcher tile,
 a favicon or a splash screen. This draws the mark as vector geometry instead - a leaf with a deep

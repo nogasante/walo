@@ -1,4 +1,4 @@
-/* Walo in Twi: machine translation, voice and listening by GhanaNLP Khaya, through our server (/api/twi).
+/* Walɔ in Twi: machine translation, voice and listening by GhanaNLP Khaya, through our server (/api/twi).
    - Fixed labels come from data/i18n-tw.json (built once, machine-translated, needs a Twi speaker's check).
    - Everything else on screen (answers, AI answers) is translated when it shows, then kept on this phone.
    - Screens are written in English; this module swaps the words in the page, so English stays the one source.
@@ -187,11 +187,11 @@ const b64 = (blob) => new Promise((ok, bad) => { const r = new FileReader(); r.o
 /* the recording -> Twi words (throws an Error with a plain message) */
 export async function transcribe(blob, signal) {
   let w;
-  try { w = await toWav(blob); } catch { throw new Error("Walo could not read that recording. Try again, or type."); }
-  if (w.seconds < 0.6) throw new Error("Walo did not hear anything. Tap the microphone and talk.");
+  try { w = await toWav(blob); } catch { throw new Error("Walɔ could not read that recording. Try again, or type."); }
+  if (w.seconds < 0.6) throw new Error("Walɔ did not hear anything. Tap the microphone and talk.");
   const r = await fetch(`${T().endpoint}?action=asr`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ audio: await b64(w.wav) }), signal });
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.ok) throw new Error(j.error || "Twi listening did not work. Try again, or type.");
-  if (!j.text) throw new Error("Walo did not hear anything. Tap the microphone and talk.");
+  if (!j.text) throw new Error("Walɔ did not hear anything. Tap the microphone and talk.");
   return j.text;
 }

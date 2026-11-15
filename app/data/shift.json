@@ -1,5 +1,5 @@
 {
- "method": "NASA POWER daily PRECTOTCORR and T2M_MAX, AG community, compared over 1991-2014 and 2015-2025 at each town point. Onset uses the same rule as the rest of Walo; see DESIGN.md method 4. Figures are usual values for each period, not a forecast.",
+ "method": "NASA POWER daily PRECTOTCORR and T2M_MAX, AG community, compared over 1991-2014 and 2015-2025 at each town point. Onset uses the same rule as the rest of Walɔ; see DESIGN.md method 4. Figures are usual values for each period, not a forecast.",
  "hot_threshold_c": 35.0,
  "periods": {
   "early": [

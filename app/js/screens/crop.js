@@ -37,7 +37,7 @@ function details(c, p, sc, cm, st) {
   if (e) out.push(`EcoCrop: rain ${fmt(e.rain_mm)} mm a year vs ideal ${fmt(e.rain_rng.opt_min)}–${fmt(e.rain_rng.opt_max)} mm${e.gh ? " (Ghana figure)" : ""}; temperature fit ${Math.round(e.temp * 100)}% over its ${e.months}-month season (ideal ${e.temp_rng.opt_min}–${e.temp_rng.opt_max} °C).`);
   if (f) out.push(`FAO-56 water balance, sown at the usual start of the rains (${doyText(f.sow)}): needs about ${fmt(f.need_mm)} mm, effective rain ${fmt(f.peff_mm)} mm, WRSI ${f.wrsi} (${f.water_class.label.toLowerCase()})${sc.water ? "" : ", not used for long crops"}.`);
   if (f && f.heat && f.hot_days != null) out.push(`About ${f.hot_days} day${f.hot_days === 1 ? "" : "s"} above ${f.heat.t} °C while it flowers.`);
-  if (cm.windows.length) out.push(cm.guess ? `Planting months are Walo's best guess: from the date the rains have started in 2 of 10 years to 8 of 10 years, keeping seasons with enough rain for it.` : `Planting months: ${cm.windows.map((w) => `${esc(w.src || ((country() || {}).sources || {}).crop_calendar || "FAO crop calendar")} (sow ${esc(w.sow_text)}, harvest ${esc(w.harvest_text)})`).join("; ")}.`);
+  if (cm.windows.length) out.push(cm.guess ? `Planting months are Walɔ's best guess: from the date the rains have started in 2 of 10 years to 8 of 10 years, keeping seasons with enough rain for it.` : `Planting months: ${cm.windows.map((w) => `${esc(w.src || ((country() || {}).sources || {}).crop_calendar || "FAO crop calendar")} (sow ${esc(w.sow_text)}, harvest ${esc(w.harvest_text)})`).join("; ")}.`);
   return out.concat(rainDetails(p, st));
 }
 export function render(id, sub) {
@@ -46,7 +46,7 @@ export function render(id, sub) {
   const sc = scoreCrop(c, p), fw = fitWord(sc), st = plantStatus(c, p), cm = cropMonths(c, p), z = zoneOf(p), outZone = z != null && !c.zones[z];
   const months = cm.allYear ? "Any month" : cm.sow.length ? runs(cm.sow).map(monthSpan).join(", ") : "";
   // the headline already names the month it wants, so this line adds the width of the window, never a second answer
-  const guessNote = cm.guess && !cm.allYear ? " Walo's best guess from ten years of rain." : "";
+  const guessNote = cm.guess && !cm.allYear ? " Walɔ's best guess from ten years of rain." : "";
   const subLine = cm.allYear ? "Any month works here." : cm.sow.length > 1 ? `Sowing runs ${months}.${guessNote}` : guessNote.trim();
   const t = headline(c, st), fo = fcOnset(forecastFor(p));
   const why = whyBody(reasons(c, sc).concat(outZone ? [`FAO does not list ${c.name.toLowerCase()} for the ${zoneName(z).toLowerCase()}.`] : []), details(c, p, sc, cm, st));
@@ -61,7 +61,7 @@ export function render(id, sub) {
   <div class="stack lift">
     ${answer({ kind: st.kind, title: t, sub: subLine, extra: fx + rainStrip(p, cm.allYear ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : cm.sow), why: { title: `Why: ${c.name}`, html: why }, say: `${t}. ${fw.text} in ${placeLabel(p)}. ${subLine}` })}
     ${sc.score < 4 ? fixesCard(growFixes(c, p), `To grow it in ${placeLabel(p)}`) : ""}
-    ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walo cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
+    ${isTree(c) ? note(`${esc(c.name)} is a tree crop: Walɔ cannot follow it as a field yet.`) : btn("Start planting", { href: `#/start/${c.id}`, ic: "sprout" })}
     ${btn("Where else it grows best", { kind: "secondary", ic: "map-pin", href: `#/crop/${c.id}/where` })}
     ${isTree(c) ? "" : btn("What to plant after it", { kind: "secondary", ic: "refresh-cw", href: `#/next/${c.id}` })}
   </div>`;
@@ -81,7 +81,7 @@ export function placesHtml(c, opts = {}) {
   const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const body = list.length
     ? `<div class="list">${list.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", icTone: tone(x), title: esc(x.p.name), sub: near ? `${Math.round(km(near, x.p))} km away` : "" })).join("")}</div>`
-    : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walo needs towns here before it can say where a crop grows.", action: "Choose another country", href: "#/welcome" });
+    : emptyState({ ic: "map-pin", title: `No towns in ${(country() || {}).name || "this country"} yet`, sub: "Walɔ needs towns here before it can say where a crop grows.", action: "Choose another country", href: "#/welcome" });
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>${body}`;
 }
 /* a town on the where page: its verdict for this crop, and the one control that changes her farm. Tapping a town

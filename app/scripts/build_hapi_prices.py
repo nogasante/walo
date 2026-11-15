@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build scripts/data/prices-world.json from OCHA's Humanitarian API (HDX HAPI) market prices.
 
-Why this file exists: Walo's Ghana prices come from MoFA SRID plus the Ghana Commodity Exchange,
+Why this file exists: Walɔ's Ghana prices come from MoFA SRID plus the Ghana Commodity Exchange,
 because WFP's Ghana series stops in July 2023. Every other country has no such source, but HAPI
 republishes WFP market prices for a single schema across countries: market, coordinates, commodity,
 currency, the unit the market actually sells in, retail or wholesale, and a monthly reference
@@ -23,7 +23,7 @@ What it writes (scripts/data/prices-world.json), per country, in the country's o
 converted, because those are not masses. Where the same market reports both retail and wholesale,
 both are kept under `r` and `w`.
 
-Nothing here is loaded by the app yet: a country only appears in Walo when countries.json marks it
+Nothing here is loaded by the app yet: a country only appears in Walɔ when countries.json marks it
 live, and that needs its planting windows sourced. This file is the price half of that.
 """
 import argparse, base64, collections, datetime, json, os, sys, time, urllib.error, urllib.parse, urllib.request
@@ -132,8 +132,8 @@ def country_rows(app_id, cc, start, end, limit=10000, max_pages=6):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--email", help="email HAPI should attribute Walo's calls to")
-    ap.add_argument("--app", default="Walo", help="application name for the HAPI identifier")
+    ap.add_argument("--email", help="email HAPI should attribute Walɔ's calls to")
+    ap.add_argument("--app", default="Walɔ", help="application name for the HAPI identifier")
     ap.add_argument("--months", type=int, default=13, help="how far back to keep prices")
     ap.add_argument("--countries", help="comma-separated ISO3 codes (default: every African country)")
     ap.add_argument("--app-country", help="also write the app's price file for this ISO3 code")

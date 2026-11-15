@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build data/soilhealth.json: a soil-health screening for each town from data Walo can actually get.
+"""Build data/soilhealth.json: a soil-health screening for each town from data Walɔ can actually get.
 
 Three inputs, all open and reproducible:
 

@@ -1,4 +1,4 @@
-/* Walo agro methods, shared by the phone (window.AGRO) and the data build (node scripts/build_agro.js).
+/* Walɔ agro methods, shared by the phone (window.AGRO) and the data build (node scripts/build_agro.js).
    Every constant comes from data/rules.json (passed in as R) or from the crop record; see DESIGN.md "Methods". */
 (function (root) {
   "use strict";
@@ -46,7 +46,7 @@
     return null;
   }
 
-  /* Summarise daily POWER records into the place climatology Walo needs.
+  /* Summarise daily POWER records into the place climatology Walɔ needs.
      D: { "YYYYMMDD": {P, tmax, tmin, t, rh, ws, rs} }, years: [y0, y1], minor: bool (bimodal zone). */
   function summarize(D, lat, z, years, R, minor) {
     const ok = (v) => v != null && v > -900, HOT = R.heat.count_thresholds_c;

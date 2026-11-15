@@ -1,5 +1,5 @@
 /*
- * Walo Plant Doctor: POST /api/diagnose
+ * Walɔ Plant Doctor: POST /api/diagnose
  * In:  { mode: "doctor" | "stage", crop, crop_name, days_since_sowing, season_days, expected_stage, place, lat, lon,
  *        climatology: { month, rain_mm, tmax_c, hot_days } (bundled NASA POWER monthly, used if the live call fails),
  *        images: [{ role: "leaf" | "plant" | "field" | "diary", mime, data: "<base64>" }] (0-3; JPEG resized on the phone, or a small original incl. HEIC),
@@ -104,7 +104,7 @@ function prompt(b, wx, nImg) {
   const said = b.words ? `The farmer says (spoken or typed, may have spelling or speech-to-text mistakes): "${b.words}"` : "";
   const fu = b.followup ? `You asked: "${b.followup.question}". The farmer answered: "${b.followup.answer || "(no answer)"}". Do not ask another question now; give your best answer.` : "";
   const input = nImg && b.words ? "Look at the photos, read what the farmer says" : nImg ? "Look at the photos" : "There is NO photo. Read what the farmer says";
-  return `You are Walo's Plant Doctor, helping a smallholder farmer in ${countryAt(b.lat, b.lon).name}. ${input}, then answer in the JSON schema. The weather below is background only: it cannot show a disease by itself.
+  return `You are Walɔ's Plant Doctor, helping a smallholder farmer in ${countryAt(b.lat, b.lon).name}. ${input}, then answer in the JSON schema. The weather below is background only: it cannot show a disease by itself.
 ${said}
 ${fu}
 Crop (as told by the farmer): ${b.crop_name}. Place: ${b.place} (${b.lat.toFixed(2)}, ${b.lon.toFixed(2)}).
@@ -172,14 +172,14 @@ module.exports = async (req, res) => {
   // no photo or words are logged: only counts, sizes and types, so failures on real phones can be traced
   console.log(JSON.stringify({ ev: "diagnose", photos: imgs.length, kb: Math.round(total * 0.75 / 1024), types: imgs.map((im) => im.mime || "?"), words: words.length, followup: !!followup }));
   const lat = Number(b.lat), lon = Number(b.lon);
-  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
+  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walɔ covers" });
   // Daily cap across every server instance (supabase/schema.sql -> walo_ai_hit). Null means the SQL is not
-  // applied yet, or Supabase is down: the per-IP limit above still applies and Walo keeps answering.
+  // applied yet, or Supabase is down: the per-IP limit above still applies and Walɔ keeps answering.
   const budget = await takeAiHit();
   if (budget && !budget.allowed) {
     console.log(JSON.stringify({ ev: "diagnose_budget", used: budget.used, cap: budget.cap }));
     res.setHeader("Retry-After", "3600");
-    return send(429, { ok: false, error: "Walo has done a lot of checks today. Try again tomorrow." });
+    return send(429, { ok: false, error: "Walɔ has done a lot of checks today. Try again tomorrow." });
   }
   const body = {
     mode: b.mode === "stage" ? "stage" : "doctor", lat, lon,

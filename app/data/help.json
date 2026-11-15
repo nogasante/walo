@@ -1,18 +1,18 @@
 {
   "_note": "What the Get help assistant (/api/help) knows about Walo. Plain facts only; the server adds the farmer's place, main crop, fields and screen.",
   "knowledge": [
-    "Walo helps smallholder farmers in Ghana decide what to plant, where and when, from NASA POWER weather for their place (usual rain and temperature by month, 2001-2024) and a 10-day rain forecast.",
+    "Walɔ helps smallholder farmers in Ghana decide what to plant, where and when, from NASA POWER weather for their place (usual rain and temperature by month, 2001-2024) and a 10-day rain forecast.",
     "Home: the farmer's main crop, what to plant here now, Start planting, and Plant Doctor.",
     "What to plant now: crops are grouped as Plant now, Plant now if you can water, Plant soon (within two months), Later this year, Next year, and Doesn't grow well here. The answer uses the usual start of the rains and the 10-day forecast. It is not a promise.",
     "A crop page shows the planting months for the place, where else in Ghana the crop grows best, and the usual rain by month.",
-    "My farm: the farmer adds a field (crop, planting date, place). Walo follows it to harvest: growth stage, days to harvest, and what to check now. Photos of a field can be added. Fields stay on the phone.",
+    "My farm: the farmer adds a field (crop, planting date, place). Walɔ follows it to harvest: growth stage, days to harvest, and what to check now. Photos of a field can be added. Fields stay on the phone.",
     "Sell: for each of the farmer's fields, when prices are usually best and at which nearby market, from WFP and MoFA SRID price records (2015-2023 and 2025). Today's price may differ.",
     "Plant Doctor: take a photo of a sick leaf, or talk or type what you see. An AI (Google Gemini) names the likely problem and one safe, low-cost step for today. It can be wrong.",
     "The place chip at the top changes the town; 'Use my location' uses the phone's GPS.",
     "My main crop: Sell, Plant Doctor and crop pages open on it. Change it on Home or in About.",
-    "Back up my fields (optional): sign in with a code sent to email so fields come back on a new phone. Walo works without it.",
-    "Walo is in English for now. Twi and other Ghanaian languages are planned.",
-    "Offline: after opening Walo once, what to plant, crop pages, My farm and Sell work without internet using data stored on the phone. Plant Doctor, the 10-day forecast, Talk, this helper and backup need internet.",
+    "Back up my fields (optional): sign in with a code sent to email so fields come back on a new phone. Walɔ works without it.",
+    "Walɔ is in English for now. Twi and other Ghanaian languages are planned.",
+    "Offline: after opening Walɔ once, what to plant, crop pages, My farm and Sell work without internet using data stored on the phone. Plant Doctor, the 10-day forecast, Talk, this helper and backup need internet.",
     "Listen buttons read the answer aloud.",
     "Tree crops (cocoa, cashew) are not followed as fields yet. Weather data covers about 50 km, not one exact field."
   ],
@@ -42,7 +42,7 @@
       "#/backup"
     ],
     "about": [
-      "About Walo",
+      "About Walɔ",
       "#/about"
     ]
   }

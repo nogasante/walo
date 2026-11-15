@@ -1,4 +1,4 @@
-/* Back up my fields: optional sign-in with a one-time email code. Walo works without it. */
+/* Back up my fields: optional sign-in with a one-time email code. Walɔ works without it. */
 import { farms } from "../store.js";
 import { CFG } from "../data.js";
 import { icon, btn, note } from "../ui.js";
@@ -37,13 +37,13 @@ export function render() {
     </div>`;
   }
   return `<div class="stack">
-    ${head("cloud-upload", "info", "Sign in or back up", "Used Walo before? Sign in with the same email and your fields come back. New here? Add your email so your fields come back if you change or lose this phone.")}
+    ${head("cloud-upload", "info", "Sign in or back up", "Used Walɔ before? Sign in with the same email and your fields come back. New here? Add your email so your fields come back if you change or lose this phone.")}
     ${err}
     <form class="card stack" id="bk-email-form" novalidate>
       <label class="field">Your email<input id="bk-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" value="${esc(S.email)}" required></label>
       ${btn(S.wait ? "Sending…" : "Email me a sign-in link", { ic: "mail", type: "submit", attrs: S.wait ? "disabled data-net" : "data-net" })}
     </form>
-    ${note("No password. We only use your email to sign you in and keep your fields. You can use Walo without this.")}
+    ${note("No password. We only use your email to sign you in and keep your fields. You can use Walɔ without this.")}
   </div>`;
 }
 export function mount(root, a, b, rerender) {

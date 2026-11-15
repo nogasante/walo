@@ -1,4 +1,4 @@
-/* Walo UI kit: the few components every screen is built from. Sizes and colours live in styles.css (tokens). */
+/* Walɔ UI kit: the few components every screen is built from. Sizes and colours live in styles.css (tokens). */
 import { icon } from "./icons.js";
 import { esc } from "./util.js";
 import { isTwi, sayTwi, stopTwi, translate } from "./twi.js";
@@ -32,7 +32,7 @@ async function speak(btn) {
   const ok = await sayTwi(btn.dataset.say, () => { btn.classList.remove("wait"); btn.classList.add("on"); });
   if (!btn.classList.contains("on") && !btn.classList.contains("wait")) return; // stopped
   btn.classList.remove("on", "wait");
-  if (!ok) { toast("The Twi voice is not working now. Walo reads in English."); speakEnglish(btn); }
+  if (!ok) { toast("The Twi voice is not working now. Walɔ reads in English."); speakEnglish(btn); }
 }
 /* a short message at the bottom that goes away by itself */
 export function toast(text) {
@@ -59,7 +59,7 @@ export function openSheet(idOrSheet, from) {
   wireSearch(b);
   document.dispatchEvent(new CustomEvent("sheet-open", { detail: b }));
 }
-/* the one way Walo says "there is nothing here": what is missing, why, and a way out of it */
+/* the one way Walɔ says "there is nothing here": what is missing, why, and a way out of it */
 export const emptyState = ({ ic = "info", title, sub = "", action = "", href = "", attrs = "" }) =>
   `<div class="nores"><span class="nores-ic">${icon(ic)}</span><b>${esc(title)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}${action ? (href ? `<a class="btn secondary" href="${href}" ${attrs}>${esc(action)}</a>` : `<button type="button" class="btn secondary" ${attrs}>${esc(action)}</button>`) : ""}</div>`;
 

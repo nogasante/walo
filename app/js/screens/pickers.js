@@ -14,7 +14,7 @@ export function openPlacePicker(next, from) {
     <div data-none hidden></div>
     ${(() => { const l = towns().sort((a, b) => a.name.localeCompare(b.name)); return l.length
       ? `<div class="list">${l.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`
-      : emptyState({ ic: "map-pin", title: `No towns in ${esc(country().name)} yet`, sub: "Choose another country, or tell us your town and Walo will add it.", action: "Choose another country", href: "#/welcome" }); })()}`;
+      : emptyState({ ic: "map-pin", title: `No towns in ${esc(country().name)} yet`, sub: "Choose another country, or tell us your town and Walɔ will add it.", action: "Choose another country", href: "#/welcome" }); })()}`;
   openSheet({ title: "Choose the town nearest your farm", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
       const t = e.target.closest("[data-town]");
@@ -26,7 +26,7 @@ export function openPlacePicker(next, from) {
 }
 const go = (next) => { if (next && location.hash !== next) location.hash = next; };
 
-/* Country. Only a country Walo has data for is offered: "live" means its prices and planting windows have been
+/* Country. Only a country Walɔ has data for is offered: "live" means its prices and planting windows have been
    checked by someone farming there; "preview" means they have not, and the app says so before you choose it. */
 export function openCountryPicker(from, host) {
   const cur = (country() || {}).id;
@@ -62,7 +62,7 @@ function useGps(b, next) {
   btn.disabled = true; say("Finding you…", true);
   navigator.geolocation.getCurrentPosition(async (pos) => {
     const lat = pos.coords.latitude, lon = pos.coords.longitude, n = nearestTown({ lat, lon });
-    if (!inCountry(lat, lon)) { btn.disabled = false; say("Walo does not cover this place yet. Pick a town below."); return; }
+    if (!inCountry(lat, lon)) { btn.disabled = false; say("Walɔ does not cover this place yet. Pick a town below."); return; }
     const name = await placeName(lat, lon);
     say(`Found you${name ? ` near ${esc(name)}` : ""}. Getting NASA weather for this spot…`, true);
     try {
@@ -89,7 +89,7 @@ export function openCropPicker(mode, from, onPick) {
   } }, from);
 }
 
-/* my main crop: the crop Walo opens on (Sell, Plant Doctor, Crop). "From my fields" goes back to auto. */
+/* my main crop: the crop Walɔ opens on (Sell, Plant Doctor, Crop). "From my fields" goes back to auto. */
 export function openMainCropPicker(from) {
   const cur = mainCrop(), auto = autoMainCrop(), p = place(), here = new Set(cropsHere(p).map((c) => c.id));
   const list = crops().slice().sort((a, b) => here.has(b.id) - here.has(a.id) || a.name.localeCompare(b.name));

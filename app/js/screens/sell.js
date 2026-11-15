@@ -33,7 +33,7 @@ function list(mine) {
   const P = CFG().photos.sell;
   const top = hero({ img: P.img, pos: P.pos, eyeIcon: "tag", eyebrow: mine.length ? `${mine.length} fields` : esc(placeLabel(place())), title: "When to sell your crops" });
   if (!mine.length) return `${top}<div class="stack lift">
-    ${answer({ kind: "info", icon: "tag", title: "Add your field to see when to sell", sub: "Walo follows your field to harvest, then says when and where to sell.", say: "Add your field to see when to sell." })}
+    ${answer({ kind: "info", icon: "tag", title: "Add your field to see when to sell", sub: "Walɔ follows your field to harvest, then says when and where to sell.", say: "Add your field to see when to sell." })}
     ${btn("Add a field", { href: "#/start", ic: "plus" })}${other(false)}</div>`;
   const card = ({ f, pr }) => {
     const c = crop(f.crop), sa = sellAdvice(c.id, pr.p, pr.harvest), s = summary(sa, pr), sp = priceNear(c.id, pr.p, 1)[0], last = (f.photos || []).slice(-1)[0];
@@ -57,7 +57,7 @@ function detail(id, f) {
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else {
     a = !best && pricesUnreachable()
-      ? { kind: "info", icon: "wifi-off", title: "Prices could not load", sub: `Walo could not reach its price file for ${esc((country() || {}).name || "this country")}. Check your connection, then open Sell again.` }
+      ? { kind: "info", icon: "wifi-off", title: "Prices could not load", sub: `Walɔ could not reach its price file for ${esc((country() || {}).name || "this country")}. Check your connection, then open Sell again.` }
       : { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: best ? `${stalePrice(best.d) ? "Last recorded price" : "Latest price"}: ${currency()} ${fmt(best.v, 2)} per kg at ${esc(best.name)} (${fmt(best.km)} km), ${dayYear(best.d)}.` : `No price records for ${esc(c.name.toLowerCase())} yet.` };
     dataLine = best ? `Price from ${best.src === "GCX" ? "the Ghana Commodity Exchange's traded prices" : gh ? "MoFA SRID's market collection" : "WFP market prices via OCHA's HDX HAPI"}, per kilogram. The newest row for ${esc(c.name.toLowerCase())} near you is ${dayYear(best.d)}.` : "Best guess: a few months after harvest, when stores run low.";
   }
@@ -66,7 +66,7 @@ function detail(id, f) {
     const s = sa.s, pct = (m) => Math.round((s.index[m - 1] - 1) * 100);
     det.push(`${esc(sa.market.name)}, ${esc(sa.label)}, ${esc(sa.unit)}: usually ${pct(sa.peak) >= 0 ? "+" : ""}${pct(sa.peak)}% in ${monthName(sa.peak)} and ${pct(sa.dip)}% in ${monthName(sa.dip)} vs the year's average (seasonal index, ${s.index_years} years in ${yrs}).`);
     det.push(`Last price in the data: ${s.last.replace(/(\d{4})-(\d\d)/, (x, y, mm) => `${monthName(+mm)} ${y}`)}. Last 12 months' average then: ${currency()} ${fmt(s.recent_avg)}.`);
-    if (sa.store) det.push(`Harvest month to best month within ${D.rules.sell.store_window_months.value} months: about +${Math.round(sa.store.gain * 100)}% (Walo says "store" from +${Math.round(D.rules.sell.store_gain_min.value * 100)}%).`);
+    if (sa.store) det.push(`Harvest month to best month within ${D.rules.sell.store_window_months.value} months: about +${Math.round(sa.store.gain * 100)}% (Walɔ says "store" from +${Math.round(D.rules.sell.store_gain_min.value * 100)}%).`);
     if (sa.better) det.push(`${esc(sa.better.market.name)} paid about ${Math.round(sa.better.gain * 100)}% more in its last year of data (same crop and ${esc(sa.better.unit)}).`);
     if (s.thin) det.push("Only a few years of data for this market: treat the pattern with care.");
     if (s.n_excluded) det.push(`${s.n_excluded} odd price(s) left out (over 3× the months around them). The raw data is unchanged.`);
@@ -78,7 +78,7 @@ function detail(id, f) {
     : `Source: ${link("https://hapi.humdata.org/docs", "WFP market prices via OCHA's HDX HAPI")}`);
   const why = whyBody([
     "Prices usually drop just after harvest, when many farmers sell, and rise later when stores run low.",
-    sa.kind === "index" ? `Walo looked at the same market's prices over the years ${yrs}.` : "Walo has no price pattern for this crop, so this is a best guess.",
+    sa.kind === "index" ? `Walɔ looked at the same market's prices over the years ${yrs}.` : "Walɔ has no price pattern for this crop, so this is a best guess.",
   ], det);
   let strip = "";
   if (sa.kind === "index") { // usual price through the year: best month green, lowest month red

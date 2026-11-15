@@ -1,7 +1,7 @@
-/* The one photo path for Walo (Plant Doctor, Add photo, Start planting).
+/* The one photo path for Walɔ (Plant Doctor, Add photo, Start planting).
    - Two file inputs live in index.html (#walo-camera with capture, #walo-gallery without). Screens show them with
      <label for>, so the phone opens its own picker from a real tap; no script .click() on a hidden input.
-   - The screen that asked is written to sessionStorage before the picker opens. If the phone reloads Walo meanwhile,
+   - The screen that asked is written to sessionStorage before the picker opens. If the phone reloads Walɔ meanwhile,
      the next visit either picks up the file (if the browser kept it) or tells the farmer the photo was lost.
    - The picked file is copied into memory at once, shown at once, then shrunk to a small JPEG with a time limit.
    - Screens get photos with takePhotos(prefix, fn) in mount(); photos that arrive before a screen is ready wait. */
@@ -11,9 +11,9 @@ import { log } from "./log.js";
 
 const KEY = "walo.photo.open"; // { owner, kind, t } from the tap until the picker returns
 export const MSG = {
-  lost: "The phone closed Walo while the camera was open, so the photo was lost. Try again. If it happens again, take the photo with the phone's camera first, then use \"Choose a photo from the phone\".",
-  unreadable: "Walo could not open that photo. Take the photo again, or choose a JPG photo from the phone.",
-  save: "Walo could not save that photo on this phone. Try again.",
+  lost: "The phone closed Walɔ while the camera was open, so the photo was lost. Try again. If it happens again, take the photo with the phone's camera first, then use \"Choose a photo from the phone\".",
+  unreadable: "Walɔ could not open that photo. Take the photo again, or choose a JPG photo from the phone.",
+  save: "Walɔ could not save that photo on this phone. Try again.",
 };
 const readMark = () => { try { const v = JSON.parse(sessionStorage.getItem(KEY) || "null"); return v && Date.now() - v.t < 10 * 60e3 ? v : null; } catch { return null; } };
 const clearMark = () => { try { sessionStorage.removeItem(KEY); } catch { /* private mode */ } };
@@ -77,7 +77,7 @@ document.addEventListener("keydown", (e) => {
   const l = e.target.closest && e.target.closest("label[data-photo]");
   if (l && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); l.click(); }
 });
-/* after a reload (the phone closed Walo while its picker was open): use the file if the browser kept it, else say so */
+/* after a reload (the phone closed Walɔ while its picker was open): use the file if the browser kept it, else say so */
 function recover() {
   const m = readMark();
   if (!m) return;

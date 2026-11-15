@@ -1,5 +1,5 @@
-/* Optional backup: the farmer signs in with an email code; their fields and photos are copied to Walo's
-   Supabase project and come back on a new phone. Walo works the same without it (local-first).
+/* Optional backup: the farmer signs in with an email code; their fields and photos are copied to Walɔ's
+   Supabase project and come back on a new phone. Walɔ works the same without it (local-first).
    Rules: push on change, pull on sign-in and on open, newest copy of a field wins (its "updated" time).
    Only the publishable key is used; row-level security keeps every row and photo to its owner. */
 import { CFG } from "./data.js";
@@ -61,7 +61,7 @@ function plain(e) {
   if (/rate|too many|security purposes/i.test(m) || s === 429) return new Error("Too many sign-in emails just now. Wait a minute, then try again.");
   if (/expired|invalid|otp/i.test(m)) return new Error("That did not work. It may have expired: ask for a new link.");
   if (/fetch|network|offline/i.test(m)) return new Error("No internet. Try again when you are online.");
-  if (/not authorized|sending|smtp/i.test(m)) return new Error("Walo could not send the email right now. Try again in a few minutes.");
+  if (/not authorized|sending|smtp/i.test(m)) return new Error("Walɔ could not send the email right now. Try again in a few minutes.");
   return new Error("Something went wrong. Try again.");
 }
 

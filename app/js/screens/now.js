@@ -23,8 +23,8 @@ export function render() {
   else a = { kind: "later", title: "Not planting time", sub: later ? `Next: ${esc(later.c.name)} in ${MONTHS_LONG[later.st.month - 1]}` : "" };
   const say = `${a.title}. ${a.sub.replace(/<[^>]+>/g, "")} ${list.slice(0, 3).map((x) => `${x.c.name}: ${statusLine(x.st)}.`).join(" ")}`;
   const why = whyBody([
-    `Walo checks when the rains usually start here, from ${yearsOf(p)} years of NASA rain data.`,
-    fo ? "It also checks the weather forecast for the next 10 days, so you plant after a good rain." : (online() ? "There is no forecast right now, so Walo used the usual start of the rains." : "Using usual weather (no forecast offline)."),
+    `Walɔ checks when the rains usually start here, from ${yearsOf(p)} years of NASA rain data.`,
+    fo ? "It also checks the weather forecast for the next 10 days, so you plant after a good rain." : (online() ? "There is no forecast right now, so Walɔ used the usual start of the rains." : "Using usual weather (no forecast offline)."),
     "Crops are grouped by when they can be planted, and each one carries its month. A crop whose next sowing falls in the new year says so.",
   ], rainDetails(p, (list[0] || {}).st));
   const tile = (x, g) => cropTile({ href: `#/crop/${x.c.id}`, c: x.c, kind: g.key === "no" ? "no" : x.st.kind === "now" ? "now" : "wait", text: g.key === "no" ? "Grows poorly here" : statusLine(x.st) });
@@ -32,7 +32,7 @@ export function render() {
   return `${hero({ img: P.img, pos: P.pos, eyebrow: `${esc(placeLabel(p))} · ${MONTHS_LONG[new Date().getMonth()]}`, title: "What to plant here now" })}
   <div class="stack lift">
     ${answer({ ...a, extra: rainStrip(p), why: { title: "Why this answer", html: why }, say })}
-    ${online() ? "" : note(fo ? "You are offline: Walo uses the last forecast it saved." : "Using usual weather (no forecast offline).", "wifi-off")}
+    ${online() ? "" : note(fo ? "You are offline: Walɔ uses the last forecast it saved." : "Using usual weather (no forecast offline).", "wifi-off")}
     ${groupedCrops(groups, tile)}
   </div>`;
 }

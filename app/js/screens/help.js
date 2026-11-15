@@ -1,4 +1,4 @@
-/* Get help: an AI helper first (Gemini on our server, /api/help, knows Walo and this farmer's place, main crop and fields),
+/* Get help: an AI helper first (Gemini on our server, /api/help, knows Walɔ and this farmer's place, main crop and fields),
    a person second: when the AI is unsure or the farmer asks for a person, Call and WhatsApp to the team's help line
    (data/app.json support.phone; empty = no person option yet). Talk or type; Listen; or a hands-free voice chat (English: the browser listens, the helper answers, the phone speaks it, then listens again).
    Nothing is kept on the server. */
@@ -27,14 +27,14 @@ function context(from) {
 /* the message a person on the help line gets first (WhatsApp), so the farmer does not have to explain again */
 function summary() {
   const c = context(S.from), last = [...S.msgs].reverse().find((m) => m.role === "farmer");
-  return [`Walo help request`, `Place: ${c.place}`, c.main_crop ? `Main crop: ${c.main_crop}` : "", c.fields.length ? `Fields: ${c.fields.map((f) => `${f.crop} (${f.stage})`).join(", ")}` : "",
+  return [`Walɔ help request`, `Place: ${c.place}`, c.main_crop ? `Main crop: ${c.main_crop}` : "", c.fields.length ? `Fields: ${c.fields.map((f) => `${f.crop} (${f.stage})`).join(", ")}` : "",
     last ? `Question: ${last.text}${last.en && last.en !== last.text ? ` (English: ${last.en})` : ""}` : ""].filter(Boolean).join("\n");
 }
 const digits = (x) => String(x || "").replace(/\D/g, "");
 function personBox() {
   if (!hasLine()) return note("A help line with a real person is coming soon.", "headset");
   const tel = digits(SC().phone), wa = digits(SC().whatsapp || SC().phone);
-  return `<div class="card stack person"><p class="doc-q">${icon("headset")} Talk to a person from the Walo team</p>
+  return `<div class="card stack person"><p class="doc-q">${icon("headset")} Talk to a person from the Walɔ team</p>
     <div class="row2">${tel ? btn("Call", { href: `tel:+${tel}`, ic: "phone" }) : ""}${wa ? btn("WhatsApp", { href: `https://wa.me/${wa}?text=${encodeURIComponent(summary())}`, ic: "message-circle", kind: "secondary", attrs: 'target="_blank" rel="noopener" data-net' }) : ""}</div>
     <small class="muted">WhatsApp opens with a short note about your question, so you do not have to explain again.</small></div>`;
 }
@@ -50,12 +50,12 @@ export function render(from) {
   const lastAi = [...S.msgs].reverse().find((m) => m.role === "walo");
   const showPerson = S.person || (lastAi && (lastAi.unsure || lastAi.wants_person));
   return `<div class="stack help">
-    ${S.msgs.length ? "" : `<div class="card help-intro"><span class="tile-ic talk">${icon("message-circle-question")}</span><div><h1 class="a-title">Ask Walo anything</h1><p class="a-sub">Talk or type your question about your farm or the app. An AI answers first and can be wrong.${hasLine() ? " A person from the team can help too." : ""}</p></div></div>`}
+    ${S.msgs.length ? "" : `<div class="card help-intro"><span class="tile-ic talk">${icon("message-circle-question")}</span><div><h1 class="a-title">Ask Walɔ anything</h1><p class="a-sub">Talk or type your question about your farm or the app. An AI answers first and can be wrong.${hasLine() ? " A person from the team can help too." : ""}</p></div></div>`}
     ${online() ? "" : note("Get help needs internet. You are offline now.", "wifi-off")}
     <div class="chat" aria-live="polite">${S.msgs.map(bubble).join("")}${S.busy && !VC.on ? `<p class="busy">${icon("loader-circle", "spin")}<span>Thinking…</span></p>` : ""}</div>
     ${S.err ? `<p class="alert">${icon("triangle-alert")}<span>${esc(S.err)}</span></p>` : ""}
     ${showPerson ? personBox() : ""}
-    ${VC.on ? voicePanel() : `${canVoice() ? `<button type="button" class="vc-start" id="vc-start" data-net><span class="vc-ic">${icon("mic")}</span><span class="vc-t"><b>Voice chat</b><small>Talk with Walo, no reading. It answers out loud.</small></span></button>` : ""}
+    ${VC.on ? voicePanel() : `${canVoice() ? `<button type="button" class="vc-start" id="vc-start" data-net><span class="vc-ic">${icon("mic")}</span><span class="vc-t"><b>Voice chat</b><small>Talk with Walɔ, no reading. It answers out loud.</small></span></button>` : ""}
     <div class="card stack">
       <label class="field"><span>Your question</span><textarea id="help-words" data-notw rows="2" maxlength="${CFG().plant_doctor.max_words_chars}" placeholder="For example: when should I sell my ${esc(cropName)}?">${esc(S.draft)}</textarea></label>
       ${S.writing ? `<p class="busy">${icon("loader-circle", "spin")}<span>Writing down your words…</span></p>`
@@ -68,7 +68,7 @@ export function render(from) {
 }
 /* ---------- hands-free voice chat ---------- */
 const VC = { on: false, phase: "", silent: 0, turns: 0, rec: null, timer: 0 };
-const VC_STATE = { listening: ["mic", "Listening…", "Say your question"], thinking: ["loader-circle", "Thinking…", "Walo is finding the answer"], speaking: ["volume-2", "Speaking…", "Walo is answering"], tap: ["mic", "Tap to talk", "Tap the big button, then speak"] };
+const VC_STATE = { listening: ["mic", "Listening…", "Say your question"], thinking: ["loader-circle", "Thinking…", "Walɔ is finding the answer"], speaking: ["volume-2", "Speaking…", "Walɔ is answering"], tap: ["mic", "Tap to talk", "Tap the big button, then speak"] };
 export const voiceOn = () => VC.on;
 function voicePanel() {
   const [ic, t, sub] = VC_STATE[VC.phase] || VC_STATE.listening, tap = VC.phase === "tap";
@@ -86,7 +86,7 @@ function vcStop(msg = "") {
   if (msg) S.err = msg;
   redraw();
 }
-/* one listening turn; auto=true when Walo starts it by itself (iOS may refuse that and needs a tap) */
+/* one listening turn; auto=true when Walɔ starts it by itself (iOS may refuse that and needs a tap) */
 function vcListen(auto) {
   if (!VC.on) return;
   if (!online()) return vcStop("Voice chat needs internet. You are offline now.");
@@ -98,7 +98,7 @@ function vcListen(auto) {
     if (VC.rec !== me) return; // stopped or replaced
     VC.rec = null; if (!VC.on) return;
     if ((err === "not-allowed" || err === "service-not-allowed") && auto && VC.turns > 0) { VC.phase = "tap"; return redraw(); } // auto-start refused: wait for a tap
-    if (err === "not-allowed" || err === "service-not-allowed") return vcStop("Walo cannot use the microphone. Allow it in the browser settings, or type instead.");
+    if (err === "not-allowed" || err === "service-not-allowed") return vcStop("Walɔ cannot use the microphone. Allow it in the browser settings, or type instead.");
     if (err === "network") return vcStop("Voice chat needs internet. Try again, or type.");
     if (err && err !== "no-speech" && err !== "aborted") return vcStop("Voice chat did not work. Tap and talk, or type instead.");
     said = said.trim();
@@ -120,10 +120,10 @@ async function vcAsk(text) {
   const ans = S.msgs.slice(before).find((m) => m.role === "walo");
   if (!ans) return vcSpeak(S.err || "Sorry, I could not answer just now.", () => vcStop(S.err));
   const lastAi = ans, person = S.person || lastAi.unsure || lastAi.wants_person;
-  const offer = person ? (hasLine() ? " A person from the Walo team can help you. Tap Call or WhatsApp below." : " A help line with a real person is coming soon.") : "";
+  const offer = person ? (hasLine() ? " A person from the Walɔ team can help you. Tap Call or WhatsApp below." : " A help line with a real person is coming soon.") : "";
   vcSpeak(ans.text + offer, () => vcListen(true));
 }
-/* speak, and only then listen again (never both at once, so Walo does not hear itself) */
+/* speak, and only then listen again (never both at once, so Walɔ does not hear itself) */
 function vcSpeak(text, next) {
   if (!VC.on) return;
   VC.phase = "speaking"; redraw();
@@ -169,12 +169,12 @@ let rec = null;
 function listen() {
   if (isTwi()) {
     startRecording(() => finishTwi()).then(() => { S.listening = true; S.err = ""; redraw(); })
-      .catch((e) => { S.err = e && e.name === "NotAllowedError" ? "Walo cannot use the microphone. Allow it in the browser settings, or type instead." : "No microphone found. Type instead."; redraw(); });
+      .catch((e) => { S.err = e && e.name === "NotAllowedError" ? "Walɔ cannot use the microphone. Allow it in the browser settings, or type instead." : "No microphone found. Type instead."; redraw(); });
     return;
   }
   const me = new SR(), base = S.draft.trim(); rec = me; me.lang = CFG().plant_doctor.speech_langs[0]; me.interimResults = true;
   me.onresult = (e) => { let t = ""; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript; S.draft = [base, t.trim()].filter(Boolean).join(" "); const ta = document.getElementById("help-words"); if (ta) ta.value = S.draft; };
-  me.onerror = (e) => { if (e.error !== "aborted") S.err = e.error === "not-allowed" ? "Walo cannot use the microphone. Allow it in the browser settings, or type instead." : "Talking did not work. Type instead."; };
+  me.onerror = (e) => { if (e.error !== "aborted") S.err = e.error === "not-allowed" ? "Walɔ cannot use the microphone. Allow it in the browser settings, or type instead." : "Talking did not work. Type instead."; };
   me.onend = () => { rec = null; S.listening = false; redraw(); };
   try { me.start(); S.listening = true; S.err = ""; } catch { S.err = "Talking did not work. Type instead."; }
   redraw();

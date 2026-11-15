@@ -4,7 +4,7 @@ import { crop, cropGroups, farmProgress, CFG } from "../data.js";
 import { icon, cropImg, cropTile, hero, ring, row } from "../ui.js";
 import { esc, roughDate, MONTHS_LONG } from "../util.js";
 
-export const title = () => "Walo";
+export const title = () => "Walɔ";
 const greeting = () => { const h = new Date().getHours(); return CFG().greetings.filter(([from]) => h >= from).pop()[1]; };
 export function render() {
   const p = place(), P = CFG().photos;
@@ -20,7 +20,7 @@ export function render() {
     ${plantBig(mine.length ? "Plant again" : "Plant something", P)}
     ${row({ href: "#/doctor", ic: "stethoscope", title: "Sick plant?", sub: "Take a photo. Plant Doctor looks at it.", attrs: "data-net" })}
     ${row({ href: "#/shift", ic: "satellite", title: "How this place is changing", sub: `Rain, heat and the season in ${esc(placeLabel(p))}` })}
-    <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
+    <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walɔ by talking or typing</small></span>${icon("chevron-right")}</a>
   </div>`;
 }
 /* the one way to plant something: a tall photo card that goes straight to the planting screen. It used to open a

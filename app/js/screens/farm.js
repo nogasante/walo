@@ -22,7 +22,7 @@ export function render(id) {
   if (!f) {
     return `<div class="stack">
       ${awayNote}
-      ${all.length ? `<div class="fgrid">${all.map(fieldCard).join("")}</div>` : answer({ kind: "info", icon: "sprout", title: "No fields yet", sub: "Pick a crop and tap Start planting. Walo then follows your field to harvest." })}
+      ${all.length ? `<div class="fgrid">${all.map(fieldCard).join("")}</div>` : answer({ kind: "info", icon: "sprout", title: "No fields yet", sub: "Pick a crop and tap Start planting. Walɔ then follows your field to harvest." })}
       ${btn("Add a field", { href: "#/start", ic: "plus" })}
       ${all.some((x) => !x.demo) ? backupLink() : ""}
     </div>`;
@@ -56,7 +56,7 @@ function farmView(f, many) {
   const al = farmAlert(pr), sa = sellAdvice(c.id, pr.p, pr.harvest), g = greenness(pr.p), rain = fieldRain(f), soil = fieldSoil(f), tips = fieldTips(pr, rain);
   const gddLine = pr.total ? `Growth counts warmth since planting (growing degree days, base ${pr.g.tb} °C${pr.g.tu != null ? `, top ${pr.g.tu} °C` : ""}): ${fmt(pr.gdd || 0)} of about ${fmt(pr.total)}. ${pr.obs && pr.obs.days ? `NASA POWER daily temperatures at the field up to ${pr.obs.last.replace(/(\d{4})(\d\d)(\d\d)/, "$3/$2/$1")}, usual weather after that.` : "Usual NASA weather for this place (live data loads when online)."} Stages follow FAO-56 Table 11.` : `Dates use a typical ${pr.days}-day season for ${esc(c.name.toLowerCase())}${pr.guessDays ? " (best guess)" : ""}.`;
   const why = whyBody([
-    "Walo counts the warmth your crop has had since planting, from NASA temperatures. Warm days make it grow faster, so the harvest date moves a little.",
+    "Walɔ counts the warmth your crop has had since planting, from NASA temperatures. Warm days make it grow faster, so the harvest date moves a little.",
     g ? `Satellite pictures (NASA MODIS) show fields around here are ${g.word} for ${MONTHS_LONG[g.month - 1]}.` : "",
   ].filter(Boolean), [
     `Planted ${dayMonth(pr.start)}${pr.d >= 0 ? `, day ${pr.d} of about ${pr.days}` : ""}. Harvest about ${dayMonth(pr.harvest)}.`,
@@ -68,7 +68,7 @@ function farmView(f, many) {
     rain && rain.last ? `Rain comes from daily rain data at this point; the newest day in it is ${rain.last.slice(6, 8)}/${rain.last.slice(4, 6)}.` : "",
     soil ? `Root-zone soil wetness ${fmt(soil.soil, 2)} on a 0–1 scale (0 dry, 1 saturated), average of the last ${soil.soilDays} day(s). It is a model of the soil, not a satellite picture of your field.` : "",
     soil && soil.rh != null ? `Air humidity at this field averaged ${soil.rh}% over the last 7 days. Leaves stay wet for hours above ${R().field_risk.rh_wet.value}%, which is when leaf and pod diseases spread; below ${R().field_risk.rh_dry.value}% with a dry week is when thrips and mites build up. These are extension rules of thumb, not a model of a named disease.` : "",
-    f.demo ? "This is a demo field so you can see how Walo works. Remove it any time." : "",
+    f.demo ? "This is a demo field so you can see how Walɔ works. Remove it any time." : "",
   ].filter(Boolean));
   const remove = `<button type="button" class="btn danger wide" data-remove="${esc(f.id)}">${icon("trash-2")}<span>Remove this field</span></button>`;
   const photoHtml = `<div class="photos">${photos.length ? photos.slice().reverse().map((ph) => `<figure><img ${imgAttr(ph.src)} alt="Field photo" loading="lazy"><figcaption>${esc(ph.stage || "")}${ph.date ? ` · ${dayMonth(fromIso(ph.date))}` : ph.day ? ` · ${esc(ph.day)}` : ""}</figcaption></figure>`).join("") : `<p class="muted">No photos yet. Take one on the field page: Add photo.</p>`}</div>
@@ -79,7 +79,7 @@ function farmView(f, many) {
     ${photos.length ? `<button type="button" class="pic-count" data-sheet="${sheet(`Photos of ${f.name}`, photoHtml)}" aria-label="${photos.length} photos">${icon("image")}<span>${photos.length}</span></button>` : ""}`;
   return `${hero({ img: heroImg, eyeIcon: "sprout", eyebrow: `${esc(c.name)} · ${esc(placeLabel(pr.p))}`, title: esc(f.name), extra })}
   <div class="stack lift">
-    ${answer({ kind: pr.frac >= 1 ? "now" : "info", tone: pr.frac >= 1 ? "good" : "info", badge: ring(pr.d < 0 ? 0 : pr.frac, ic), title: t, sub: esc(stage), extra: `<ol class="stages" aria-label="Stage: ${esc(stage)}">${pr.stages.map((s, i) => `<li class="${i < pr.si ? "done" : i === pr.si ? "now" : ""}">${icon(s.icon)}<span>${esc(s.name)}</span></li>`).join("")}</ol>`, why: { title: "How Walo knows", html: why + remove }, say: `${f.name}. ${t}. ${stage}. ${task ? "Today: " + task : ""}` })}
+    ${answer({ kind: pr.frac >= 1 ? "now" : "info", tone: pr.frac >= 1 ? "good" : "info", badge: ring(pr.d < 0 ? 0 : pr.frac, ic), title: t, sub: esc(stage), extra: `<ol class="stages" aria-label="Stage: ${esc(stage)}">${pr.stages.map((s, i) => `<li class="${i < pr.si ? "done" : i === pr.si ? "now" : ""}">${icon(s.icon)}<span>${esc(s.name)}</span></li>`).join("")}</ol>`, why: { title: "How Walɔ knows", html: why + remove }, say: `${f.name}. ${t}. ${stage}. ${task ? "Today: " + task : ""}` })}
     ${task ? `<div class="task">${icon("circle-check")}<div><small>Today</small><b>${esc(task)}</b></div></div>` : ""}
     ${al ? `<p class="alert">${icon(al.icon)}<span>${ALERT[al.kind]()}</span></p>` : ""}
     ${tips.map((t) => `<div class="task">${icon(t.ic)}<div><small>${esc(t.k)}</small><b>${esc(t.text)}</b></div></div>`).join("")}

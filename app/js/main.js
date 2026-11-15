@@ -1,4 +1,4 @@
-/* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
+/* Walɔ app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
 import { load, setForecastListener, CFG, setActiveCountry, loadCountryData, crop, isTree } from "./data.js";
 import { place, placeLabel, focusCrop, subscribe, hydrate, farmsHere, placeChosen, countryId } from "./store.js";
@@ -77,7 +77,7 @@ function canonical(r) {
 function topbar(r, rt) {
   const farmCtx = (r.name === "sell" && !r.a) || ((r.name === "sell" || r.name === "doctor") && r.b); // the fields' own places, not the chip
   const t = rt.s.title(r.a, r.b);
-  return `${rt.root ? `<a class="brand" href="#/about" aria-label="About Walo"><img class="brand-logo" src="img/logo-mark.png" alt="" width="30" height="30"></a>` : `<button type="button" class="back" id="back" aria-label="Back">${icon("chevron-left")}</button>`}
+  return `${rt.root ? `<a class="brand" href="#/about" aria-label="About Walɔ"><img class="brand-logo" src="img/logo-mark.png" alt="" width="30" height="30"></a>` : `<button type="button" class="back" id="back" aria-label="Back">${icon("chevron-left")}</button>`}
     <h1 class="tb-title">${esc(t)}</h1>
     ${online() ? "" : `<button type="button" class="offchip" id="offchip" aria-label="Offline. What works">${icon("wifi-off")}<span>Offline</span></button>`}
     ${twiOn() ? `<button type="button" class="langchip" id="langchip" data-notw aria-label="${isTwi() ? "Language: Twi. Switch to English" : "Language: English. Switch to Twi"}"><span${isTwi() ? "" : ' class="on"'}>EN</span><span${isTwi() ? ' class="on"' : ""}>Twi</span></button>` : ""}
@@ -89,7 +89,7 @@ function tabbar(active) {
 }
 /* offline: things that need internet say so (grey tag + this sheet) instead of failing quietly */
 function netSheet() {
-  return { title: "This needs internet", html: `<div class="why"><p>You are offline. This part of Walo needs internet. Try again when you have a connection.</p>
+  return { title: "This needs internet", html: `<div class="why"><p>You are offline. This part of Walɔ needs internet. Try again when you have a connection.</p>
     <p><b>Works without internet:</b></p><ul class="plain">${CFG().offline.works.map((w) => `<li>${w}</li>`).join("")}</ul>
     ${note("Planting advice offline uses the usual weather, not this week's forecast.", "wifi-off")}</div>` };
 }
@@ -116,7 +116,7 @@ function render(keepScroll = false) {
     document.body.dataset.route = r.name;
     document.body.classList.add("ready"); // from here the bars belong to a real screen, not the boot splash
     document.body.classList.toggle("has-hero", !!main.querySelector(".hero"));
-    document.title = `${rt.s.title(r.a, r.b)} · Walo`;
+    document.title = `${rt.s.title(r.a, r.b)} · Walɔ`;
     if (rt.s.mount) rt.s.mount(main.firstElementChild, r.a, r.b, () => render(true)); // the .screen node is new each render, so listeners never pile up
     hydrate(main);
     window.scrollTo(0, keepScroll ? y : 0); onScroll();
@@ -174,7 +174,7 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
 (async function boot() {
   wire();
   try { await load(); } catch {
-    document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">Could not load Walo</h1><p class="a-sub">Walo needs its data files the first time it opens. Check your connection, then try again.</p></article><a class="btn primary" href="./">Try again</a></div></div>`;
+    document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">Could not load Walɔ</h1><p class="a-sub">Walɔ needs its data files the first time it opens. Check your connection, then try again.</p></article><a class="btn primary" href="./">Try again</a></div></div>`;
     return;
   }
   // which country this phone chose last time (Ghana if it never chose), and that country's price file

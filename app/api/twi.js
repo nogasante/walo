@@ -1,5 +1,5 @@
 /*
- * Walo Twi: GhanaNLP Khaya (machine translation, speech and speech recognition), behind our server so the key never reaches the phone.
+ * Walɔ Twi: GhanaNLP Khaya (machine translation, speech and speech recognition), behind our server so the key never reaches the phone.
  *   GET  /api/twi?action=status                  -> { ok, translate, tts, asr }  (no call to Khaya)
  *   POST /api/twi?action=translate {texts:[..], to:"tw"|"en"} -> { ok, out:[..] }   en-tw (or tw-en for what the farmer said)
  *   GET  /api/twi?action=tts&text=<Twi>         -> audio/wav (cached by the CDN: the same words never cost twice)
@@ -100,7 +100,7 @@ module.exports = async (req, res) => {
       const j = await readJson(req, LIM.audio_b64 + 1000), b64 = typeof j.audio === "string" ? j.audio : "";
       if (!b64 || b64.length > LIM.audio_b64) return send(res, 413, { ok: false, error: "Talk a little shorter (up to 30 seconds)." });
       const wav = Buffer.from(b64, "base64");
-      if (wav.slice(0, 4).toString() !== "RIFF" || wav.slice(8, 12).toString() !== "WAVE") return send(res, 400, { ok: false, error: "Walo could not read that recording." });
+      if (wav.slice(0, 4).toString() !== "RIFF" || wav.slice(8, 12).toString() !== "WAVE") return send(res, 400, { ok: false, error: "Walɔ could not read that recording." });
       const r = await call("/asr/v3/transcribe?language=twi", { method: "POST", headers: { "Content-Type": "audio/wav" }, body: wav }, TIMEOUT.asr);
       if (!r.ok) return send(res, 502, { ok: false, error: quotaMsg(r.status) });
       const out = await r.json().catch(() => null), text = clean(typeof out === "string" ? out : out && out.text);

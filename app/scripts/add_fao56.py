@@ -1,6 +1,6 @@
 """Add FAO-56 crop coefficients (Table 12) and stage lengths (Table 11) to data/crops.json as crop.fao56, plus heat/GDD keys.
 Values transcribed from https://www.fao.org/4/x0490e/x0490e0b.htm (fetched 14 Nov 2026). Stage lengths are FAO's for the row named in 'row';
-Walo scales them to the crop's local season length (days_typical) keeping FAO's proportions, as FAO-56 Ch. 6 allows for local varieties.
+Walɔ scales them to the crop's local season length (days_typical) keeping FAO's proportions, as FAO-56 Ch. 6 allows for local varieties.
 Kc_ini: Table 12 group value. Where a Table 12 range is given, the value used is noted."""
 import json, os
 D = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")

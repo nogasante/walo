@@ -1,7 +1,7 @@
 /*
- * Walo forecast: GET /api/forecast?lat=..&lon=..
+ * Walɔ forecast: GET /api/forecast?lat=..&lon=..
  * Next 10 days, daily rain (precip_24h:mm) and daily max temperature (t_max_2m_24h:C) from the Meteomatics Weather API.
- * Credentials come from process.env.METEOMATICS_USER / METEOMATICS_PASS on the server only. NASA POWER stays Walo's
+ * Credentials come from process.env.METEOMATICS_USER / METEOMATICS_PASS on the server only. NASA POWER stays Walɔ's
  * source for climatology and history; this is only the short-range forecast layer.
  */
 "use strict";
@@ -12,7 +12,7 @@ const mem = new Map();
 module.exports = async (req, res) => {
   const send = (code, obj, cache) => { res.statusCode = code; res.setHeader("Content-Type", "application/json; charset=utf-8"); res.setHeader("Cache-Control", cache || "no-store"); res.end(JSON.stringify(obj)); };
   const q = new URL(req.url, "http://x").searchParams, lat = Number(q.get("lat")), lon = Number(q.get("lon"));
-  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walo covers" });
+  if (!inCountry(lat, lon)) return send(400, { ok: false, error: "Location outside the area Walɔ covers" });
   const user = process.env.METEOMATICS_USER, pass = process.env.METEOMATICS_PASS;
   if (!user || !pass) return send(503, { ok: false, error: "Forecast not set up" });
   const la = lat.toFixed(2), lo = lon.toFixed(2), key = `${la},${lo}`;

@@ -1,4 +1,4 @@
-/* Walo state: the chosen place and crop, the farms, and farm photos. Everything stays on this phone
+/* Walɔ state: the chosen place and crop, the farms, and farm photos. Everything stays on this phone
    (localStorage for small values, IndexedDB for photos). Screens read from here and call the setters.
    If the farmer turns on backup (js/sync.js), each changed field also gets a time stamp so the newest copy wins. */
 import { CFG, town, towns, crop, crops, setActiveCountry, cropInCountry } from "./data.js";
@@ -20,7 +20,7 @@ export function place() {
 /* Changing country clears the place and any phone location, because neither is in the new country. */
 export const countryId = () => get("walo.country", null);
 /* Changing country clears the place, a phone location, the main crop and the crop as well: rice in Ghana is not a
-   choice about Kenya, and keeping it made Walo open on a crop nobody there grows. */
+   choice about Kenya, and keeping it made Walɔ open on a crop nobody there grows. */
 export function setCountry(id) { set("walo.country", id); set("walo.place", null); set("walo.gps", null); set("walo.main", { crop: null, updated: new Date().toISOString() }); set("walo.crop", null); setActiveCountry(id); emit(); }
 export function setPlace(id) { set("walo.place", id); emit(); }
 export function setGps(p) { set("walo.gps", p); set("walo.place", "gps"); emit(); }

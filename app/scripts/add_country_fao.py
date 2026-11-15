@@ -20,7 +20,7 @@ HERE = __import__("os").path.dirname(__import__("os").path.abspath(__file__))
 ROOT = __import__("os").path.join(HERE, "..")
 API = "https://api-cropcalendar.apps.fao.org/api/v1/countries"
 
-# FAO crop names (lowercased) -> our crop ids. Only crops Walo has a page for.
+# FAO crop names (lowercased) -> our crop ids. Only crops Walɔ has a page for.
 CROP_MAP = {
     "maize": "maize", "corn": "maize", "maize (corn)": "maize", "corn, sweet": "maize",
     "rice": "rice", "paddy rice": "rice", "rice, paddy": "rice",

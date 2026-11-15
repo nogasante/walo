@@ -19,7 +19,7 @@ export function render(id) {
     return `<div class="stack">${dots}<h1 class="q">What will you plant?</h1>
       ${note(`For ${esc(placeLabel(p))}, today.`, "map-pin")}
       ${groupedCrops(groups, tile, "tiles")}
-      ${trees.length ? note(`${trees.map((c) => esc(c.name)).join(" and ")} are trees: Walo cannot follow them as a field yet.`) : ""}</div>`;
+      ${trees.length ? note(`${trees.map((c) => esc(c.name)).join(" and ")} are trees: Walɔ cannot follow them as a field yet.`) : ""}</div>`;
   }
   const c = crop(F.crop);
   if (F.step === 1) {

@@ -1,5 +1,5 @@
 /* Online or not: the phone's own flag, plus a failed call to our server or another site (a phone can say "online" with no real internet).
-   Calls served from Walo's offline copy do not count. Changes re-draw the screen so "Needs internet" tags and the Offline chip stay true. */
+   Calls served from Walɔ's offline copy do not count. Changes re-draw the screen so "Needs internet" tags and the Offline chip stay true. */
 let down = false;
 export const online = () => navigator.onLine && !down;
 const counts = (u) => { try { const x = new URL(typeof u === "string" ? u : u.url, location.href); return x.origin !== location.origin || x.pathname.startsWith("/api/"); } catch { return false; } };

@@ -130,7 +130,7 @@ export function rotationOptions(afterId, p, { soil = "loam", limit = "none", rai
   again.reasons = ["The crop you already know, in a field set up for it."];
   again.risks = ["The same crop every season brings the same pests, weeds and hungry soil back.", ...again.risks].slice(0, 2);
 
-  // 0 = the rain can carry it, 1 = Walo does not judge its water (a long season), 2 = it needs water. A crop
+  // 0 = the rain can carry it, 1 = Walɔ does not judge its water (a long season), 2 = it needs water. A crop
   // without a water verdict never leads a water-short season just because nothing was measured.
   const wRank = (o) => (o.waterPct == null ? (limit === "water" ? 2 : 1) : o.waterPct < pass ? 2 : 0);
   const order = (a, b) =>

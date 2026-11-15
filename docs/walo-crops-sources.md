@@ -1,4 +1,4 @@
-# Walo crop knowledge base – sources and confidence
+# Walɔ crop knowledge base – sources and confidence
 
 Generated 2026-11-14 10:25 (Africa/Accra, GMT). These are the source notes for the crop knowledge base the app ships as `app/data/crops.json`, built from saved raw data (EcoCrop CSV, FAO crop-calendar API responses, FAOSTAT bulk file, WFP/HDX prices).
 
@@ -35,7 +35,7 @@ Generated 2026-11-14 10:25 (Africa/Accra, GMT). These are the source notes for t
 | Cashew (*Anacardium occidentale*) | low–medium (perennial tree crop) | not confirmed | – / – / – / – |
 | Shea (*Vitellaria paradoxa*) | low (wild/parkland tree; not a planting recommendation) | not confirmed | – / – / – / – |
 
-✓ means at least one price series exists (WFP/HDX to Jul 2023, or MoFA SRID/GCX rows in the Walo price file). Groundnut has no WFP series in any of the four markets, only MoFA SRID Techiman rows from 2025.
+✓ means at least one price series exists (WFP/HDX to Jul 2023, or MoFA SRID/GCX rows in the Walɔ price file). Groundnut has no WFP series in any of the four markets, only MoFA SRID Techiman rows from 2025.
 
 ## Field → source matrix
 
@@ -72,7 +72,7 @@ Every crop also has an `ecocrop` block (ECOCROP: temperature, annual rainfall, p
 - **Mm and °C thresholds:** Ghana-specific figures are missing for groundnut, cassava, yam, millet, soybean, plantain, okra, garden egg, sweet potato, cashew and shea. Only global EcoCrop ranges are available for them.
 - **Inconsistent sources:** the MoFA onion guide contradicts itself on rainfall and temperature, and the pepper guide does the same on rainfall. The FAO cassava growing period (180–210 d) conflicts with IITA's 9–18 months. EcoCrop's sorghum rainfall (300–700 mm) is lower than Ghana practice.
 - **FAOSTAT yields** from recent years are mostly FAO estimates (flag E). Sweet potato (~1.8 t/ha) looks implausibly low, and okra (~21.9 t/ha) and dry chilli look implausibly high. Cocoyam is mapped to the FAOSTAT item 'Taro', which is an assumption.
-- **Prices:** WFP series stop in July 2023. There is no price series for okra, sweet potato, cashew, shea or cocoa (cocoa has a COCOBOD fixed producer price). There is no groundnut series for Ejura, Kumasi or Tamale. The Walo price CSV has no Tamale rows, so Tamale availability here was checked directly in WFP/HDX.
+- **Prices:** WFP series stop in July 2023. There is no price series for okra, sweet potato, cashew, shea or cocoa (cocoa has a COCOBOD fixed producer price). There is no groundnut series for Ejura, Kumasi or Tamale. The Walɔ price CSV has no Tamale rows, so Tamale availability here was checked directly in WFP/HDX.
 - **Pests:** none confirmed for cashew or shea. Sweet potato virus diseases are not confirmed.
 - **Cocoa, cashew and shea** are perennial tree crops, so they don't fit a planting-window or rotation model. Shea is a wild parkland tree and shouldn't be recommended for planting.
 
@@ -87,7 +87,7 @@ No candidate crop was dropped completely. Shea, cashew, cocoa and sweet potato a
 - **FAO_AEZ**: FAO Crop Calendar – Ghana agro-ecological zones (Coastal savanna, Rain forest, Transitional, Guinea savanna). *FAO*. <https://api-cropcalendar.apps.fao.org/api/v1/countries/GH/aez?language=en>. Note: Transitional zone = northern Ashanti and Brong-Ahafo, rain 1000–1300 mm, major season Apr–Aug, minor Sep–Nov. Guinea savanna = Northern/Upper East/Upper West, 750–1000 mm, single season Jun–Oct (FAO text).
 - **FAOSTAT**: FAOSTAT Crops and livestock products (QCL), Africa bulk file, Ghana, 2020–2024. *FAO Statistics Division*. <https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_Africa.zip>. Note: Flags: A=official, X=from international org, E=estimated, I=imputed. Many recent Ghana yields are FAO estimates (E).
 - **WFP_HDX**: WFP Food Prices for Ghana (wfp_food_prices_gha.csv). *WFP via Humanitarian Data Exchange (HDX)*. <https://data.humdata.org/dataset/wfp-food-prices-for-ghana>. Note: Observations end 15 Jul 2023 for these markets.
-- **WALO_PRICES**: Walo crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024–2026, news). *Team Simply Zero compilation*. <file:/workspace/walo-ghana-crop-prices.csv>. Note: Does not contain Tamale rows; Tamale availability below is from WFP_HDX directly.
+- **WALO_PRICES**: Walɔ crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024–2026, news). *Team Simply Zero compilation*. <file:/workspace/walo-ghana-crop-prices.csv>. Note: Does not contain Tamale rows; Tamale availability below is from WFP_HDX directly.
 - **MOFA_MAIZE**: Guide to Maize Production (Planting for Food and Jobs IEC series). *Ministry of Food and Agriculture (MoFA), Directorate of Agricultural Extension Services, Ghana*. <https://mofa.gov.gh/site/images/pdf/production_guides/GUIDE_TO_MAIZE_PRODUCTION.pdf>
 - **MOFA_TOMATO**: Tomato Production Guide. *MoFA Ghana (DAES)*. <https://mofa.gov.gh/site/images/pdf/production_guides/TOMATO_Production_Guide.pdf>
 - **MOFA_PEPPER**: Pepper Production Guide. *MoFA Ghana (DAES)*. <https://mofa.gov.gh/site/images/pdf/production_guides/Pepper_Production.pdf>. Note: Guide states two different rainfall figures (600–1,250 mm annual, and 300–600 mm well distributed).

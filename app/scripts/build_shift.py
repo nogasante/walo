@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build data/shift.json: how the farming season at each town has moved between two periods.
 
-The Field Shift brief asks for adaptation to *changing* conditions, not just current suitability, so Walo compares
+The Field Shift brief asks for adaptation to *changing* conditions, not just current suitability, so Walɔ compares
 the same NASA POWER daily record over two periods at the exact point it gives advice for:
 
     early   1991-2014
@@ -135,7 +135,7 @@ def main():
             limit = int(sys.argv[i + 1])
     places = json.loads((ROOT / "data/places.json").read_text())["places"]
     countries = json.loads((ROOT / "data/countries.json").read_text())["countries"]
-    out = {"method": "NASA POWER daily PRECTOTCORR and T2M_MAX, AG community, compared over 1991-2014 and 2015-2025 at each town point. Onset uses the same rule as the rest of Walo; see DESIGN.md method 4. Figures are usual values for each period, not a forecast.",
+    out = {"method": "NASA POWER daily PRECTOTCORR and T2M_MAX, AG community, compared over 1991-2014 and 2015-2025 at each town point. Onset uses the same rule as the rest of Walɔ; see DESIGN.md method 4. Figures are usual values for each period, not a forecast.",
            "hot_threshold_c": HOT_C, "periods": {"early": list(EARLY), "recent": list(RECENT)}, "places": {}}
     items = [(k, v) for k, v in places.items() if (only is None or k in only)]
     if limit:

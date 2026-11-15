@@ -1,5 +1,5 @@
 {
-  "_about": "Countries Walo runs in. Everything a country changes lives here, so the code contains no country: which coordinates are accepted, the money on Sell, the rain-season search windows, the zone names, the map, the labels on sources. Adding a country is a data change plus a check by someone who farms there. status \"live\" means that check has happened; \"preview\" means the data is complete enough to use but nobody farming there has checked it, and the app says so before you choose it; \"draft\" is never selectable.",
+  "_about": "Countries Walɔ runs in. Everything a country changes lives here, so the code contains no country: which coordinates are accepted, the money on Sell, the rain-season search windows, the zone names, the map, the labels on sources. Adding a country is a data change plus a check by someone who farms there. status \"live\" means that check has happened; \"preview\" means the data is complete enough to use but nobody farming there has checked it, and the app says so before you choose it; \"draft\" is never selectable.",
   "default": "GH",
   "countries": {
     "GH": {
@@ -16,7 +16,7 @@
           -10,
           6
         ],
-        "_note": "Walo deliberately accepts a margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
+        "_note": "Walɔ deliberately accepts a margin around the country so 'use my location' near a border still works; the nearest town still has to be in places.json."
       },
       "currency": {
         "code": "GHS",
@@ -30,7 +30,7 @@
           "from": "03-01",
           "to": "07-31",
           "default": true,
-          "note": "No single standard start date for Ghana; Sivakumar (1988) searched from 1 May in the Sahel. Walo starts at 1 March so the forest and transition zones are not missed."
+          "note": "No single standard start date for Ghana; Sivakumar (1988) searched from 1 May in the Sahel. Walɔ starts at 1 March so the forest and transition zones are not missed."
         },
         "minor_search": {
           "from": "08-15",
@@ -98,7 +98,7 @@
           "from": "03-01",
           "to": "06-30",
           "default": true,
-          "note": "The long rains (masika) fall March-May, so Walo searches from 1 March. FEWS NET Kenya seasonal calendar 2024."
+          "note": "The long rains (masika) fall March-May, so Walɔ searches from 1 March. FEWS NET Kenya seasonal calendar 2024."
         },
         "minor_search": {
           "from": "09-15",

@@ -1,4 +1,4 @@
-"""Build data/market.json from the WFP Ghana food prices CSV (HDX), for every Walo crop and all 20 markets with real depth.
+"""Build data/market.json from the WFP Ghana food prices CSV (HDX), for every Walɔ crop and all 20 markets with real depth.
 
 Input:  /workspace/walo-crops-build/wfp_gha.csv (HDX "wfp_food_prices_gha.csv", 2006-01 to 2023-07, lat/lon per market)
 Keeps:  MoFA SRID 2025 (Techiman) and GCX / dated quotes ("srid2025", "other_quotes") from the previous data/market.json.
@@ -20,7 +20,7 @@ FACTOR, MIN_MARKET_ROWS, MIN_OBS = 3.0, 100, 12
 SOURCE = "WFP Ghana food prices via HDX (sourced from FPMA / MoFA SRID / FAO GIEWS)"
 SOURCE_URL = "https://data.humdata.org/dataset/wfp-food-prices-for-ghana"
 
-# WFP commodity -> (Walo crop id, label shown in Walo). Processed or imported goods (gari, imported rice, dried pepper) are left out.
+# WFP commodity -> (Walɔ crop id, label shown in Walɔ). Processed or imported goods (gari, imported rice, dried pepper) are left out.
 COMMODITY = {
     "Maize": ("maize", "Maize (white)"), "Maize (yellow)": ("maize", "Maize (yellow)"),
     "Cassava": ("cassava", "Cassava"), "Yam": ("yam", "Yam"), "Yam (puna)": ("yam", "Yam (puna)"),

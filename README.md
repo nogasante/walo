@@ -1,18 +1,18 @@
-# Walo
+# Walɔ
 
-**Walo** (Ga for “helper”) is a mobile web app for low-literacy smallholder farmers in Ghana. A farmer picks a place and sees what to plant now, or picks a crop and sees where it grows best. The same app follows a field from sowing to sale, and can look at a sick plant.
+**Walɔ** (Ga for “helper”) is a mobile web app for low-literacy smallholder farmers in Ghana. A farmer picks a place and sees what to plant now, or picks a crop and sees where it grows best. The same app follows a field from sowing to sale, and can look at a sick plant.
 
 Kenya can be used as a **preview**: `countries.json` holds it as `preview`, with 14 county towns, NASA POWER climate for each, MODIS greenness, its own outline map, per-kilogram prices for six crops from HDX HAPI, and planting windows for maize, sorghum, millet, cowpea, cassava and sweet potato taken from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book 2025. The country picker says plainly that nobody farming there has checked those windows yet; `checked_by_local` stays false until someone has, which is what turns it `live`. Ghana's long-run price index is not extended to Kenya: HAPI carries about a year of Kenyan prices, not enough for a seasonal pattern.
 
 Team **Simply Zero**. [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/), challenge **Field Shift: Adapting Farms with NASA Data**, Kumasi local event.
 
-**Challenge:** Field Shift: Adapting Farms with NASA Data. Walo is a decision-support tool for planting and rotation: NASA Earth observations set the rain, heat and soil-water terms, and local soil and crop calendars set the rest.
+**Challenge:** Field Shift: Adapting Farms with NASA Data. Walɔ is a decision-support tool for planting and rotation: NASA Earth observations set the rain, heat and soil-water terms, and local soil and crop calendars set the rest.
 
 **NASA data that makes the project eligible:** NASA POWER daily (AG community, 1991–2025) is the primary source, and the one to tick in the challenge's Resources list on the submission form; NASA MODIS/Terra MOD13Q1 NDVI is the second. Nothing else decides a number NASA data can answer: the Meteomatics forecast only times the next ten days, and Copernicus DEM stands in for SRTM, which needs an Earthdata login.
 
 **AI disclosure, in one line:** the idea, the crops, the rules and the review are the team's; the app code, the data-build scripts and the redesign were written with an AI assistant (Grok Bot), and Plant Doctor and Get help call Gemini at runtime. No AI-generated images, audio or video, and no NASA branding. Full log: [app/AI_USE.md](app/AI_USE.md).
 
-Walo is a participant project built at the Kumasi local event on 14–15 November 2026. It is not a NASA product, and NASA does not endorse it.
+Walɔ is a participant project built at the Kumasi local event on 14–15 November 2026. It is not a NASA product, and NASA does not endorse it.
 
 **Live app:** [https://walo-simply-zero.vercel.app](https://walo-simply-zero.vercel.app)
 
@@ -20,7 +20,7 @@ The app is static HTML, CSS, and JavaScript, plus serverless functions in `app/a
 
 ## Who it is for
 
-A farmer on a shared, low-cost Android phone, often outdoors, who reads a little English and would rather listen. Each answer screen leads with one icon, one plain sentence, and a Listen button. Numbers, methods, and sources sit behind **Why?**. Walo supports a decision. It does not replace the farmer’s judgement.
+A farmer on a shared, low-cost Android phone, often outdoors, who reads a little English and would rather listen. Each answer screen leads with one icon, one plain sentence, and a Listen button. Numbers, methods, and sources sit behind **Why?**. Walɔ supports a decision. It does not replace the farmer’s judgement.
 
 ## Features
 
@@ -47,7 +47,7 @@ The hackathon build is **English only**. Listen uses the phone’s own English v
 ```mermaid
 flowchart TD
   farmer[Farmer on a phone]
-  app[Walo in the browser]
+  app[Walɔ in the browser]
   cache[Service worker cache]
   files[Bundled JSON in app/data]
   phoneStore[localStorage fields and IndexedDB photos]
@@ -123,7 +123,7 @@ The browser holds the climate summaries, crop rules, and price indexes. It asks 
 | MoFA production guides | Ghana crop practice per crop | [mofa.gov.gh](https://mofa.gov.gh/) |
 | MoFA SRID commodity prices | Market prices per kilogram, retail and wholesale, every two weeks, April–October 2025 in 16 markets (SRID has published no newer public file) | [SRID prices](https://srid.mofa.gov.gh/node/18) · built by `app/scripts/build_srid_prices.py` |
 | Ghana Commodity Exchange | Traded closing prices per kilogram for white maize and soya bean at the Tamale, Kumasi and Sandema warehouses, 2026 | [GCX market data](https://www.gcx.com.gh/market-data) · built by `app/scripts/build_gcx_prices.py` |
-| HDX HAPI market prices (other countries) | WFP market prices in one schema across countries: market coordinates, currency, the unit the market sells in, retail or wholesale, monthly. Converted to price per kilogram; used for the countries Walo is expanding into, not yet loaded by the app | [HDX HAPI](https://hapi.humdata.org/docs) · built by `app/scripts/build_hapi_prices.py` |
+| HDX HAPI market prices (other countries) | WFP market prices in one schema across countries: market coordinates, currency, the unit the market sells in, retail or wholesale, monthly. Converted to price per kilogram; used for the countries Walɔ is expanding into, not yet loaded by the app | [HDX HAPI](https://hapi.humdata.org/docs) · built by `app/scripts/build_hapi_prices.py` |
 | IITA and CSIR-SARI (and related Ghana trials) | Crop guides for maize, sorghum, cassava, yam, plantain, cowpea, millet | Per-crop list in [docs/walo-crops-sources.md](docs/walo-crops-sources.md) |
 | NASA POWER daily, same point, 1991–2014 vs 2015–2025 | How the season has moved at her town: two periods and a 35-year trend (`data/shift.json`, built by `app/scripts/build_shift.py`) | [power.larc.nasa.gov](https://power.larc.nasa.gov/) |
 | FAO agro-ecological zones and the district soil notes in `docs/walo-crops-sources.md` | The usual soil for her zone, which the rotation screen starts from (`data/soil.json`) | [FAO crop calendar](https://cropcalendar.apps.fao.org/) |

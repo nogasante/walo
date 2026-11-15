@@ -1,5 +1,5 @@
 /*
- * Walo daily AI budget, shared by /api/diagnose and /api/help.
+ * Walɔ daily AI budget, shared by /api/diagnose and /api/help.
  *
  * The count lives in Postgres (supabase/schema.sql -> public.walo_ai_hit()), not in the memory of a
  * serverless instance, so the cap holds across cold starts and across instances. The cap itself is a
@@ -7,7 +7,7 @@
  * call the same function, so a cap sent from here would be a cap an attacker chooses.
  *
  * If the SQL has not been applied yet, or Supabase is slow or down, this returns null and the caller
- * keeps its own in-memory limit. Walo never stops answering because the counter is unavailable.
+ * keeps its own in-memory limit. Walɔ never stops answering because the counter is unavailable.
  */
 "use strict";
 const BACKUP = require("../data/app.json").backup;

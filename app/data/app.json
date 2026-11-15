@@ -1,5 +1,5 @@
 {
- "_about": "Walo app settings. Place-, crop- or service-specific settings that are not NASA, price or crop data live here, so the code has no fixed place, market or crop names.",
+ "_about": "Walɔ app settings. Place-, crop- or service-specific settings that are not NASA, price or crop data live here, so the code has no fixed place, market or crop names.",
  "default_place": "ejura",
  "default_crop": "maize",
  "map_labels": [
@@ -84,7 +84,7 @@
  },
  "farm": {
   "harvest_soon_days": 14,
-  "_note": "default (Walo wording choice, no standard): within this many days of the estimated harvest the field says 'Harvest soon'."
+  "_note": "default (Walɔ wording choice, no standard): within this many days of the estimated harvest the field says 'Harvest soon'."
  },
  "photos": {
   "_note": "Photos used as labels on cards and photo bands (credits in data/credits.json).",

@@ -26,7 +26,7 @@ export function rainDetails(p, st) {
   ["major", "minor"].forEach((s) => { const o = ag.onset[s]; if (o && o.median != null) out.push(`${s === "major" ? "Main" : "Second"} rains usually start ${doyText(o.median)} (2 years in 10 by ${doyText(o.p20)}, 8 in 10 by ${doyText(o.p80)}). NASA POWER daily rain ${ag.years.join("–")}.`); });
   out.push(`Planting rain = ${onsetRule()}.`);
   if (st && st.fo) out.push(`${esc(CFG().forecast.label)} forecast, next ${st.fo.days} days: ${fmt(st.fo.total)} mm${st.fo.date ? `; ${st.fo.mm} mm in ${R().onset.rain_days} days from ${dayMonth(st.fo.date)}` : ", no planting rain"}.`);
-  else out.push(online() ? "No forecast right now, so Walo used the usual start of the rains." : "Using usual weather (no forecast offline).");
+  else out.push(online() ? "No forecast right now, so Walɔ used the usual start of the rains." : "Using usual weather (no forecast offline).");
   if (p.zone) out.push(`FAO agro-ecological zone: ${esc(zoneName(p.zone))}.`);
   if (p.kind === "gps") out.push(`NASA POWER for your location (${p.lat.toFixed(2)}, ${p.lon.toFixed(2)}), ${CFG().periods.live.join("–")}.`);
   return out;

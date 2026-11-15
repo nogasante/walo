@@ -27,7 +27,7 @@
    "url": "https://data.humdata.org/dataset/wfp-food-prices-for-ghana"
   },
   "WALO_PRICES": {
-   "title": "Walo crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024\u20132026, news)",
+   "title": "Walɔ crop price file /workspace/walo-ghana-crop-prices.csv (WFP rows plus MoFA SRID 2025 Techiman, GCX 2024\u20132026, news)",
    "url": "file:/workspace/walo-ghana-crop-prices.csv"
   },
   "MOFA_MAIZE": {
@@ -1791,7 +1791,7 @@
      "action": "Lift and dry quickly to avoid aflatoxin"
     }
    ],
-   "price_note": "WFP/HDX has NO groundnut series for Ejura, Kumasi, Techiman or Tamale; only 2025 MoFA SRID Techiman rows in the Walo file.",
+   "price_note": "WFP/HDX has NO groundnut series for Ejura, Kumasi, Techiman or Tamale; only 2025 MoFA SRID Techiman rows in the Walɔ file.",
    "rotation": {
     "family": "legume",
     "n_fix": true,
@@ -5212,7 +5212,7 @@
    "heat_sensitive_stage": null,
    "root_crop": false,
    "stages": null,
-   "price_note": "No market price series in WFP or Walo file (cocoa is sold at COCOBOD's fixed producer price \u2013 not collected).",
+   "price_note": "No market price series in WFP or Walɔ file (cocoa is sold at COCOBOD's fixed producer price \u2013 not collected).",
    "rotation": {
     "family": "tree",
     "n_fix": false,

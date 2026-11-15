@@ -1,5 +1,5 @@
 /*
- * Walo client log: POST /api/log with a small JSON object from js/log.js.
+ * Walɔ client log: POST /api/log with a small JSON object from js/log.js.
  * Prints one line per event to the server log, keeping only whitelisted short fields
  * (event name, screen, picker kind, file type and size, timings, browser family). No photos, words or locations.
  */

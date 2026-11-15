@@ -1,4 +1,4 @@
-/* Walo styles. Tokens first; every size and colour below comes from them. */
+/* Walɔ styles. Tokens first; every size and colour below comes from them. */
 @font-face { font-family: "Jakarta"; src: url("fonts/jakarta-var.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
 :root {
   --bg: #f6f4ee; --surface: #fff; --ink: #1c2a21; --muted: #5b675f; --line: #e2dfd5;

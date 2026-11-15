@@ -1,5 +1,5 @@
 /* How this place is changing: the "shift" the challenge is named after, at her own point. Two periods of the same
-   NASA POWER daily record (1991-2014 and 2015-2025), the same onset rule the rest of Walo uses, and the plan
+   NASA POWER daily record (1991-2014 and 2015-2025), the same onset rule the rest of Walɔ uses, and the plan
    question that follows from it. Nothing here is a forecast; the Why? says exactly what it is and is not. */
 import { place, placeLabel, mainCrop } from "../store.js";
 import { shiftFor, crop, CFG } from "../data.js";
@@ -12,7 +12,7 @@ const P = (s) => s.periods;
 export function render() {
   const p = place(), s = shiftFor(p);
   if (!s) {
-    return `<div class="stack">${emptyState({ ic: "satellite", title: `No long rain record for ${placeLabel(p)} yet`, sub: "Walo compares 1991–2014 with 2015–2025 at each town; this one is not built yet.", action: "See what to plant here", href: "#/now" })}</div>`;
+    return `<div class="stack">${emptyState({ ic: "satellite", title: `No long rain record for ${placeLabel(p)} yet`, sub: "Walɔ compares 1991–2014 with 2015–2025 at each town; this one is not built yet.", action: "See what to plant here", href: "#/now" })}</div>`;
   }
   const [e0, e1] = P(s).early, [r0, r1] = P(s).recent;
   const d = s.dOnset || 0, rp = s.rainPct, dh = s.dHot;
@@ -27,7 +27,7 @@ export function render() {
   const hotLine = Math.abs(dh || 0) >= 1 ? `, and ${fmt(s.recent.hot_days)} very hot days against ${fmt(s.early.hot_days)}` : "";
   const sub = moved
     ? `Usual rain in the season is ${fmt(s.recent.season_rain)} mm against ${fmt(s.early.season_rain)} mm${hotLine}.`
-    : "Walo compared the same 35 years of NASA rain and heat for this point in two halves.";
+    : "Walɔ compared the same 35 years of NASA rain and heat for this point in two halves.";
   // the whole 35-year trend, so the screen is not just two halves compared
   const tr = s.trend || {}, trBits = [];
   if (tr.onset_days_per_decade != null && Math.abs(tr.onset_days_per_decade) >= 0.5) trBits.push(`The first rain comes about ${Math.abs(tr.onset_days_per_decade)} days ${tr.onset_days_per_decade > 0 ? "later" : "earlier"} every ten years.`);
@@ -35,7 +35,7 @@ export function render() {
   if (tr.hot_days_per_decade != null && Math.abs(tr.hot_days_per_decade) >= 1) trBits.push(`Very hot days have been ${tr.hot_days_per_decade > 0 ? "rising" : "falling"} about ${Math.abs(tr.hot_days_per_decade)} every ten years.`);
   const why = whyBody(
     [
-      `Walo took the same NASA POWER daily record for this point and split it: ${e0}–${e1} and ${r0}–${r1}. For each year it found the day the main rains started, using the same rule it uses for planting advice (a day with rain, then 20 mm over three days, and no long dry spell after).`,
+      `Walɔ took the same NASA POWER daily record for this point and split it: ${e0}–${e1} and ${r0}–${r1}. For each year it found the day the main rains started, using the same rule it uses for planting advice (a day with rain, then 20 mm over three days, and no long dry spell after).`,
       "The figures are usual values for each period, not a trend line and not a forecast. NASA POWER gives a grid cell of roughly 50 km, so this is your area, not your field.",
     ],
     [
@@ -55,7 +55,7 @@ export function render() {
         : rp <= -5
           ? "With less rain in the season, a shorter-season variety or one that needs less water is the safer choice."
           : "With more very hot days, sow so that flowering misses the hottest weeks, and keep the soil covered."
-    : "The dates Walo gives already come from the last 35 years, so the planting advice is in step with this record.";
+    : "The dates Walɔ gives already come from the last 35 years, so the planting advice is in step with this record.";
   return `${hero({ img: CFG().photos.plant_here.img, pos: CFG().photos.plant_here.pos, eyeIcon: "satellite", eyebrow: `${esc(placeLabel(p))} · ${e0}–${r1}`, title: "How this place is changing" })}
   <div class="stack lift">
     ${answer({ kind: moved ? "info" : "good", tone: moved ? "info" : "good", ic: "satellite", title: esc(headline), sub: esc(sub), why: { title: "How this was worked out", html: why }, say: `${headline}. ${sub}` })}

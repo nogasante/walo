@@ -23,15 +23,15 @@
   },
   "KM": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "KE": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SS": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "NS": {
    "id": "sandy",
@@ -39,11 +39,11 @@
   },
   "NG": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SG": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "DS": {
    "id": "sandy",
@@ -67,87 +67,87 @@
   },
   "TG004": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "CI001": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "CI002": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "CI003": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "CI004": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN001": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN002": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN003": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN004": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN005": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "SN006": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "ML001": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "ML002": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "ML003": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "ML004": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "ML005": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "NE001": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "NE002": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "NE003": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   },
   "NE004": {
    "id": "loam",
-   "note": "Walo has no soil note for this zone, so it starts from loam."
+   "note": "Walɔ has no soil note for this zone, so it starts from loam."
   }
  },
  "default": {
   "id": "loam",
-  "note": "Walo has no soil note for this place, so it starts from loam."
+  "note": "Walɔ has no soil note for this place, so it starts from loam."
  }
 }
