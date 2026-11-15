@@ -35,8 +35,12 @@ export const crops = () => D.cropList;
 export const isTree = (c) => c.kind === "tree";
 
 /* ---------- places ---------- */
-export const towns = () => Object.entries(D.places.places).map(([id, p]) => ({ id, kind: "town", ...p }));
-export const town = (id) => (D.places.places[id] ? { id, kind: "town", ...D.places.places[id] } : null);
+/* A town belongs to one country (places.json "country"), and only the country being used is offered, so a
+   Kenyan market can never become the nearest town for a Ghanaian field. */
+const homeId = () => COUNTRIES().default;
+export const placeCountry = (p) => p.country || COUNTRIES().default;
+export const towns = () => Object.entries(D.places.places).filter(([, p]) => placeCountry(p) === homeId()).map(([id, p]) => ({ id, kind: "town", ...p }));
+export const town = (id) => (D.places.places[id] && placeCountry(D.places.places[id]) === homeId() ? { id, kind: "town", ...D.places.places[id] } : null);
 export function nearestTown(pt, except) {
   return towns().filter((t) => t.id !== except).map((t) => ({ t, d: km(pt, t) })).sort((a, b) => a.d - b.d)[0];
 }

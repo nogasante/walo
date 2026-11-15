@@ -2,6 +2,8 @@
 
 **Walo** (Ga for “helper”) is a mobile web app for low-literacy smallholder farmers in Ghana. A farmer picks a place and sees what to plant now, or picks a crop and sees where it grows best. The same app follows a field from sowing to sale, and can look at a sick plant.
 
+Kenya is prepared but not yet selectable: `countries.json` holds it as `draft`, with 14 county towns, NASA POWER climate for each, prices for six crops from HDX HAPI, and planting windows for maize, sorghum, millet, cowpea, cassava and sweet potato taken from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book 2025. A country becomes selectable only when `checked_by_local` is true, and that check has not happened.
+
 Team **Simply Zero**. [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/), challenge **Field Shift: Adapting Farms with NASA Data**, Kumasi local event.
 
 **Live app:** [https://walo-simply-zero.vercel.app](https://walo-simply-zero.vercel.app)
