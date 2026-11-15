@@ -1,6 +1,6 @@
 /* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
-import { load, setForecastListener, CFG, setActiveCountry, loadCountryData } from "./data.js";
+import { load, setForecastListener, CFG, setActiveCountry, loadCountryData, crop, isTree } from "./data.js";
 import { place, placeLabel, focusCrop, subscribe, hydrate, farmsHere, placeChosen, countryId } from "./store.js";
 import { icon, wire, resetSheets, closeSheet, stopSpeaking, openSheet, toast, note } from "./ui.js";
 import { esc } from "./util.js";
@@ -38,7 +38,33 @@ const TABS = [["home", "#/", "house", "Home"], ["farm", "#/farm", "sprout", "My 
 /* first run, or a country she has not picked a town in yet: no place chosen and no real field in THIS country to read
    one from. A field in another country does not count, and the demo field never does. */
 const needsSetup = () => { try { return !placeChosen() && !farmsHere().some((f) => !f.demo); } catch { return false; } };
-const parse = () => { const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent); return { name: ROUTES[parts[0]] ? parts[0] : "home", a: parts[1], b: parts[2] }; };
+const parse = () => { const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent); return { raw: parts[0], name: ROUTES[parts[0]] ? parts[0] : "home", a: parts[1], b: parts[2] }; };
+/* A route can be typed, shared, restored from another country, or left behind by a deleted field, so what the URL
+   claims is checked before it renders. Anything that cannot be shown is replaced (not pushed) by the screen it
+   falls back to, so the address bar never describes a screen she is not on, and Back never returns to the lie. */
+function canonical(r) {
+  if (r.raw && !ROUTES[r.raw]) return "#/"; // an unknown path is not a screen
+  if (r.name === "crop") {
+    if (!crop(r.a)) return `#/crop/${focusCrop()}`;
+    if (r.b && r.b !== "where") return `#/crop/${r.a}`;
+  }
+  if (r.name === "farm" && r.a && !farmsHere().some((f) => f.id === r.a)) return "#/farm"; // fields elsewhere are not this farm
+  if (r.name === "start" && r.a) {
+    if (!crop(r.a)) return "#/start";
+    if (isTree(crop(r.a))) return `#/crop/${r.a}`; // a tree cannot be followed as a field, and the crop page says so
+  }
+  if (r.name === "doctor") {
+    const id = r.a && crop(r.a) ? r.a : focusCrop();
+    if (id !== r.a) return `#/doctor/${id}`;
+    if (r.b && !farmsHere().some((f) => f.id === r.b)) return `#/doctor/${id}`;
+  }
+  if (r.name === "sell") {
+    if (!r.a) return null;
+    if (!crop(r.a)) return "#/sell";
+    if (r.b && !farmsHere().some((f) => f.id === r.b)) return `#/sell/${r.a}`;
+  }
+  return null;
+}
 function topbar(r, rt) {
   const farmCtx = (r.name === "sell" && !r.a) || ((r.name === "sell" || r.name === "doctor") && r.b); // the fields' own places, not the chip
   const t = rt.s.title(r.a, r.b);
@@ -70,6 +96,8 @@ function render(keepScroll = false) {
   try {
     const y = window.scrollY, r = parse(), rt = ROUTES[r.name];
     if (needsSetup() && r.name !== "welcome" && r.name !== "backup") { location.hash = "#/welcome"; return; }
+    const fix = canonical(r);
+    if (fix && fix !== location.hash) { location.replace(fix); return; } // re-enters with a route that exists
     if (!(rt.s === help && help.voiceOn())) stopSpeaking(); // a voice chat keeps talking while its own screen redraws
     resetSheets();
     const main = document.getElementById("main");

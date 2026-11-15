@@ -9,8 +9,9 @@ import { esc, iso, today0, dayMonth, fromIso } from "../util.js";
 let F = { crop: null, step: 0 };
 export const title = () => "Start planting";
 export function render(id) {
-  if (id && crop(id) && F.crop !== id) F = { crop: id, step: 1, photo: null };
-  if (!F.crop || !crop(F.crop)) F = { crop: null, step: 0 };
+  // a tree crop has no field stages to follow, so it never enters the flow (the router sends it to its crop page)
+  if (id && crop(id) && !isTree(crop(id)) && F.crop !== id) F = { crop: id, step: 1, photo: null };
+  if (!F.crop || !crop(F.crop) || isTree(crop(F.crop))) F = { crop: null, step: 0 };
   const p = place(), steps = 3, dots = `<p class="steps" aria-label="Step ${F.step + 1} of ${steps}">${[0, 1, 2].map((i) => `<i class="${i <= F.step ? "on" : ""}"></i>`).join("")}</p>`;
   if (F.step === 0) {
     const groups = cropGroups(p), trees = groups.flatMap((g) => g.items.map((x) => x.c)).filter(isTree);
