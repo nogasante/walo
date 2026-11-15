@@ -6,6 +6,14 @@ Kenya can be used as a **preview**: `countries.json` holds it as `preview`, with
 
 Team **Simply Zero**. [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.org/), challenge **Field Shift: Adapting Farms with NASA Data**, Kumasi local event.
 
+**Challenge:** Field Shift: Adapting Farms with NASA Data. Walo is a decision-support tool for planting and rotation: NASA Earth observations set the rain, heat and soil-water terms, and local soil and crop calendars set the rest.
+
+**NASA data that makes the project eligible:** NASA POWER daily (AG community, 1991–2025) is the primary source, and the one to tick in the challenge's Resources list on the submission form; NASA MODIS/Terra MOD13Q1 NDVI is the second. Nothing else decides a number NASA data can answer: the Meteomatics forecast only times the next ten days, and Copernicus DEM stands in for SRTM, which needs an Earthdata login.
+
+**AI disclosure, in one line:** the idea, the crops, the rules and the review are the team's; the app code, the data-build scripts and the redesign were written with an AI assistant (Grok Bot), and Plant Doctor and Get help call Gemini at runtime. No AI-generated images, audio or video, and no NASA branding. Full log: [app/AI_USE.md](app/AI_USE.md).
+
+Walo is a participant project built at the Kumasi local event on 14–15 November 2026. It is not a NASA product, and NASA does not endorse it.
+
 **Live app:** [https://walo-simply-zero.vercel.app](https://walo-simply-zero.vercel.app)
 
 The app is static HTML, CSS, and JavaScript, plus serverless functions in `app/api/`. Vercel’s **Root Directory** for this repository is `app` (see [Deploy](#deploy)).
