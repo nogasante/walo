@@ -120,6 +120,10 @@ function render(keepScroll = false) {
     if (rt.s.mount) rt.s.mount(main.firstElementChild, r.a, r.b, () => render(true)); // the .screen node is new each render, so listeners never pile up
     hydrate(main);
     window.scrollTo(0, keepScroll ? y : 0); onScroll();
+  } catch (e) {
+    // a screen that throws used to leave the app on its boot splash with no way out; now it says so and offers Home
+    console.error(e);
+    try { document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">This screen did not load</h1><p class="a-sub">Something went wrong showing this page. Go home and open it again, and tell the team if it keeps happening.</p></article><a class="btn primary" href="#/">Go home</a></div></div>`; } catch { /* nothing left to do */ }
   } finally { busy = false; }
 }
 /* Back stays inside Walo and goes to the screen's parent. Using the browser history instead could take her out of the
