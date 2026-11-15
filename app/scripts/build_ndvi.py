@@ -2,7 +2,7 @@
 Microsoft Planetary Computer (STAC collection modis-13Q1-061, data API statistics; free, no login).
 For each place: median NDVI in a ~3 x 3 km box around the town point for each 16-day composite, 2016-2025 -> monthly
 climatology (mean of the composite medians starting in that month) + the latest composite available. Writes data/ndvi.json."""
-import json, os, urllib.request, time, statistics as st
+import json, os, sys, urllib.request, time, statistics as st
 from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = lambda n: json.load(open(os.path.join(HERE, "data", n)))
@@ -31,8 +31,14 @@ def stat(arg):
         s = post(STATS.format(iid), poly)["properties"]["statistics"]["250m_16_days_NDVI_b1"]
         return s["median"] / 10000 if s["count"] and s["median"] > -2000 else None
     except Exception: return None
-out = {"source": "NASA MODIS Terra MOD13Q1 v6.1 NDVI, 250 m, 16-day composites (Didan 2021, doi:10.5067/MODIS/MOD13Q1.061), via Microsoft Planetary Computer STAC collection modis-13Q1-061", "url": "https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061", "method": "Median NDVI in a ~3 x 3 km box around each town point; monthly values = mean of 2016-2025 composites that start in that month.", "fetched": time.strftime("%Y-%m-%d"), "places": {}}
+OUT = os.path.join(HERE, "data", "ndvi.json")
+# Places already measured are kept: a second country costs only its own towns, not the whole file again.
+old = json.load(open(OUT))["places"] if os.path.exists(OUT) else {}
+SKIP = {k for k in old if k in agro} if "--all" not in sys.argv else set()
+out = {"source": "NASA MODIS Terra MOD13Q1 v6.1 NDVI, 250 m, 16-day composites (Didan 2021, doi:10.5067/MODIS/MOD13Q1.061), via Microsoft Planetary Computer STAC collection modis-13Q1-061", "url": "https://planetarycomputer.microsoft.com/dataset/modis-13Q1-061", "method": "Median NDVI in a ~3 x 3 km box around each town point; monthly values = mean of 2016-2025 composites that start in that month.", "fetched": time.strftime("%Y-%m-%d"), "places": {k: v for k, v in old.items() if k in agro}}
 for pid, p in agro.items():
+    if pid in SKIP:
+        print(pid, "kept", flush=True); continue
     its = items(p["lat"], p["lon"])
     with ThreadPoolExecutor(12) as ex: vals = list(ex.map(stat, [(i, p["lat"], p["lon"]) for i, _ in its]))
     rows = [(d, v) for (_, d), v in zip(its, vals) if v is not None]

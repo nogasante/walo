@@ -136,6 +136,8 @@ def main():
     ap.add_argument("--app", default="Walo", help="application name for the HAPI identifier")
     ap.add_argument("--months", type=int, default=13, help="how far back to keep prices")
     ap.add_argument("--countries", help="comma-separated ISO3 codes (default: every African country)")
+    ap.add_argument("--app-country", help="also write the app's price file for this ISO3 code")
+    ap.add_argument("--app-code", help="the two-letter id countries.json uses for --app-country, e.g. KE")
     args = ap.parse_args()
 
     app_id = identifier(args.app, args.email)
@@ -203,6 +205,26 @@ def main():
     out["covered"] = sorted(out["countries"])
     json.dump(out, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
     print(f"\nwrote {OUT}: {len(out['countries'])} countries, {sum(kept.values())} market-crop rows, {start}..{end}")
+
+    if args.app_country:
+        cc = args.app_country.upper()
+        c = out["countries"].get(cc)
+        if not c:
+            sys.exit(f"{cc} has no usable rows in {start}..{end}; nothing written for the app")
+        # the shape js/data.js priceNear reads: markets with coordinates, crops with r/w entries per market
+        app_out = {"source": {"name": "WFP market prices via OCHA's HDX HAPI", "url": "https://hapi.humdata.org/docs"},
+                   "fetched": end, "covered": [start, end], "unit": f"{c['currency']} per kg",
+                   "about": ("WFP market prices republished by OCHA's Humanitarian API, converted to the price "
+                             "per kilogram from the unit each market publishes. Markets selling by the litre, "
+                             "bunch, piece or tuber are left out, and processed forms such as flour and meal "
+                             "are never treated as the crop."),
+                   "markets": {k: {"region": v.get("region", ""), "lat": v["lat"], "lon": v["lon"]}
+                               for k, v in c["markets"].items() if v.get("lat") is not None},
+                   "crops": c["crops"]}
+        code = (args.app_code or cc[:2]).lower()
+        path = os.path.join(HERE, "..", "data", f"prices-{code}.json")
+        json.dump(app_out, open(path, "w"), ensure_ascii=False, separators=(",", ":"))
+        print(f"wrote {path}: {len(app_out['markets'])} markets, {len(app_out['crops'])} crops")
 
 
 if __name__ == "__main__":

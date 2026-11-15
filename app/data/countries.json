@@ -1,5 +1,5 @@
 {
-  "_about": "Countries Walo runs in. Everything a country changes lives here, so the code contains no country: which coordinates are accepted, the money on Sell, the rain-season search windows, the zone names, the map, the labels on sources. Adding a country is a data change plus a check by someone who farms there. A country only appears in the app when status is \"live\"; anything half-sourced stays \"draft\" and is never selectable.",
+  "_about": "Countries Walo runs in. Everything a country changes lives here, so the code contains no country: which coordinates are accepted, the money on Sell, the rain-season search windows, the zone names, the map, the labels on sources. Adding a country is a data change plus a check by someone who farms there. status \"live\" means that check has happened; \"preview\" means the data is complete enough to use but nobody farming there has checked it, and the app says so before you choose it; \"draft\" is never selectable.",
   "default": "GH",
   "countries": {
     "GH": {
@@ -45,8 +45,8 @@
     },
     "KE": {
       "name": "Kenya",
-      "status": "draft",
-      "_status_note": "Draft: the planting windows come from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book, not from someone who farms there. A country only becomes selectable when checked_by_local is true.",
+      "status": "preview",
+      "_status_note": "Preview: the planting windows come from the FEWS NET Kenya seasonal calendar and the Ministry of Agriculture cropping calendar in the Kenya Food Security Data Book, not from someone who farms there. The picker says so. It becomes \"live\" when checked_by_local is true.",
       "checked_by_local": false,
       "bbox": {
         "lat": [-5.2, 5.6],
@@ -55,7 +55,7 @@
       },
       "currency": { "code": "KES", "name": "shilling" },
       "language": "en",
-      "map": null,
+      "map": "kenya-map",
       "onset": {
         "hemisphere": "north",
         "major_search": {

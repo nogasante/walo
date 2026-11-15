@@ -1,7 +1,7 @@
 /* Crop answer: can I plant this crop here, and when. "Where else" shows the best towns for it. */
 import { twiOn } from "../twi.js";
 import { place, placeLabel, placeChosen, setPlace, setCrop, focusCrop } from "../store.js";
-import { crop, town, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor } from "../data.js";
+import { crop, town, scoreCrop, fitWord, plantStatus, cropMonths, cropDays, placeList, isTree, country, D, zoneOf, zoneName, forecastFor, fcOnset, confFor, mapFor } from "../data.js";
 import { answer, whyBody, btn, sheet, row, note, openSheet, closeSheet, hero, facts } from "../ui.js";
 import { esc, fmt, runs, monthSpan, weekday, MONTHS_LONG, doyText } from "../util.js";
 import { rainDetails, rainStrip } from "./words.js";
@@ -57,10 +57,11 @@ export function render(id, sub) {
 }
 /* the map and the best towns for a crop. Used on the crop page, and by first run, which has no place yet. */
 export function placesHtml(c, hint = "Tap a town to see how it does there. Your farm does not change.") {
-  const list = placeList(c), cur = place(), hers = placeChosen(), g = D.ghana_map;
+  const list = placeList(c), cur = place(), hers = placeChosen(), g = mapFor();
   const P = (lat, lon) => [(lon - g.x0) * g.s, (g.y1 - lat) * g.s];
-  const pins = list.slice().reverse().map((x) => { const [px, py] = P(x.p.lat, x.p.lon), w = fitWord(x.sc), sel = hers && x.p.id === cur.id; return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${sel ? 9 : 6}" class="pin ${x.listed ? w.cls : "bad"}${sel ? " sel" : ""}"><title>${esc(x.p.name)}</title></circle>`; }).join("");
-  const map = `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>`;
+  const pins = g ? list.slice().reverse().map((x) => { const [px, py] = P(x.p.lat, x.p.lon), w = fitWord(x.sc), sel = hers && x.p.id === cur.id; return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${sel ? 9 : 6}" class="pin ${x.listed ? w.cls : "bad"}${sel ? " sel" : ""}"><title>${esc(x.p.name)}</title></circle>`; }).join("") : "";
+  // a country with no outline in data/ just shows the list: no map is better than another country's map
+  const map = g ? `<svg class="gmap" viewBox="-10 -10 ${g.w + 20} ${g.h + 20}" role="img" aria-label="Map of ${esc((country() || {}).name || "the country")}: green dots grow ${esc(c.name.toLowerCase())} well"><path d="${g.path}" class="land"/>${pins}</svg>` : "";
   const top = list.filter((x) => x.listed).slice(0, 6);
   return `${map}<p class="legend"><span class="dot good"></span>Grows well <span class="dot wait"></span>Can grow <span class="dot bad"></span>Poorly</p>
     <div class="list">${top.map((x) => row({ attrs: `data-town="${x.p.id}"`, ic: "map-pin", title: esc(x.p.name), sub: fitWord(x.sc).text, status: x.sc.score >= 4 ? "good" : x.sc.score === 3 ? "wait" : "bad" })).join("")}</div>

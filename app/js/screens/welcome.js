@@ -2,11 +2,12 @@
    Door 1: I have a farm — what can I grow there?      → ask the place, then the crops that do well there.
    Door 2: I want to plant a crop — where should I plant it? → ask the crop, then SHOW the places (never ask).
    Nothing is assumed: no town is picked for her, and she can sign in instead if she has used Walo before. */
-import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry } from "../data.js";
+import { towns, crops, cropsHere, crop, fetchLive, placeName, nearestTown, inCountry, country, countryIds } from "../data.js";
 import { place, placeLabel, setPlace, setGps, setMainCrop, mainCrop, mainIsAuto } from "../store.js";
 import { btn, icon, note, row, cropImg } from "../ui.js";
 import { placesHtml } from "./crop.js";
 import { esc } from "../util.js";
+import { openCountryPicker } from "./pickers.js";
 
 /* step: "doors" | "place" | "crop" | "places".  order: which of the two she picked first. */
 let W = { step: "doors", order: "place", crop: null };
@@ -36,6 +37,7 @@ function placeStep() {
     <h1 class="q">Where is your farm?</h1>
     ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
+    ${countryIds().length > 1 ? btn(`Country: ${country().name}`, { kind: "secondary", ic: "map-pin", attrs: 'id="w-country"' }) : ""}
     <p class="gps-msg" id="w-msg" aria-live="polite"></p>
     <p class="list-h">Or pick the town nearest your farm</p>
     <div class="list">${list.map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region) })).join("")}</div>
@@ -79,6 +81,7 @@ export function mount(root) {
     if (c) { chooseCrop(c.dataset.crop); return; }
     if (e.target.closest("[data-later]")) { setMainCrop(null); location.hash = "#/"; return; }
     if (e.target.closest("#w-gps")) useGps(root);
+    if (e.target.closest("#w-country")) openCountryPicker(null, root);
   });
 }
 

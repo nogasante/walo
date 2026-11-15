@@ -1,6 +1,6 @@
 /* The two pickers every path uses: place (towns + "Use my location") and crop. Both open as a bottom sheet. */
-import { towns, crops, cropsHere, fetchLive, placeName, nearestTown, inCountry } from "../data.js";
-import { place, setPlace, setGps, placeLabel, mainCrop, mainIsAuto, autoMainCrop, setMainCrop } from "../store.js";
+import { towns, crops, cropsHere, fetchLive, placeName, nearestTown, inCountry, country, countryIds, loadCountryData } from "../data.js";
+import { place, setPlace, setGps, placeLabel, mainCrop, mainIsAuto, autoMainCrop, setMainCrop, setCountry } from "../store.js";
 import { openSheet, closeSheet, icon, cropImg, row } from "../ui.js";
 import { esc } from "../util.js";
 
@@ -8,17 +8,41 @@ export function openPlacePicker(next, from) {
   const cur = place();
   const html = `<button type="button" class="btn secondary wide" id="use-gps" data-net>${icon("locate-fixed")}<span>Use my location</span></button>
     <p class="gps-msg" id="gps-msg" aria-live="polite"></p>
+    ${countryIds().length > 1 ? `<button type="button" class="btn secondary wide" id="pick-country">${icon("map-pin")}<span>Country: ${esc(country().name)}</span></button>` : ""}
     <p class="list-h">Or pick the town nearest your farm</p>
     <div class="list">${towns().sort((a, b) => a.name.localeCompare(b.name)).map((t) => row({ attrs: `data-town="${t.id}"`, ic: "map-pin", title: esc(t.name), sub: esc(t.region), status: t.id === cur.id ? "good" : "" })).join("")}</div>`;
   openSheet({ title: "Where is your farm?", html, onOpen: (b) => {
     b.addEventListener("click", (e) => {
       const t = e.target.closest("[data-town]");
       if (t) { setPlace(t.dataset.town); closeSheet(true); go(next); return; }
+      if (e.target.closest("#pick-country")) { openCountryPicker(null, b); return; }
       if (e.target.closest("#use-gps")) useGps(b, next);
     });
   } }, from);
 }
 const go = (next) => { if (next && location.hash !== next) location.hash = next; };
+
+/* Country. Only a country Walo has data for is offered: "live" means its prices and planting windows have been
+   checked by someone farming there; "preview" means they have not, and the app says so before you choose it. */
+export function openCountryPicker(from, host) {
+  const cur = (country() || {}).id;
+  const rows = countryIds().map((k) => {
+    const c = country(k), sub = c.status === "live" ? "Checked by someone farming there" : "Preview: nobody has checked the planting windows here yet";
+    return row({ attrs: `data-country="${k}"`, ic: "map-pin", title: esc(c.name), sub: sub, status: k === cur ? "good" : "" });
+  }).join("");
+  openSheet({ title: "Which country?", html: `<div class="list">${rows}</div>
+    <p class="muted small">Your farm's town is asked again after you change country, because towns belong to one country.</p>`, onOpen: (b) => {
+    b.addEventListener("click", async (e) => {
+      const t = e.target.closest("[data-country]");
+      if (!t || t.dataset.country === cur) return;
+      setCountry(t.dataset.country);
+      try { await loadCountryData(); } catch { /* planting still works without prices */ }
+      closeSheet(true);
+      location.hash = "#/";
+      location.reload(); // a new country means new towns, map and prices everywhere: start the app again cleanly
+    });
+  } }, from || host);
+}
 
 function useGps(b, next) {
   const msg = b.querySelector("#gps-msg"), btn = b.querySelector("#use-gps"), say = (t, busy) => { msg.innerHTML = `${busy ? icon("loader-circle", "spin") : ""}<span>${t}</span>`; };

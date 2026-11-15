@@ -1,7 +1,7 @@
 /* Walo state: the chosen place and crop, the farms, and farm photos. Everything stays on this phone
    (localStorage for small values, IndexedDB for photos). Screens read from here and call the setters.
    If the farmer turns on backup (js/sync.js), each changed field also gets a time stamp so the newest copy wins. */
-import { CFG, town, crop, crops } from "./data.js";
+import { CFG, town, towns, crop, crops, setActiveCountry } from "./data.js";
 import { DAY, today0, iso } from "./util.js";
 
 const get = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } };
@@ -14,8 +14,12 @@ const emit = () => listeners.forEach((fn) => fn());
 export function place() {
   const id = get("walo.place", null);
   if (id === "gps") { const g = get("walo.gps", null); if (g && g.agro) return g; }
-  return town(id) || town(CFG().default_place);
+  return town(id) || town(CFG().default_place) || towns()[0];
 }
+/* ---------- country ---------- */
+/* Changing country clears the place and any phone location, because neither is in the new country. */
+export const countryId = () => get("walo.country", null);
+export function setCountry(id) { set("walo.country", id); set("walo.place", null); set("walo.gps", null); setActiveCountry(id); emit(); }
 export function setPlace(id) { set("walo.place", id); emit(); }
 export function setGps(p) { set("walo.gps", p); set("walo.place", "gps"); emit(); }
 export const placeLabel = (p) => (p.kind === "gps" ? p.name || "My location" : p.name);

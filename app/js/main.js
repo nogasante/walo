@@ -1,7 +1,7 @@
 /* Walo app shell: one router (location.hash), top bar with the place chip, picture tabs, re-render on state change. */
 import { online } from "./net.js";
-import { load, setForecastListener, CFG } from "./data.js";
-import { place, placeLabel, focusCrop, subscribe, hydrate, farms } from "./store.js";
+import { load, setForecastListener, CFG, setActiveCountry, loadCountryData } from "./data.js";
+import { place, placeLabel, focusCrop, subscribe, hydrate, farms, countryId } from "./store.js";
 import { icon, wire, resetSheets, closeSheet, stopSpeaking, openSheet, toast, note } from "./ui.js";
 import { esc } from "./util.js";
 import * as home from "./screens/home.js";
@@ -102,6 +102,9 @@ window.addEventListener("hashchange", () => { if (!ready) return; closeSheet(tru
     document.getElementById("main").innerHTML = `<div class="screen"><div class="stack"><article class="answer bad"><h1 class="a-title">Could not load Walo</h1><p class="a-sub">Check your connection and try again.</p></article></div></div>`;
     return;
   }
+  // which country this phone chose last time (Ghana if it never chose), and that country's price file
+  setActiveCountry(countryId());
+  try { await loadCountryData(); } catch { /* a country without prices still answers about planting */ }
   // older versions kept the place under walo.loc
   try { const old = localStorage.getItem("walo.loc"); if (old && !localStorage.getItem("walo.place") && old !== "live") localStorage.setItem("walo.place", JSON.stringify(old)); localStorage.removeItem("walo.loc"); localStorage.removeItem("walo.live"); } catch { /* ignore */ }
   startSync(); // only does anything if this phone turned backup on

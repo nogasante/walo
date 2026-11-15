@@ -2,7 +2,7 @@
    For each: when it usually sells best near that field (WFP/HDX price pattern), tied to its harvest, with the data's years and unit.
    "Check another crop" is a small option at the bottom. */
 import { place, placeLabel, farm, farms, setCrop, mainCrop } from "../store.js";
-import { crop, sellAdvice, farmProgress, monthName, currency, priceNear, D, CFG } from "../data.js";
+import { crop, sellAdvice, farmProgress, monthName, currency, priceNear, D, CFG, country } from "../data.js";
 import { answer, whyBody, note, icon, link, cropImg, hero, monthBars, btn, chip } from "../ui.js";
 import { esc, fmt, roughDate, dayMonth } from "../util.js";
 import { sellLine } from "./farm.js";
@@ -43,11 +43,11 @@ function list(mine) {
       <span class="sc-t"><small class="sc-eye">${esc(f.name)}</small><b>Your ${esc(c.name.toLowerCase())} · ${esc(when)}</b>${chip(s.tone, esc(s.act))}<span class="sc-line">${s.line}</span>${sp ? `<small class="sc-data">${currency()} ${fmt(sp.v, 2)}/kg at ${esc(sp.name)}, ${dayYear(sp.d)}</small>` : s.data ? `<small class="sc-data">${s.data}</small>` : ""}</span>${icon("chevron-right")}</a>`;
   };
   return `${top}<div class="stack lift"><div class="scards">${mine.map(card).join("")}</div>
-    ${note("WFP's price records for these markets stop in July 2023. They show the usual season, not this year's price.", "calendar-days")}${other(true)}</div>`;
+    ${(country() || {}).id === "GH" ? note("WFP's price records for these markets stop in July 2023. They show the usual season, not this year's price.", "calendar-days") : ""}${other(true)}</div>`;
 }
 function detail(id, f) {
   const c = crop(id), pr = f ? farmProgress(f) : null, p = pr ? pr.p : place(); setCrop(id);
-  const sa = sellAdvice(id, p, pr ? pr.harvest : null);
+  const sa = sellAdvice(id, p, pr ? pr.harvest : null), gh = (country() || {}).id === "GH";
   const yrs = `${sa.years[0]}–${sa.years[1]}`, sp = priceNear(id, p, 3), best = sp[0] || null;
   let a, dataLine = "";
   if (sa.kind === "index") {
@@ -57,7 +57,7 @@ function detail(id, f) {
     dataLine = `Price pattern from ${yrs} prices (WFP), per ${esc(sa.unit)}. The newest price in it is ${newest}, so today's price may be different. Ask at the market before you sell.`;
   } else {
     a = { kind: "info", icon: "tag", title: sa.guessMonth ? `Best guess: sell around ${monthName(sa.guessMonth)}` : `No price history for ${esc(c.name.toLowerCase())}`, sub: best ? `${stalePrice(best.d) ? "Last recorded price" : "Latest price"}: ${currency()} ${fmt(best.v, 2)} per kg at ${esc(best.name)} (${fmt(best.km)} km), ${dayYear(best.d)}.` : `No price records for ${esc(c.name.toLowerCase())} yet.` };
-    dataLine = best ? `Price from ${best.src === "GCX" ? "the Ghana Commodity Exchange's traded prices" : "MoFA SRID's market collection"}, per kilogram. The newest row for ${esc(c.name.toLowerCase())} near you is ${dayYear(best.d)}.` : "Best guess: a few months after harvest, when stores run low.";
+    dataLine = best ? `Price from ${best.src === "GCX" ? "the Ghana Commodity Exchange's traded prices" : gh ? "MoFA SRID's market collection" : "WFP market prices via OCHA's HDX HAPI"}, per kilogram. The newest row for ${esc(c.name.toLowerCase())} near you is ${dayYear(best.d)}.` : "Best guess: a few months after harvest, when stores run low.";
   }
   const det = [];
   if (sa.kind === "index") {
@@ -71,7 +71,9 @@ function detail(id, f) {
   }
   if (sp.length) det.push(`Prices per kilogram, newest ${dayYear(best.d)}: ` + sp.map((x) => `${esc(x.name)} ${currency()} ${fmt(x.v, 2)} ${x.src === "GCX" ? "traded (GCX)" : esc(x.type)}${x.prev ? ` (${x.v >= x.prev ? "up" : "down"} ${Math.round(Math.abs(x.v / x.prev - 1) * 100)}% on a month earlier)` : ""}`).join(" · ") + ". MoFA SRID collects market prices in person every two weeks; the Ghana Commodity Exchange reports closing traded prices at its warehouses. Both are what a trader works from, not a guarantee of what you will be offered.");
   det.push(`Distances are straight-line from ${esc(placeLabel(p))}.`);
-  det.push(`Sources: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")} · ${link(D.market.srid_source.url, "MoFA SRID")}`);
+  det.push(gh
+    ? `Sources: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")} · ${link(D.market.srid_source.url, "MoFA SRID")}`
+    : `Source: ${link("https://hapi.humdata.org/docs", "WFP market prices via OCHA's HDX HAPI")}`);
   const why = whyBody([
     "Prices usually drop just after harvest, when many farmers sell, and rise later when stores run low.",
     sa.kind === "index" ? `Walo looked at the same market's prices over the years ${yrs}.` : "Walo has no price pattern for this crop, so this is a best guess.",

@@ -1,6 +1,6 @@
 /* About: what the data is, what Walo cannot do yet, AI use, and credits. Short on purpose. */
 import { D, CFG, crops, crop, country, isTree } from "../data.js";
-import { mainCrop, mainIsAuto } from "../store.js";
+import { mainCrop, mainIsAuto, place } from "../store.js";
 import { openMainCropPicker } from "./pickers.js";
 import { link, icon } from "../ui.js";
 import { esc } from "../util.js";
@@ -9,7 +9,8 @@ const dayText = (d) => `${d.slice(8, 10)}/${d.slice(5, 7)}/${d.slice(0, 4)}`; /*
 const newestExchange = () => Object.values(D.exchange.crops).flatMap((c) => Object.values(c.mk).map((x) => x.d)).sort().pop();
 export const title = () => "About Walo";
 export function render() {
-  const ag = D.agro.places[CFG().default_place], rs = D.rules.sources, cs = D.crops.sources, ph = D.credits.images;
+  const cur = place(), ag = (cur && D.agro.places[cur.id]) || D.agro.places[CFG().default_place], rs = D.rules.sources, cs = D.crops.sources, ph = D.credits.images;
+  const gh = (country() || {}).id === "GH";
   const refs = (o) => Object.values(o).map((x) => `<li>${esc(x.title)}${x.url ? ` ${link(x.url, x.url.replace(/^https?:\/\//, "").split("/")[0])}` : ""}</li>`).join("");
   return `<div class="stack about">
     <p class="lead">Walo helps you decide what to plant, where and when, using NASA data for your place.</p>
@@ -19,9 +20,9 @@ export function render() {
       <li><b>NASA POWER</b>: daily rain, temperature, humidity, wind, sunshine and root-zone soil wetness, ${ag.years.join("–")}, for every town (and for your phone's location). ${link("https://power.larc.nasa.gov/", "power.larc.nasa.gov")}</li>
       <li><b>NASA MODIS</b> greenness (NDVI, MOD13Q1), read through ${link(D.ndvi.url, "Microsoft Planetary Computer")}.</li>
       <li><b>${esc(CFG().forecast.label)}</b>: rain forecast for the next 10 days.</li>
-      <li><b>Prices</b>: ${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023, for the usual season; ${link(D.prices.source.url, "MoFA SRID commodity prices")}, per kilogram, newest ${dayText(D.prices.covered[1])} in ${Object.keys(D.prices.markets).length} markets, and SRID has published no newer public file; ${link(D.exchange.source.url, "Ghana Commodity Exchange")} traded prices, newest ${dayText(newestExchange())} at ${Object.keys(D.exchange.markets).length} warehouses.</li>
+      <li><b>Prices</b>: ${gh ? `${link(D.market.source.url, "WFP Ghana food prices (HDX)")}, ${D.market.markets.length} markets to July 2023, for the usual season; ${link(D.prices.source.url, "MoFA SRID commodity prices")}, per kilogram, newest ${dayText(D.prices.covered[1])} in ${Object.keys(D.prices.markets).length} markets, and SRID has published no newer public file; ${link(D.exchange.source.url, "Ghana Commodity Exchange")} traded prices, newest ${dayText(newestExchange())} at ${Object.keys(D.exchange.markets).length} warehouses.` : `${link("https://hapi.humdata.org/docs", "WFP market prices via OCHA's HDX HAPI")}, per kilogram, converted from the unit each market sells in.`}</li>
       <li><b>Crops</b>: FAO crop calendar for ${esc((country() || {}).name || "the country")}'s zones, FAO EcoCrop, FAO-56, and local research (sources below).</li>
-      <li>${link(CFG().geocode.credit_url, CFG().geocode.credit)}. Map: Natural Earth.</li>
+      <li>${link(CFG().geocode.credit_url, CFG().geocode.credit)}. Map: ${gh ? "Natural Earth" : "geoBoundaries (RCMRD)"}.</li>
     </ul>
     <h2 class="h2">${icon("info")}What Walo cannot do yet</h2>
     <ul class="plain">

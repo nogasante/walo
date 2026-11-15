@@ -5,7 +5,7 @@ import { MONTHS_LONG, DAY, today0, doyOfDate, km, runs, iso } from "./util.js";
 
 const A = () => window.AGRO;
 export const D = {};
-const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "help"];
+const FILES = ["app", "rules", "countries", "crops", "places", "agro", "ndvi", "market", "prices", "exchange", "credits", "ghana-map", "kenya-map", "help"];
 export async function load() {
   const js = await Promise.all(FILES.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })));
   FILES.forEach((n, i) => { D[n.replace("-", "_")] = js[i]; });
@@ -18,9 +18,29 @@ export const R = () => D.rules;
 /* Everything a country changes lives in data/countries.json: which coordinates are accepted, the money on
    Sell, the rain-season search windows, the zone names and the map. No country name is written in this file. */
 const COUNTRIES = () => D.countries || { default: "GH", countries: {} };
-export const country = (id) => { const c = COUNTRIES(), k = id || c.default; return c.countries[k] ? { id: k, ...c.countries[k] } : null; };
+/* The country in use. js/store.js remembers her choice and js/main.js sets it before the first screen draws,
+   so nothing below has to know which country it is looking at. */
+let ACTIVE = null;
+export const setActiveCountry = (id) => { ACTIVE = COUNTRIES().countries[id] ? id : COUNTRIES().default; return ACTIVE; };
+const activeId = () => (ACTIVE && COUNTRIES().countries[ACTIVE] ? ACTIVE : COUNTRIES().default);
+/* "live" countries are checked by someone who farms there; "preview" ones are usable but say so. A "draft"
+   country is never offered. */
+export const countryIds = () => Object.keys(COUNTRIES().countries).filter((k) => ["live", "preview"].includes(COUNTRIES().countries[k].status));
+export const country = (id) => { const c = COUNTRIES(), k = id || activeId(); return c.countries[k] ? { id: k, ...c.countries[k] } : null; };
 export const currency = () => { const c = country(); return (c && c.currency && c.currency.code) || ""; };
-export const inCountry = (lat, lon) => Object.values(COUNTRIES().countries).some((c) => c.status === "live" && lat >= c.bbox.lat[0] && lat <= c.bbox.lat[1] && lon >= c.bbox.lon[0] && lon <= c.bbox.lon[1]);
+/* "Use my location" only accepts a point inside the country in use, so a Kenyan phone in Kenya must first say
+   it is in Kenya and never silently gets Ghanaian advice. */
+export const inCountry = (lat, lon) => { const c = country(); return !!c && ["live", "preview"].includes(c.status) && lat >= c.bbox.lat[0] && lat <= c.bbox.lat[1] && lon >= c.bbox.lon[0] && lon <= c.bbox.lon[1]; };
+/* the outline the crop page draws; a country without one simply shows no map */
+export const mapFor = () => { const c = country(), g = c && c.map; return g ? D[g.replace(/-/g, "_")] || null : null; };
+/* a country other than the default keeps its own prices in data/prices-<code>.json, fetched the first time it is
+   chosen so a Ghanaian phone never downloads another country's markets */
+export async function loadCountryData(cc = activeId()) {
+  if (cc === COUNTRIES().default) return true;
+  const key = "prices_" + cc.toLowerCase();
+  if (D[key]) return true;
+  try { const r = await fetch(`data/prices-${cc.toLowerCase()}.json`); if (!r.ok) return false; D[key] = await r.json(); return true; } catch { return false; }
+}
 /* rules.json holds the physical onset rule; the country holds where to look for the season. A southern-hemisphere
    country points these windows at its own rainy months; nothing else in the method changes. */
 export const onsetRules = () => {
@@ -37,7 +57,7 @@ export const isTree = (c) => c.kind === "tree";
 /* ---------- places ---------- */
 /* A town belongs to one country (places.json "country"), and only the country being used is offered, so a
    Kenyan market can never become the nearest town for a Ghanaian field. */
-const homeId = () => COUNTRIES().default;
+const homeId = () => activeId();
 export const placeCountry = (p) => p.country || COUNTRIES().default;
 export const towns = () => Object.entries(D.places.places).filter(([, p]) => placeCountry(p) === homeId()).map(([id, p]) => ({ id, kind: "town", ...p }));
 export const town = (id) => (D.places.places[id] && placeCountry(D.places.places[id]) === homeId() ? { id, kind: "town", ...D.places.places[id] } : null);
@@ -212,7 +232,7 @@ const climGdd = (ag, doy, g) => { const m = ag.months[A().monthOfDoy(doy)]; retu
 const gddCache = () => { try { return JSON.parse(localStorage.getItem("walo.gdd") || "{}"); } catch { return {}; } };
 export function farmPlace(f) {
   if (f.place && f.place.kind === "gps") return f.place;
-  return town(f.loc) || town(CFG().default_place);
+  return town(f.loc) || town(CFG().default_place) || towns()[0] || null;
 }
 export function farmProgress(f) {
   const c = crop(f.crop), p = farmPlace(f), ag = agroOf(p), start = new Date(f.date + "T00:00:00"), d = Math.round((today0() - start) / DAY);
@@ -292,12 +312,12 @@ const S = () => R().sell;
 const mkByName = (n) => D.market.markets.find((x) => x.name === n);
 export const unitText = (u) => u.replace(/\s*\(.*\)/, "").replace(/^(\d+) KG$/, "$1 kg bag").replace(/^KG$/, "kg").replace(/^Bunch$/, "bunch").replace(/^100 Tubers$/, "100 tubers").replace(/^Piece$/, "piece");
 export function marketsFor(cropId, pt) {
-  const m = D.market.crops[cropId]; if (!m) return [];
+  const md = marketData(), m = md && md.crops[cropId]; if (!m) return [];
   return m.series.map((s) => { const mk = mkByName(s.market); return mk && { ...mk, s, km: Math.round(km(pt, mk)) }; }).filter(Boolean).sort((a, b) => a.km - b.km);
 }
 const idx = (s, m) => s.index[((m - 1) % 12 + 12) % 12];
 export function sellAdvice(cropId, pt, harvest = null) {
-  const c = crop(cropId), m = D.market.crops[cropId], near = marketsFor(cropId, pt), years = D.market.index_years;
+  const md = marketData(), c = crop(cropId), m = md && md.crops[cropId], near = marketsFor(cropId, pt), years = (md && md.index_years) || [];
   const out = { c, years, harvest };
   if (near.length) {
     const n = near[0], s = n.s;
@@ -332,12 +352,18 @@ export const monthName = (m) => MONTHS_LONG[m - 1];
 /* WFP's Ghana series stops in July 2023, so the seasonal index says when prices usually rise, and this
    says what a market actually paid in the last fortnight. Nearest markets first, wholesale preferred
    because that is what a farmer selling a bag gets. */
+/* the price file for the country in use: a country's own file if it has one, otherwise the default country's
+   (Ghana's SRID file plus the exchange). Keyed off the file, not off "is this the default country", so a
+   country with its own prices can never fall back to another country's markets. */
+const priceData = () => D["prices_" + activeId().toLowerCase()] || (activeId() === COUNTRIES().default ? D.prices : null);
+/* the long-run seasonal index exists for the default country only; elsewhere Sell speaks from current prices */
+const marketData = () => (activeId() === COUNTRIES().default && !D["prices_" + activeId().toLowerCase()] ? D.market : null);
 export function priceNear(cropId, pt, n = 3) {
-  const P = D.prices && D.prices.crops[cropId];
+  const PD = priceData(), P = PD && PD.crops[cropId];
   if (!P) return [];
   const out = [];
   for (const [name, mk] of Object.entries(P.mk)) {
-    const m = D.prices.markets[name];
+    const m = PD.markets[name];
     if (!m) continue;
     // SRID's newest week is not the same for retail and wholesale in every market, so show the newer one
     const pick = [mk.w && { type: "wholesale", v: mk.w.v, d: mk.w.d, prev: mk.w4 || null }, mk.r && { type: "retail", v: mk.r.v, d: mk.r.d, prev: null }]
@@ -346,7 +372,7 @@ export function priceNear(cropId, pt, n = 3) {
     out.push({ name, km: Math.round(km(pt, m)), ...pick, label: P.label });
   }
   // the exchange's warehouses are places too, and its trades are months newer than the last SRID file
-  const X = D.exchange && D.exchange.crops[cropId];
+  const X = activeId() === COUNTRIES().default && D.exchange && D.exchange.crops[cropId];
   if (X) for (const [name, v] of Object.entries(X.mk)) {
     const m = D.exchange.markets[name];
     if (!m) continue;
