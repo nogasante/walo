@@ -235,7 +235,8 @@ export function farmProgress(f) {
 /* heat units since sowing from NASA POWER daily T2M_MAX/T2M_MIN at the field, cached on the phone */
 export async function fetchGdd(f) {
   const c = crop(f.crop), g = c && A().gddBase(c, R()), p = farmPlace(f), all = gddCache(), k = `${f.id}|${f.date}|${f.loc || ""}`, today = iso(today0());
-  if (!g || !navigator.onLine || f.date >= today || (all[k] && all[k].fetched === today)) return false;
+  // an entry saved before soil wetness was asked for is fetched once more, so the card appears today
+  if (!g || !navigator.onLine || f.date >= today || (all[k] && all[k].fetched === today && all[k].soil !== undefined)) return false;
   try {
     const r = await fetch(`https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN,PRECTOTCORR,GWETROOT&community=AG&longitude=${p.lon.toFixed(4)}&latitude=${p.lat.toFixed(4)}&start=${f.date.replace(/-/g, "")}&end=${today.replace(/-/g, "")}&format=JSON`);
     if (!r.ok) return false;
