@@ -21,20 +21,31 @@ export function render() {
 }
 
 function doors() {
-  return `<div class="stack">
-    <img class="welcome-logo" src="img/logo.png" alt="Walo" width="116" height="116">
-    <h1 class="q">What do you want to know?</h1>
-    <div class="choices two">
-      <button type="button" class="choice" data-door="place"><span class="tile-ic">${icon("map-pin")}</span><b>I have a farm</b><small>What can I grow there?</small></button>
-      <button type="button" class="choice" data-door="crop"><span class="tile-ic">${icon("sprout")}</span><b>I want to plant a crop</b><small>Where should I plant it?</small></button>
+  return `<div class="stack wl">
+    <div class="wl-head">
+      <h1 class="q">What do you want to know?</h1>
+      <p class="muted">Pick one. You can change it any time.</p>
     </div>
-    <p class="muted small">Used Walo before? <a href="#/backup">Sign in with your email</a> and your fields come back.</p>
+    <div class="wl-doors">
+      <button type="button" class="door" data-door="place">
+        <img class="door-pic" src="img/field.webp" alt="" width="84" height="84">
+        <span class="door-t"><b>I have a farm</b><small>What can I grow there?</small></span>
+        <span class="door-go">${icon("chevron-right")}</span>
+      </button>
+      <button type="button" class="door" data-door="crop">
+        <img class="door-pic" src="img/maize-field.webp" alt="" width="84" height="84">
+        <span class="door-t"><b>I want to plant a crop</b><small>Where should I plant it?</small></span>
+        <span class="door-go">${icon("chevron-right")}</span>
+      </button>
+    </div>
+    <p class="muted small wl-signin">Used Walo before? <a href="#/backup">Sign in with your email</a> and your fields come back.</p>
   </div>`;
 }
 
 function placeStep() {
   const list = towns().slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="stack">
+    ${backBtn()}
     <h1 class="q">Where is your farm?</h1>
     ${note("Walo uses NASA rain and temperature for your place. It stays on this phone.", "map-pin")}
     ${btn("Use my location", { ic: "locate-fixed", attrs: 'id="w-gps" data-net' })}
@@ -52,6 +63,7 @@ function cropStep() {
   const list = crops().slice().sort((a, b) => (asking ? 0 : here.has(b.id) - here.has(a.id)) || a.name.localeCompare(b.name));
   const cur = mainIsAuto() ? null : mainCrop(); // a crop from a field is not a choice she made here
   return `<div class="stack">
+    ${backBtn()}
     <h1 class="q">${asking ? "Which crop do you want to plant?" : `What can you grow in ${esc(placeLabel(place()))}?`}</h1>
     ${note(asking ? "Walo will show you where it does best." : "The crops that do well here come first. Pick the one you grow.", "sprout")}
     <div class="tiles">${list.map((c) => `<button type="button" class="tile${c.id === cur ? " sel" : ""}" data-crop="${c.id}">${cropImg(c, "tile-img")}<span>${esc(c.name)}</span></button>`).join("")}</div>
@@ -65,17 +77,28 @@ function placesStep() {
   const c = crop(W.crop);
   if (!c) { W.step = "doors"; return doors(); }
   return `<div class="stack">
+    ${backBtn("Choose another crop")}
     <h1 class="q">Where should you plant ${esc(c.name.toLowerCase())}?</h1>
     ${placesHtml(c, "Tap the town where you will plant it.")}
-    ${btn("Choose another crop", { kind: "secondary", attrs: "data-back" })}
   </div>`;
+}
+
+/* one way back from every step, so a wrong tap never strands her in the middle of setup */
+const backBtn = (label = "Back") => `<button type="button" class="wback" data-wback>${icon("chevron-left")}<span>${label}</span></button>`;
+
+/* where "back" goes from the step she is on */
+function stepBack() {
+  if (W.step === "place") W.step = "doors";
+  else if (W.step === "crop") W.step = W.order === "place" ? "place" : "doors";
+  else { W.step = "crop"; W.crop = null; }
+  refresh();
 }
 
 export function mount(root) {
   root.addEventListener("click", (e) => {
     const door = e.target.closest("[data-door]");
     if (door) { W.order = door.dataset.door; W.step = W.order === "crop" ? "crop" : "place"; refresh(); return; }
-    if (e.target.closest("[data-back]")) { W.step = "crop"; W.crop = null; refresh(); return; }
+    if (e.target.closest("[data-wback]")) { stepBack(); return; }
     const t = e.target.closest("[data-town]");
     if (t) { choosePlace(t.dataset.town); return; }
     const c = e.target.closest("[data-crop]");

@@ -99,18 +99,18 @@ def mark(size):
     # outlined in the light green so the fingers stay separate even at 32 px.
     under = art.copy()
     parts = [
-        ((0.50, 0.94), (0.66, 0.90), 0.20),   # palm
-        ((0.46, 0.90), (0.62, 0.70), 0.072),  # little finger
-        ((0.55, 0.91), (0.74, 0.68), 0.076),
-        ((0.64, 0.91), (0.84, 0.69), 0.078),
-        ((0.72, 0.90), (0.93, 0.73), 0.072),  # thumb, lying flatter
+        ((0.43, 0.97), (0.67, 0.94), 0.25),   # palm and heel
+        ((0.46, 0.93), (0.56, 0.79), 0.088),  # little finger
+        ((0.56, 0.94), (0.67, 0.78), 0.094),
+        ((0.66, 0.94), (0.78, 0.80), 0.092),
+        ((0.73, 0.93), (0.85, 0.85), 0.082),  # thumb, lying flatter
     ]
     hand = Image.new("L", (S, S), 0)
     hd = ImageDraw.Draw(hand)
     for a, b, w in parts:
         capsule(hd, a, b, w, 255, S)
     hand = Image.composite(hand, Image.new("L", (S, S), 0), leaf)
-    ring = ImageChops.subtract(hand.filter(ImageFilter.MaxFilter(9)), hand)
+    ring = ImageChops.subtract(hand.filter(ImageFilter.MaxFilter(11)), hand)
     art.paste(Image.new("RGBA", (S, S), HAND_LIGHT + (255,)), (0, 0), ring)
     art.paste(Image.new("RGBA", (S, S), (20, 80, 45, 255)), (0, 0), hand)
 
