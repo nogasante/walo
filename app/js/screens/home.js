@@ -21,13 +21,19 @@ export function render() {
     <a class="helpbtn" href="#/help/home" data-net><span class="tile-ic talk">${icon("headset")}</span><span class="fo-t"><b>Get help</b><small>Ask Walo by talking or typing</small></span>${icon("chevron-right")}</a>
   </div>`;
 }
-/* the one "plant" button, holding both ways in: her place first, or the crop first */
+/* the one "plant" button, holding both ways in as the two photo cards that used to sit on Home: her place first,
+   or the crop first. A short choice, so it opens in the middle of the screen. */
 function plantSheet() {
-  const html = `<div class="list">
-    ${row({ href: "#/now", ic: "map-pin", title: "What can I grow here?", sub: `Now, in ${esc(placeLabel(place()))}` })}
-    ${row({ attrs: 'data-plant-where="1"', ic: "sprout", title: "Where does my crop grow best?", sub: "Pick a crop, then see the towns" })}
+  const P = CFG().photos;
+  const opt = ({ tag = "a", href, ph, ic, title, sub, attrs = "" }) =>
+    `<${tag} class="pcard wide" ${href ? `href="${href}"` : 'type="button"'} ${attrs}>
+      <span class="pc-pic"><img src="${ph.img}" alt="" loading="lazy" style="object-position:${ph.pos}"><span class="badge">${icon(ic)}</span></span>
+      <span class="pc-t"><b>${title}</b><small>${sub}</small></span></${tag}>`;
+  const html = `<div class="stack">
+    ${opt({ href: "#/now", ph: P.plant_here, ic: "map-pin", title: "What can I grow here?", sub: `Now, in ${esc(placeLabel(place()))}` })}
+    ${opt({ tag: "button", attrs: 'data-plant-where="1"', ph: P.where_crop, ic: "sprout", title: "Where does my crop grow best?", sub: "Pick a crop, then see the towns" })}
   </div>`;
-  return { title: "Plant", html, onOpen: (b) => b.addEventListener("click", (e) => {
+  return { title: "Plant", html, center: true, onOpen: (b) => b.addEventListener("click", (e) => {
     if (!e.target.closest("[data-plant-where]")) return;
     closeSheet(true);
     openCropPicker("where", null, (id) => { setCrop(id); location.hash = `#/crop/${id}/where`; });
