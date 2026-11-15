@@ -238,8 +238,8 @@
           "from": "08-15",
           "to": "10-31",
           "zones": [
-            "003",
-            "004"
+            "TG003",
+            "TG004"
           ],
           "default": true,
           "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
@@ -250,19 +250,19 @@
         "prices": "WFP market prices via HDX HAPI"
       },
       "zones": {
-        "001": {
+        "TG001": {
           "name": "Dry savannah",
           "short": "dry savannah"
         },
-        "002": {
+        "TG002": {
           "name": "Wet savannah",
           "short": "wet savannah"
         },
-        "003": {
+        "TG003": {
           "name": "Forest area",
           "short": "Forest area"
         },
-        "004": {
+        "TG004": {
           "name": "Littoral",
           "short": "littoral"
         },
@@ -346,8 +346,8 @@
           "from": "08-15",
           "to": "10-31",
           "zones": [
-            "001",
-            "002"
+            "CI001",
+            "CI002"
           ],
           "default": true,
           "note": "Only the bimodal southern zones have a second season; the zone ids are filled in from FAO's calendar."
@@ -358,19 +358,19 @@
         "prices": "WFP market prices via HDX HAPI"
       },
       "zones": {
-        "001": {
+        "CI001": {
           "name": "Guinea Zone",
           "short": "Guinea Zone"
         },
-        "002": {
+        "CI002": {
           "name": "Sudano-Guinean Zone 1",
           "short": "Sudano-Guinean Zon"
         },
-        "003": {
+        "CI003": {
           "name": "Sudano-Guinean Zone 2",
           "short": "Sudano-Guinean Zon"
         },
-        "004": {
+        "CI004": {
           "name": "Sudanese Zone",
           "short": "Sudanese Zone"
         },
@@ -454,7 +454,7 @@
           "from": "08-15",
           "to": "10-31",
           "zones": [
-            "006"
+            "SN006"
           ],
           "default": true,
           "note": "Only bimodal southern zones have a second season."
@@ -465,27 +465,27 @@
         "prices": "WFP market prices via HDX HAPI"
       },
       "zones": {
-        "001": {
+        "SN001": {
           "name": "Niayes",
           "short": "niayes"
         },
-        "002": {
+        "SN002": {
           "name": "VALLEY RIVER",
           "short": "VALLEY RIVER"
         },
-        "003": {
+        "SN003": {
           "name": "Pastoral zone",
           "short": "pastoral zone"
         },
-        "004": {
+        "SN004": {
           "name": "Groundnut Basin",
           "short": "groundnut Basin"
         },
-        "005": {
+        "SN005": {
           "name": "CENTRAL AND SOUTHEAST",
           "short": "CENTRAL AND SOUTHE"
         },
-        "006": {
+        "SN006": {
           "name": "CASAMANCE",
           "short": "CASAMANCE"
         },
@@ -535,23 +535,23 @@
         "prices": "WFP market prices via HDX HAPI"
       },
       "zones": {
-        "001": {
+        "ML001": {
           "name": "Saharan zone",
           "short": "Saharan zone"
         },
-        "002": {
+        "ML002": {
           "name": "Sahel",
           "short": "Sahel"
         },
-        "003": {
+        "ML003": {
           "name": "Area Sudan",
           "short": "area Sudan"
         },
-        "004": {
+        "ML004": {
           "name": "Sudano Guinean Zone",
           "short": "Sudano Guinean Zon"
         },
-        "005": {
+        "ML005": {
           "name": "Delta interior and lake area",
           "short": "Delta interior and"
         },
@@ -601,19 +601,19 @@
         "prices": "WFP market prices via HDX HAPI"
       },
       "zones": {
-        "001": {
+        "NE001": {
           "name": "Saharan region, desert",
           "short": "Saharan region, de"
         },
-        "002": {
+        "NE002": {
           "name": "Sahelo-Saharan zone",
           "short": "Sahelo-Saharan zon"
         },
-        "003": {
+        "NE003": {
           "name": "Sahel",
           "short": "Sahel"
         },
-        "004": {
+        "NE004": {
           "name": "Sudano-Sahelian Zone",
           "short": "Sudano-Sahelian Zo"
         },

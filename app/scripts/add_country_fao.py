@@ -152,7 +152,7 @@ def main():
         override = ZONE_OVERRIDE.get(iso, {})
         for pid, p in mine.items():
             if pid in override:
-                p["zone"] = override[pid]
+                p["zone"] = f"{iso}{override[pid]}"
                 print(f"  town {p['name'][:16]:18} region {p.get('region') or '-':16} -> zone {override[pid]} (chosen)")
                 continue
             region = (p.get("region") or "").lower()
@@ -164,23 +164,28 @@ def main():
                     hit = zid; break
                 if town and town in units:
                     hit = zid; break
-            p["zone"] = hit
+            p["zone"] = f"{iso}{hit}" if hit else None
             print(f"  town {p['name'][:16]:18} region {p.get('region') or '-':16} -> zone {hit or 'UNMATCHED'}")
 
         if check:
             continue
 
         if iso in MINOR_ZONES:
-            entry["onset"]["minor_search"]["zones"] = MINOR_ZONES[iso]
+            entry["onset"]["minor_search"]["zones"] = [f"{iso}{z}" for z in MINOR_ZONES[iso]]
         for zid, z in zones.items():
             z.pop("_units", None)
-        entry["zones"] = {**zones, "_source": f"FAO Crop Calendar agro-ecological zones for {iso}"}
+        # FAO numbers its zones 001, 002... per country, so a bare "001" means Togo's dry savannah in one row and
+        # Senegal's Niayes in another. Every key carries the country: TG001, SN004. Crops also record which zones
+        # they are grown in, which is what the crop list filters on.
+        entry["zones"] = {**{f"{iso}{k}": v for k, v in zones.items()}, "_source": f"FAO Crop Calendar agro-ecological zones for {iso}"}
         entry.setdefault("sources", {})["crop_calendar"] = f"FAO Crop Calendar ({iso})"
         for zid in zones:
             wins = build_zone_windows(cal, zid)
             for cid, w in wins.items():
                 if cid in crop_by_id:
-                    crop_by_id[cid]["windows"][zid] = w
+                    key = f"{iso}{zid}"
+                    crop_by_id[cid].setdefault("zones", {})[key] = "FAO crop calendar lists this zone"
+                    crop_by_id[cid]["windows"][key] = w
         print(f"  wrote zones and windows for {iso}")
 
     if not check:

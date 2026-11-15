@@ -88,7 +88,14 @@ export function agroOf(p) {
   return D.agro.places[p.id] || D.agro.places[nearestTown(p).t.id];
 }
 export const climateOnly = (p) => zoneOf(p) == null;
-export const cropsHere = (p) => (climateOnly(p) ? crops().slice() : crops().filter((c) => c.zones[zoneOf(p)]));
+/* Crops FAO's calendar lists for this town's zone. Some zones have no rows at all (Mali's Sudan zone, Nigeria's
+   Sokoto zone), and an empty crop list there looked like the country had no crops. Those places fall back to the
+   whole list judged by climate, and the crop page says FAO does not list that crop for the zone. */
+export const cropsHere = (p) => {
+  if (climateOnly(p)) return crops().slice();
+  const z = zoneOf(p), listed = crops().filter((c) => c.zones[z]);
+  return listed.length ? listed : crops().slice();
+};
 export function confFor(c, p) { return c.confidence[baseId(p)] || (c.confidence_zone || {})[zoneOf(p)] || "Low"; }
 const CONF_ORDER = { High: 0, Medium: 1, Low: 2 };
 
