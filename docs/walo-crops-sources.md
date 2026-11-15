@@ -1,6 +1,6 @@
 # Walo crop knowledge base – sources and confidence
 
-Generated 2026-11-14 10:25 (Africa/Accra, GMT). Companion to `/workspace/walo-crops.json`. Built by `walo-crops-build/build.py` from saved raw data (EcoCrop CSV, FAO crop-calendar API responses, FAOSTAT bulk file, WFP/HDX prices).
+Generated 2026-11-14 10:25 (Africa/Accra, GMT). These are the source notes for the crop knowledge base the app ships as `app/data/crops.json`, built from saved raw data (EcoCrop CSV, FAO crop-calendar API responses, FAOSTAT bulk file, WFP/HDX prices).
 
 **Rules.** Every value in the JSON carries source ids. `not confirmed` means no source was found in this session, so the app must not show it as fact. EcoCrop values are global ranges for the species, not Ghana-specific. FAO calendar dates are FAO's zone-level calendar for Ghana, last updated in 2021. Twi names come from a language-learning site and one academic table, so **a Twi speaker must check them before they go in the app**.
 

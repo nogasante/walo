@@ -163,7 +163,6 @@ app/                  Vercel root. The running app.
     data/             Their raw inputs and full outputs (prices-world.json and friends), not read by the app
   AI_USE.md           Space Apps AI disclosure
   DESIGN.md           Design record and the methods chapter
-proof/                Stdlib NASA POWER proof script
 supabase/schema.sql   Table, row-level security, photo bucket, and the daily AI budget
 docs/                 Per-crop source notes
 ```
@@ -187,15 +186,6 @@ From `app/`, with the [Vercel CLI](https://vercel.com/docs/cli) and the names in
 cd app
 vercel dev
 ```
-
-The NASA proof script uses the standard library only. It needs a network when you ask NASA, and `--help` does not:
-
-```bash
-python3 proof/walo_proof.py --help
-python3 proof/walo_proof.py --place Ejura --crop maize
-```
-
-A saved Ejura run: [proof/sample_output_ejura.txt](proof/sample_output_ejura.txt).
 
 ## Deploy
 
@@ -230,7 +220,6 @@ Project ref: `yceufknddlcrezefaivi`.
 ## Checks before you push
 
 ```bash
-python3 proof/walo_proof.py --help
 python3 -c "import json,pathlib; [json.loads(p.read_text()) for p in pathlib.Path('app').rglob('*.json')]"
 find app -name '*.js' -print0 | xargs -0 -n1 node --check
 ```

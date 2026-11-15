@@ -4,7 +4,7 @@
 
 The first version of Walo (built the morning of 14 Nov) put every number on screen: month grids, crop timing tables, three long rotation cards, several price tables per crop and a long list of warnings. The team's verdict: "overwhelming" and "hacked". This document records how we redesigned it, step by step. The scope did not change (Ejura-Sekyedumase only; maize, cowpea, groundnut, cassava only; Calendar, Market, Plant Doctor; voice-first).
 
-> Sections 1–13 record how the design got here. **§13b describes the current app (v12).** §14 is the methods.
+> Sections 1–13 record how the design got here. **§13b describes the current app (v12).** §14 is the methods. Paths in those sections name the files as they were then; the current tree is in `README.md`.
 
 ---
 

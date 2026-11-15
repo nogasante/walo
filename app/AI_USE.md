@@ -2,10 +2,12 @@
 
 *Simply Zero · NASA Space Apps Challenge 2026 · written 14 November 2026 (Africa/Accra)*
 
+*Files named in the dated sections below are the ones that existed on that day; the current tree and the current data sources are in `README.md`.*
+
 - **The idea is the team's.** The problem, the district (Ejura-Sekyedumase), the four crops and the three rotations to compare were decided by Simply Zero.
 - **App code:** this web app (index.html, styles.css, app.js) was scaffolded and coded by an AI assistant (**Grok Bot**) from the team's written brief and the team's seed data.
-- **Data processing:** `scripts/build_data.py`, which turns the NASA POWER, SRTM, SoilGrids and price files into the app's JSON, was AI-written.
-- **Figures:** all numbers come from the cited datasets (NASA POWER, NASA SRTM via OpenTopoData, SoilGrids 2.0, WFP/HDX, MoFA SRID, Ghana Commodity Exchange, and dated news articles kept in the data files). Nothing was estimated by AI; where data are missing the app says so ("data gap", "coming later").
+- **Data processing:** the build scripts that turn the raw data into the app's JSON were AI-written: `app/scripts/build_agro.js`, `build_crops.py`, `build_markets.py`, `build_shift.py`, `build_soilhealth.py`, `build_ndvi.py`, `build_srid_prices.py`, `build_gcx_prices.py` and `build_hapi_prices.py`.
+- **Figures:** all numbers come from the cited datasets (NASA POWER daily, NASA MODIS MOD13Q1 NDVI, FAO EcoCrop / FAO-56 / agro-ecological zones and the district soil notes in `docs/walo-crops-sources.md`, Copernicus DEM via Open-Meteo for slope — SRTM was the intended source and needs an Earthdata login — WFP/HDX, MoFA SRID, Ghana Commodity Exchange, and dated news articles kept in the data files). Nothing was estimated by AI; where data are missing the app says so ("data gap", "coming later").
 - **Redesign (14 November 2026):** after the team found the first version overwhelming, the AI assistant (Grok Bot) applied a design process (personas, one question per screen, design principles, visual system, Nielsen heuristic review — see `DESIGN.md`) and rebuilt the interface (index.html, styles.css, app.js, sw.js, icon.svg). The four crop illustrations are simple hand-coded SVG shapes written by the AI, not AI-generated images. No data was changed or added.
 - **Visual redesign (14 November 2026, later the same day):** the AI assistant restyled the app (photo headers, photo crop cards, new charts, "Your farm" location card with a Ghana map, "Generic advice vs. Walo" card). The location-first idea (NASA data for the farm's own point instead of generic advice) is the team's. Every number on the new cards is read from the existing data files.
 - **Photos:** 8 real photographs from Wikimedia Commons (CC BY-SA 4.0 / CC BY-SA 2.0), credited with author, licence and source link on the About page and in `data/credits.json`. They were only cropped, resized and converted to WebP. **No AI-generated images are used.**
