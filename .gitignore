@@ -17,3 +17,6 @@ secrets/
 __pycache__/
 *.py[cod]
 .DS_Store
+
+# Screenshots and other local working files; never part of the app.
+artifacts/
