@@ -51,7 +51,7 @@ export function render(id, fid) {
   const { options } = rotationOptions(after.id, p, { soil: soilChoice(), priority: priority() });
   if (!options.length) return emptyState({ ic: "sprout", title: `No crops to follow ${after.name.toLowerCase()} here`, sub: "Walo has no other crop for this place yet.", action: "Try another place", href: "#/welcome" });
   const top = options[0], prio = priority(), soil = soilChoice();
-  const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1).toLowerCase()}. ` : "";
+  const when = pr ? `Your ${after.name.toLowerCase()} comes off around ${monthName(pr.harvest.getMonth() + 1)}. ` : "";
   const headline = top.same
     ? `Keep ${after.name.toLowerCase()} in this field`
     : `Plant ${top.c.name.toLowerCase()} after your ${after.name.toLowerCase()}`;
