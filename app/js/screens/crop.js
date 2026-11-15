@@ -45,7 +45,9 @@ export function render(id, sub) {
   const c = crop(id), p = place(); setCrop(id);
   const sc = scoreCrop(c, p), fw = fitWord(sc), st = plantStatus(c, p), cm = cropMonths(c, p), z = zoneOf(p), outZone = z != null && !c.zones[z];
   const months = cm.allYear ? "Any month" : cm.sow.length ? runs(cm.sow).map(monthSpan).join(", ") : "";
-  const subLine = months ? `Planting months: ${months}${cm.guess ? " (best guess)" : ""}.` : "";
+  // the headline already names the month it wants, so this line adds the width of the window, never a second answer
+  const guessNote = cm.guess && !cm.allYear ? " Walo's best guess from ten years of rain." : "";
+  const subLine = cm.allYear ? "Any month works here." : cm.sow.length > 1 ? `Sowing runs ${months}.${guessNote}` : guessNote.trim();
   const t = headline(c, st), fo = fcOnset(forecastFor(p));
   const why = whyBody(reasons(c, sc).concat(outZone ? [`FAO does not list ${c.name.toLowerCase()} for the ${zoneName(z).toLowerCase()}.`] : []), details(c, p, sc, cm, st));
   // "Where does it grow best" is its own page at #/crop/<id>/where, not a sheet popped over this one: the same
